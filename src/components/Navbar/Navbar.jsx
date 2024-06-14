@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
@@ -6,7 +6,8 @@ import Darkmode from "./Darkmode";
 import { Link, NavLink } from "react-router-dom";
 import { isActive } from "@tiptap/react";
 import { IoMdArrowDropdown } from "react-icons/io";
-
+import { GrFavorite } from "react-icons/gr";
+import { ShopContext } from "../Context/ShopContext";
 // const MenuLinks = [
 //   {
 //     id: 1,
@@ -74,12 +75,13 @@ const DropdownLink = [
 ];
 
 const Navbar = () => {
+  const { getTotalCartItems } = useContext(ShopContext);
   return (
     <div className="bg-white dark:bg-gray-800 dark:text-white duration-200  z-40  fixed top-0 right-0 left-0">
       <div className="py-4">
         <div className="container flex justify-between items-center">
           {/* logo and link section */}
-          <div className="flex  items-center gap-24">
+          <div className="flex  items-center gap-3">
             <a
               href="#"
               className="text-primary font-semibold tracking-widest text-2xl uppercase sm:text-3xl"
@@ -159,8 +161,11 @@ const Navbar = () => {
             <NavLink to="/cart" type="button" className="relative p-3">
               <FaShoppingCart className="text-xl text-gray-600 dark:text-gray-400" />
               <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">
-                0
+                {getTotalCartItems()}
               </div>
+            </NavLink>
+            <NavLink to="/wishlist" type="button" className="relative p-3">
+              <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" />
             </NavLink>
             <NavLink to="/login" type="button" className="relative p-3">
               <FaUser className="text-xl text-gray-600 dark:text-gray-400" />

@@ -16,7 +16,7 @@ import { ShopContext } from "../Context/ShopContext";
 const ProductDisplay = (props) => {
   const { product } = props;
   const navigate = useNavigate();
-  const { addToCart } = useContext(ShopContext);
+  const { addToCart, buyNow } = useContext(ShopContext);
   const [productData, setproductData] = useState();
   const { productId } = useParams();
   console.log(productId);
@@ -127,20 +127,32 @@ const ProductDisplay = (props) => {
                       <p>Width: 0.94 Mtr</p>
                     </div>
                     <div className="flex gap-3  ">
-                      <Button
+                      {/* <Button
                         text="BUY NOW"
                         bgColor={"bg-primary"}
                         textColor={"text-white"}
-                      />
+                      /> */}
 
-                      <Button
-                        text="ADD TO CART"
-                        bgColor={"bg-primary"}
-                        textColor={"text-white"}
+                      <button
                         onClick={() => {
-                          addToCart(product.id);
+                          buyNow(productData._id);
+                          navigate("/checkout");
                         }}
-                      />
+                        type="button"
+                        className=" w-[100px] h-[58px] outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer"
+                      >
+                        BUY NOW
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          addToCart(productData._id);
+                        }}
+                        type="button"
+                        className=" w-[100px] h-[58px] outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer"
+                      >
+                        ADD TO CART
+                      </button>
                     </div>
                     <p className="mt-3 text-[20px]">
                       <span>Category: </span>

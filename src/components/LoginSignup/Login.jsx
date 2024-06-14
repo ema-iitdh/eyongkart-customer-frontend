@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 // import "./LoginSignup.css";
+import instance from "../../../api";
 import Navbar from "../Navbar/Navbar";
 import Button from "../Shared/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const Login = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    toast.success("successfully");
+    setLoading(true);
+    instance
+      .post("/user/login", { email, password })
+      // console.log(name,email,password);
+      // setName("");
+      // setEmail("");
+      // setPassword("");
+      .then((result) => {
+        if (result.data.message) {
+          console.log(result);
+          setLoading(false);
+          navigate("/");
+        }
+        if (result.status === 400) {
+          toast.error(result.data.message);
+          setLoading(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <>
       <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden p-16">
@@ -18,20 +47,24 @@ const Login = () => {
                 className="w-[600px] h-[50px] text-xl rounded-none indent-2 outline-none "
                 type="email"
                 placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <input
                 className="w-[600px] h-[50px] text-xl rounded-none indent-2 outline-none "
                 type="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
 
-              <Link to={"/"} className="flex ml-5 justify-center  ">
-                <Button
-                  text="Sign in"
-                  bgColor="bg-primary"
-                  textColor="text-white"
-                />
-              </Link>
+              <button
+                onClick={handleSubmit}
+                type="button"
+                className=" w-[100px] h-[50px] ml-[250px]  outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer"
+              >
+                {loading ? "Signing" : "Sign in"}
+              </button>
             </div>
             <p className=" text-black dark:text-white mt-4 text-[20px] ">
               Forget Password?

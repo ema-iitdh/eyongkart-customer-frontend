@@ -84,10 +84,9 @@ const Products = () => {
         <Heading title="Our Products" subtitle={"Explore our products"} />
         {/* Body section */}
         {/* <Link to="/product/productId"> */}
-        <Link to="/shop">
-          <ProductCard data={ProductsData} />
-          <ProductCard data={ProductsData2} />
-        </Link>
+
+        <ProductCard data={ProductsData} />
+        <ProductCard data={ProductsData2} />
       </div>
 
       <div className="container">
@@ -95,9 +94,8 @@ const Products = () => {
         <Heading title="Men Products" subtitle={"Explore our men products"} />
         {/* Body section */}
         {/* <Link to="/product/productId"> */}
-        <Link to="/shop">
-          <ProductCard data={collection_men} />
-        </Link>
+
+        <ProductCard data={collection_men} />
       </div>
 
       <div className="container">
@@ -108,9 +106,8 @@ const Products = () => {
         />
         {/* Body section */}
         {/* <Link to="/product/productId"> */}
-        <Link to="/shop">
-          <ProductCard data={collection_women} />
-        </Link>
+
+        <ProductCard data={collection_women} />
       </div>
     </div>
   );

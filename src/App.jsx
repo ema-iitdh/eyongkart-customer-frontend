@@ -13,10 +13,17 @@ import Product from "./Pages/Product";
 import ShopCategory from "./Pages/ShopCategory";
 import CreateAccount from "./components/LoginSignup/CreateAccount";
 import Carts from "./components/Header/Carts";
+import Checkout from "./components/Checkout/Checkout";
+
+import Wishlist from "./components/Wishlist/Wishlist";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <MantineProvider>
+      <ToastContainer />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -31,6 +38,9 @@ const App = () => {
           <Route path="/product" element={<Product />}>
             <Route path=":productId" element={<ProductDisplay />} />
           </Route>
+
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/wishlist" element={<Wishlist />} />
         </Routes>
       </BrowserRouter>
     </MantineProvider>

@@ -12,7 +12,7 @@ const ShopCategory = ({ products }) => {
           <Item
             key={item._id}
             id={item._id}
-            title={item.category.name}
+            name={item.name}
             img={item?.image_id[0]}
             price={item.price}
           />
