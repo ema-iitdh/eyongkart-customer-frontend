@@ -118,13 +118,6 @@ const CarouselTraditional = () => {
                     <h1 className="text-5xl uppercase text-white dark:text-white/7 sm:text-[80px] md:text-[100px] xl:text-[150px] font-bold">
                       {data.title2}
                     </h1>
-                    <div>
-                      <Button
-                        text="Shop By Category"
-                        bgColor="bg-primary"
-                        textColor="text-white"
-                      />
-                    </div>
                   </div>
                   {/* image section */}
                   <div className="order-1 sm:order-2 ">

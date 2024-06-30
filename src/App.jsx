@@ -4,6 +4,7 @@ import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import HomePage from "./Pages/HomePage";
 import Shop from "../src/components/Header/Shop";
+import ShopByCategory from "../src/components/Header/ShopByCategory";
 import AboutUs from "../src/components/Header/AboutUs";
 import Contact from "../src/components/Header/Contact";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -19,6 +20,7 @@ import Wishlist from "./components/Wishlist/Wishlist";
 import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import Myorder from "./components/Myorders/Myorder";
 
 const App = () => {
   return (
@@ -28,6 +30,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<Shop />} />
+          <Route
+            path="/shopbycategory/:category"
+            element={<ShopByCategory />}
+          />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
@@ -41,6 +47,7 @@ const App = () => {
 
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/myorder" element={<Myorder />} />
         </Routes>
       </BrowserRouter>
     </MantineProvider>

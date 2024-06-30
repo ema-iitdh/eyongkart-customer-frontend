@@ -64,7 +64,7 @@ const CreateAccount = () => {
                 type="button"
                 className=" w-[100px] h-[50px] ml-[250px]  outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer"
               >
-                {loading ? "creating" : "create"}
+                {loading ? "Creating" : "Create"}
               </button>
             </div>
             <p className=" text-black dark:text-white mt-6 text-[20px]">

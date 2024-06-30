@@ -12,11 +12,17 @@ const ProductCard = ({ data }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 place-items-center">
         {/* card section */}
         {data.map((data) => (
-          <div className="group" key={data.id}>
+          <div className="group" key={data._id}>
             <div className="relative">
               <img
-                onClick={() => navigate("/shop")}
-                src={data.img}
+                onClick={() => {
+                  // navigate("/shop")
+                  navigate(`/product/${data._id}`);
+                }}
+                src={`http://drive.google.com/thumbnail?id=${data?.image_id[0]?.replace(
+                  /"/g,
+                  ""
+                )}`}
                 alt=""
                 className="h-[190px] w-[260px] object-cover rounded-md"
               />
@@ -49,8 +55,8 @@ const ProductCard = ({ data }) => {
             </div>
             <div className="flex justify-between  leading-7">
               <div>
-                <h2 className="font-semibold">{data.title}</h2>
-                <h2 className="font-bold">Rs. {data.price}</h2>
+                <h2 className="font-semibold">{data.name}</h2>
+                <h2 className="font-bold">₹ {data.price}</h2>
               </div>
 
               <button type="button" className="relative p-3">

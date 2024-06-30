@@ -1,7 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import { TiDeleteOutline } from "react-icons/ti";
 import { ShopContext } from "../Context/ShopContext";
+import { Radio, Group } from "@mantine/core";
+import instance from "../../../api";
+import { useNavigate } from "react-router-dom";
+
 const CartsItems = () => {
   const {
     getTotalCartAmount,
@@ -11,6 +15,105 @@ const CartsItems = () => {
     addToCart,
     removeFromCart,
   } = useContext(ShopContext);
+  const navigate = useNavigate();
+
+  const [razorpaytick, setrazorpaytick] = useState(false);
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  }
+  const paymentHandler = async () => {
+    if (!razorpaytick) {
+      navigate("/myorder");
+      return;
+    }
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+    if (!res) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+
+    const receiptId = "qwerty";
+    // biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
+    const result = await instance.post("/order", {
+      buyProduct: getTotalCartAmount(),
+      // biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
+      currency: "INR",
+      receiptId,
+    });
+
+    if (!result) {
+      alert("Server error. Are you online?");
+      return;
+    }
+    console.log(result.data);
+    const { amount, id: order_id, currency } = result.data;
+
+    const options = {
+      key: "rzp_test_JIH6EhvgsXj43w", // Enter the Key ID generated from the Dashboard
+      amount: amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency,
+      name: "Supriya ch", //your business name
+      description: "Test Transaction",
+      image: "https://example.com/your_logo",
+      order_id: order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      handler: async (response) => {
+        const body = {
+          ...response,
+        };
+
+        // const validateRes = await fetch(
+        //   "http://192.168.0.167:3000:3000/order/validate",
+        //   {
+        //     method: "POST",
+        //     body: JSON.stringify(body),
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //   }
+        // );
+        const validateRes = await instance.post("/order/validate", {
+          body,
+        });
+        const jsonRes = await validateRes.json();
+        console.log(jsonRes);
+      },
+      prefill: {
+        //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+        name: "Web Dev Matrix", //your customer's name
+        email: "webdevmatrix@example.com",
+        contact: "9000000000", //Provide the customer's phone number for better conversion rates
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.on("payment.failed", (response) => {
+      alert(response.error.code);
+      alert(response.error.description);
+      alert(response.error.source);
+      alert(response.error.step);
+      alert(response.error.reason);
+      alert(response.error.metadata.order_id);
+      alert(response.error.metadata.payment_id);
+    });
+    rzp1.open();
+  };
   console.log(cartItems);
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
@@ -37,7 +140,7 @@ const CartsItems = () => {
                 <td className="p-2  ">
                   <img
                     className="h-[120px] w-[200px] object-contain"
-                    src={`http://drive.google.com/thumbnail?id=${item?.image_id[4]?.replace(
+                    src={`http://drive.google.com/thumbnail?id=${item?.image_id[0]?.replace(
                       /"/g,
                       ""
                     )}`}
@@ -45,7 +148,7 @@ const CartsItems = () => {
                   />
                 </td>
                 <td className="p-2 text-[16px] ">{item.name}</td>
-                <td className="p-2 text-[16px]">Rs {item.price}</td>
+                <td className="p-2 text-[16px]">₹ {item.price}</td>
                 <td className="p-2 text-[16px]  text-center   ">
                   <div className="flex gap-4 justify-center items-center">
                     <button
@@ -67,7 +170,7 @@ const CartsItems = () => {
                 </td>
 
                 <td className="p-2 text-[16px] ">
-                  Rs {item.price * item.quantity}
+                  ₹ {item.price * item.quantity}
                 </td>
                 <td className="p-2 text-[16px]">
                   <button type="button" className="text-red-500">
@@ -92,7 +195,7 @@ const CartsItems = () => {
           <div>
             <div className=" flex justify-between pt[-15px]">
               <p>Subtotals</p>
-              <p>Rs {getTotalCartAmount()}</p>
+              <p>₹ {getTotalCartAmount()}</p>
             </div>
             <hr className="h-[1px] bg-white border-none" />
             <div className="flex justify-between">
@@ -102,13 +205,31 @@ const CartsItems = () => {
             <hr className="h-[1px] bg-white border-none" />
             <div className="flex justify-between pt[-15px]">
               <h3>Totals</h3>
-              <h3>Rs {getTotalCartAmount()}</h3>
+              <h3>₹ {getTotalCartAmount()}</h3>
             </div>
           </div>
+          <Radio.Group>
+            <Group mt="xl ">
+              <Radio
+                value="razorpay"
+                label="Razorpay"
+                checked={razorpaytick}
+                onChange={(event) =>
+                  setrazorpaytick(event.currentTarget.checked)
+                }
+              />
+              <Radio
+                value="cash"
+                label="Cash on Delivery"
+                onChange={() => setrazorpaytick(false)}
+              />
+            </Group>
+          </Radio.Group>
           <button
             type="button"
             className="w-[200px] h-[50px] outline-none border-none bg-red-500 text-white text-[16px]
             cursor-pointer"
+            onClick={paymentHandler}
           >
             PROCEED TO CHECKOUT
           </button>

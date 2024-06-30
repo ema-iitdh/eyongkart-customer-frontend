@@ -10,7 +10,7 @@ const Category = () => {
     <div className="py-8">
       <div className="container">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="py-10 pl-5 bg-gradient-to-br from-gray-600/90 to-gray-300 text-white rounded-3xl relative h-[320px] flex items-end ">
+          <div className="py-10 pl-5 bg-gradient-to-br from-gray-600/90 to-gray-300 text-white rounded-3xl relative h-[320px] flex items-end  ">
             {/* <img
               src={Category1}
               alt=""
@@ -19,7 +19,7 @@ const Category = () => {
 
             <div>
               <div className=" mb-4">
-                <p className="text-2xl font-semibold  mb-[2px] ">
+                <p className="text-2xl font-semibold  mb-[2px]  ">
                   Beauty of Rani phi
                 </p>
                 {/* <p className="mb-[2px] text-gray-400">Beauty</p>
@@ -27,7 +27,8 @@ const Category = () => {
                 <p className="text-4xl xl:text-5xl font-bold opacity-20 mb-2">
                   Rani phi
                 </p> */}
-                <Link to="/shop">
+
+                <Link to="/shopByCategory/Rani-Phee">
                   <Button
                     text="Browse"
                     bgColor={"bg-primary"}
@@ -55,7 +56,7 @@ const Category = () => {
                 <p className="text-4xl xl:text-5xl font-bold opacity-20 mb-2">
                   Rani phi
                 </p> */}
-                <Link to="/shop">
+                <Link to="/shopByCategory/Pheijom">
                   <Button
                     text="Browse"
                     bgColor={"bg-primary"}
@@ -82,7 +83,7 @@ const Category = () => {
                 <p className="text-4xl xl:text-5xl font-bold opacity-20 mb-2">
                   Wangkhei phi
                 </p>
-                <Link to="/shop">
+                <Link to="/shopByCategory/Wangkhei-Phee">
                   <Button
                     text="Browse"
                     bgColor={"bg-primary"}

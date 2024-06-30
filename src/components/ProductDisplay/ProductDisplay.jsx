@@ -18,6 +18,11 @@ const ProductDisplay = (props) => {
   const navigate = useNavigate();
   const { addToCart, buyNow } = useContext(ShopContext);
   const [productData, setproductData] = useState();
+  const [imgData1, setImgData1] = useState();
+  const [imgData2, setImgData2] = useState();
+  const [imgData3, setImgData3] = useState();
+  const [imgData4, setImgData4] = useState();
+  const [mainImg, setMainImg] = useState();
   const { productId } = useParams();
   console.log(productId);
   const fetchProductData = async () => {
@@ -28,8 +33,32 @@ const ProductDisplay = (props) => {
       });
       console.log(res);
       setproductData(res.data.product);
-      console.log(
+      setImgData1(
         `http://drive.google.com/thumbnail?id=${res.data.product?.image_id[0]?.replace(
+          /"/g,
+          ""
+        )}`
+      );
+      setImgData2(
+        `http://drive.google.com/thumbnail?id=${res.data.product?.image_id[1]?.replace(
+          /"/g,
+          ""
+        )}`
+      );
+      setImgData3(
+        `http://drive.google.com/thumbnail?id=${res.data.product?.image_id[2]?.replace(
+          /"/g,
+          ""
+        )}`
+      );
+      setImgData4(
+        `http://drive.google.com/thumbnail?id=${res.data.product?.image_id[3]?.replace(
+          /"/g,
+          ""
+        )}`
+      );
+      setImgData5(
+        `http://drive.google.com/thumbnail?id=${res.data.product?.image_id[4]?.replace(
           /"/g,
           ""
         )}`
@@ -38,6 +67,17 @@ const ProductDisplay = (props) => {
       console.log(error);
     }
   };
+  // const getfile = async () => {
+  //   try {
+  //     const res = await instance({
+  //       url: `http://drive.google.com/thumbnail?id=${productData?.image_id[0]}`,
+  //       method: "GET",
+  //     });
+  //     setImgData(res);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   useEffect(() => {
     fetchProductData();
   }, []);
@@ -55,56 +95,68 @@ const ProductDisplay = (props) => {
                     <div className="flex flex-col gap-4">
                       <img
                         className="h-[120px] w-[200px]"
-                        src={`http://drive.google.com/thumbnail?id=${productData?.image_id[0]?.replace(
-                          /"/g,
-                          ""
-                        )}`}
+                        // src={`http://drive.google.com/thumbnail?id=${productData?.image_id[0]?.replace(
+                        //   /"/g,
+                        //   ""
+                        // )}`}
+                        src={imgData1}
                         alt="image1"
+                        onClick={() => setMainImg(imgData1)}
                       />
                       <img
                         className="h-[120px] w-[200px]  "
-                        src={`http://drive.google.com/thumbnail?id=${productData?.image_id[1]?.replace(
-                          /"/g,
-                          ""
-                        )}`}
+                        src={imgData2}
                         alt="image2"
+                        onClick={() => setMainImg(imgData2)}
                       />
                       <img
                         className="h-[120px] w-[200px]"
-                        src={`http://drive.google.com/thumbnail?id=${productData?.image_id[2]?.replace(
-                          /"/g,
-                          ""
-                        )}`}
+                        // src={`http://drive.google.com/thumbnail?id=${productData?.image_id[2]?.replace(
+                        //   /"/g,
+                        //   ""
+                        // )}`}
+                        src={imgData3}
                         alt="image3"
+                        onClick={() => setMainImg(imgData3)}
                       />
                       <img
                         className="h-[120px] w-[200px]"
-                        src={`http://drive.google.com/thumbnail?id=${productData?.image_id[3]?.replace(
-                          /"/g,
-                          ""
-                        )}`}
+                        // src={`http://drive.google.com/thumbnail?id=${productData?.image_id[3]?.replace(
+                        //   /"/g,
+                        //   ""
+                        // )}`}
+                        src={imgData4}
                         alt="image4"
+                        onClick={() => setMainImg(imgData4)}
                       />
                     </div>
                     <div className="productdisplay-img">
-                      <img
-                        className="w-[540px] h-[540px]"
-                        src={`http://drive.google.com/thumbnail?id=${productData?.image_id[4]?.replace(
-                          /"/g,
-                          ""
-                        )}`}
-                        alt="imag5"
-                      />
+                      {mainImg ? (
+                        <img
+                          className="w-[540px] h-[540px]"
+                          src={mainImg}
+                          alt="imag5"
+                        />
+                      ) : (
+                        <img
+                          className="w-[540px] h-[540px]"
+                          src={`http://drive.google.com/thumbnail?id=${productData?.image_id[4]?.replace(
+                            /"/g,
+                            ""
+                          )}`}
+                          alt="imag5"
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="productdisplay-right  ">
                     <h1 className="dark:text-white">{productData.name}</h1>
-                    <Rating value={3.5} fractions={2} size="lg" readOnly />
+                    <Rating value={3.5} fractions={2} size="lg" />
 
                     <div className="productdisplay-right-prices">
                       {/* <div className='productdisplay-right-price-old'>${product.old_price} </div> */}
                       <div className="productdisplay-right-price-new">
-                        Rs. {productData.price}{" "}
+                        ₹ {productData.price}{" "}
                       </div>
                     </div>
                     <div className="productdisplay-right-description">
@@ -114,7 +166,7 @@ const ProductDisplay = (props) => {
                     <div className="pt-8 flex gap-4">
                       Quantity
                       <input
-                        className="w-[50px] h-[25px] dark:text-black"
+                        className="w-[50px] h-[25px] dark:text-black border border-black"
                         min={1}
                         max={6}
                         type="number"

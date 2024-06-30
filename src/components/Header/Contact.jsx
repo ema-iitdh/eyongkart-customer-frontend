@@ -15,33 +15,32 @@ const Contact = () => {
             </h1>
             <div className="flex flex-col  gap-6 mt-5  ">
               <input
-                className="w-[600px] h-[50px] text-2xl rounded-xl indent-2 outline-1 "
+                className="w-[600px] h-[50px] text-xl rounded-none indent-2 outline-1 "
                 type="name"
                 placeholder="Name"
               />
 
               <input
-                className="w-[600px] h-[50px] text-2xl rounded-xl indent-2 outline-1 "
+                className="w-[600px] h-[50px] text-xl rounded-none indent-2 outline-1 "
                 type="email"
                 placeholder="Email Address"
               />
               <input
-                className="w-[600px] h-[50px] text-2xl rounded-xl indent-2 outline-1 "
+                className="w-[600px] h-[50px] text-xl rounded-none indent-2 outline-1 "
                 type="text"
                 placeholder="Phone number"
               />
               <textarea
-                className="w-[600px] h-[70px] text-2xl rounded-xl indent-2  outline-1"
+                className="w-[600px] h-[70px] text-xl rounded-none indent-2  outline-1"
                 type="comment"
                 placeholder="Comments"
               />
-              <div className="flex ml-5 justify-center">
-                <Button
-                  text="Submit"
-                  bgColor="bg-primary"
-                  textColor="text-white"
-                />
-              </div>
+              <button
+                type="button"
+                className=" w-[100px] h-[50px] ml-[250px]  outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer"
+              >
+                Submit
+              </button>
             </div>
           </div>
         </div>

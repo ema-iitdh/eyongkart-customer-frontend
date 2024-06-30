@@ -33,7 +33,7 @@ const Wishlist = () => {
                   {/* <img src={item.img} alt={item.title} className="w-16 h-16 object-cover"/> */}
                   <img
                     className="h-[120px] w-[200px] object-contain"
-                    src={`http://drive.google.com/thumbnail?id=${item?.image_id[4]?.replace(
+                    src={`http://drive.google.com/thumbnail?id=${item?.image_id[0]?.replace(
                       /"/g,
                       ""
                     )}`}
@@ -41,7 +41,7 @@ const Wishlist = () => {
                   />
                 </td>
                 <td className="p-2 text-[16px] ">{item.name}</td>
-                <td className="p-2 text-[16px]">Rs {item.price}</td>
+                <td className="p-2 text-[16px]">₹ {item.price}</td>
                 <td className="p-2 text-[16px]  text-center   ">
                   <div className="flex gap-4 justify-center items-center">
                     <button type="button" className="hover:bg-gray-200 px-4 ">
@@ -55,7 +55,7 @@ const Wishlist = () => {
                 </td>
 
                 <td className="p-2 text-[16px] ">
-                  Rs {item.price * item.quantity}
+                  ₹ {item.price * item.quantity}
                 </td>
                 <td className="p-2 text-[16px]">
                   <button type="button" className="text-red-500">

@@ -120,7 +120,7 @@ const ShopContextProvider = (props) => {
       if (item) {
         // If the item is already in the cart, update its quantity and subtotal
         updatedCartItems = prev.map((item) =>
-          item._id === itemId
+          item._id === itemId && item.quantity > 0
             ? {
                 ...item,
                 quantity: item.quantity - 1,

@@ -26,7 +26,7 @@ const Item = (props) => {
         <div>
           <p className="text-[18px]">{props.name}</p>
 
-          <p className="text-[18px]">Rs. {props.price}</p>
+          <p className="text-[18px]">₹ {props.price}</p>
         </div>
         <button type="button" className="relative p-3">
           <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" />
