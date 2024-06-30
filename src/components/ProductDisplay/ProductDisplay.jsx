@@ -135,12 +135,12 @@ const ProductDisplay = (props) => {
                         <img
                           className="w-[540px] h-[540px]"
                           src={mainImg}
-                          alt="imag5"
+                          alt="imag1"
                         />
                       ) : (
                         <img
                           className="w-[540px] h-[540px]"
-                          src={`http://drive.google.com/thumbnail?id=${productData?.image_id[4]?.replace(
+                          src={`http://drive.google.com/thumbnail?id=${productData?.image_id[0]?.replace(
                             /"/g,
                             ""
                           )}`}

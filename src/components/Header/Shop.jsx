@@ -3,9 +3,13 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import instance from "../../../api";
 import ShopCategory from "../../Pages/ShopCategory";
+import { FaSearch } from "react-icons/fa";
 
 const Shop = () => {
   const [products, setproducts] = useState();
+  const [newproducts, setNewproducts] = useState();
+  const [searchProduct, setSearchProduct] = useState("");
+
   const fetchProducts = async () => {
     try {
       const res = await instance({
@@ -18,6 +22,14 @@ const Shop = () => {
       console.log(error);
     }
   };
+
+  const handleOnChange = (e) => {
+    setSearchProduct(e.target.value);
+    let searchProductnew = products.filter((i) =>
+      i.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setNewproducts(searchProductnew);
+  };
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -27,13 +39,28 @@ const Shop = () => {
       behavior: "smooth",
     });
   }, []);
+  console.log(searchProduct);
+  console.log(newproducts);
   return (
     <>
       <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden pt-16">
         <Navbar />
         <div className="container text-2xl overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex  items-center flex-col pt-8 gap-y-3.5">
           <div className="container">
-            <ShopCategory products={products} />
+            <div className="relative group hidden sm:block flex justify-end">
+              <input
+                type="text"
+                placeholder="Search"
+                className="search-bar"
+                onChange={handleOnChange}
+              />
+              <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
+            </div>
+            {searchProduct ? (
+              <ShopCategory products={newproducts} />
+            ) : (
+              <ShopCategory products={products} />
+            )}
           </div>
         </div>
         <Footer />

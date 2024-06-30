@@ -35,21 +35,25 @@ const ShopCategory = ({ products }) => {
   // }, []);
   return (
     <div className="m-2 grid grid-cols-4 gap-5">
-      {products?.map((item, i) => {
-        // if (props.category === item.category) {
-        return (
-          <Item
-            key={item._id}
-            id={item._id}
-            name={item.name}
-            img={item?.image_id[0]}
-            price={item.price}
-          />
-        );
-        // } else {
-        //   return null;
-        // }
-      })}
+      {products && products.length ? (
+        products?.map((item, i) => {
+          // if (props.category === item.category) {
+          return (
+            <Item
+              key={item._id}
+              id={item._id}
+              name={item.name}
+              img={item?.image_id[0]}
+              price={item.price}
+            />
+          );
+          // } else {
+          //   return null;
+          // }
+        })
+      ) : (
+        <p>Not Match Product found</p>
+      )}
     </div>
   );
 };

@@ -28,7 +28,7 @@ const Category2 = () => {
                 <p className="text-4xl xl:text-5xl font-bold opacity-20 mb-2">
                   Top
                 </p>
-                <Link to="/shop">
+                <Link to="/shopByCategory/Top">
                   <Button
                     text="Browse"
                     bgColor={"bg-primary"}
@@ -56,7 +56,7 @@ const Category2 = () => {
                 <p className="text-4xl xl:text-5xl font-bold opacity-20 mb-2">
                   Muka suit
                 </p>
-                <Link to="/shop">
+                <Link to="/shopByCategory/Muka-Phee">
                   <Button
                     text="Browse"
                     bgColor={"bg-primary"}
@@ -83,7 +83,7 @@ const Category2 = () => {
                 <p className="text-2xl xl:text-3xl font-bold opacity-20 mb-2">
                   Phanek Mayek Naibi
                 </p> */}
-                <Link to="/shop">
+                <Link to="/shopByCategory/Phanek">
                   <Button
                     text="Browse"
                     bgColor={"bg-primary"}

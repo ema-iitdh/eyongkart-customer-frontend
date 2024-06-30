@@ -65,6 +65,18 @@ const ShopByCategory = () => {
           case "Phanek":
             categoryId = "664d9c81d3fbe4146f8e3bb0";
             break;
+          case "Pheijom":
+            categoryId = "664d9c9cd3fbe4146f8e3bb3";
+            break;
+          case "Muka-Phee":
+            categoryId = "664d9c75d3fbe4146f8e3bad";
+            break;
+          case "Blouse":
+            categoryId = "6678fec2ff86abec768f96a7";
+            break;
+          case "Top":
+            categoryId = "6673f97a8b7f735de0751f60";
+            break;
           default:
             break;
         }
