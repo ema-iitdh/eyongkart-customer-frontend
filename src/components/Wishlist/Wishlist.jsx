@@ -44,13 +44,13 @@ const Wishlist = () => {
                 <td className="p-2 text-[16px]">₹ {item.price}</td>
                 <td className="p-2 text-[16px]  text-center   ">
                   <div className="flex gap-4 justify-center items-center">
-                    <button type="button" className="hover:bg-gray-200 px-4 ">
+                    {/* <button type="button" className="hover:bg-gray-200 px-4 ">
                       -
-                    </button>
+                    </button> */}
                     {item.quantity}
-                    <button type="button" className="hover:bg-gray-200 px-4">
+                    {/* <button type="button" className="hover:bg-gray-200 px-4">
                       +
-                    </button>
+                    </button> */}
                   </div>
                 </td>
 

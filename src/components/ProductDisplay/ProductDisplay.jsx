@@ -206,11 +206,11 @@ const ProductDisplay = (props) => {
                         ADD TO CART
                       </button>
                     </div>
-                    <p className="mt-3 text-[20px]">
+                    <p className="mt-3 text-[18px]">
                       <span>Category: </span>
                       Women, Rani phi and traditional design.
                     </p>
-                    <p className="mt-3 text-[20px]">
+                    <p className="mt-3 text-[18px]">
                       <span>Tags: </span>
                       Modern Latest.
                     </p>

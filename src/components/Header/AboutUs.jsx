@@ -10,7 +10,7 @@ const AboutUs = () => {
           <h1 className=" flex justify-center pt-4 font-semibold text-gray-500 hover:text-black dark:hover:text-white">
             About Us
           </h1>
-          <div className=" container flex flex-col  gap-3 mt-5 ">
+          <div className=" container flex flex-col text-xl  gap-3 mt-5 ">
             <p>LS Handloom shopping - Imphal,Manipur</p>
             <p>
               Manipur online handloom shopping,delivering Manipur products

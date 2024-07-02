@@ -10,6 +10,7 @@ import { GrFavorite } from "react-icons/gr";
 import { ShopContext } from "../Context/ShopContext";
 import { BsFillArchiveFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/auth";
 
 import instance from "../../../api";
 
@@ -83,7 +84,8 @@ import logo from "../../assets/logo1.png";
 const Navbar = () => {
   const navigate = useNavigate();
   const [DropdownLink, setDropdownLink] = useState([]);
-
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const { auth } = useContext(AuthContext);
   const getAllCategory = async () => {
     try {
       const res = await instance({
@@ -96,10 +98,15 @@ const Navbar = () => {
       console.log(error);
     }
   };
+  console.log(auth);
 
-  useEffect(() => {
-    getAllCategory();
-  }, []);
+  // useEffect(() => {
+  //   getAllCategory();
+  //   let isLogin = localStorage.getItem("isLogin");
+  //   if (isLogin) {
+  //     setLoginSuccess(true);
+  //   }
+  // }, []);
 
   const { getTotalCartItems } = useContext(ShopContext);
   return (
@@ -187,10 +194,10 @@ const Navbar = () => {
           {/* navbar right section */}
           <div className="flex justify-between items-center gap-4">
             {/* Search bar section */}
-            <div className="relative group hidden sm:block">
+            {/* <div className="relative group hidden sm:block">
               <input type="text" placeholder="Search" className="search-bar" />
               <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
-            </div>
+            </div> */}
             {/* order button section */}
             <NavLink to="/cart" type="button" className="relative p-3">
               <FaShoppingCart className="text-xl text-gray-600 dark:text-gray-400" />
@@ -201,15 +208,22 @@ const Navbar = () => {
             <NavLink to="/wishlist" type="button" className="relative p-3">
               <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" />
             </NavLink>
-            <NavLink to="/myorder" type="button" className="relative p-3">
-              <BsFillArchiveFill className="text-xl text-gray-600 dark:text-gray-400" />
-            </NavLink>
-            <NavLink to="/login" type="button" className="relative p-3">
-              <RiAccountCircleLine
-                size={25}
-                className=" text-gray-600 dark:text-gray-400"
-              />
-            </NavLink>
+            {auth && (
+              <NavLink to="/myorder" type="button" className="relative p-3">
+                <BsFillArchiveFill className="text-xl text-gray-600 dark:text-gray-400" />
+              </NavLink>
+            )}
+            {!auth ? (
+              <NavLink to="/login" type="button" className="relative p-3">
+                <RiAccountCircleLine
+                  size={25}
+                  className=" text-gray-600 dark:text-gray-400"
+                />
+                <p>Login</p>
+              </NavLink>
+            ) : (
+              <p onClick={() => localStorage.removeItem("isLogin")}>Login</p>
+            )}
             {/*  darkmode section */}
             <div>
               <Darkmode />

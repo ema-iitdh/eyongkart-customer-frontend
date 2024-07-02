@@ -352,7 +352,7 @@ const Checkout = () => {
                     <Group mt="xl ">
                       <Radio
                         value="razorpay"
-                        label="Razorpay"
+                        label="Online Payment"
                         checked={razorpaytick}
                         onChange={(event) =>
                           setrazorpaytick(event.currentTarget.checked)

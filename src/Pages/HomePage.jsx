@@ -9,6 +9,7 @@ import Footer from "../components/Footer/Footer";
 import raniphi from "../assets/Category/rani.png";
 import pheichom from "../assets/Category/pheijom5.png";
 import CarouselTraditional from "../components/Hero/CarouselTraditional";
+import Offers from "../components/Offers/Offers";
 
 const BannerData = {
   discount: "20% OFF",
@@ -36,6 +37,7 @@ const HomePage = () => {
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
       <Navbar />
       <CarouselTraditional />
+      <Offers />
       <Category />
       <Category2 />
       <Banner data={BannerData} />

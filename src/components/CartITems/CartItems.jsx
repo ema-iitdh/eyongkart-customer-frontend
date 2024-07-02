@@ -212,7 +212,7 @@ const CartsItems = () => {
             <Group mt="xl ">
               <Radio
                 value="razorpay"
-                label="Razorpay"
+                label="Online payment"
                 checked={razorpaytick}
                 onChange={(event) =>
                   setrazorpaytick(event.currentTarget.checked)

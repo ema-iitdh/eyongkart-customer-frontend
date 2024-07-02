@@ -52,7 +52,9 @@ const ShopCategory = ({ products }) => {
           // }
         })
       ) : (
-        <p>Not Match Product found</p>
+        <p className="flex justify-center items-center flex-col text-xl">
+          Not Match Product found
+        </p>
       )}
     </div>
   );

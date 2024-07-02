@@ -24,6 +24,7 @@ const Login = () => {
         if (result.data.message) {
           console.log(result);
           setLoading(false);
+          localStorage.setItem("auth", JSON.stringify(result.data));
           navigate("/");
         }
         if (result.status === 400) {
