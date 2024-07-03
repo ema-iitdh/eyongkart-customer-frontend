@@ -51,11 +51,11 @@ const ShopCategory = ({ products }) => {
           //   return null;
           // }
         })
-      ) : (
+      ) : {products && !products.lenght > 0 ? (
         <p className="flex justify-center items-center flex-col text-xl">
           Not Match Product found
         </p>
-      )}
+      )}: ''}
     </div>
   );
 };

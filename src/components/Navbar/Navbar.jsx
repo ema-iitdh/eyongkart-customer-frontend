@@ -10,82 +10,17 @@ import { GrFavorite } from "react-icons/gr";
 import { ShopContext } from "../Context/ShopContext";
 import { BsFillArchiveFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../Context/auth";
-
+import { useAuth } from "../Context/auth";
 import instance from "../../../api";
+import { Tooltip, Button } from "@mantine/core";
 
 import logo from "../../assets/logo1.png";
-// const MenuLinks = [
-//   {
-//     id: 1,
-//     name: "Home",
-//     link: "/",
-//   },
-//   {
-//     id: 2,
-//     name: "Shop",
-//     link: "/shop",
-//   },
-//   {
-//     id: 3,
-//     name: "About Us",
-//     link: "/about",
-//   },
-//   {
-//     id: 4,
-//     name: "Contact",
-//     link: "/contact",
-//   },
-// ];
-
-// const DropdownLink = [
-//   {
-//     id: 1,
-//     name: "Rani phee",
-//     link: "/shop",
-//   },
-//   {
-//     id: 2,
-//     name: "Wangkhei phee",
-//     link: "/shop",
-//   },
-//   {
-//     id: 3,
-//     name: "Muka phee",
-//     link: "/shop",
-//   },
-//   {
-//     id: 4,
-//     name: "Kurta",
-//     link: "/shop",
-//   },
-//   {
-//     id: 5,
-//     name: "Phanek",
-//     link: "/shop",
-//   },
-//   {
-//     id: 6,
-//     name: "Pheijom",
-//     link: "/shop",
-//   },
-//   {
-//     id: 7,
-//     name: "Khudei",
-//     link: "/shop",
-//   },
-//   {
-//     id: 8,
-//     name: "Top",
-//     link: "/shop",
-//   },
-// ];
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [DropdownLink, setDropdownLink] = useState([]);
   const [loginSuccess, setLoginSuccess] = useState(false);
-  const { auth } = useContext(AuthContext);
+  const [auth, setAuth] = useAuth();
   const getAllCategory = async () => {
     try {
       const res = await instance({
@@ -100,18 +35,14 @@ const Navbar = () => {
   };
   console.log(auth);
 
-  // useEffect(() => {
-  //   getAllCategory();
-  //   let isLogin = localStorage.getItem("isLogin");
-  //   if (isLogin) {
-  //     setLoginSuccess(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    getAllCategory();
+  }, []);
 
   const { getTotalCartItems } = useContext(ShopContext);
   return (
     <div className="bg-white dark:bg-gray-800 dark:text-white duration-200  z-40  fixed top-0 right-0 left-0">
-      <div className="py-4">
+      <div className="py-3">
         <div className="container flex justify-between items-center">
           {/* logo and link section */}
           <div className="flex  items-center gap-7">
@@ -199,30 +130,52 @@ const Navbar = () => {
               <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
             </div> */}
             {/* order button section */}
-            <NavLink to="/cart" type="button" className="relative p-3">
-              <FaShoppingCart className="text-xl text-gray-600 dark:text-gray-400" />
-              <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">
-                {getTotalCartItems()}
-              </div>
-            </NavLink>
-            <NavLink to="/wishlist" type="button" className="relative p-3">
-              <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" />
-            </NavLink>
-            {auth && (
-              <NavLink to="/myorder" type="button" className="relative p-3">
-                <BsFillArchiveFill className="text-xl text-gray-600 dark:text-gray-400" />
+            <Tooltip className="bg-red-500" label="Carts">
+              <NavLink to="/cart" type="button" className="relative p-3">
+                <FaShoppingCart className="text-xl text-gray-600 dark:text-gray-400" />
+                <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">
+                  {getTotalCartItems()}
+                </div>
               </NavLink>
+            </Tooltip>
+            <Tooltip className="bg-red-500" label="Wishlist">
+              <NavLink to="/wishlist" type="button" className="relative p-3">
+                <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" />
+              </NavLink>
+            </Tooltip>
+
+            {auth?.token && (
+              <Tooltip className="bg-red-500" label="Orders">
+                <NavLink to="/myorder" type="button" className="relative p-3">
+                  <BsFillArchiveFill className="text-xl text-gray-600 dark:text-gray-400" />
+                </NavLink>
+              </Tooltip>
             )}
-            {!auth ? (
-              <NavLink to="/login" type="button" className="relative p-3">
-                <RiAccountCircleLine
-                  size={25}
-                  className=" text-gray-600 dark:text-gray-400"
-                />
-                <p>Login</p>
-              </NavLink>
+            {!auth.token ? (
+              <Tooltip label="Login" className="bg-red-500">
+                <NavLink to="/login" type="button" className="relative p-3">
+                  <button type="button">
+                    <RiAccountCircleLine
+                      size={25}
+                      className=" text-gray-600 dark:text-gray-400"
+                    />
+                  </button>
+                </NavLink>
+              </Tooltip>
             ) : (
-              <p onClick={() => localStorage.removeItem("isLogin")}>Login</p>
+              <button
+                type="button"
+                className="bg-white w-[80px] h-[30px] outline-black border  dark:text-white dark:bg-black"
+                onClick={() => {
+                  localStorage.removeItem("auth");
+                  setAuth({
+                    message: "",
+                    token: "",
+                  });
+                }}
+              >
+                Logout
+              </button>
             )}
             {/*  darkmode section */}
             <div>

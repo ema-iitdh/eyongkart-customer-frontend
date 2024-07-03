@@ -5,11 +5,13 @@ import Navbar from "../Navbar/Navbar";
 import Button from "../Shared/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../Context/auth";
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [auth, setAuth] = useAuth();
   const handleSubmit = (e) => {
     e.preventDefault();
     toast.success("successfully");
@@ -22,7 +24,11 @@ const Login = () => {
       // setPassword("");
       .then((result) => {
         if (result.data.message) {
-          console.log(result);
+          setAuth({
+            ...auth,
+            message: result.data.message,
+            token: result.data.token,
+          });
           setLoading(false);
           localStorage.setItem("auth", JSON.stringify(result.data));
           navigate("/");

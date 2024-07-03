@@ -5,12 +5,12 @@ import "./index.css";
 import ShopContextProvider from "./components/Context/ShopContext.jsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import AuthContextProvider from "./components/Context/auth.jsx";
+import AuthProvider from "./components/Context/auth.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <AuthContextProvider>
+  <AuthProvider>
     <ShopContextProvider>
       <App />
     </ShopContextProvider>
-  </AuthContextProvider>
+  </AuthProvider>
 );

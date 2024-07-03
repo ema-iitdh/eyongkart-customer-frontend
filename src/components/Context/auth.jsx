@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import instance from "../../../api";
 
 export const AuthContext = createContext();
 
-const AuthContextProvider = (props) => {
+const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     message: "",
     token: "",
   });
 
-  const contextValue = {
-    auth,
-  };
+  // const contextValue = {
+  //   auth,
+  // };
 
   useEffect(() => {
     let isLogin = localStorage.getItem("auth");
@@ -27,9 +27,12 @@ const AuthContextProvider = (props) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {props.children}
+    <AuthContext.Provider value={[auth, setAuth]}>
+      {children}
     </AuthContext.Provider>
   );
 };
-export default AuthContextProvider;
+
+export const useAuth = () => React.useContext(AuthContext);
+// const useAuth = () => useContext(AuthContext);
+export default AuthProvider;
