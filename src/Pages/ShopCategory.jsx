@@ -3,8 +3,9 @@ import React, { useContext } from "react";
 import { ShopContext } from "../components/Context/ShopContext";
 import Item from "../components/Item/Item";
 import { useParams } from "react-router-dom";
+import { Skeleton } from "@mantine/core";
 // import instance from "../../api";
-const ShopCategory = ({ products }) => {
+const ShopCategory = ({ products, isSearch, isLoading }) => {
   const { all_product } = useContext(ShopContext);
   // console.log(products);
   // const params = useParams();
@@ -35,7 +36,11 @@ const ShopCategory = ({ products }) => {
   // }, []);
   return (
     <div className="m-2 grid grid-cols-4 gap-5">
-      {products && products.length ? (
+      {products && products.length === 0 && isSearch !== "" ? (
+        <p className="flex justify-center items-center flex-col text-xl">
+          Not Match Product found
+        </p>
+      ) : (
         products?.map((item, i) => {
           // if (props.category === item.category) {
           return (
@@ -51,11 +56,18 @@ const ShopCategory = ({ products }) => {
           //   return null;
           // }
         })
-      ) : {products && !products.lenght > 0 ? (
-        <p className="flex justify-center items-center flex-col text-xl">
-          Not Match Product found
-        </p>
-      )}: ''}
+      )}
+      {isLoading && (
+        // <div className="flex justify-center items-center flex-col text-xl">
+        <>
+          <Skeleton height={50} circle mb="xl" />
+          <Skeleton height={8} radius="xl" />
+          <Skeleton height={8} mt={6} radius="xl" />
+          <Skeleton height={8} mt={6} width="70%" radius="xl" />
+        </>
+        // </div>
+      )}
+      {/* <Skeleton visible={loading} height={500} width={500} /> */}
     </div>
   );
 };

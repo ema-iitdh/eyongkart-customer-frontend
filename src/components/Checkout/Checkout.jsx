@@ -324,13 +324,13 @@ const Checkout = () => {
                           />
                         </p>
                         <p className="p-2 text-[18px] ">{buyProduct.name}</p>
-                        <p className="p-2 text-[18px]">Rs {buyProduct.price}</p>
+                        <p className="p-2 text-[18px]">₹ {buyProduct.price}</p>
                       </div>
 
                       <div>
                         <div className=" flex justify-between pt[-15px]">
                           <p>Subtotals</p>
-                          <p>Rs {buyProduct?.price}</p>
+                          <p>₹ {buyProduct?.price}</p>
                         </div>
                         <hr className="h-[1px] bg-white border-none" />
                         <div className="flex justify-between">

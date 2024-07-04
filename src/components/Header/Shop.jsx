@@ -9,15 +9,17 @@ const Shop = () => {
   const [products, setproducts] = useState();
   const [newproducts, setNewproducts] = useState();
   const [searchProduct, setSearchProduct] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const res = await instance({
         url: "/product/allproduct",
         method: "GET",
       });
-      console.log(res.data.products);
+      // console.log(res.data.products);
       setproducts(res.data.products);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -69,9 +71,17 @@ const Shop = () => {
               </div>
             </div>
             {searchProduct ? (
-              <ShopCategory products={newproducts} />
+              <ShopCategory
+                products={newproducts}
+                isSearch={searchProduct}
+                isLoading={loading}
+              />
             ) : (
-              <ShopCategory products={products} />
+              <ShopCategory
+                products={products}
+                isSearch={searchProduct}
+                isLoading={loading}
+              />
             )}
           </div>
         </div>
