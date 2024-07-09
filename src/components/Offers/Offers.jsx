@@ -26,21 +26,15 @@ const Offers = (props) => {
 
   return (
     <>
-      <div className="container mt-10 hero-bg-color rounded-3xl   ">
-        <div className="overflow-hidden rounded-3xl min-h-[400px] sm:min-h-[450px] flex  items-center flex-col pt-3 gap-y-3.5">
-          <div className="container pb-8 pr-0 sm:pb-0">
-            <h1 className=" flex justify-start items-start text-2xl font-semibold text-gray-500 hover:text-black dark:hover:text-white pb-6">
+      <div className="container  pt-6">
+        <div className="overflow-hidden rounded-3xl h-[350px] sm:h-[400px] hero-bg-color flex justify-center items-center bg-green-400">
+          <div className="container pb-2 ml-0 pr-0  sm:pb-0">
+            <h1 className=" flex justify-start items-start text-2xl font-semibold text-red-500 hover:text-black dark:hover:text-white pt-3 pb-0">
               Top sales
             </h1>
             <Carousel responsive={responsive}>
-              <div className=" bg-gray-300 h-[300px] w-[250px] p-4 mt-4 rounded-lg flex flex-col items-center justify-center">
-                {/* <Link to={`/product/${props.id}`}> */}
+              <div className=" bg-gray-300 h-[300px] w-[250px] p-4 sm:mt-4 mt-1 rounded-lg flex flex-col items-center justify-center">
                 <img
-                  // onClick={window.scrollTo(0, 0)}
-                  // src={`http://drive.google.com/thumbnail?id=${props?.img?.replace(
-                  //   /"/g,
-                  //   ""
-                  // )}`}
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREO9JCt80KZ19i_5SPCZ8DXSwsaBbCTbumjQ&s"
                   alt=""
                   className="h-fill object-fill aspect-square"
@@ -55,12 +49,12 @@ const Offers = (props) => {
                     type="button"
                     className="bg-red-600 hover:bg-red-500  text-white py-3 mt-2 px-4 rounded-full "
                   >
-                    Add to cart
+                    Buy Now
                   </button>
                 </div>
               </div>
 
-              <div className=" bg-gray-300 h-[300px] w-[250px] p-4 mt-4 rounded-lg flex flex-col items-center justify-center">
+              <div className=" bg-gray-300 h-[300px] w-[250px] p-4 sm:mt-4 mt-1 rounded-lg flex flex-col items-center justify-center">
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaMX-Oh8phzPOnMODmYYqCKNeuEyV8RRe4fw&s"
                   alt=""
@@ -76,12 +70,12 @@ const Offers = (props) => {
                     type="button"
                     className="bg-red-600 hover:bg-red-500  text-white py-3 mt-2 px-4 rounded-full "
                   >
-                    Add to cart
+                    Buy Now
                   </button>
                 </div>
               </div>
 
-              <div className=" bg-gray-300 h-[300px] w-[250px] p-4 mt-4 rounded-lg flex flex-col items-center justify-center">
+              <div className=" bg-gray-300 h-[300px] w-[250px] p-4 sm:mt-4 mt-1 rounded-lg flex flex-col items-center justify-center">
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREO9JCt80KZ19i_5SPCZ8DXSwsaBbCTbumjQ&s"
                   alt=""
@@ -97,12 +91,12 @@ const Offers = (props) => {
                     type="button"
                     className="bg-red-600 hover:bg-red-500  text-white py-3 mt-2 px-4 rounded-full "
                   >
-                    Add to cart
+                    Buy Now
                   </button>
                 </div>
               </div>
 
-              <div className=" bg-gray-300 h-[300px] w-[250px] p-4 mt-4 rounded-lg flex flex-col items-center justify-center">
+              <div className=" bg-gray-300 h-[300px] w-[250px] p-4 sm:mt-4 mt-1 rounded-lg flex flex-col items-center justify-center">
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREO9JCt80KZ19i_5SPCZ8DXSwsaBbCTbumjQ&s"
                   alt=""
@@ -118,12 +112,12 @@ const Offers = (props) => {
                     type="button"
                     className="bg-red-600 hover:bg-red-500  text-white py-3 mt-2 px-4 rounded-full "
                   >
-                    Add to cart
+                    Buy Now
                   </button>
                 </div>
               </div>
 
-              <div className=" bg-gray-300 h-[300px] w-[250px] p-4 mt-4 rounded-lg flex flex-col items-center justify-center">
+              <div className=" bg-gray-300 h-[300px] w-[250px] p-4 sm:mt-4 mt-1 rounded-lg flex flex-col items-center justify-center">
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREO9JCt80KZ19i_5SPCZ8DXSwsaBbCTbumjQ&s"
                   alt=""
@@ -139,7 +133,7 @@ const Offers = (props) => {
                     type="button"
                     className="bg-red-600 hover:bg-red-500  text-white py-3 mt-2 px-4 rounded-full "
                   >
-                    Add to cart
+                    Buy Now
                   </button>
                 </div>
               </div>

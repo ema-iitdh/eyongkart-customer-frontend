@@ -10,7 +10,7 @@ const Item = (props) => {
   );
 
   return (
-    <div className="item bg-gray-300 p-4 rounded-lg flex flex-col items-center justify-center">
+    <div className="item bg-gray-300 p-4 rounded-lg flex flex-col items-center justify-center w-52">
       <Link to={`/product/${props.id}`}>
         <img
           // onClick={window.scrollTo(0, 0)}
@@ -24,9 +24,14 @@ const Item = (props) => {
       </Link>
       <div className="w-full flex justify-between">
         <div>
-          <p className="text-[18px] dark:text-black">{props.name}</p>
+          <p className="text-[14px] sm:text-[18px]">{props.name}</p>
 
-          <p className="text-[18px] dark:text-black">₹ {props.price}</p>
+          <p className="text-[14px] sm:text-[18px]">
+            <span className="line-through text-red-600">
+              ₹ {props.old_price}
+            </span>
+            <span className="ml-3">₹ {props.new_price}</span>
+          </p>
         </div>
         <button type="button" className="relative p-3">
           <GrFavorite className="text-xl dark:text-black " />

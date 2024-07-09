@@ -35,7 +35,7 @@ const ShopCategory = ({ products, isSearch, isLoading }) => {
   //   // fetchProducts();
   // }, []);
   return (
-    <div className="m-2 grid grid-cols-4 gap-5">
+    <div className="m-2 grid grid-cols-2 sm:grid-cols-5 gap-5">
       {products && products.length === 0 && isSearch !== "" ? (
         <p className="flex justify-center items-center flex-col text-xl">
           Not Match Product found
@@ -49,7 +49,8 @@ const ShopCategory = ({ products, isSearch, isLoading }) => {
               id={item._id}
               name={item.name}
               img={item?.image_id[0]}
-              price={item.price}
+              old_price={item.old_price}
+              new_price={item.new_price}
             />
           );
           // } else {

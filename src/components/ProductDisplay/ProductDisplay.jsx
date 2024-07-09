@@ -87,114 +87,99 @@ const ProductDisplay = (props) => {
       {productData && (
         <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
           <Navbar />
-          <div className="overflow-hidden m-7 rounded-3xl min-h-[500px] sm:min-h-[500px] hero-bg-color flex  items-center flex-col pt-12 gap-y-3.5">
-            <div className="container pb-8 pr-0 sm:pb-0">
-              {/* <div className=" pb-8 pr-0 sm:pb-0"> */}
-              <div className=" flex ml-2 pt-5 pb-5">
-                <div className="flex gap-4">
-                  <div className="flex flex-col gap-4">
-                    <img
-                      className="h-[120px] w-[200px]"
-                      // src={`http://drive.google.com/thumbnail?id=${productData?.image_id[0]?.replace(
-                      //   /"/g,
-                      //   ""
-                      // )}`}
-                      src={imgData1}
-                      alt="image1"
-                      onClick={() => setMainImg(imgData1)}
-                    />
-                    <img
-                      className="h-[120px] w-[200px]  "
-                      src={imgData2}
-                      alt="image2"
-                      onClick={() => setMainImg(imgData2)}
-                    />
-                    <img
-                      className="h-[120px] w-[200px]"
-                      // src={`http://drive.google.com/thumbnail?id=${productData?.image_id[2]?.replace(
-                      //   /"/g,
-                      //   ""
-                      // )}`}
-                      src={imgData3}
-                      alt="image3"
-                      onClick={() => setMainImg(imgData3)}
-                    />
-                    <img
-                      className="h-[120px] w-[200px]"
-                      // src={`http://drive.google.com/thumbnail?id=${productData?.image_id[3]?.replace(
-                      //   /"/g,
-                      //   ""
-                      // )}`}
-                      src={imgData4}
-                      alt="image4"
-                      onClick={() => setMainImg(imgData4)}
-                    />
-                  </div>
-                  <div className="productdisplay-img">
-                    {mainImg ? (
+          <div className="container pt-20 sm:p-20 ">
+            <div className="overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex justify-center items-center">
+              <div className="container pb-8 pr-0 sm:pb-0">
+                <div className=" sm:flex ml-2 pt-5 pb-5">
+                  <div className="flex gap-4">
+                    <div className="flex flex-col gap-4">
                       <img
-                        className="w-[540px] h-[540px]"
-                        src={mainImg}
-                        alt="imag1"
+                        className="h-[120px] w-[200px]"
+                        src={imgData1}
+                        alt="image1"
+                        onClick={() => setMainImg(imgData1)}
                       />
-                    ) : (
                       <img
-                        className="w-[540px] h-[540px]"
-                        src={`http://drive.google.com/thumbnail?id=${productData?.image_id[0]?.replace(
-                          /"/g,
-                          ""
-                        )}`}
-                        alt="imag5"
+                        className="h-[120px] w-[200px]  "
+                        src={imgData2}
+                        alt="image2"
+                        onClick={() => setMainImg(imgData2)}
                       />
-                    )}
-                  </div>
-                </div>
-                <div className="productdisplay-right  ">
-                  <h1 className="dark:text-white">{productData.name}</h1>
-                  <Rating value={3.5} fractions={2} size="lg" />
-
-                  <div className="productdisplay-right-prices">
-                    {/* <div className='productdisplay-right-price-old'>${product.old_price} </div> */}
-                    <div className="productdisplay-right-price-new">
-                      ₹ {productData.price}{" "}
+                      <img
+                        className="h-[120px] w-[200px]"
+                        src={imgData3}
+                        alt="image3"
+                        onClick={() => setMainImg(imgData3)}
+                      />
+                      <img
+                        className="h-[120px] w-[200px]"
+                        src={imgData4}
+                        alt="image4"
+                        onClick={() => setMainImg(imgData4)}
+                      />
+                    </div>
+                    <div className="productdisplay-img">
+                      {mainImg ? (
+                        <img
+                          className="w-[540px] h-[540px]"
+                          src={mainImg}
+                          alt="imag1"
+                        />
+                      ) : (
+                        <img
+                          className="w-[540px] h-[530px]"
+                          src={`http://drive.google.com/thumbnail?id=${productData?.image_id[0]?.replace(
+                            /"/g,
+                            ""
+                          )}`}
+                          alt="imag5"
+                        />
+                      )}
                     </div>
                   </div>
-                  <div className="productdisplay-right-description">
-                    A lightweight,usually knitted, close-fitting and a roun
-                    neckline and short sleeves,worn as an outer garment.
-                  </div>
-                  <div className="pt-8 flex gap-4">
-                    Quantity
-                    <input
-                      className="w-[50px] h-[25px] dark:text-black border border-black"
-                      min={1}
-                      max={6}
-                      type="number"
-                      placeholder="Quantity"
-                    />
-                  </div>
-                  <div className="productdisplay-right-size pb-14">
-                    <h1>Size Length</h1>
-                    <p> Length : 2.50 Mtr </p>
-                    <p>Width: 0.94 Mtr</p>
-                  </div>
-                  <div className="flex gap-3  ">
-                    {/* <Button
-                        text="BUY NOW"
-                        bgColor={"bg-primary"}
-                        textColor={"text-white"}
-                      /> */}
+                  <div className="productdisplay-right mt-4 sm:mt-0 ">
+                    <h1 className="dark:text-white ">{productData.name}</h1>
+                    <Rating value={3.5} fractions={2} size="lg" />
 
-                    <button
-                      onClick={() => {
-                        buyNow(productData._id);
-                        navigate("/checkout");
-                      }}
-                      type="button"
-                      className=" w-[100px] h-[58px] outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer"
-                    >
-                      BUY NOW
-                    </button>
+                    <div className="productdisplay-right-prices">
+                      <div className="productdisplay-right-price-new mt-[-20px]">
+                        ₹ {productData.new_price}{" "}
+                        <span className="line-through text-black">
+                          {" "}
+                          ₹ {productData.old_price}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="productdisplay-right-description mt-[-15px]">
+                      A lightweight,usually knitted, close-fitting and a roun
+                      neckline and short sleeves,worn as an outer garment.
+                    </div>
+                    <div className="pt-8 flex text-xl gap-3 font-semibold">
+                      Quantity
+                      <input
+                        className="w-[100px] h-[30px] dark:text-black border border-black "
+                        min={1}
+                        max={6}
+                        type="number"
+                        placeholder="Quantity"
+                      />
+                    </div>
+                    <div className="productdisplay-right-size pb-8">
+                      <h1>Size Length</h1>
+                      <p> Length : 2.50 Mtr </p>
+                      <p>Width: 0.94 Mtr</p>
+                    </div>
+                    <div className="flex gap-3 flex-row ">
+                      <button
+                        onClick={() => {
+                          buyNow(productData._id);
+                          navigate("/checkout");
+                        }}
+                        type="button"
+                        className=" w-[100px] h-[58px] outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer "
+                      >
+                        BUY NOW
+                      </button>
 
                     <button
                       onClick={() => {

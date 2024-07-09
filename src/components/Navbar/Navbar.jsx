@@ -19,6 +19,7 @@ import logo from "../../assets/logo.jpg";
 const Navbar = () => {
   const navigate = useNavigate();
   const [DropdownLink, setDropdownLink] = useState([]);
+  const [allCategory, setAllCategory] = useState([]);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [auth, setAuth] = useAuth();
   const getAllCategory = async () => {
@@ -27,13 +28,26 @@ const Navbar = () => {
         url: `/category/allcategory`,
         method: "GET",
       });
-      console.log(res.data.category);
-      setDropdownLink(res.data.category);
+      // const sortedCategory = res.data.category.sort((a, b) =>
+      //   a.name.localeCompare(b.name)
+      // );
+      setDropdownLink(
+        res.data.category.sort((a, b) => a.name.localeCompare(b.name))
+      );
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(auth);
+  console.log(DropdownLink);
+
+  // let allcategory = [];
+  // const addCategory = () => {
+  //   let category = [];
+  //   if (DropdownLink.length) DropdownLink.map((i) => category.push(i.name));
+  //   return allCategory.push([...category]);
+  // };
+  // addCategory();
+  // console.log(allcategory);
 
   useEffect(() => {
     getAllCategory();
@@ -46,12 +60,12 @@ const Navbar = () => {
         <div className="container flex justify-between items-center">
           {/* logo and link section */}
           <div className="flex  items-center gap-7">
-            <a
-              href="#"
+            <NavLink
+              to="/"
               className="text-primary  tracking-widest  uppercase sm:text-3xl"
             >
-              <img className="w-[80px] h-[55px]" src={logo} alt="" />
-            </a>
+              <img className="w-[100px] h-[50px]" src={logo} alt="" />
+            </NavLink>
             {/* menu items */}
             <div className="hidden lg:block">
               <ul className="flex items-center gap-5">
@@ -100,6 +114,7 @@ const Navbar = () => {
                     <ul className="space-y-1 bg-white w-[200px] rounded-lg">
                       {DropdownLink.map((data, index) => (
                         <li key={index}>
+                          {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                           <p
                             className="text-[16px] inline-block w-full p-1 hover:text-gray-600 hover:bg-whitesmoke dark:text-black dark:hover:text-gray-600"
                             onClick={() => {
@@ -165,7 +180,7 @@ const Navbar = () => {
             ) : (
               <button
                 type="button"
-                className="bg-white w-[80px] h-[30px] outline-black border  dark:text-white dark:bg-black"
+                className="bg-white w-[80px] h-[30px] outline-black border  dark:text-white dark:bg-black hover:bg-red-700 duration-[3000ms]"
                 onClick={() => {
                   localStorage.removeItem("auth");
                   setAuth({
