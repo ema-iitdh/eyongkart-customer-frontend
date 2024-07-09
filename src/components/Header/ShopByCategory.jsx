@@ -65,7 +65,7 @@ const ShopByCategory = () => {
           case "Phanek":
             categoryId = "664d9c81d3fbe4146f8e3bb0";
             break;
-          case "Pheijom":
+          case "Digital-Print-Pheijom":
             categoryId = "664d9c9cd3fbe4146f8e3bb3";
             break;
           case "Muka-Phee":
@@ -109,7 +109,7 @@ const ShopByCategory = () => {
         <Navbar />
         <div className="container text-2xl overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex  items-center flex-col pt-8 gap-y-3.5">
           <div className="container">
-            <div className="m-2 grid grid-cols-4 gap-5">
+            <div className="m-2 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-5">
               {products?.map((item, i) => {
                 // if (props.category === item.category) {
                 return (
@@ -118,7 +118,8 @@ const ShopByCategory = () => {
                     id={item._id}
                     name={item.name}
                     img={item?.image_id[0]}
-                    price={item.price}
+                    new_price={item.new_price}
+                    old_price={item.old_price}
                   />
                 );
                 // } else {

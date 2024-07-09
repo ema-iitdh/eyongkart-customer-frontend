@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 import axios from "axios";
 import instance from "../../../api";
+import { toast } from "react-toastify";
 
 import { Radio, Group } from "@mantine/core";
 const Checkout = () => {
@@ -17,6 +18,7 @@ const Checkout = () => {
   const [district, setDistrict] = useState("");
   const [pincode, setPincode] = useState("");
   const [state, setState] = useState("Manipur");
+  const [checkoutItem, setCheckoutItem] = useState([]);
   const districtPincode = [
     {
       district: "Imphal East",
@@ -42,8 +44,8 @@ const Checkout = () => {
 
   const { cartItems } = useContext(ShopContext);
 
-  const { buyProduct, getTotalCartAmount } = useContext(ShopContext);
-  console.log(buyProduct);
+  const { buyProduct, getTotalCartAmount, getInitialCartItems } =
+    useContext(ShopContext);
   const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo({
@@ -90,7 +92,7 @@ const Checkout = () => {
     const receiptId = "qwerty";
     // biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
     const result = await instance.post("/order", {
-      buyProduct: buyProduct.price,
+      buyProduct: getTotal(),
       // biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
       currency: "INR",
       receiptId,
@@ -115,7 +117,6 @@ const Checkout = () => {
         const body = {
           ...response,
         };
-
         // const validateRes = await fetch(
         //   "http://192.168.0.167:3000:3000/order/validate",
         //   {
@@ -126,11 +127,18 @@ const Checkout = () => {
         //     },
         //   }
         // );
-        const validateRes = await instance.post("/order/validate", {
-          body,
+        console.log(body);
+        const { data } = await instance.post("/order/validate", {
+          razorpay_order_id: body.razorpay_order_id,
+          razorpay_payment_id: body.razorpay_payment_id,
+          razorpay_signature: body.razorpay_signature,
         });
-        const jsonRes = await validateRes.json();
-        console.log(jsonRes);
+        if (data.msg === "success") {
+          toast.success(`Payment Success with Payment ID: ${data.paymentId}`);
+          localStorage.removeItem("cartItems");
+          getInitialCartItems();
+          navigate("/myorder");
+        }
       },
       prefill: {
         //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
@@ -157,43 +165,37 @@ const Checkout = () => {
     });
     rzp1.open();
   };
-  // const paymentHandler = async (e) => {
-  //   const response = await fetch("http://192.168.0.167:3000/order", {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       buyProduct: buyProduct.price,
-  //       currency,
-  //       receipt: receiptId,
-  //     }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   const order = await response.json();
-  //   console.log(order);
 
-  //
-  //   e.preventDefault();
-  // };
-  // useEffect(() => {
-  //   let data = localStorage.getItem("p");
-  //   if (data) {
-  //     data = JSON.parse(data);
-  //     setP(data);
-  //     setAmount(data.rate * 100);
-  //   }
-  // }, []);
+  const getTotal = () => {
+    let total = 0;
+    if (checkoutItem && checkoutItem.length) {
+      checkoutItem.map((i) => {
+        total = total + i.new_price * i.quantity;
+      });
+    }
+    return total;
+  };
+
+  useEffect(() => {
+    let isData = localStorage.getItem("checkoutItem");
+    if (isData) {
+      isData = JSON.parse(isData);
+      setCheckoutItem(isData);
+    }
+  }, []);
+
+  console.log("one", buyProduct, "two", checkoutItem);
 
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden pt-16">
       <Navbar />
-      <div className="container text-2xl overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex  flex-col pt-8 gap-y-3.5">
+      <div className="container text-2xl overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex  flex-col pt-8 gap-y-3.5 ">
         <div className="container ">
           <h4>Address information</h4>
         </div>
-        <div className="flex gap-2">
-          <div className="container border border-black w-[50%]">
-            <div className=" flex flex-col mb-3 w-[500px] text-[18px] ">
+        <div className="sm:flex   gap-2 ">
+          <div className="container border border-black dark:border-white sm:w-[50%]">
+            <div className=" flex flex-col mb-3 w-[100%] text-[18px] ">
               <label>Full Name</label>
               <input
                 className="rounded-md w-full h-[40px] text-black indent-2 border-none outline-none  "
@@ -204,8 +206,7 @@ const Checkout = () => {
                 onChange={(e) => setFullName(e.target.value)}
               />
             </div>
-
-            <div className=" flex flex-col mb-3 w-[500px] text-[18px] ">
+            <div className=" flex flex-col mb-3 w-[100%] text-[18px] ">
               <label> Full Address</label>
               <input
                 className="rounded-md h-[40px] text-black indent-2 border-none outline-none "
@@ -216,8 +217,7 @@ const Checkout = () => {
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
-
-            <div className=" flex flex-col mb-3 w-[500px] text-[18px] ">
+            <div className=" flex flex-col mb-3 w-[100%] text-[18px] ">
               <label>Phone Number</label>
               <input
                 className="rounded-md h-[40px] text-black indent-2 border-none outline-none "
@@ -228,8 +228,7 @@ const Checkout = () => {
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
-
-            <div className=" flex flex-col mb-3 w-[500px] text-[18px] ">
+            <div className=" flex flex-col mb-3 w-[100%] text-[18px] ">
               <label>Email Address</label>
               <input
                 className="rounded-md h-[40px] text-black indent-2 border-none outline-none "
@@ -245,7 +244,7 @@ const Checkout = () => {
               <div className="flex flex-wrap">
                 <label
                   className="w-[95%]  text-[18px] mt-1 mb-1"
-                  for="services"
+                  htmlFor="services"
                 >
                   District
                 </label>
@@ -273,7 +272,7 @@ const Checkout = () => {
                   Pincode
                 </label>
                 <input
-                  className="h-[40px] w-[250px] text-black text-[18px] rounded-md border-solid border-[1px] indent-1 outline-none "
+                  className="h-[40px] w-[100%] text-black text-[18px] rounded-md border-solid border-[1px] indent-1 outline-none "
                   type=""
                   placeholder="Enter Pincode"
                   value={pincode}
@@ -304,33 +303,39 @@ const Checkout = () => {
             </div>
           </div>
 
-          <div className="container border border-black w-[50%]">
+          <div className="container mb-4 w-[100%] sm:w-[50%]">
             <div className="flex  mt-[40px] text-[18px]  gap-4 items-start justify-center ">
-              <div className="flex flex-1 flex-col border border-black rounded-3xl p-4 justify-between ">
+              <div className="flex flex-1 flex-col border border-black dark:border-white rounded-3xl p-4 justify-between ">
                 <h1> Cart Totals</h1>
-
                 <div>
-                  {buyProduct ? (
+                  {checkoutItem ? (
                     <>
-                      <div className="bg-white dark:bg-gray-900 flex items-center gap-8 mb-6">
-                        <p className="p-2  ">
-                          <img
-                            className="h-[100px] w-[200px] object-contain"
-                            src={`http://drive.google.com/thumbnail?id=${buyProduct?.image_id[4]?.replace(
-                              /"/g,
-                              ""
-                            )}`}
-                            alt="image1"
-                          />
-                        </p>
-                        <p className="p-2 text-[18px] ">{buyProduct.name}</p>
-                        <p className="p-2 text-[18px]">₹ {buyProduct.price}</p>
-                      </div>
-
+                      {checkoutItem.map((p, i) => (
+                        <div
+                          key={i}
+                          className="bg-white dark:bg-gray-900 flex items-center gap-8 mb-6"
+                        >
+                          {" "}
+                          <p className="p-2">
+                            <img
+                              className="h-[100px] w-[200px] object-contain"
+                              src={`http://drive.google.com/thumbnail?id=${p?.image_id[4]?.replace(
+                                /"/g,
+                                ""
+                              )}`}
+                              alt="image1"
+                            />
+                          </p>
+                          <p className="p-2 text-[18px] ">{p.name}</p>
+                          <p className="p-2 text-[18px]">
+                            ₹ {p.new_price}*{p.quantity}
+                          </p>
+                        </div>
+                      ))}
                       <div>
                         <div className=" flex justify-between pt[-15px]">
                           <p>Subtotals</p>
-                          <p>₹ {buyProduct?.price}</p>
+                          <p>₹ {getTotal()}</p>
                         </div>
                         <hr className="h-[1px] bg-white border-none" />
                         <div className="flex justify-between">
@@ -340,14 +345,13 @@ const Checkout = () => {
                         <hr className="h-[1px] bg-white border-none" />
                         <div className="flex justify-between pt[-15px]">
                           <h3>Totals</h3>
-                          <h3>₹ {buyProduct?.price}</h3>
+                          <h3>₹ {getTotal()}</h3>
                         </div>
                       </div>
                     </>
                   ) : (
                     <></>
                   )}
-
                   <Radio.Group>
                     <Group mt="xl ">
                       <Radio
@@ -364,8 +368,7 @@ const Checkout = () => {
                   <button
                     onClick={paymentHandler}
                     type="button"
-                    className="w-[200px] h-[50px] mt-4 outline-none border-none bg-red-500 text-white text-[16px]
-            cursor-pointer"
+                    className="w-[200px] h-[50px] mt-4 outline-none border-none bg-red-500 text-white text-[16px] cursor-pointer rounded-xl"
                   >
                     PROCEED TO PAY
                   </button>

@@ -44,6 +44,7 @@ const Banner = ({ data }) => {
             </p>
             <div data-aos="fae-up" data-aos-offset="0">
               <button
+                type="button"
                 style={{ color: data.bgColor }}
                 className="bg-white py-2 px-4 rounded-full"
               >

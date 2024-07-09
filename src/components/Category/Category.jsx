@@ -56,7 +56,7 @@ const Category = () => {
                 <p className="text-4xl xl:text-5xl font-bold opacity-20 mb-2">
                   Rani phi
                 </p> */}
-                <Link to="/shopByCategory/Pheijom">
+                <Link to="/shopByCategory/Digital-Print-Pheijom">
                   <Button
                     text="Browse"
                     bgColor={"bg-primary"}
