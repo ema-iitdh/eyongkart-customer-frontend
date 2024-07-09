@@ -14,6 +14,7 @@ const CartsItems = () => {
     substractQuantity,
     addToCart,
     removeFromCart,
+    buyFromCart,
   } = useContext(ShopContext);
   const navigate = useNavigate();
 
@@ -31,104 +32,30 @@ const CartsItems = () => {
       document.body.appendChild(script);
     });
   }
-  const paymentHandler = async () => {
-    if (!razorpaytick) {
-      navigate("/myorder");
-      return;
+
+  const getTotal = () => {
+    let total = 0;
+    if (cartItems?.length) {
+      cartItems.map((i) => {
+        total = total + i.new_price * i.quantity;
+      });
     }
-    const res = await loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
-    if (!res) {
-      alert("Razorpay SDK failed to load. Are you online?");
-      return;
-    }
-
-    const receiptId = "qwerty";
-    // biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
-    const result = await instance.post("/order", {
-      buyProduct: getTotalCartAmount(),
-      // biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
-      currency: "INR",
-      receiptId,
-    });
-
-    if (!result) {
-      alert("Server error. Are you online?");
-      return;
-    }
-    console.log(result.data);
-    const { amount, id: order_id, currency } = result.data;
-
-    const options = {
-      key: "rzp_test_JIH6EhvgsXj43w", // Enter the Key ID generated from the Dashboard
-      amount: amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      currency,
-      name: "Supriya ch", //your business name
-      description: "Test Transaction",
-      image: "https://example.com/your_logo",
-      order_id: order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      handler: async (response) => {
-        const body = {
-          ...response,
-        };
-
-        // const validateRes = await fetch(
-        //   "http://192.168.0.167:3000:3000/order/validate",
-        //   {
-        //     method: "POST",
-        //     body: JSON.stringify(body),
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //   }
-        // );
-        const validateRes = await instance.post("/order/validate", {
-          body,
-        });
-        const jsonRes = await validateRes.json();
-        console.log(jsonRes);
-      },
-      prefill: {
-        //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-        name: "Web Dev Matrix", //your customer's name
-        email: "webdevmatrix@example.com",
-        contact: "9000000000", //Provide the customer's phone number for better conversion rates
-      },
-      notes: {
-        address: "Razorpay Corporate Office",
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
-    const rzp1 = new window.Razorpay(options);
-    rzp1.on("payment.failed", (response) => {
-      alert(response.error.code);
-      alert(response.error.description);
-      alert(response.error.source);
-      alert(response.error.step);
-      alert(response.error.reason);
-      alert(response.error.metadata.order_id);
-      alert(response.error.metadata.payment_id);
-    });
-    rzp1.open();
+    return total;
   };
-  console.log(cartItems);
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
       <Navbar />
 
       <div className="container text-2xl overflow-hidden min-h-[550px] sm:min-h-[650px] hero-bg-color flex flex-col pt-8 gap-y-3.5 ">
-        <table className=" min-w-full text-center dark:text-white text-black text-[20px]">
+        <table className=" min-w-full  text-center dark:text-white text-black text-[13px] sm:text-[20px]">
           <thead>
             <tr className="bg-gray-200 dark:bg-gray-800 gap-2">
-              <th className="p-2">Products</th>
-              <th className="p-2">Title</th>
-              <th className="p-2">Price</th>
-              <th className="p-2">Quantity</th>
-              <th className="p-2">SubTotal</th>
-              <th className="p-2">Remove</th>
+              <th className="p-1 sm:p-2">Products</th>
+              <th className="p-1 sm:p-2">Title</th>
+              <th className="p-1 pl-4 pr-2 sm:p-2">Price</th>
+              <th className="p-1 sm:p-2">Quantity</th>
+              <th className="p-1 pl-4 pr-3 sm:p-2">SubTotal</th>
+              <th className="p-1 sm:p-2">Remove</th>
             </tr>
           </thead>
           <tbody>
@@ -137,9 +64,9 @@ const CartsItems = () => {
                 key={index}
                 className="bg-white border border-black  dark:bg-gray-900"
               >
-                <td className="p-2  ">
+                <td className="sm:p-2 p-1 ">
                   <img
-                    className="h-[120px] w-[200px] object-contain"
+                    className="h-[50px] sm:h-[120px] w-[50px] sm:w-[200px] object-contain"
                     src={`http://drive.google.com/thumbnail?id=${item?.image_id[0]?.replace(
                       /"/g,
                       ""
@@ -147,14 +74,18 @@ const CartsItems = () => {
                     alt="image1"
                   />
                 </td>
-                <td className="p-2 text-[16px] ">{item.name}</td>
-                <td className="p-2 text-[16px]">₹ {item.price}</td>
-                <td className="p-2 text-[16px]  text-center   ">
-                  <div className="flex gap-4 justify-center items-center">
+                <td className="sm:p-2 p-1 text-[14px] sm:text-[16px] ">
+                  {item.name}
+                </td>
+                <td className="sm:p-2 p-1 text-[14px] sm:text-[16px]">
+                  ₹ {item.new_price}
+                </td>
+                <td className="sm:p-2 p-1 text-[16px]  text-center   ">
+                  <div className="flex gap-0 sm:gap-4 justify-center items-center">
                     <button
                       type="button"
                       onClick={() => substractQuantity(item._id)}
-                      className="hover:bg-gray-200 px-4 "
+                      className="hover:bg-gray-200 px-2 sm:px-4 "
                     >
                       -
                     </button>
@@ -162,15 +93,15 @@ const CartsItems = () => {
                     <button
                       type="button"
                       onClick={() => addToCart(item._id)}
-                      className="hover:bg-gray-200 px-4"
+                      className="hover:bg-gray-200 px-2 sm:px-4"
                     >
                       +
                     </button>
                   </div>
                 </td>
 
-                <td className="p-2 text-[16px] ">
-                  ₹ {item.price * item.quantity}
+                <td className="p-2 text-[14px] sm:text-[16px] ">
+                  ₹ {item.new_price * item.quantity}
                 </td>
                 <td className="p-2 text-[16px]">
                   <button type="button" className="text-red-500">
@@ -189,13 +120,13 @@ const CartsItems = () => {
         <hr className="h-[1px] bg-white border-none" />
       </div>
 
-      <div className="flex  mt-[50px] text-[18px] pl-32 gap-8 items-start justify-center ">
-        <div className="flex flex-1 flex-col border border-black rounded-3xl p-4 justify-between  gap-10 mb-[100px]">
+      <div className="sm:flex mt-[50px] text-[18px] pl-32 gap-8 items-start sm:justify-center ">
+        <div className="flex w-4/5 sm:w-2/4 flex-col border border-black dark:border-white rounded-3xl p-4 justify-between  gap-10 mb-[100px]">
           <h1> Cart Totals</h1>
           <div>
             <div className=" flex justify-between pt[-15px]">
               <p>Subtotals</p>
-              <p>₹ {getTotalCartAmount()}</p>
+              <p>₹ {getTotal()}</p>
             </div>
             <hr className="h-[1px] bg-white border-none" />
             <div className="flex justify-between">
@@ -205,36 +136,24 @@ const CartsItems = () => {
             <hr className="h-[1px] bg-white border-none" />
             <div className="flex justify-between pt[-15px]">
               <h3>Totals</h3>
-              <h3>₹ {getTotalCartAmount()}</h3>
+              <h3>₹ {getTotal()}</h3>
             </div>
           </div>
-          <Radio.Group>
-            <Group mt="xl ">
-              <Radio
-                value="razorpay"
-                label="Online payment"
-                checked={razorpaytick}
-                onChange={(event) =>
-                  setrazorpaytick(event.currentTarget.checked)
-                }
-              />
-              <Radio
-                value="cash"
-                label="Cash on Delivery"
-                onChange={() => setrazorpaytick(false)}
-              />
-            </Group>
-          </Radio.Group>
-          <button
-            type="button"
-            className="w-[200px] h-[50px] outline-none border-none bg-red-500 text-white text-[16px]
-            cursor-pointer"
-            onClick={paymentHandler}
-          >
-            PROCEED TO CHECKOUT
-          </button>
+          <div className="w-full h-fit flex justify-center">
+            <button
+              type="button"
+              className="w-[250px] h-[50px] outline-none border-none px-3 bg-red-500 text-white text-[16px]
+            cursor-pointer rounded-lg"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/checkout");
+              }}
+            >
+              PROCEED TO CHECKOUT
+            </button>
+          </div>
         </div>
-        <div className="flex flex-1 flex-col text-[16px] ">
+        {/* <div className="flex flex-1 flex-col text-[16px] ">
           <p className="text-gray-400">If you have promocode,Enter here</p>
           <div className=" flex w-[300px] mt-3 pl-5 h-[50px] bg-gray-200 dark:bg-gray-200 ">
             <input
@@ -250,7 +169,7 @@ const CartsItems = () => {
               SUBMIT
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
