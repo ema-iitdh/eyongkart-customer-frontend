@@ -14,7 +14,7 @@ import { useAuth } from "../Context/auth";
 import instance from "../../../api";
 import { Tooltip, Button } from "@mantine/core";
 
-import logo from "../../assets/logo1.png";
+import logo from "../../assets/logo.jpg";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const Navbar = () => {
   const { getTotalCartItems } = useContext(ShopContext);
   return (
     <div className="bg-white dark:bg-gray-800 dark:text-white duration-200  z-40  fixed top-0 right-0 left-0">
-      <div className="py-3">
+      <div className="py-4">
         <div className="container flex justify-between items-center">
           {/* logo and link section */}
           <div className="flex  items-center gap-7">
@@ -50,7 +50,7 @@ const Navbar = () => {
               href="#"
               className="text-primary  tracking-widest  uppercase sm:text-3xl"
             >
-              <img className="w-[100px] h-[50px]" src={logo} alt="" />
+              <img className="w-[80px] h-[55px]" src={logo} alt="" />
             </a>
             {/* menu items */}
             <div className="hidden lg:block">

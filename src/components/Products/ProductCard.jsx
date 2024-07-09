@@ -9,7 +9,7 @@ const ProductCard = ({ data }) => {
   const [productData, setproductData] = useState();
   return (
     <div className="mb-10">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 place-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-7 place-items-center">
         {/* card section */}
         {data.map((data) => (
           <div className="group" key={data._id}>

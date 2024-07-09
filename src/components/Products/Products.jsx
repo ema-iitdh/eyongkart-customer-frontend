@@ -130,7 +130,7 @@ const Products = () => {
   console.log(productMenTypes);
 
   return (
-    <div>
+    <div className="container  overflow-hidden rounded-3xl min-h-[500px] sm:min-h-[650px] hero-bg-color flex  items-center flex-col pt-6  gap-y-3.5">
       <div className="container">
         {/* Heading section */}
         <Heading title="Latest Products" subtitle={"Explore our products"} />

@@ -26,9 +26,9 @@ const Offers = (props) => {
 
   return (
     <>
-      <div className="container pt-6">
-        <div className="overflow-hidden rounded-3xl min-h-[400px] sm:min-h-[400px] hero-bg-color flex justify-center items-center">
-          <div className="container pb-8 ml-2 pr-0 sm:pb-0">
+      <div className="container mt-10 hero-bg-color rounded-3xl   ">
+        <div className="overflow-hidden rounded-3xl min-h-[400px] sm:min-h-[450px] flex  items-center flex-col pt-3 gap-y-3.5">
+          <div className="container pb-8 pr-0 sm:pb-0">
             <h1 className=" flex justify-start items-start text-2xl font-semibold text-gray-500 hover:text-black dark:hover:text-white pb-6">
               Top sales
             </h1>

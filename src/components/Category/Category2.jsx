@@ -6,8 +6,8 @@ import Muka from "../../assets/Category/muka.png";
 import { Link } from "react-router-dom";
 const Category2 = () => {
   return (
-    <div className="py-8 ">
-      <div className="container">
+    <div className="container h-[380px]  hero-bg-color mt-10 rounded-3xl   ">
+      <div className="pt-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* first col */}
 

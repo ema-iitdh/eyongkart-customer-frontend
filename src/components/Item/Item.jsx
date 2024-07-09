@@ -24,12 +24,12 @@ const Item = (props) => {
       </Link>
       <div className="w-full flex justify-between">
         <div>
-          <p className="text-[18px]">{props.name}</p>
+          <p className="text-[18px] dark:text-black">{props.name}</p>
 
-          <p className="text-[18px]">₹ {props.price}</p>
+          <p className="text-[18px] dark:text-black">₹ {props.price}</p>
         </div>
         <button type="button" className="relative p-3">
-          <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" />
+          <GrFavorite className="text-xl dark:text-black " />
         </button>
       </div>
     </div>

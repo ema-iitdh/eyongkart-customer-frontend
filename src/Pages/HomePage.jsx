@@ -34,18 +34,20 @@ const BannerData2 = {
 
 const HomePage = () => {
   return (
-    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
-      <Navbar />
-      <CarouselTraditional />
-      <Offers />
-      <Category />
-      <Category2 />
-      <Banner data={BannerData} />
-      <Products />
+    <>
+      <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
+        <Navbar />
+        <CarouselTraditional />
+        <Offers />
+        <Category />
+        <Category2 />
+        <Banner data={BannerData} />
+        <Products />
 
-      <Banner data={BannerData2} />
-      <Footer />
-    </div>
+        <Banner data={BannerData2} />
+        <Footer />
+      </div>
+    </>
   );
 };
 
