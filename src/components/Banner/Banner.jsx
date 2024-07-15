@@ -1,7 +1,7 @@
 import React from "react";
 const Banner = ({ data }) => {
   return (
-    <div className="min-h-[500px]  flex justify-center items-center ">
+    <div className="p-4 min-h-[150px] sm:min-h-[300px]  flex  items-center ">
       <div className="container ">
         <div
           style={{ backgroundColor: data.bgColor }}
@@ -21,7 +21,7 @@ const Banner = ({ data }) => {
             <img
               src={data.image}
               alt=""
-              className="scale-123 w-[250px] md:w-[340px] mx-auto drop-shadow-2xl object-cover"
+              className="scale-123 w-[250px] md:w-[300px] mx-auto drop-shadow-2xl object-cover"
             />
           </div>
           {/* third col */}

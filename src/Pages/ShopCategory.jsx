@@ -61,10 +61,10 @@ const ShopCategory = ({ products, isSearch, isLoading }) => {
       {isLoading && (
         // <div className="flex justify-center items-center flex-col text-xl">
         <>
-          <Skeleton height={50} circle mb="xl" />
-          <Skeleton height={8} radius="xl" />
-          <Skeleton height={8} mt={6} radius="xl" />
-          <Skeleton height={8} mt={6} width="70%" radius="xl" />
+          <Skeleton height={300} square mb="xl" />
+          <Skeleton height={300} square="xl" />
+          <Skeleton height={300} square="xl" />
+          <Skeleton height={300} square="xl" />
         </>
         // </div>
       )}

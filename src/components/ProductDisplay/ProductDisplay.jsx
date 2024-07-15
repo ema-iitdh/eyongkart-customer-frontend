@@ -12,6 +12,7 @@ import instance from "../../../api";
 import { Rating } from "@mantine/core";
 import { Select } from "@mantine/core";
 import { ShopContext } from "../Context/ShopContext";
+import RelatedProduct from "../RelatedProducts/RelatedProduct";
 
 const ProductDisplay = (props) => {
   const { product } = props;
@@ -87,8 +88,8 @@ const ProductDisplay = (props) => {
       {productData && (
         <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
           <Navbar />
-          <div className="container pt-20 sm:p-20 ">
-            <div className="overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex justify-center items-center">
+          <div className="pt-20 ">
+            <div className="overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color pb-5">
               <div className="container pb-8 pr-0 sm:pb-0">
                 <div className=" sm:flex ml-2 pt-5 pb-5">
                   <div className="flex gap-4">
@@ -181,28 +182,29 @@ const ProductDisplay = (props) => {
                         BUY NOW
                       </button>
 
-                    <button
-                      onClick={() => {
-                        addToCart(productData._id);
-                      }}
-                      type="button"
-                      className=" w-[100px] h-[58px] outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer"
-                    >
-                      ADD TO CART
-                    </button>
+                      <button
+                        onClick={() => {
+                          addToCart(productData._id);
+                        }}
+                        type="button"
+                        className=" w-[100px] h-[58px] outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer"
+                      >
+                        ADD TO CART
+                      </button>
+                    </div>
+                    <p className="mt-3 text-[16px]">
+                      <span className="text-[18px]">Category: </span>
+                      Women, Rani phi and traditional design.
+                    </p>
+                    <p className="mt-3 text-[16px]">
+                      <span className="text-[18px]">Tags: </span>
+                      Modern Latest.
+                    </p>
                   </div>
-                  <p className="mt-3 text-[18px]">
-                    <span>Category: </span>
-                    Women, Rani phi and traditional design.
-                  </p>
-                  <p className="mt-3 text-[18px]">
-                    <span>Tags: </span>
-                    Modern Latest.
-                  </p>
                 </div>
               </div>
+              <RelatedProduct />
             </div>
-            {/* </div> */}
           </div>
           {/* <Footer /> */}
         </div>

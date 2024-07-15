@@ -7,23 +7,23 @@ const Myorder = () => {
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
       <Navbar />
 
-      <div className="container text-2xl overflow-hidden min-h-[550px] sm:min-h-[650px] hero-bg-color flex flex-col pt-8 gap-y-3.5 ">
+      <div className="text-xl overflow-hidden min-h-[550px] sm:min-h-[650px] hero-bg-color flex flex-col pt-8 gap-y-3.5 ">
         <table className=" min-w-full text-center dark:text-white text-black text-[20px] mt-16">
           <thead>
             <tr className="bg-gray-200 dark:bg-gray-800 gap-2">
-              <th className="p-2">Products</th>
-              <th className="p-2">Title</th>
-              <th className="p-2">Price</th>
-              <th className="p-2">Quantity</th>
-              <th className="p-2">SubTotal</th>
-              <th className="p-2">Remove</th>
+              <th className="p-2 sm:p-2">Products</th>
+              <th className="p-2 sm:p-2">Title</th>
+              <th className="p-2 sm:p-2">Price</th>
+              <th className="p-2 sm:p-2">Quantity</th>
+              <th className="p-2 sm:p-2">SubTotal</th>
+              <th className="p-2 sm:p-2">Remove</th>
             </tr>
           </thead>
           <tbody>
             <tr className="bg-white border border-black  dark:bg-gray-900">
               <td className="p-2  ">
                 <img
-                  className="h-[120px] w-[200px] object-contain"
+                  className="h-[50px] sm:h-[120px] w-[50px] sm:w-[200px]  object-contain"
                   src={image}
                   alt="image1"
                 />

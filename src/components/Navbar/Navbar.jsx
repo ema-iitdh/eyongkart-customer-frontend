@@ -64,49 +64,128 @@ const Navbar = () => {
               to="/"
               className="text-primary  tracking-widest  uppercase sm:text-3xl"
             >
-              <img className="w-[100px] h-[50px]" src={logo} alt="" />
+              <img className="w-[80px] h-[40px]" src={logo} alt="" />
             </NavLink>
             {/* menu items */}
-            <div className="hidden lg:block">
-              <ul className="flex items-center gap-5">
-                <NavLink
+            <div className="hidden lg:block ">
+              <ul className="flex items-center font-semibold gap-5">
+                {/* <NavLink
                   to="/"
                   className={({ isActive }) =>
                     isActive ? "text-red-400 text-[18px]" : "text-[18px]"
                   }
                 >
                   Home
-                </NavLink>
-                <NavLink
+                </NavLink> */}
+                {/* <NavLink
                   to="/shop"
                   className={({ isActive }) =>
                     isActive ? "text-red-400 text-[18px]" : "text-[18px]"
                   }
                 >
                   Shop
-                </NavLink>
-                <NavLink
-                  to="/about"
-                  className={({ isActive }) =>
-                    isActive ? "text-red-400 text-[18px]" : "text-[18px]"
-                  }
-                >
-                  About Us
-                </NavLink>
-
-                <NavLink
-                  to="/contact"
-                  className={({ isActive }) =>
-                    isActive ? "text-red-400 text-[18px]" : "text-[18px]"
-                  }
-                >
-                  Contact
-                </NavLink>
+                </NavLink> */}
 
                 <li className="relative cursor-pointer group  ">
-                  <a className=" navbar text-[18px] flex ">
-                    <span className="navbar flex items-center text-[18px] mt-1">
-                      Catalog
+                  <a className=" navbar text-[16px] flex ">
+                    <span className="navbar flex items-center text-[16px] mt-1">
+                      MEN
+                      <IoMdArrowDropdown />
+                    </span>
+                  </a>
+                  <div className="absolute z-[9999] hidden group-hover:block">
+                    <ul className="space-y-1 bg-white w-[200px] rounded-lg">
+                      {DropdownLink.map((data, index) => (
+                        <li key={index}>
+                          {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+                          <p
+                            className="text-[16px] inline-block w-full p-1 hover:text-gray-600 hover:bg-whitesmoke dark:text-black dark:hover:text-gray-600"
+                            onClick={() => {
+                              console.log(data.name);
+                              navigate(
+                                `/shopByCategory/${data.name.replace(
+                                  / /g,
+                                  "-"
+                                )}`
+                              );
+                            }}
+                          >
+                            {data.name}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+
+                <li className="relative cursor-pointer group  ">
+                  <a className=" navbar text-[16px] flex ">
+                    <span className="navbar flex items-center text-[16px] mt-1">
+                      WOMEN
+                      <IoMdArrowDropdown />
+                    </span>
+                  </a>
+                  <div className="absolute z-[9999] hidden group-hover:block">
+                    <ul className="space-y-1 bg-white w-[200px] rounded-lg">
+                      {DropdownLink.map((data, index) => (
+                        <li key={index}>
+                          {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+                          <p
+                            className="text-[16px] inline-block w-full p-1 hover:text-gray-600 hover:bg-whitesmoke dark:text-black dark:hover:text-gray-600"
+                            onClick={() => {
+                              console.log(data.name);
+                              navigate(
+                                `/shopByCategory/${data.name.replace(
+                                  / /g,
+                                  "-"
+                                )}`
+                              );
+                            }}
+                          >
+                            {data.name}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+
+                <li className="relative cursor-pointer group  ">
+                  <a className=" navbar text-[16px] flex ">
+                    <span className="navbar flex items-center text-[16px] mt-1">
+                      KIDS
+                      <IoMdArrowDropdown />
+                    </span>
+                  </a>
+                  <div className="absolute z-[9999] hidden group-hover:block">
+                    <ul className="space-y-1 bg-white w-[200px] rounded-lg">
+                      {DropdownLink.map((data, index) => (
+                        <li key={index}>
+                          {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+                          <p
+                            className="text-[16px] inline-block w-full p-1 hover:text-gray-600 hover:bg-whitesmoke dark:text-black dark:hover:text-gray-600"
+                            onClick={() => {
+                              console.log(data.name);
+                              navigate(
+                                `/shopByCategory/${data.name.replace(
+                                  / /g,
+                                  "-"
+                                )}`
+                              );
+                            }}
+                          >
+                            {data.name}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+
+                <li className="relative cursor-pointer group  ">
+                  <a className=" navbar text-[16px] flex ">
+                    <span className="navbar flex items-center text-[16px] mt-1">
+                      CATALOG
                       <IoMdArrowDropdown />
                     </span>
                   </a>
@@ -138,16 +217,21 @@ const Navbar = () => {
             </div>
           </div>
           {/* navbar right section */}
-          <div className="flex justify-between items-center gap-4">
+          <div className="flex justify-between items-center gap-2">
             {/* Search bar section */}
-            {/* <div className="relative group hidden sm:block">
-              <input type="text" placeholder="Search" className="search-bar" />
+            <div className="relative group hidden sm:block">
+              <input
+                type="text"
+                placeholder="Search for products "
+                className="search-bar"
+              />
               <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
-            </div> */}
+            </div>
             {/* order button section */}
             <Tooltip className="bg-red-500" label="Carts">
               <NavLink to="/cart" type="button" className="relative p-3">
-                <FaShoppingCart className="text-xl text-gray-600 dark:text-gray-400" />
+                {/* <FaShoppingCart className="text-xl text-gray-600 dark:text-gray-400" /> */}
+                <label htmlFor="">Bags</label>
                 <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">
                   {getTotalCartItems()}
                 </div>
@@ -155,14 +239,16 @@ const Navbar = () => {
             </Tooltip>
             <Tooltip className="bg-red-500" label="Wishlist">
               <NavLink to="/wishlist" type="button" className="relative p-3">
-                <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" />
+                {/* <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" /> */}
+                <label htmlFor="">Wishlist</label>
               </NavLink>
             </Tooltip>
 
             {auth?.token && (
               <Tooltip className="bg-red-500" label="Orders">
                 <NavLink to="/myorder" type="button" className="relative p-3">
-                  <BsFillArchiveFill className="text-xl text-gray-600 dark:text-gray-400" />
+                  {/* <BsFillArchiveFill className="text-xl text-gray-600 dark:text-gray-400" /> */}
+                  <label htmlFor="">Orders</label>
                 </NavLink>
               </Tooltip>
             )}
@@ -180,7 +266,7 @@ const Navbar = () => {
             ) : (
               <button
                 type="button"
-                className="bg-white w-[80px] h-[30px] outline-black border  dark:text-white dark:bg-black hover:bg-red-700 duration-[3000ms]"
+                className="bg-white w-[80px] h-[30px] outline-black border  dark:text-white dark:bg-black hover:bg-red-500 duration-[3000ms]"
                 onClick={() => {
                   localStorage.removeItem("auth");
                   setAuth({

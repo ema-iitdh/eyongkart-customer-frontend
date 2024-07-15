@@ -99,31 +99,31 @@ const CarouselTraditional = () => {
     fetchCarouselData();
   }, []);
   return (
-    <div className="container mt-20 text-2xl overflow-hidden rounded-3xl min-h-[500px] sm:min-h-[550px] hero-bg-color flex  items-center flex-col pt-12 gap-y-3.5">
-      <div className="container">
+    <div className=" mt-20 rounded-3xl text-2xl overflow-hidden  min-h-[400px] sm:min-h-[480px] hero-bg-color flex  items-center flex-col pt-8 gap-y-3.5">
+      <div className=" container px-1">
         {/* hero section */}
         <Slider {...settings}>
           {carouselData?.map((data) => (
             <div key={data.id}>
               <div className="grid grid-cols-1 sm:grid-cols-2">
                 {/* text content section */}
-                <div className="flex flex-col justify-center gap-4 sm:pl-3  sm:pt-0 text-center sm:text-left order-2 sm:order-1 relative z-10">
+                <div className="flex flex-col justify-center gap-6 sm:pl-4  sm:pt-0 text-center sm:text-left order-2 sm:order-1 relative z-10">
                   <h1 className="text-2xl sm:text-6xl lg:text-2xl font-bold">
                     {data.subtitle}
                   </h1>
                   <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold">
                     {data.title}
                   </h1>
-                  <h1 className="text-5xl uppercase text-white dark:text-white/7 sm:text-[80px] md:text-[100px] xl:text-[150px] font-bold">
+                  <h1 className="text-5xl uppercase text-white dark:text-white/7 sm:text-[70px] md:text-[100px] xl:text-[150px] font-bold">
                     {data.title2}
                   </h1>
                 </div>
                 {/* image section */}
-                <div className="order-1 sm:order-2 ">
+                <div className=" order-2 sm:order-1 ">
                   <img
                     src={`http://drive.google.com/thumbnail?id=${data.img}`}
                     alt=""
-                    className="w-[280px] h-[280px] sm:w-[380px] sm:h-[450px] sm:scale-105 lg:scale-110 object-contain mx-auto drop-shadow-[-8px_4px_6px_rgba(0,0,0,.4)] relative z-40"
+                    className="w-[220px] h-[150px] sm:w-[350px] sm:h-[400px] sm:scale-105 lg:scale-110 object-contain mx-auto drop-shadow-[-8px_4px_6px_rgba(0,0,0,.4)] relative z-40"
                   />
                 </div>
               </div>
