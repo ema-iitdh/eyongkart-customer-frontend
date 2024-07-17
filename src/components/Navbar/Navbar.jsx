@@ -56,7 +56,7 @@ const Navbar = () => {
   const { getTotalCartItems } = useContext(ShopContext);
   return (
     <div className="bg-white dark:bg-gray-800 dark:text-white duration-200  z-40  fixed top-0 right-0 left-0">
-      <div className="py-4">
+      <div className="py-4 relative" style={{ background: "red" }}>
         <div className="container flex justify-between items-center">
           {/* logo and link section */}
           <div className="flex  items-center gap-7">
@@ -64,28 +64,11 @@ const Navbar = () => {
               to="/"
               className="text-primary  tracking-widest  uppercase sm:text-3xl"
             >
-              <img className="w-[80px] h-[40px]" src={logo} alt="" />
+              <img className="w-[100px] h-[40px]" src={logo} alt="" />
             </NavLink>
             {/* menu items */}
             <div className="hidden lg:block ">
               <ul className="flex items-center font-semibold gap-5">
-                {/* <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    isActive ? "text-red-400 text-[18px]" : "text-[18px]"
-                  }
-                >
-                  Home
-                </NavLink> */}
-                {/* <NavLink
-                  to="/shop"
-                  className={({ isActive }) =>
-                    isActive ? "text-red-400 text-[18px]" : "text-[18px]"
-                  }
-                >
-                  Shop
-                </NavLink> */}
-
                 <li className="relative cursor-pointer group  ">
                   <a className=" navbar text-[16px] flex ">
                     <span className="navbar flex items-center text-[16px] mt-1">
@@ -93,28 +76,21 @@ const Navbar = () => {
                       <IoMdArrowDropdown />
                     </span>
                   </a>
-                  <div className="absolute z-[9999] hidden group-hover:block">
-                    <ul className="space-y-1 bg-white w-[200px] rounded-lg">
-                      {DropdownLink.map((data, index) => (
-                        <li key={index}>
-                          {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-                          <p
-                            className="text-[16px] inline-block w-full p-1 hover:text-gray-600 hover:bg-whitesmoke dark:text-black dark:hover:text-gray-600"
-                            onClick={() => {
-                              console.log(data.name);
-                              navigate(
-                                `/shopByCategory/${data.name.replace(
-                                  / /g,
-                                  "-"
-                                )}`
-                              );
-                            }}
-                          >
-                            {data.name}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
+                  <div
+                    className="absolute z-[9999] hidden group-hover:block bg-white w-[1000px]"
+                    style={{ marginLeft: "-30px" }}
+                  >
+                    <div className="text-red-500 ">
+                      Pheijom
+                      <h3>kurta men</h3>
+                      <h3>hhh</h3>
+                    </div>
+                    <div>
+                      Lengyan
+                      <h3>abcd</h3>
+                      <h3>fdr</h3>
+                      <h3>hgf</h3>
+                    </div>
                   </div>
                 </li>
 
@@ -125,28 +101,21 @@ const Navbar = () => {
                       <IoMdArrowDropdown />
                     </span>
                   </a>
-                  <div className="absolute z-[9999] hidden group-hover:block">
-                    <ul className="space-y-1 bg-white w-[200px] rounded-lg">
-                      {DropdownLink.map((data, index) => (
-                        <li key={index}>
-                          {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-                          <p
-                            className="text-[16px] inline-block w-full p-1 hover:text-gray-600 hover:bg-whitesmoke dark:text-black dark:hover:text-gray-600"
-                            onClick={() => {
-                              console.log(data.name);
-                              navigate(
-                                `/shopByCategory/${data.name.replace(
-                                  / /g,
-                                  "-"
-                                )}`
-                              );
-                            }}
-                          >
-                            {data.name}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
+                  <div
+                    className="absolute z-[9999] hidden group-hover:block bg-white w-[1000px]"
+                    style={{ marginLeft: "-100px" }}
+                  >
+                    <div className="text-red-500 ">
+                      Pheijom
+                      <h3>kurta men</h3>
+                      <h3>hhh</h3>
+                    </div>
+                    <div>
+                      Lengyan
+                      <h3>abcd</h3>
+                      <h3>fdr</h3>
+                      <h3>hgf</h3>
+                    </div>
                   </div>
                 </li>
 
@@ -279,9 +248,7 @@ const Navbar = () => {
               </button>
             )}
             {/*  darkmode section */}
-            <div>
-              <Darkmode />
-            </div>
+            <div>{/* <Darkmode /> */}</div>
           </div>
         </div>
       </div>
