@@ -49,15 +49,6 @@ const Shop = () => {
         <Navbar />
         <div className="container text-2xl overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex  items-center flex-col pt-8 gap-y-3.5">
           <div className="container">
-            {/* <div className="relative group hidden sm:block  ">
-              <input
-                type="text"
-                placeholder="Search"
-                className="search-bar text-xl"
-                onChange={handleOnChange}
-              />
-              <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
-            </div> */}
             <div className="flex justify-end items-center">
               {/* Search bar section */}
               <div className="relative group hidden sm:block">
