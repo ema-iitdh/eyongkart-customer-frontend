@@ -56,7 +56,8 @@ const Navbar = () => {
   const { getTotalCartItems } = useContext(ShopContext);
   return (
     <div className="bg-white dark:bg-gray-800 dark:text-white duration-200  z-40  fixed top-0 right-0 left-0">
-      <div className="py-4 relative" style={{ background: "red" }}>
+      <div className="py-4 relative">
+        {/* style={{ background: "red" }} */}
         <div className="container flex justify-between items-center">
           {/* logo and link section */}
           <div className="flex  items-center gap-7">
@@ -64,7 +65,11 @@ const Navbar = () => {
               to="/"
               className="text-primary  tracking-widest  uppercase sm:text-3xl"
             >
-              <img className="w-[100px] h-[40px]" src={logo} alt="" />
+              <img
+                className="w-[80px] h-[40px] object-contain"
+                src={logo}
+                alt=""
+              />
             </NavLink>
             {/* menu items */}
             <div className="hidden lg:block ">
@@ -80,16 +85,11 @@ const Navbar = () => {
                     className="absolute z-[9999] hidden group-hover:block bg-white w-[1000px]"
                     style={{ marginLeft: "-30px" }}
                   >
-                    <div className="text-red-500 ">
-                      Pheijom
-                      <h3>kurta men</h3>
-                      <h3>hhh</h3>
-                    </div>
-                    <div>
-                      Lengyan
-                      <h3>abcd</h3>
-                      <h3>fdr</h3>
-                      <h3>hgf</h3>
+                    <div className=" ml-3 text-red-400">
+                      <p>Digital Print Pheijom</p>
+                      <p>Kurta Men</p>
+                      <p>Lengyan</p>
+                      <p>Khudei</p>
                     </div>
                   </div>
                 </li>
@@ -105,16 +105,77 @@ const Navbar = () => {
                     className="absolute z-[9999] hidden group-hover:block bg-white w-[1000px]"
                     style={{ marginLeft: "-100px" }}
                   >
-                    <div className="text-red-500 ">
-                      Pheijom
-                      <h3>kurta men</h3>
-                      <h3>hhh</h3>
-                    </div>
-                    <div>
-                      Lengyan
-                      <h3>abcd</h3>
-                      <h3>fdr</h3>
-                      <h3>hgf</h3>
+                    <div className="flex flex-row">
+                      <div className="ml-3 ">
+                        <p className="text-red-400">Wangkhei phee</p>
+                        <div className="ml-8">
+                          <p>Ningam samji</p>
+                          <p>Kheiroi Thekpa</p>
+                          <p>Border Chatpa</p>
+                          <p>Wangkhei phee Maraktaibi</p>
+                          <p>Lamthang Khulak</p>
+                          <p>Moirang Phijang</p>
+                          <p>Angom mayek</p>
+                        </div>
+                        <div className="ml-3 ">
+                          <p className="text-red-400">Top</p>
+                          <div className="ml-8">
+                            <p>Half </p>
+                            <p>Full</p>
+                          </div>
+                        </div>
+
+                        <div className="ml-3 ">
+                          <p className="text-red-400">Blouse</p>
+                          <div className="ml-8">
+                            <p>Half </p>
+                            <p>Full</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="ml-3 ">
+                        <p className="text-red-400">Rani phee</p>
+                        <div className="ml-8">
+                          <p>Maraktaibi Border</p>
+                          <p>Rani Muka Suit</p>
+                          <p>Rani Manao Border </p>
+                          <p>Rani Muka Suit Border</p>
+                          <p>Rani Full</p>
+                          <p>Rani Manao</p>
+                          <p>Rani Ningam samji</p>
+                          <p>Rani Kheiroi Thekpa</p>
+                          <p>Rani Lamthang Khulak</p>
+                          <p>Rani Moirang Phijang</p>
+                          <p>Rani Angom mayek</p>
+                        </div>
+                      </div>
+
+                      <div className="ml-3 ">
+                        <p className="text-red-400">Muga Suit</p>
+                        <div className="ml-8">
+                          <p>Muga Suit </p>
+                          <p>Muga Border Chatpa</p>
+                          <p>Muga Ningam samji</p>
+                          <p>Muga Kheiroi Thekpa</p>
+                          <p>Muga Lamthang Khulak</p>
+                          <p>Muga Moirang Phijang</p>
+                          <p>Muga Angom mayek</p>
+                        </div>
+                      </div>
+                      <div className="ml-3 ">
+                        <p className="text-red-400">Phanek</p>
+                        <div className="ml-8">
+                          <p>Thambal Leikhok</p>
+                          <p>Khwang Pheege Sabi</p>
+                          <p>Pheege Sabi</p>
+                          <p>Pheege Mafen Khwang Phanek</p>
+                          <p>Khurkhul Manao Phanek</p>
+                          <p>Leni Muga Phanek</p>
+                          <p>Pashmina Muga Phanek</p>
+                          <p>Oneply Khurkhul Manao Phanek </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </li>

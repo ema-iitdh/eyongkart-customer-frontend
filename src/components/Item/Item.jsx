@@ -10,7 +10,7 @@ const Item = (props) => {
   );
 
   return (
-    <div className="item bg-gray-300 p-4 rounded-lg flex flex-col items-center justify-center w-52">
+    <div className="item bg-gray-300 p-4 rounded-lg flex flex-col items-center justify-center w-58">
       <Link to={`/product/${props.id}`}>
         <img
           // onClick={window.scrollTo(0, 0)}

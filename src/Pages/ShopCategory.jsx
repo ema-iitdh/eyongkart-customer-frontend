@@ -35,7 +35,7 @@ const ShopCategory = ({ products, isSearch, isLoading }) => {
   //   // fetchProducts();
   // }, []);
   return (
-    <div className="m-2 grid grid-cols-2 sm:grid-cols-5 gap-5">
+    <div className="m-2 grid grid-cols-2 sm:grid-cols-4 gap-2">
       {products && products.length === 0 && isSearch !== "" ? (
         <p className="flex justify-center items-center flex-col text-xl">
           Not Match Product found
@@ -61,10 +61,10 @@ const ShopCategory = ({ products, isSearch, isLoading }) => {
       {isLoading && (
         // <div className="flex justify-center items-center flex-col text-xl">
         <>
-          <Skeleton height={300} square mb="xl" />
-          <Skeleton height={300} square="xl" />
-          <Skeleton height={300} square="xl" />
-          <Skeleton height={300} square="xl" />
+          <Skeleton height={300} width={250} square="xl" />
+          <Skeleton height={300} width={250} square="xl" />
+          <Skeleton height={300} width={250} square="xl" />
+          <Skeleton height={300} width={250} square="xl" />
         </>
         // </div>
       )}
