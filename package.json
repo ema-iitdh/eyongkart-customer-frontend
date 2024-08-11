@@ -41,7 +41,8 @@
     "react-toastify": "^10.0.5",
     "recharts": "^2.12.7",
     "router-dom": "^2.2.11",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "sweetalert2": "^11.12.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

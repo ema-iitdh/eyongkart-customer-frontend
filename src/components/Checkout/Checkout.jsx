@@ -7,8 +7,11 @@ import { ShopContext } from "../Context/ShopContext";
 import axios from "axios";
 import instance from "../../../api";
 import { toast } from "react-toastify";
-
+import { useDisclosure } from "@mantine/hooks";
+import { Modal, Button } from "@mantine/core";
+import Swal from "sweetalert2";
 import { Radio, Group } from "@mantine/core";
+import { Checkbox } from "@mantine/core";
 const Checkout = () => {
   const [razorpaytick, setrazorpaytick] = useState(false);
   const [fullname, setFullName] = useState("");
@@ -184,6 +187,25 @@ const Checkout = () => {
     }
   }, []);
 
+  const alertOk = () => {
+    Swal.fire({
+      title: "Good job!",
+      text: "Thank you for order",
+      icon: "success",
+    });
+
+    navigate("/myorder");
+  };
+  const saveInfo = () => {
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Your information has been saved",
+      showConfirmButton: true,
+      timer: 1500,
+    });
+  };
+
   console.log("one", buyProduct, "two", checkoutItem);
 
   return (
@@ -297,9 +319,17 @@ const Checkout = () => {
               />
             </div>
 
-            <div className="text-[18px]">
-              <input type="checkbox" />
-              Save the information
+            <div className="text-[18px] gap-2">
+              <button onClick={saveInfo}>
+                {/* <input
+                  className="bg-red-400 checked:bg-red-500 border-2 border-gray-300 rounded-sm"
+                  name="info"
+                  id="info"
+                  type="checkbox"
+                /> */}
+                <Checkbox size="xs" defaultChecked color="red" />
+              </button>
+              <label htmlFor="info"> Save the information</label>
             </div>
           </div>
 
@@ -353,16 +383,24 @@ const Checkout = () => {
                     <></>
                   )}
                   <Radio.Group>
-                    <Group mt="xl ">
+                    <Group mt="xl">
                       <Radio
+                        color="red"
                         value="razorpay"
-                        label="Online Payment"
+                        label="Online Payment /UPI"
                         checked={razorpaytick}
                         onChange={(event) =>
                           setrazorpaytick(event.currentTarget.checked)
                         }
                       />
-                      <Radio value="cash" label="Cash on Delivery" />
+                      <div>
+                        <Radio
+                          value="cash"
+                          color="red"
+                          label="Cash on Delivery"
+                          onClick={alertOk}
+                        />
+                      </div>
                     </Group>
                   </Radio.Group>
                   <button

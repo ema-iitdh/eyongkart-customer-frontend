@@ -108,7 +108,7 @@ const Navbar = () => {
                     <div className="flex flex-row">
                       <div className="ml-3 ">
                         <p className="text-red-400">Wangkhei phee</p>
-                        <div className="ml-8">
+                        <div className="ml-8 text-[15px]">
                           <p>Ningam samji</p>
                           <p>Kheiroi Thekpa</p>
                           <p>Border Chatpa</p>
@@ -119,7 +119,7 @@ const Navbar = () => {
                         </div>
                         <div className="ml-3 ">
                           <p className="text-red-400">Top</p>
-                          <div className="ml-8">
+                          <div className="ml-8 text-[15px]">
                             <p>Half </p>
                             <p>Full</p>
                           </div>
@@ -127,7 +127,7 @@ const Navbar = () => {
 
                         <div className="ml-3 ">
                           <p className="text-red-400">Blouse</p>
-                          <div className="ml-8">
+                          <div className="ml-8 text-[15px]">
                             <p>Half </p>
                             <p>Full</p>
                           </div>
@@ -136,7 +136,7 @@ const Navbar = () => {
 
                       <div className="ml-3 ">
                         <p className="text-red-400">Rani phee</p>
-                        <div className="ml-8">
+                        <div className="ml-8 text-[15px]">
                           <p>Maraktaibi Border</p>
                           <p>Rani Muka Suit</p>
                           <p>Rani Manao Border </p>
@@ -153,7 +153,7 @@ const Navbar = () => {
 
                       <div className="ml-3 ">
                         <p className="text-red-400">Muga Suit</p>
-                        <div className="ml-8">
+                        <div className="ml-8 text-[15px]">
                           <p>Muga Suit </p>
                           <p>Muga Border Chatpa</p>
                           <p>Muga Ningam samji</p>
@@ -165,7 +165,7 @@ const Navbar = () => {
                       </div>
                       <div className="ml-3 ">
                         <p className="text-red-400">Phanek</p>
-                        <div className="ml-8">
+                        <div className="ml-8 text-[15px]">
                           <p>Thambal Leikhok</p>
                           <p>Khwang Pheege Sabi</p>
                           <p>Pheege Sabi</p>

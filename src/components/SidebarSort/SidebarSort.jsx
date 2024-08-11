@@ -182,21 +182,16 @@ import Footer from "../Footer/Footer";
 import { Group, Button, Select } from "@mantine/core";
 import Shop from "../Header/Shop";
 import { Link } from "react-router-dom";
-import { ScrollArea } from "@mantine/core";
+import { ScrollArea, Radio } from "@mantine/core";
 import instance from "../../../api";
 
 const SidebarSort = () => {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [brand, setBrand] = useState("");
+  const [price, setPrice] = useState("");
+  const [products, setproducts] = useState();
   const [loading, setLoading] = useState(false);
+  const [newproducts, setNewproducts] = useState();
   const [searchProduct, setSearchProduct] = useState("");
-  const [selectedFilters, setSelectedFilters] = useState({
-    brand: [],
-    price: [],
-    color: [],
-  });
-  const [sortCriteria, setSortCriteria] = useState("");
-
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -204,101 +199,23 @@ const SidebarSort = () => {
         url: "/product/allproduct",
         method: "GET",
       });
-      setProducts(res.data.products);
-      setFilteredProducts(res.data.products);
+      // console.log(res.data.products);
+      setproducts(res.data.products);
       setLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchProducts();
   }, []);
-
-  const handleCheckboxChange = (e) => {
-    const { name, value, checked } = e.target;
-    setSelectedFilters((prevFilters) => {
-      const updatedFilters = { ...prevFilters };
-      if (checked) {
-        updatedFilters[name] = [...updatedFilters[name], value];
-      } else {
-        updatedFilters[name] = updatedFilters[name].filter(
-          (item) => item !== value
-        );
-      }
-      return updatedFilters;
-    });
-  };
-
-  useEffect(() => {
-    const filterProducts = () => {
-      let updatedProducts = products;
-
-      // Filter by brand
-      if (selectedFilters.brand.length > 0) {
-        updatedProducts = updatedProducts.filter((product) =>
-          selectedFilters.brand.includes(product.brand)
-        );
-      }
-
-      // Filter by price
-      if (selectedFilters.price.length > 0) {
-        updatedProducts = updatedProducts.filter((product) => {
-          return selectedFilters.price.some((priceRange) => {
-            const [min, max] = priceRange.split(" to ").map(Number);
-            return product.price >= min && (max ? product.price <= max : true);
-          });
-        });
-      }
-
-      // Filter by color
-      if (selectedFilters.color.length > 0) {
-        updatedProducts = updatedProducts.filter((product) =>
-          selectedFilters.color.includes(product.color)
-        );
-      }
-
-      setFilteredProducts(updatedProducts);
-    };
-
-    filterProducts();
-  }, [selectedFilters, products]);
-
-  useEffect(() => {
-    const sortProducts = () => {
-      let sortedProducts = [...filteredProducts];
-      switch (sortCriteria) {
-        case "price-asc":
-          sortedProducts.sort((a, b) => a.price - b.price);
-          break;
-        case "price-desc":
-          sortedProducts.sort((a, b) => b.price - a.price);
-          break;
-        case "name-asc":
-          sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
-          break;
-        case "name-desc":
-          sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
-          break;
-        default:
-          break;
-      }
-      setFilteredProducts(sortedProducts);
-    };
-
-    sortProducts();
-  }, [sortCriteria, filteredProducts]);
-
-  const handleSearchChange = (e) => {
+  const handleOnChange = (e) => {
     setSearchProduct(e.target.value);
     let searchProductnew = products.filter((i) =>
       i.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    setFilteredProducts(searchProductnew);
+    setNewproducts(searchProductnew);
   };
-
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
       <Navbar />
@@ -311,171 +228,168 @@ const SidebarSort = () => {
             scrollbars="y"
             scrollHideDelay={200}
           >
-            <div className="w-[170px] h-[500px] ">
+            <div className="w-[170px] h-[400px] ">
               <h2 className="p-3 text-[20px]">Filters</h2>
               <div className="text-[14px]">
                 <h2 className="p-2 text-[16px]">BRAND</h2>
-                <div>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="brand"
-                      value="All"
-                      onChange={handleCheckboxChange}
+                      id="all"
+                      type="radio"
+                      value={"All"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setBrand(e.target.value)}
                     />
-                    <span className=""></span>All
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                    <label htmlFor="all">All</label>
+                    {/* <Radio size="xs" name="brand" label="All" color="red" /> */}
+                  </div>
+
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="brand"
-                      value="Rani phee"
-                      onChange={handleCheckboxChange}
+                      id="rani"
+                      type="radio"
+                      value={"Rani Handloom"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setBrand(e.target.value)}
                     />
-                    <span className=""></span>Gera Handloom
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                    <label htmlFor="rani">Rani Handloom</label>
+                  </div>
+
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="brand"
-                      value="Wangkhei Phee"
-                      onChange={handleCheckboxChange}
+                      id="muga"
+                      type="radio"
+                      value={"Muga Handloom"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setBrand(e.target.value)}
                     />
-                    <span className=""></span>Phee collection
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                    <label htmlFor="muga">Muga Handloom</label>
+                  </div>
+
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="brand"
-                      value="Digital Print Pheijom"
-                      onChange={handleCheckboxChange}
+                      id="pheijom"
+                      type="radio"
+                      value={"Pheijom Handloom"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setBrand(e.target.value)}
                     />
-                    <span className=""></span> Pheijom collection
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                    <label htmlFor="pheijom"> Pheijom Handloom</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="brand"
-                      value="Muka phee"
-                      onChange={handleCheckboxChange}
+                      id="pheijom"
+                      type="radio"
+                      value={"Pheijom Handloom"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setBrand(e.target.value)}
                     />
-                    <span className=""></span>Muka collection
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                    <label htmlFor="pheijom">Blouse Handloom</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="brand"
-                      value="Top"
-                      onChange={handleCheckboxChange}
+                      id="top"
+                      type="radio"
+                      value={"Top Handloom"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setBrand(e.target.value)}
                     />
-                    <span className=""></span>Top collection
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                    <label htmlFor="top">Top Handloom</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="brand"
-                      value="Phanek"
-                      onChange={handleCheckboxChange}
+                      id="phanek "
+                      type="radio"
+                      value={"Phanek  Handloom"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setBrand(e.target.value)}
                     />
-                    <span className=""></span>Phanek collection
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                    <label htmlFor="phanek ">Phanek Handloom</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="brand"
-                      value="Blouse"
-                      onChange={handleCheckboxChange}
+                      id="wangkheiphee"
+                      type="radio"
+                      value={"Wangkheiphee Handloom"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setBrand(e.target.value)}
                     />
-                    <span className=""></span>Blouse collection
-                  </label>
+                    <label htmlFor="wangkheiphee">Wangkheiphee Handloom</label>
+                  </div>
                 </div>
               </div>
 
               <div className="text-[14px]">
                 <h2 className="p-2 text-[16px]">PRICE</h2>
-                <div>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="price"
-                      value="5000 to 10000"
-                      onChange={handleCheckboxChange}
+                      id="2000"
+                      type="radio"
+                      value={"₹ 2000 - ₹ 3500"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setPrice(e.target.value)}
                     />
-                    <span className=""></span>₹ 5000 to ₹ 10000
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                    <label htmlFor="2000">₹ 2000 - ₹ 3500</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="price"
-                      value="10000 to 15000"
-                      onChange={handleCheckboxChange}
+                      id="5000"
+                      type="radio"
+                      value={"₹ 5000 - ₹ 10000"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setPrice(e.target.value)}
                     />
-                    <span className=""></span>₹ 10000 to ₹ 15000
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                    <label htmlFor="5000">₹ 5000 - ₹ 10000</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="price"
-                      value="16000 to 20000"
-                      onChange={handleCheckboxChange}
+                      id="12000"
+                      type="radio"
+                      value={"₹ 12000 - ₹ 15000"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setPrice(e.target.value)}
                     />
-                    <span className=""></span>₹ 16000 to ₹ 20000
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
+                    <label htmlFor="12000">₹ 12000 - ₹ 15000</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
                     <input
-                      type="checkbox"
                       name="price"
-                      value="20000 above"
-                      onChange={handleCheckboxChange}
+                      id="15000"
+                      type="radio"
+                      value={"₹ 15000 - ₹ 20000"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setPrice(e.target.value)}
                     />
-                    <span className=""></span>₹ 20000 above
-                  </label>
+                    <label htmlFor="15000">₹ 15000 - ₹ 20000</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
+                    <input
+                      name="price"
+                      id="20000"
+                      type="radio"
+                      value={"₹ 20000 - ₹ 30000"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
+                    <label htmlFor="20000">₹ 20000 - ₹ 30000</label>
+                  </div>
                 </div>
               </div>
 
-              <div className="text-[14px]">
-                <h2 className="p-2 text-[16px]">COLOR</h2>
-                <div>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      name="color"
-                      value="RED"
-                      onChange={handleCheckboxChange}
-                    />
-                    <span className=""></span>RED
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      name="color"
-                      value="BLUE"
-                      onChange={handleCheckboxChange}
-                    />
-                    <span className=""></span>BLUE
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      name="color"
-                      value="GREEN"
-                      onChange={handleCheckboxChange}
-                    />
-                    <span className=""></span>GREEN
-                  </label>
-                  <label className="block relative pl-4 mb-3 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      name="color"
-                      value="PINK"
-                      onChange={handleCheckboxChange}
-                    />
-                    <span className=""></span>PINK
-                  </label>
-                </div>
-              </div>
-
-              <div className="text-[14px]">
+              {/* <div className="text-[14px]">
                 <h2 className="p-2 text-[16px]">SORT BY</h2>
                 <Select
                   placeholder="Sort by"
@@ -487,7 +401,7 @@ const SidebarSort = () => {
                     { value: "name-desc", label: "Name: Z to A" },
                   ]}
                 />
-              </div>
+              </div> */}
             </div>
           </ScrollArea>
 
@@ -518,7 +432,7 @@ const SidebarSort = () => {
                   <Button variant="default">Muka phee</Button>
                 </Link>
               </Group>
-              <Shop products={filteredProducts} />
+              <Shop />
             </div>
           </ScrollArea>
         </div>

@@ -58,7 +58,7 @@ const Wishlist = () => {
                     ""
                   )}`}
                   alt=""
-                  className="h-[190px] w-[260px] object-cover rounded-md"
+                  className="h-[200px] w-[200px] object-cover "
                 />
               </div>
               <div className="flex justify-between  leading-7">
