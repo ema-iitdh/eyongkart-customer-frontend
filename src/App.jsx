@@ -22,6 +22,8 @@ import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import Myorder from "./components/Myorders/Myorder";
+import SidebarSort from "./components/SidebarSort/SidebarSort";
+import RemProductList from "./components/RemProductList";
 
 const App = () => {
   return (
@@ -33,6 +35,7 @@ const App = () => {
           <Route path="/shop" element={<Shop />} />
           <Route
             path="/shopbycategory/:category"
+            // path='/shopbycategory'
             element={<ShopByCategory />}
           />
           <Route path="/about" element={<AboutUs />} />
@@ -49,6 +52,10 @@ const App = () => {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/myorder" element={<Myorder />} />
+          <Route path="/sort" element={<SidebarSort />} />
+          {/* Remove this */}
+          {/* Remove RemProductList */}
+          <Route path="/productList/:categoryId" element={<RemProductList />} />
         </Routes>
       </BrowserRouter>
     </MantineProvider>

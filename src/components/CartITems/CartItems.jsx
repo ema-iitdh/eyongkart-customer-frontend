@@ -46,7 +46,7 @@ const CartsItems = () => {
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
       <Navbar />
 
-      <div className="container text-2xl overflow-hidden min-h-[550px] sm:min-h-[650px] hero-bg-color flex flex-col pt-8 gap-y-3.5 ">
+      <div className=" text-xl overflow-hidden min-h-[550px] sm:min-h-[650px] hero-bg-color flex flex-col pt-8 gap-y-3.5 ">
         <table className=" min-w-full  text-center dark:text-white text-black text-[13px] sm:text-[20px]">
           <thead>
             <tr className="bg-gray-200 dark:bg-gray-800 gap-2">
