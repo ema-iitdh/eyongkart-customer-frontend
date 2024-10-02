@@ -91,13 +91,20 @@ const ShopByCategory = () => {
             break;
         }
 
-        if (categoryId) {
-          const res = await instance({
-            url: `/product/getProductCategoryById/${categoryId}`,
-            method: "GET",
-          });
-          setProducts(res.data.product);
-        }
+        // if (categoryId) {
+        const category = params.category.replace(/-/g, " ");
+        console.log(`categoryId: ${category}`);
+        console.log(encodeURIComponent(category));
+
+        const res = await instance({
+          // url: `/product/getProductCategoryById/${categoryId}`,
+          url: `/product/getProductCategoryById?name=${encodeURIComponent(
+            category
+          )}`, // Rani-Phee
+          method: "GET",
+        });
+        setProducts(res.data.product);
+        // }
       } catch (error) {
         console.log(error);
       }
@@ -112,7 +119,6 @@ const ShopByCategory = () => {
       behavior: "smooth",
     });
   }, []);
-  console.log(products);
   const handleCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
     setSelectedFilters((prevFilters) => {
@@ -127,6 +133,19 @@ const ShopByCategory = () => {
       return updatedFilters;
     });
   };
+
+  const handlePrice = async (lcost, hcost) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3000/product/filterbyprice/${params.category}/${lcost}-${hcost}`
+      );
+      setProducts(data.products);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden pt-16">
@@ -249,9 +268,9 @@ const ShopByCategory = () => {
                       type="radio"
                       value={"₹ 2000 - ₹ 3500"}
                       className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
-                      onChange={(e) => setPrice(e.target.value)}
+                      onChange={(e) => handlePrice(1, 999)}
                     />
-                    <label htmlFor="2000">₹ 2000 - ₹ 3500</label>
+                    <label htmlFor="2000">Less than 1000</label>
                   </div>
                   <div className="flex items-center gap-2 pl-2">
                     <input
@@ -260,9 +279,9 @@ const ShopByCategory = () => {
                       type="radio"
                       value={"₹ 5000 - ₹ 10000"}
                       className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
-                      onChange={(e) => setPrice(e.target.value)}
+                      onChange={(e) => handlePrice(1000, 3000)}
                     />
-                    <label htmlFor="5000">₹ 5000 - ₹ 10000</label>
+                    <label htmlFor="5000">₹ 1000 - ₹ 3000</label>
                   </div>
                   <div className="flex items-center gap-2 pl-2">
                     <input
@@ -271,9 +290,9 @@ const ShopByCategory = () => {
                       type="radio"
                       value={"₹ 12000 - ₹ 15000"}
                       className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
-                      onChange={(e) => setPrice(e.target.value)}
+                      onChange={(e) => handlePrice(3001, 5000)}
                     />
-                    <label htmlFor="12000">₹ 12000 - ₹ 15000</label>
+                    <label htmlFor="12000">₹ 3000 - ₹ 5000</label>
                   </div>
                   <div className="flex items-center gap-2 pl-2">
                     <input
@@ -282,9 +301,9 @@ const ShopByCategory = () => {
                       type="radio"
                       value={"₹ 15000 - ₹ 20000"}
                       className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
-                      onChange={(e) => setPrice(e.target.value)}
+                      onChange={(e) => handlePrice(5001, 10000)}
                     />
-                    <label htmlFor="15000">₹ 15000 - ₹ 20000</label>
+                    <label htmlFor="15000">₹5000 - ₹10000</label>
                   </div>
                   <div className="flex items-center gap-2 pl-2">
                     <input
@@ -293,9 +312,9 @@ const ShopByCategory = () => {
                       type="radio"
                       value={"₹ 20000 - ₹ 30000"}
                       className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
-                      onChange={(e) => setPrice(e.target.value)}
+                      onChange={(e) => handlePrice(10001, 20000)}
                     />
-                    <label htmlFor="20000">₹ 20000 - ₹ 30000</label>
+                    <label htmlFor="20000">More than ₹ 10000</label>
                   </div>
                 </div>
               </div>
@@ -309,23 +328,25 @@ const ShopByCategory = () => {
                 <Link to="/sort">
                   <Button variant="default">All products</Button>
                 </Link>
-                <Link to="/shopByCategory/Rani-Phee">
+                <Link to="/shopByCategory/Rani Phee">
                   <Button variant="default">Rani phee</Button>
                 </Link>
-                <Link to="/shopByCategory/Wangkhei-Phee">
+                <Link to="/shopByCategory/Wangkhei Phee">
                   <Button variant="default">Wangkhei phee</Button>
                 </Link>
-                <Link to="/shopByCategory/Digital-Print-Pheijom">
+                <Link to="/shopByCategory/Digital Print Pheijom">
                   <Button variant="default">Digital pheijom</Button>
                 </Link>
                 <Link to="/shopByCategory/Phanek">
                   <Button variant="default">Phanek</Button>
                 </Link>
-                <Button variant="default">Blouse</Button>
+                <Link to="/shopByCategory/Blouse">
+                  <Button variant="default">Blouse</Button>
+                </Link>
                 <Link to="/shopByCategory/Top">
                   <Button variant="default">Top</Button>
                 </Link>
-                <Link to="/shopByCategory/Muka-Phee">
+                <Link to="/shopByCategory/Muka Phee">
                   <Button variant="default">Muka phee</Button>
                 </Link>
               </Group>
