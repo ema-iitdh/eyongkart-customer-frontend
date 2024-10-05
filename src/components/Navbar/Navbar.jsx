@@ -15,6 +15,46 @@ import instance from "../../../api";
 import { Tooltip, Button } from "@mantine/core";
 
 import logo from "../../assets/logo.jpg";
+import { useQuery } from "@tanstack/react-query";
+
+// Remove this
+function CategoryOption({ title, data }) {
+  console.log(data?.subCategories);
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <div className="group relative">
+        <p className="cursor-pointer p-2 hover:bg-[#3333337c]">{title}</p>
+
+        <div className="hidden z-10 rounded px-5 py-2 bg-orange-600 text-white group-hover:grid absolute top-full left-0 ">
+          {data?.categories?.map((category) => (
+            <div key={category._id}>
+              <p
+                onKeyDown={() => {
+                  navigate(`/productList/${category._id}`);
+                }}
+                onClick={() => {
+                  navigate(`/productList/${category._id}`);
+                }}
+                className="whitespace-nowrap"
+              >
+                {category.name}
+              </p>
+              <p className="bg-red-400">
+                {category?.subCategories?.map((category) => (
+                  <>{category.subCategoryName}</>
+                ))}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// till here
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -27,7 +67,7 @@ const Navbar = () => {
   const getAllCategory = async () => {
     try {
       const res = await instance({
-        url: `/category/allcategory`,
+        url: "/category/allcategory",
         method: "GET",
       });
       // const sortedCategory = res.data.category.sort((a, b) =>
@@ -91,9 +131,55 @@ const Navbar = () => {
   // console.log(searchProduct);
   // console.log(newproducts);
   //
+
+  // Remove this
+  const { data: menCategory, isLoading } = useQuery({
+    queryKey: ["menCategory"],
+    queryFn: () =>
+      instance({
+        url: "/category?sex=male&isProductForKids=false",
+        method: "GET",
+      }),
+  });
+
+  const { data: womenCategory, isLoading: isLoadingWomenCategory } = useQuery({
+    queryKey: ["womenCategory"],
+    queryFn: () =>
+      instance({
+        url: "/category?sex=female&isProductForKids=false",
+        method: "GET",
+      }),
+  });
+  const { data: kidsCategory, isLoading: isLoadingKidsCategory } = useQuery({
+    queryKey: ["kidsCategory"],
+    queryFn: () =>
+      instance({
+        url: "/category?isProductForKids=true",
+        method: "GET",
+      }),
+  });
+
+  // till here
+
+  // >>>>>>> 530d8b64574d0a7654abd237621bdddd00fa9441
   const { getTotalCartItems } = useContext(ShopContext);
+
   return (
     <div className="bg-white dark:bg-gray-800 dark:text-white duration-200  z-40  fixed top-0 right-0 left-0">
+      {/* Remove this */}
+      <div className="flex items-center gap-2">
+        <CategoryOption title="Men" data={isLoading ? [] : menCategory?.data} />
+        <CategoryOption
+          title="Women"
+          data={isLoadingWomenCategory ? [] : womenCategory?.data}
+        />
+        <CategoryOption
+          title="Kids"
+          data={isLoadingKidsCategory ? [] : kidsCategory?.data}
+        />
+      </div>
+      {/* till here */}
+
       <div className="py-4 relative">
         {/* style={{ background: "red" }} */}
         <div className="container flex justify-between items-center">
@@ -103,11 +189,7 @@ const Navbar = () => {
               to="/"
               className="text-primary  tracking-widest  uppercase sm:text-3xl"
             >
-              <img
-                className="w-[80px] h-[40px] object-contain"
-                src={logo}
-                alt=""
-              />
+              <img className="w-[80px] h-[40px] object-fit" src={logo} alt="" />
             </NavLink>
             {/* menu items */}
             <div className="hidden lg:block ">
@@ -272,6 +354,7 @@ const Navbar = () => {
                                   "-"
                                 )}`
                               );
+                              // navigate(`/shopByCategory/${data.name}`);
                             }}
                           >
                             {data.name}

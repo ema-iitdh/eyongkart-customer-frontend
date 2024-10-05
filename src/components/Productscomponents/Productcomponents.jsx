@@ -23,7 +23,7 @@ const Productcomponents = () => {
         >
           <Box>
             <div className="flex flex-grow gap-2 p-5">
-              <Link to="/shopByCategory/Rani-Phee">
+              <Link to="/shopByCategory/Rani Phee">
                 <div className=" bg-gray-300  h-[320px] w-[250px]  rounded-lg flex flex-col items-center justify-center">
                   <img className="w-[220px] h-[220px]" src={rani} alt="" />
                   <div className="w-full flex flex-col justify-center items-center">
@@ -35,7 +35,7 @@ const Productcomponents = () => {
                 </div>
               </Link>
 
-              <Link to="/shopByCategory/Wangkhei-Phee">
+              <Link to="/shopByCategory/Wangkhei Phee">
                 <div className=" bg-gray-300 h-[320px] w-[250px]  rounded-lg flex flex-col items-center justify-center">
                   <img className="w-[220px] h-[220px]" src={wangkhei} alt="" />
                   <div className="w-full flex flex-col items-center justify-center">
@@ -47,7 +47,7 @@ const Productcomponents = () => {
                 </div>
               </Link>
 
-              <Link to="/shopByCategory/Digital-Print-Pheijom">
+              <Link to="/shopByCategory/Digital Print Pheijom">
                 <div className=" bg-gray-300 h-[320px] w-[250px]  rounded-lg flex flex-col items-center justify-center">
                   <img className="w-[220px] h-[220px]" src={pheijom} alt="" />
                   <div className="w-full flex flex-col items-center justify-center">

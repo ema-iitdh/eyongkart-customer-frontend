@@ -1,181 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import Navbar from "../Navbar/Navbar";
-// import Footer from "../Footer/Footer";
-// import { Group, Button } from "@mantine/core";
-// import Shop from "../Header/Shop";
-// import { Link } from "react-router-dom";
-// import { ScrollArea } from "@mantine/core";
-// import instance from "../../../api";
-// const SidebarSort = () => {
-//   const [products, setproducts] = useState();
-//   const [loading, setLoading] = useState(false);
-//   const [newproducts, setNewproducts] = useState();
-//   const [searchProduct, setSearchProduct] = useState("");
-//   const fetchProducts = async () => {
-//     try {
-//       setLoading(true);
-//       const res = await instance({
-//         url: "/product/allproduct",
-//         method: "GET",
-//       });
-//       // console.log(res.data.products);
-//       setproducts(res.data.products);
-//       setLoading(false);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-//   useEffect(() => {
-//     fetchProducts();
-//   }, []);
-//   const handleOnChange = (e) => {
-//     setSearchProduct(e.target.value);
-//     let searchProductnew = products.filter((i) =>
-//       i.name.toLowerCase().includes(e.target.value.toLowerCase())
-//     );
-//     setNewproducts(searchProductnew);
-//   };
-//   return (
-//     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
-//       <Navbar />
-//       <div className="pt-20 ">
-//         <div className="overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color pb-5 gap-10 flex justify-start">
-//           <ScrollArea
-//             h={600}
-//             type="never"
-//             w={170}
-//             scrollbars="y"
-//             scrollHideDelay={200}
-//           >
-//             <div className="w-[170px] h-[500px] ">
-//               <h2 className="p-3 text-[20px]">Filters</h2>
-//               <div className="text-[14px]">
-//                 <h2 className="p-2 text-[16px]">BRAND</h2>
-//                 <div>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>All
-//                   </label>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>Rani phee
-//                   </label>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>Wangkhei Phee
-//                   </label>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>Digital Print Pheijom
-//                   </label>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>Muka phee
-//                   </label>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>Top
-//                   </label>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>
-//                     Phanek
-//                   </label>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>
-//                     Blouse
-//                   </label>
-//                 </div>
-//               </div>
-
-//               <div className="text-[14px]">
-//                 <h2 className="p-2 text-[16px]">PRICE</h2>
-//                 <div>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>₹ 5000 to ₹ 10000
-//                   </label>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>₹ 10000 to ₹ 15000
-//                   </label>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>₹ 16000 to ₹ 20000
-//                   </label>
-
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>₹ 20000 above
-//                   </label>
-//                 </div>
-//               </div>
-//               <div className="text-[14px]">
-//                 <h2 className="p-2 text-[16px]">COLOR</h2>
-//                 <div>
-//                   <label className="block  relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>RED
-//                   </label>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>BLUE
-//                   </label>
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>GREEN
-//                   </label>
-
-//                   <label className="block relative pl-4 mb-3 cursor-pointer">
-//                     <input type="checkbox" name="phee" id="" />
-//                     <span className=""></span>PINK
-//                   </label>
-//                 </div>
-//               </div>
-//             </div>
-//           </ScrollArea>
-//           <ScrollArea h={600} type="never" scrollbars="y">
-//             <div className="  ">
-//               <h1 className="pt-3 pl-12">Recommended</h1>
-//               <Group gap="xs" className="pl-12">
-//                 <Link to="/sort">
-//                   <Button variant="default">All products</Button>
-//                 </Link>
-//                 <Link to="/shopByCategory/Rani-Phee">
-//                   <Button variant="default">Rani phee</Button>
-//                 </Link>
-//                 <Link to="/shopByCategory/Wangkhei-Phee">
-//                   <Button variant="default">Wangkhei phee</Button>
-//                 </Link>
-//                 <Link to="/shopByCategory/Digital-Print-Pheijom">
-//                   <Button variant="default">Digital pheijom</Button>
-//                 </Link>
-//                 <Link to="/shopByCategory/Phanek">
-//                   <Button variant="default">Phanek</Button>
-//                 </Link>
-//                 <Button variant="default">Blouse</Button>
-//                 <Link to="/shopByCategory/Top">
-//                   <Button variant="default">Top</Button>
-//                 </Link>
-//                 <Link to="/shopByCategory/Muka-Phee">
-//                   <Button variant="default">Muka phee</Button>
-//                 </Link>
-//               </Group>
-
-//               <Shop />
-//             </div>
-//           </ScrollArea>
-//         </div>
-//       </div>
-
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default SidebarSort;
-
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
@@ -184,6 +6,8 @@ import Shop from "../Header/Shop";
 import { Link } from "react-router-dom";
 import { ScrollArea, Radio } from "@mantine/core";
 import instance from "../../../api";
+import axios from "axios";
+import Item from "../Item/Item";
 
 const SidebarSort = () => {
   const [brand, setBrand] = useState("");
@@ -206,12 +30,25 @@ const SidebarSort = () => {
       console.log(error);
     }
   };
+
+  const handlePrice = async (lcost, hcost) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3000/product/filterbyprice/${lcost}-${hcost}`
+      );
+      setproducts(data.products);
+      console.log(products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
   }, []);
   const handleOnChange = (e) => {
     setSearchProduct(e.target.value);
-    let searchProductnew = products.filter((i) =>
+    const searchProductnew = products.filter((i) =>
       i.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setNewproducts(searchProductnew);
@@ -329,6 +166,7 @@ const SidebarSort = () => {
               </div>
             </div>
 
+
             <div className="text-[14px]">
               <h2 className="p-2 text-[16px]">PRICE</h2>
               <div className="flex flex-col gap-2">
@@ -387,6 +225,66 @@ const SidebarSort = () => {
                   />
                   <label htmlFor="20000">₹ 20000 - ₹ 30000</label>
                 </div>
+              <div className="text-[14px]">
+                <h2 className="p-2 text-[16px]">PRICE</h2>
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2 pl-2">
+                    <input
+                      name="price"
+                      id="2000"
+                      type="radio"
+                      value={"₹ 2000 - ₹ 3500"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => handlePrice(1, 999)}
+                    />
+                    <label htmlFor="2000">Less than 1000</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
+                    <input
+                      name="price"
+                      id="5000"
+                      type="radio"
+                      value={"₹ 5000 - ₹ 10000"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => handlePrice(1000, 3000)}
+                    />
+                    <label htmlFor="5000">₹ 1000 - ₹ 3000</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
+                    <input
+                      name="price"
+                      id="12000"
+                      type="radio"
+                      value={"₹ 12000 - ₹ 15000"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => handlePrice(3001, 5000)}
+                    />
+                    <label htmlFor="12000">₹ 3000 - ₹ 5000</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
+                    <input
+                      name="price"
+                      id="15000"
+                      type="radio"
+                      value={"₹ 15000 - ₹ 20000"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => handlePrice(5001, 10000)}
+                    />
+                    <label htmlFor="15000">₹5000 - ₹10000</label>
+                  </div>
+                  <div className="flex items-center gap-2 pl-2">
+                    <input
+                      name="price"
+                      id="20000"
+                      type="radio"
+                      value={"₹ 20000 - ₹ 30000"}
+                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                      onChange={(e) => handlePrice(10001, 20000)}
+                    />
+                    <label htmlFor="20000">More than ₹ 10000</label>
+                  </div>
+{/* >>>>>>> 530d8b64574d0a7654abd237621bdddd00fa9441 */}
+                </div>
               </div>
             </div>
 
@@ -404,6 +302,7 @@ const SidebarSort = () => {
                 />
               </div> */}
           </div>
+</div>
         </ScrollArea>
 
         <ScrollArea h={600} type="never" scrollbars="y">
@@ -436,11 +335,63 @@ const SidebarSort = () => {
             <Shop />
           </div>
         </ScrollArea>
+
+          <ScrollArea h={600} type="never" scrollbars="y">
+            <div className="">
+              <h1 className="pt-3 pl-12">Recommended</h1>
+              <Group gap="xs" className="pl-5">
+                <Link to="/sort">
+                  <Button variant="default">All products</Button>
+                </Link>
+                <Link to="/shopByCategory/Rani Phee">
+                  <Button variant="default">Rani phee</Button>
+                </Link>
+                <Link to="/shopByCategory/Wangkhei Phee">
+                  <Button variant="default">Wangkhei phee</Button>
+                </Link>
+                <Link to="/shopByCategory/Digital Print Pheijom">
+                  <Button variant="default">Digital pheijom</Button>
+                </Link>
+                <Link to="/shopByCategory/Phanek">
+                  <Button variant="default">Phanek</Button>
+                </Link>
+                <Link to="/shopByCategory/Blouse">
+                  <Button variant="default">Blouse</Button>
+                </Link>
+                <Link to="/shopByCategory/Top">
+                  <Button variant="default">Top</Button>
+                </Link>
+                <Link to="/shopByCategory/Muka Phee">
+                  <Button variant="default">Muka phee</Button>
+                </Link>
+              </Group>
+              <div className="m-5 grid grid-cols-2 sm:grid-cols-4 gap-1 sm:gap-2">
+                {products?.map((item, i) => {
+                  // if (props.category === item.category) {
+                  return (
+                    <Item
+                      key={item._id}
+                      id={item._id}
+                      name={item.name}
+                      img={item?.image_id[0]}
+                      new_price={item.new_price}
+                      old_price={item.old_price}
+                    />
+                  );
+                  //  } else {
+                  //    return null;
+                  //  }
+                })}
+              </div>
+            </div>
+          </ScrollArea>
+        </div>
+
       </div>
-      {/* </div> */}
+      </div>
       <Footer />
     </div>
-  );
+);
 };
 
 export default SidebarSort;
