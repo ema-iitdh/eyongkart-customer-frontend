@@ -22,6 +22,8 @@ const Navbar = () => {
   const [allCategory, setAllCategory] = useState([]);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [auth, setAuth] = useAuth();
+  // const [newproducts, setNewproducts] = useState();
+  // const [searchProduct, setSearchProduct] = useState("");
   const getAllCategory = async () => {
     try {
       const res = await instance({
@@ -52,7 +54,43 @@ const Navbar = () => {
   useEffect(() => {
     getAllCategory();
   }, []);
+  //
+  // const [products, setproducts] = useState();
+  // const [loading, setLoading] = useState(false);
+  // const fetchProducts = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const res = await instance({
+  //       url: "/product/allproduct",
+  //       method: "GET",
+  //     });
+  //     // console.log(res.data.products);
+  //     setproducts(res.data.products);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
+  // const handleOnChange = (e) => {
+  //   setSearchProduct(e.target.value);
+  //   let searchProductnew = products.filter((i) =>
+  //     i.name.toLowerCase().includes(e.target.value.toLowerCase())
+  //   );
+  //   setNewproducts(searchProductnew);
+  // };
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, []);
+  // useEffect(() => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "smooth",
+  //   });
+  // }, []);
+  // console.log(searchProduct);
+  // console.log(newproducts);
+  //
   const { getTotalCartItems } = useContext(ShopContext);
   return (
     <div className="bg-white dark:bg-gray-800 dark:text-white duration-200  z-40  fixed top-0 right-0 left-0">
@@ -254,9 +292,19 @@ const Navbar = () => {
                 type="text"
                 placeholder="Search for products "
                 className="search-bar"
+                // onChange={handleOnChange}
               />
               <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
             </div>
+            {/* <div className="relative group hidden sm:block">
+              <input
+                type="text"
+                placeholder="Search"
+                className="search-bar "
+                onChange={handleOnChange}
+              />
+              <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
+            </div> */}
             {/* order button section */}
             <Tooltip className="bg-red-500" label="Carts">
               <NavLink to="/cart" type="button" className="relative p-3">

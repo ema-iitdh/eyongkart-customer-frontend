@@ -74,14 +74,18 @@ const Footer = () => {
             {/*  Company address */}
             <div className="py-8 px-4 col-span-2 sm:col-auto dark:text-white">
               <h1 className="text-xl font-bold sm:text-left mb-3 ">Address </h1>
-              <div>
+              <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <GrLocation />
                   <p>Imphal,Manipur,India</p>
                 </div>
-                <div className="flex items-center gap-3 mt-6">
+                <div className="flex items-center gap-2 mt-6">
                   <FaMobileAlt />
-                  <p>+91 9876542338</p>
+                  <p>+91 9362002083</p>
+                </div>
+                <div className="flex items-center gap-2 mt-6">
+                  <FaMobileAlt />
+                  <p> +91 9863059696</p>
                 </div>
                 {/* social link */}
                 <div className="flex items-center gap-3 mt-6">

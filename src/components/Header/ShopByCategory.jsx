@@ -131,6 +131,7 @@ const ShopByCategory = () => {
     <>
       <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden pt-16">
         <Navbar />
+
         <div className="  overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color pt-8 flex gap-y-3.5">
           <ScrollArea
             h={600}
@@ -156,7 +157,7 @@ const ShopByCategory = () => {
                     <label htmlFor="all">All</label>
                     {/* <Radio size="xs" name="brand" label="All" color="red" /> */}
                   </div>
-
+                  {/* <Link to="/shopByCategory/Rani-Phee"> */}
                   <div className="flex items-center gap-2 pl-2">
                     <input
                       name="brand"
@@ -168,6 +169,7 @@ const ShopByCategory = () => {
                     />
                     <label htmlFor="rani">Rani Handloom</label>
                   </div>
+                  {/* </Link> */}
 
                   <div className="flex items-center gap-2 pl-2">
                     <input
@@ -350,6 +352,7 @@ const ShopByCategory = () => {
             </div>
           </div>
         </div>
+
         <Footer />
       </div>
     </>
