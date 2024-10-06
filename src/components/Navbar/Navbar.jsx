@@ -27,7 +27,7 @@ function CategoryOption({ title, data }) {
       <div className="group relative">
         <p className="cursor-pointer p-2 hover:bg-[#3333337c]">{title}</p>
 
-        <div className="hidden z-10 rounded px-5 py-2 bg-orange-600 text-white group-hover:grid absolute top-full left-0 ">
+        <div className="hidden z-10 rounded px-5 py-2 bg-white w-[600px]  text-red-400 group-hover:grid absolute top-full left-0  ">
           {data?.categories?.map((category) => (
             <div key={category._id}>
               <p
@@ -41,10 +41,12 @@ function CategoryOption({ title, data }) {
               >
                 {category.name}
               </p>
-              <p className="bg-red-400">
-                {category?.subCategories?.map((category) => (
-                  <>{category.subCategoryName}</>
-                ))}
+              <p className=" text-black  ">
+                <p className="ml-8 text-[15px] ">
+                  {category?.subCategories?.map((category) => (
+                    <>{category.subCategoryName}</>
+                  ))}
+                </p>
               </p>
             </div>
           ))}
@@ -62,8 +64,6 @@ const Navbar = () => {
   const [allCategory, setAllCategory] = useState([]);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [auth, setAuth] = useAuth();
-  // const [newproducts, setNewproducts] = useState();
-  // const [searchProduct, setSearchProduct] = useState("");
   const getAllCategory = async () => {
     try {
       const res = await instance({
@@ -94,43 +94,6 @@ const Navbar = () => {
   useEffect(() => {
     getAllCategory();
   }, []);
-  //
-  // const [products, setproducts] = useState();
-  // const [loading, setLoading] = useState(false);
-  // const fetchProducts = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const res = await instance({
-  //       url: "/product/allproduct",
-  //       method: "GET",
-  //     });
-  //     // console.log(res.data.products);
-  //     setproducts(res.data.products);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const handleOnChange = (e) => {
-  //   setSearchProduct(e.target.value);
-  //   let searchProductnew = products.filter((i) =>
-  //     i.name.toLowerCase().includes(e.target.value.toLowerCase())
-  //   );
-  //   setNewproducts(searchProductnew);
-  // };
-  // useEffect(() => {
-  //   fetchProducts();
-  // }, []);
-  // useEffect(() => {
-  //   window.scrollTo({
-  //     top: 0,
-  //     behavior: "smooth",
-  //   });
-  // }, []);
-  // console.log(searchProduct);
-  // console.log(newproducts);
-  //
 
   // Remove this
   const { data: menCategory, isLoading } = useQuery({
@@ -161,13 +124,12 @@ const Navbar = () => {
 
   // till here
 
-  // >>>>>>> 530d8b64574d0a7654abd237621bdddd00fa9441
   const { getTotalCartItems } = useContext(ShopContext);
 
   return (
     <div className="bg-white dark:bg-gray-800 dark:text-white duration-200  z-40  fixed top-0 right-0 left-0">
       {/* Remove this */}
-      <div className="flex items-center gap-2">
+      {/* <div className="flex items-center gap-2">
         <CategoryOption title="Men" data={isLoading ? [] : menCategory?.data} />
         <CategoryOption
           title="Women"
@@ -177,7 +139,7 @@ const Navbar = () => {
           title="Kids"
           data={isLoadingKidsCategory ? [] : kidsCategory?.data}
         />
-      </div>
+      </div> */}
       {/* till here */}
 
       <div className="py-4 relative">
@@ -189,46 +151,53 @@ const Navbar = () => {
               to="/"
               className="text-primary  tracking-widest  uppercase sm:text-3xl"
             >
-              <img className="w-[80px] h-[40px] object-fit" src={logo} alt="" />
+              <img
+                className="w-[80px] h-[40px] object-fit "
+                src={logo}
+                alt=""
+              />
             </NavLink>
             {/* menu items */}
             <div className="hidden lg:block ">
               <ul className="flex items-center font-semibold gap-5">
                 <li className="relative cursor-pointer group  ">
-                  <a className=" navbar text-[16px] flex ">
+                  <div className=" navbar text-[16px]  ">
                     <span className="navbar flex items-center text-[16px] mt-1">
                       MEN
                       <IoMdArrowDropdown />
                     </span>
-                  </a>
+                  </div>
                   <div
-                    className="absolute z-[9999] hidden group-hover:block bg-white w-[1000px]"
+                    className="absolute z-[9999] hidden group-hover:block text-red-400"
                     style={{ marginLeft: "-30px" }}
                   >
-                    <div className=" ml-3 text-red-400">
-                      <p>Digital Print Pheijom</p>
+                    <div className=" ">
+                      {/* <p>Digital Print Pheijom</p>
                       <p>Kurta Men</p>
                       <p>Lengyan</p>
-                      <p>Khudei</p>
+                      <p>Khudei</p> */}
+                      <CategoryOption
+                        data={isLoading ? [] : menCategory?.data}
+                      />
                     </div>
                   </div>
                 </li>
 
                 <li className="relative cursor-pointer group  ">
-                  <a className=" navbar text-[16px] flex ">
+                  <div className=" navbar text-[16px] flex ">
                     <span className="navbar flex items-center text-[16px] mt-1">
                       WOMEN
                       <IoMdArrowDropdown />
                     </span>
-                  </a>
+                  </div>
                   <div
-                    className="absolute z-[9999] hidden group-hover:block bg-white w-[1000px]"
-                    style={{ marginLeft: "-100px" }}
+                    className="absolute z-[9999] hidden group-hover:block "
+                    style={{ marginLeft: "-90px" }}
                   >
-                    <div className="flex flex-row">
-                      <div className="ml-3 ">
-                        <p className="text-red-400">Wangkhei phee</p>
-                        <div className="ml-8 text-[15px]">
+                    <div className="flex flex-col ">
+                      {/* <div className="ml-3 "> */}
+                      {/* <p className="text-red-400">Wangkhei phee</p> */}
+                      {/* <div className="ml-8 text-[15px]">
                           <p>Ningam samji</p>
                           <p>Kheiroi Thekpa</p>
                           <p>Border Chatpa</p>
@@ -236,134 +205,53 @@ const Navbar = () => {
                           <p>Lamthang Khulak</p>
                           <p>Moirang Phijang</p>
                           <p>Angom mayek</p>
-                        </div>
-                        <div className="ml-3 ">
-                          <p className="text-red-400">Top</p>
-                          <div className="ml-8 text-[15px]">
-                            <p>Half </p>
-                            <p>Full</p>
-                          </div>
-                        </div>
-
-                        <div className="ml-3 ">
-                          <p className="text-red-400">Blouse</p>
-                          <div className="ml-8 text-[15px]">
-                            <p>Half </p>
-                            <p>Full</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="ml-3 ">
-                        <p className="text-red-400">Rani phee</p>
-                        <div className="ml-8 text-[15px]">
-                          <p>Maraktaibi Border</p>
-                          <p>Rani Muka Suit</p>
-                          <p>Rani Manao Border </p>
-                          <p>Rani Muka Suit Border</p>
-                          <p>Rani Full</p>
-                          <p>Rani Manao</p>
-                          <p>Rani Ningam samji</p>
-                          <p>Rani Kheiroi Thekpa</p>
-                          <p>Rani Lamthang Khulak</p>
-                          <p>Rani Moirang Phijang</p>
-                          <p>Rani Angom mayek</p>
-                        </div>
-                      </div>
-
-                      <div className="ml-3 ">
-                        <p className="text-red-400">Muga Suit</p>
-                        <div className="ml-8 text-[15px]">
-                          <p>Muga Suit </p>
-                          <p>Muga Border Chatpa</p>
-                          <p>Muga Ningam samji</p>
-                          <p>Muga Kheiroi Thekpa</p>
-                          <p>Muga Lamthang Khulak</p>
-                          <p>Muga Moirang Phijang</p>
-                          <p>Muga Angom mayek</p>
-                        </div>
-                      </div>
-                      <div className="ml-3 ">
-                        <p className="text-red-400">Phanek</p>
-                        <div className="ml-8 text-[15px]">
-                          <p>Thambal Leikhok</p>
-                          <p>Khwang Pheege Sabi</p>
-                          <p>Pheege Sabi</p>
-                          <p>Pheege Mafen Khwang Phanek</p>
-                          <p>Khurkhul Manao Phanek</p>
-                          <p>Leni Muga Phanek</p>
-                          <p>Pashmina Muga Phanek</p>
-                          <p>Oneply Khurkhul Manao Phanek </p>
-                        </div>
-                      </div>
+                        </div> */}
+                      <CategoryOption
+                        // title="Women"
+                        data={isLoadingWomenCategory ? [] : womenCategory?.data}
+                      />
+                      {/*removing */}
                     </div>
                   </div>
                 </li>
 
                 <li className="relative cursor-pointer group  ">
-                  <a className=" navbar text-[16px] flex ">
+                  <div className=" navbar text-[16px] flex ">
                     <span className="navbar flex items-center text-[16px] mt-1">
                       KIDS
                       <IoMdArrowDropdown />
                     </span>
-                  </a>
-                  <div className="absolute z-[9999] hidden group-hover:block">
-                    <ul className="space-y-1 bg-white w-[200px] rounded-lg">
-                      {DropdownLink.map((data, index) => (
-                        <li key={index}>
-                          {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-                          <p
-                            className="text-[16px] inline-block w-full p-1 hover:text-gray-600 hover:bg-whitesmoke dark:text-black dark:hover:text-gray-600"
-                            onClick={() => {
-                              console.log(data.name);
-                              navigate(
-                                `/shopByCategory/${data.name.replace(
-                                  / /g,
-                                  "-"
-                                )}`
-                              );
-                            }}
-                          >
-                            {data.name}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
+                  </div>
+                  <div
+                    className="absolute z-[9999] hidden group-hover:block  "
+                    style={{ marginLeft: "-200px", width: "100%" }}
+                  >
+                    <div className="flex flex-col text-red-400  ">
+                      <CategoryOption
+                        // title="Kids"
+                        data={isLoadingKidsCategory ? [] : kidsCategory?.data}
+                      />
+                      {/*removing */}
+                    </div>
                   </div>
                 </li>
 
-                <li className="relative cursor-pointer group  ">
-                  <a className=" navbar text-[16px] flex ">
+                {/* <li className="relative cursor-pointer group  ">
+                  <div className=" navbar text-[16px] flex ">
                     <span className="navbar flex items-center text-[16px] mt-1">
-                      CATALOG
+                      KIDS
                       <IoMdArrowDropdown />
                     </span>
-                  </a>
+                  </div>
                   <div className="absolute z-[9999] hidden group-hover:block">
                     <ul className="space-y-1 bg-white w-[200px] rounded-lg">
-                      {DropdownLink.map((data, index) => (
-                        <li key={index}>
-                          {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-                          <p
-                            className="text-[16px] inline-block w-full p-1 hover:text-gray-600 hover:bg-whitesmoke dark:text-black dark:hover:text-gray-600"
-                            onClick={() => {
-                              console.log(data.name);
-                              navigate(
-                                `/shopByCategory/${data.name.replace(
-                                  / /g,
-                                  "-"
-                                )}`
-                              );
-                              // navigate(`/shopByCategory/${data.name}`);
-                            }}
-                          >
-                            {data.name}
-                          </p>
-                        </li>
-                      ))}
+                      <CategoryOption
+                        // title="Kids"
+                        data={isLoadingKidsCategory ? [] : kidsCategory?.data}
+                      />
                     </ul>
                   </div>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -375,19 +263,9 @@ const Navbar = () => {
                 type="text"
                 placeholder="Search for products "
                 className="search-bar"
-                // onChange={handleOnChange}
               />
               <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
             </div>
-            {/* <div className="relative group hidden sm:block">
-              <input
-                type="text"
-                placeholder="Search"
-                className="search-bar "
-                onChange={handleOnChange}
-              />
-              <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
-            </div> */}
             {/* order button section */}
             <Tooltip className="bg-red-500" label="Carts">
               <NavLink to="/cart" type="button" className="relative p-3">
