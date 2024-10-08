@@ -14,6 +14,7 @@ import { Radio, Group } from "@mantine/core";
 import { Checkbox } from "@mantine/core";
 const Checkout = () => {
   const [razorpaytick, setrazorpaytick] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [fullname, setFullName] = useState("");
   const [address, setAddress] = useState("");
   const [phonenumber, setPhoneNumber] = useState("");
@@ -81,9 +82,15 @@ const Checkout = () => {
   }
   const paymentHandler = async () => {
     if (!razorpaytick) {
+      // alert("Proceeding with Razorpay payment");
+      // navigate("/myorder");
+      return;
+    }
+    if (paymentMethod === "cash") {
       navigate("/myorder");
       return;
     }
+
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
@@ -193,8 +200,7 @@ const Checkout = () => {
       text: "Thank you for order",
       icon: "success",
     });
-
-    navigate("/myorder");
+    // navigate("/myorder");
   };
   const saveInfo = () => {
     Swal.fire({
@@ -393,20 +399,22 @@ const Checkout = () => {
                           setrazorpaytick(event.currentTarget.checked)
                         }
                       />
-                      <div>
-                        <Radio
-                          value="cash"
-                          color="red"
-                          label="Cash on Delivery"
-                          onClick={alertOk}
-                        />
-                      </div>
+
+                      <Radio
+                        value="cash"
+                        color="red"
+                        label="Cash on Delivery"
+                        onClick={alertOk}
+                        onChange={() => {
+                          setPaymentMethod("cash");
+                        }}
+                      />
                     </Group>
                   </Radio.Group>
                   <button
                     onClick={paymentHandler}
                     type="button"
-                    className="w-[200px] h-[50px] mt-4 outline-none border-none bg-red-500 text-white text-[16px] cursor-pointer rounded-xl"
+                    className="w-[150px] h-[50px] mt-4 outline-none border-none bg-red-500 text-white text-[16px] cursor-pointer rounded-xl"
                   >
                     PROCEED TO PAY
                   </button>

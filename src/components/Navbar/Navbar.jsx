@@ -13,10 +13,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/auth";
 import instance from "../../../api";
 import { Tooltip, Button } from "@mantine/core";
-
+import { BsFillBoxFill } from "react-icons/bs";
 import logo from "../../assets/logo.jpg";
 import { useQuery } from "@tanstack/react-query";
 
+import { IconPhoto } from "@tabler/icons-react";
 // Remove this
 function CategoryOption({ title, data }) {
   console.log(data?.subCategories);
@@ -153,7 +154,7 @@ const Navbar = () => {
             >
               <img
                 className="w-[80px] h-[40px] object-fit "
-                src={logo}
+                src="/mainLogo.png"
                 alt=""
               />
             </NavLink>
@@ -163,7 +164,10 @@ const Navbar = () => {
                 <li className="relative cursor-pointer group  ">
                   <div className=" navbar text-[16px]  ">
                     <span className="navbar flex items-center text-[16px] mt-1">
-                      MEN
+                      <CategoryOption
+                        title="MEN"
+                        // data={isLoading ? [] : menCategory?.data}
+                      />
                       <IoMdArrowDropdown />
                     </span>
                   </div>
@@ -171,7 +175,7 @@ const Navbar = () => {
                     className="absolute z-[9999] hidden group-hover:block text-red-400"
                     style={{ marginLeft: "-30px" }}
                   >
-                    <div className=" ">
+                    <div className="">
                       {/* <p>Digital Print Pheijom</p>
                       <p>Kurta Men</p>
                       <p>Lengyan</p>
@@ -186,7 +190,10 @@ const Navbar = () => {
                 <li className="relative cursor-pointer group  ">
                   <div className=" navbar text-[16px] flex ">
                     <span className="navbar flex items-center text-[16px] mt-1">
-                      WOMEN
+                      <CategoryOption
+                        title="WOMEN"
+                        // data={isLoading ? [] : menCategory?.data}
+                      />
                       <IoMdArrowDropdown />
                     </span>
                   </div>
@@ -218,13 +225,16 @@ const Navbar = () => {
                 <li className="relative cursor-pointer group  ">
                   <div className=" navbar text-[16px] flex ">
                     <span className="navbar flex items-center text-[16px] mt-1">
-                      KIDS
+                      <CategoryOption
+                        title="KIDS"
+                        // data={isLoading ? [] : menCategory?.data}
+                      />
                       <IoMdArrowDropdown />
                     </span>
                   </div>
                   <div
                     className="absolute z-[9999] hidden group-hover:block  "
-                    style={{ marginLeft: "-200px", width: "100%" }}
+                    style={{ marginLeft: "-200px" }}
                   >
                     <div className="flex flex-col text-red-400  ">
                       <CategoryOption
@@ -266,6 +276,7 @@ const Navbar = () => {
               />
               <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
             </div>
+
             {/* order button section */}
             <Tooltip className="bg-red-500" label="Carts">
               <NavLink to="/cart" type="button" className="relative p-3">
@@ -282,6 +293,17 @@ const Navbar = () => {
                 <label htmlFor="">Wishlist</label>
               </NavLink>
             </Tooltip>
+
+            <div>
+              <Button
+                className="text-black "
+                variant="filled"
+                color="rgba(250, 18, 18, 1)"
+              >
+                <BsFillBoxFill className="m-1" />
+                Seller
+              </Button>
+            </div>
 
             {auth?.token && (
               <Tooltip className="bg-red-500" label="Orders">

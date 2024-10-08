@@ -82,18 +82,19 @@ const SidebarSort = () => {
                     <label htmlFor="all">All</label>
                     {/* <Radio size="xs" name="brand" label="All" color="red" /> */}
                   </div>
-
-                  <div className="flex items-center gap-2 pl-2">
-                    <input
-                      name="brand"
-                      id="rani"
-                      type="radio"
-                      value={"Rani Handloom"}
-                      className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
-                      onChange={(e) => setBrand(e.target.value)}
-                    />
-                    <label htmlFor="rani">Rani Handloom</label>
-                  </div>
+                  <Link to="/shopByCategory/Rani Phee">
+                    <div className="flex items-center gap-2 pl-2">
+                      <input
+                        name="brand"
+                        id="rani"
+                        type="radio"
+                        value={"Rani Handloom"}
+                        className="appearance-none w-3 h-3 rounded-full border-2  border-gray-500 checked:bg-red-500  focus:outline-none transition-colors"
+                        onChange={(e) => setBrand(e.target.value)}
+                      />
+                      <label htmlFor="rani">Rani Handloom</label>
+                    </div>
+                  </Link>
 
                   <div className="flex items-center gap-2 pl-2">
                     <input

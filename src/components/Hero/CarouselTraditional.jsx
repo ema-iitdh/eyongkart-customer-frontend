@@ -99,7 +99,7 @@ const CarouselTraditional = () => {
     fetchCarouselData();
   }, []);
   return (
-    <div className=" mt-20 rounded-3xl text-2xl overflow-hidden  min-h-[400px] sm:min-h-[480px] hero-bg-color flex  items-center flex-col pt-8 gap-y-3.5">
+    <div className=" mt-20 rounded-3xl text-2xl overflow-hidden  min-h-[400px] sm:min-h-[480px] hero-bg-color flex items-center flex-col pt-8 gap-y-3.5">
       <div className=" container px-1">
         {/* hero section */}
         <Slider {...settings}>

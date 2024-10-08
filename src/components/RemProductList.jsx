@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import instance from "../../api";
 
 function RemProductList() {
@@ -24,16 +24,22 @@ function RemProductList() {
   console.log(productList);
 
   if (productList?.data?.products?.length === 0)
-    return <div>No products found for this category</div>;
+    return (
+      <div className="flex justify-center items-center">
+        No products found for this category
+      </div>
+    );
 
   return (
     <div>
       Product List
-      {productList?.data?.products?.map((product) => (
-        <>
-          <div>{product?.name}</div>
-        </>
-      ))}
+      <Link to="/productList/:categoryId">
+        {productList?.data?.products?.map((product) => (
+          <>
+            <div>{product?.name}</div>
+          </>
+        ))}
+      </Link>
     </div>
   );
 }

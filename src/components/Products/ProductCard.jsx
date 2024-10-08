@@ -32,6 +32,7 @@ const ProductCard = ({ data, type, setWishlistUpdate }) => {
         {products?.map((p) => (
           <div className="group" key={p._id}>
             <div className="relative">
+              {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
               <img
                 onClick={() => navigate(`/product/${p._id}`)}
                 src={`http://drive.google.com/thumbnail?id=${p?.image_id[0]?.replace(
@@ -45,11 +46,12 @@ const ProductCard = ({ data, type, setWishlistUpdate }) => {
             <div className="flex justify-between leading-7">
               <div>
                 <h2 className="font-semibold">{p.name}</h2>
-                <h2 className="font-bold">
+                <h2 className="font-bold ">
                   <span className="line-through text-red-600">
                     ₹ {p.old_price}
                   </span>
                   <span className="ml-3">₹ {p.new_price}</span>
+                  <span className="text-[15px] ml-1">20%OFF</span>
                 </h2>
               </div>
               <button type="button" className="relative p-3">
