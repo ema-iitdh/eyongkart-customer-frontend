@@ -324,7 +324,7 @@ const ShopByCategory = () => {
           </ScrollArea>
 
           <div className="container">
-            <div>
+            <div className="">
               <h1 className="pt-3 pl-5">Recommended</h1>
               <Group gap="xs" className="pl-5">
                 <Link to="/sort">

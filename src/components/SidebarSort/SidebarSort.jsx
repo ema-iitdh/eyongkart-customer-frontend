@@ -8,6 +8,7 @@ import { ScrollArea, Radio } from "@mantine/core";
 import instance from "../../../api";
 import axios from "axios";
 import Item from "../Item/Item";
+import ChatBox from "../Chat/ChatBox";
 
 const SidebarSort = () => {
   const [brand, setBrand] = useState("");
@@ -294,6 +295,7 @@ const SidebarSort = () => {
             </div>
           </ScrollArea>
         </div>
+        <ChatBox />
       </div>
       <Footer />
     </div>

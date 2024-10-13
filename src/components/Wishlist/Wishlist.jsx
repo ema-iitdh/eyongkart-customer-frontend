@@ -5,6 +5,7 @@ import { ShopContext } from "../Context/ShopContext";
 import Footer from "../Footer/Footer";
 import instance from "../../../api";
 import { FaHeart } from "react-icons/fa6";
+import ChatBox from "../Chat/ChatBox";
 const Wishlist = () => {
   const { cartItems, removeFromCart } = useContext(ShopContext);
 
@@ -44,10 +45,11 @@ const Wishlist = () => {
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
       <Navbar />
-      <div className="py-14">
-        <div className="container  overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex  items-center flex-col pt-12 gap-y-3.5">
+
+      <div className=" text-xl overflow-hidden min-h-[550px] sm:min-h-[650px] hero-bg-color flex flex-col pt-8 gap-y-3.5 ">
+        <div className="overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex  items-center flex-col pt-16 gap-y-3.5">
           <div className="container">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5 place-items-center">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 place-items-center">
               {products.map((p) => (
                 <div className="group" key={p._id}>
                   <div className="relative">
@@ -62,18 +64,19 @@ const Wishlist = () => {
                         ""
                       )}`}
                       alt=""
-                      className="h-[190px] w-[260px] object-cover rounded-md"
+                      className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px]  object-fit rounded-md"
                     />
                   </div>
-                  <div className="flex justify-between  leading-7">
+                  <div className="flex justify-between ">
                     <div>
-                      <h2 className="font-semibold">{p.name}</h2>
-                      <h2 className="font-bold">
-                        {" "}
-                        <span className="line-through text-red-600">
+                      <h2 className="sm:font-semibold text-[18px]">{p.name}</h2>
+                      <h2 className="font-bold ">
+                        <span className="line-through text-red-600 sm:text-[20px] text-[16px] ">
                           ₹ {p.old_price}
                         </span>
-                        <span className="ml-3">₹ {p.new_price}</span>
+                        <span className="ml-3 sm:text-[20px] text-[16px]">
+                          ₹ {p.new_price}
+                        </span>
                       </h2>
                     </div>
 
@@ -83,7 +86,7 @@ const Wishlist = () => {
                         className={
                           p.fav === "Yes"
                             ? "text-red-600 dark:text-gray-400"
-                            : "text-gray-400 dark:text-gray-300"
+                            : "text-gray-400 dark:text-gray-400"
                         }
                         onClick={(e) => handleIsWistlist(e, p)}
                       />
@@ -95,6 +98,7 @@ const Wishlist = () => {
           </div>
         </div>
       </div>
+      <ChatBox />
       <Footer />
     </div>
   );

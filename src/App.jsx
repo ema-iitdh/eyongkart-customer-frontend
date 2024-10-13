@@ -24,6 +24,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Myorder from "./components/Myorders/Myorder";
 import SidebarSort from "./components/SidebarSort/SidebarSort";
 import RemProductList from "./components/RemProductList";
+import ChatBox from "./components/Chat/ChatBox";
 
 const App = () => {
   return (
@@ -53,6 +54,8 @@ const App = () => {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/myorder" element={<Myorder />} />
           <Route path="/sort" element={<SidebarSort />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/chat" element={<ChatBox />} />
           {/* Remove this */}
           {/* Remove RemProductList */}
           <Route path="/productList/:categoryId" element={<RemProductList />} />

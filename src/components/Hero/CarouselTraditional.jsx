@@ -72,11 +72,11 @@ const CarouselTraditional = () => {
     dots: false,
     arrows: false,
     infinite: true,
-    speed: 800,
+    speed: 1000,
     slidesToShow: 1,
-    // autoplay:true,
+    autoplay: true,
     slidesToScroll: 1,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 2500,
     cssEase: "ease-in-out",
     pauseOnHover: false,
     pauseOnFocus: true,
@@ -99,31 +99,29 @@ const CarouselTraditional = () => {
     fetchCarouselData();
   }, []);
   return (
-    <div className=" mt-20 rounded-3xl text-2xl overflow-hidden  min-h-[400px] sm:min-h-[480px] hero-bg-color flex items-center flex-col pt-8 gap-y-3.5">
-      <div className=" container px-1">
-        {/* hero section */}
+    <div className="mt-16 rounded-3xl text-2xl overflow-hidden  min-h-[210px] sm:min-h-[450px] hero-bg-color flex items-center flex-col pt-6 gap-y-3.5">
+      <div className="p-4 m-1 w-full ">
         <Slider {...settings}>
           {carouselData?.map((data) => (
             <div key={data.id}>
-              <div className="grid grid-cols-1 sm:grid-cols-2">
-                {/* text content section */}
-                <div className="flex flex-col justify-center gap-6 sm:pl-4  sm:pt-0 text-center sm:text-left order-2 sm:order-1 relative z-10">
+              <div className="grid grid-cols-2 sm:grid-cols-2 gap-x-10">
+                <div className="flex flex-col justify-center sm:gap-6 gap-4 sm:pl-4 sm:pt-0  sm:text-left text-left order-2 sm:order-1 relative z-10">
                   <h1 className="text-2xl sm:text-6xl lg:text-2xl font-bold">
                     {data.subtitle}
                   </h1>
-                  <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold">
+                  <h1 className="text-3xl sm:text-6xl lg:text-7xl font-bold">
                     {data.title}
                   </h1>
-                  <h1 className="text-5xl uppercase text-white dark:text-white/7 sm:text-[70px] md:text-[100px] xl:text-[150px] font-bold">
+                  <h1 className="sm:text-5xl text-[38px] uppercase text-white  md:text-[100px]  font-bold">
                     {data.title2}
                   </h1>
                 </div>
-                {/* image section */}
-                <div className=" order-2 sm:order-1 ">
+
+                <div className=" order-2 sm:order-1 pl-10 h-fit ">
                   <img
                     src={`http://drive.google.com/thumbnail?id=${data.img}`}
                     alt=""
-                    className="w-[220px] h-[150px] sm:w-[350px] sm:h-[400px] sm:scale-105 lg:scale-110 object-contain mx-auto drop-shadow-[-8px_4px_6px_rgba(0,0,0,.4)] relative z-40"
+                    className="w-[150px] h-[120px] sm:w-[350px] sm:h-[320px] sm:scale-105 lg:scale-100 object-fit m-auto sm:pl-10 pl-4 drop-shadow-[-8px_4px_6px_rgba(0,0,0,.4)]  z-40"
                   />
                 </div>
               </div>

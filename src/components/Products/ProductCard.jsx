@@ -28,10 +28,10 @@ const ProductCard = ({ data, type, setWishlistUpdate }) => {
 
   return (
     <div className="mb-10">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5 place-items-center">
+      <div className="grid grid-cols-2  sm:grid-cols-3 md:grid-cols-5 gap-3 ">
         {products?.map((p) => (
           <div className="group" key={p._id}>
-            <div className="relative">
+            <div className="relative ">
               {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
               <img
                 onClick={() => navigate(`/product/${p._id}`)}
@@ -40,7 +40,7 @@ const ProductCard = ({ data, type, setWishlistUpdate }) => {
                   ""
                 )}`}
                 alt=""
-                className="h-[190px] w-[260px] object-cover rounded-md"
+                className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px]  object-fit rounded-md"
               />
             </div>
             <div className="flex justify-between leading-7">
@@ -51,7 +51,10 @@ const ProductCard = ({ data, type, setWishlistUpdate }) => {
                     ₹ {p.old_price}
                   </span>
                   <span className="ml-3">₹ {p.new_price}</span>
-                  <span className="text-[15px] ml-1">20%OFF</span>
+                  <span className="text-[15px] text-gray-500 ml-1">
+                    {" "}
+                    20%OFF
+                  </span>
                 </h2>
               </div>
               <button type="button" className="relative p-3">

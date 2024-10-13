@@ -49,45 +49,74 @@ const data = [
   },
 ];
 const TopSales = () => {
-  var settings = {
+  let settings = {
     dots: true,
     infinite: true,
-    speed: 600,
+    speed: 500,
     slidesToShow: 4,
     slidesToScroll: 2,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 1,
+        },
+      },
+    ],
   };
+
   return (
     <>
       <div className="pt-2">
-        <div className="overflow-hidden rounded-3xl h-[350px] sm:h-[400px] hero-bg-color  ">
+        <div className="overflow-hidden rounded-3xl  sm:h-[420px] h-[330px] hero-bg-color  ">
           <div className="container pb-2 ml-0 pr-0  sm:pb-0">
-            <h1 className=" flex justify-start items-start text-2xl font-semibold text-black hover:text-red-500 dark:text-white p-2 ">
+            <h1 className="gap-4 flex justify-start items-start text-2xl font-semibold  text-black hover:text-red-500 dark:text-white p-2 ">
               Top sales
+              <p className="text-[16px] text-red-500">70% Above</p>
             </h1>
-            <div className="  m-auto ">
+            <div className="sm:m-auto sm:p-5 sm:w-auto pt-1 pr-8 w-[400px]">
               <Slider {...settings}>
                 {data.map((item, index) => {
                   return (
-                    <div key={index} className="bg-gray-300">
-                      <div>
+                    <div
+                      key={index}
+                      className="bg-gray-300 sm:w-20 sm:h-[320px] w-[300px] h-[250px]"
+                    >
+                      <div className="">
                         <img
-                          className="w-60 h-60 p-2  block m-auto"
+                          className="sm:w-60 sm:h-60 w-[150px] h-[170px] object-fit block m-auto p-2 "
                           src={item.img}
                           alt=""
                         />
                       </div>
-                      <div className="p-2 bg-white flex justify-between ">
-                        <div>
-                          <p className="font-semibold text-black">
-                            {item.name}
-                          </p>
-                          <p className="font-semibold text-black">
-                            ₹ {item.new_price}
-                          </p>
+                      <div className=" flex justify-around sm:p-2 p-2">
+                        <div className="sm:text-[18px] text-[15px] text-black">
+                          <p className="">{item.name}</p>
+                          <p className=" ">₹ {item.new_price}</p>
                         </div>
                         <button
                           type="button"
-                          className="bg-red-600 hover:bg-red-500  text-white p-3 m-2 rounded-full "
+                          className="bg-red-600 hover:bg-red-500 sm:text-[15px] text-[12px] sm:w-[100px]  sm:h-[40px] w-[60px] h-8  text-white rounded-md  "
                         >
                           Buy now
                         </button>

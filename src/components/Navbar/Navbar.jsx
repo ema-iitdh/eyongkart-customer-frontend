@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+// import App from "./App.css";
 import { FaSearch } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { RiAccountCircleLine } from "react-icons/ri";
@@ -16,44 +17,44 @@ import { Tooltip, Button } from "@mantine/core";
 import { BsFillBoxFill } from "react-icons/bs";
 import logo from "../../assets/logo.jpg";
 import { useQuery } from "@tanstack/react-query";
-
+import { Avatar } from "@mantine/core";
+import { IconStar } from "@tabler/icons-react";
 import { IconPhoto } from "@tabler/icons-react";
 // Remove this
 function CategoryOption({ title, data }) {
-  console.log(data?.subCategories);
   const navigate = useNavigate();
 
   return (
-    <>
-      <div className="group relative">
-        <p className="cursor-pointer p-2 hover:bg-[#3333337c]">{title}</p>
+    <div className="group relative">
+      {/* Main title (category) */}
+      <p className="cursor-pointer p-2 hover:bg-red-500">{title}</p>
 
-        <div className="hidden z-10 rounded px-5 py-2 bg-white w-[600px]  text-red-400 group-hover:grid absolute top-full left-0  ">
-          {data?.categories?.map((category) => (
-            <div key={category._id}>
-              <p
-                onKeyDown={() => {
-                  navigate(`/productList/${category._id}`);
-                }}
-                onClick={() => {
-                  navigate(`/productList/${category._id}`);
-                }}
-                className="whitespace-nowrap"
-              >
-                {category.name}
-              </p>
-              <p className=" text-black  ">
-                <p className="ml-8 text-[15px] ">
-                  {category?.subCategories?.map((category) => (
-                    <>{category.subCategoryName}</>
-                  ))}
-                </p>
-              </p>
-            </div>
-          ))}
-        </div>
+      {/* Dropdown for subcategories */}
+      <div className="hidden group-hover:grid absolute left-0 top-0 z-10 bg-gray-100 px-4  grid-cols-3 gap-4  overflow-y-auto w-[600px]">
+        {data?.categories?.map((category) => (
+          <div key={category._id} className="category">
+            {/* Category Name */}
+            <p
+              className="font-bold text-red-500 cursor-pointer"
+              onClick={() => {
+                navigate(`/productList/${category._id}`);
+              }}
+            >
+              {category.name}
+            </p>
+
+            {/* Subcategories List */}
+            <ul className="list-none mt-2">
+              {category?.subCategories?.map((subcategory) => (
+                <li key={subcategory._id} className="text-sm text-black">
+                  {subcategory.subCategoryName}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -68,7 +69,7 @@ const Navbar = () => {
   const getAllCategory = async () => {
     try {
       const res = await instance({
-        url: "/category/allcategory",
+        url: "/category",
         method: "GET",
       });
       // const sortedCategory = res.data.category.sort((a, b) =>
@@ -128,9 +129,10 @@ const Navbar = () => {
   const { getTotalCartItems } = useContext(ShopContext);
 
   return (
-    <div className="bg-white dark:bg-gray-800 dark:text-white duration-200  z-40  fixed top-0 right-0 left-0">
-      {/* Remove this */}
-      {/* <div className="flex items-center gap-2">
+    <>
+      <div className=" bg-white duration-200 z-40 fixed top-0 right-0 left-0">
+        {/* Remove this */}
+        {/* <div className="flex items-center gap-2">
         <CategoryOption title="Men" data={isLoading ? [] : menCategory?.data} />
         <CategoryOption
           title="Women"
@@ -141,70 +143,57 @@ const Navbar = () => {
           data={isLoadingKidsCategory ? [] : kidsCategory?.data}
         />
       </div> */}
-      {/* till here */}
+        {/* till here */}
+        <div className="sm:py-2  relative ">
+          <div className="container flex justify-between items-center">
+            <div className="flex  items-center gap-7">
+              <NavLink
+                to="/"
+                className="text-primary tracking-widest uppercase sm:text-3xl"
+              >
+                <img
+                  className="w-[80px] h-[40px] object-fit "
+                  src="/mainLogo.png"
+                  alt=""
+                />
+              </NavLink>
 
-      <div className="py-4 relative">
-        {/* style={{ background: "red" }} */}
-        <div className="container flex justify-between items-center">
-          {/* logo and link section */}
-          <div className="flex  items-center gap-7">
-            <NavLink
-              to="/"
-              className="text-primary  tracking-widest  uppercase sm:text-3xl"
-            >
-              <img
-                className="w-[80px] h-[40px] object-fit "
-                src="/mainLogo.png"
-                alt=""
-              />
-            </NavLink>
-            {/* menu items */}
-            <div className="hidden lg:block ">
-              <ul className="flex items-center font-semibold gap-5">
-                <li className="relative cursor-pointer group  ">
-                  <div className=" navbar text-[16px]  ">
-                    <span className="navbar flex items-center text-[16px] mt-1">
-                      <CategoryOption
-                        title="MEN"
-                        // data={isLoading ? [] : menCategory?.data}
-                      />
-                      <IoMdArrowDropdown />
-                    </span>
-                  </div>
-                  <div
-                    className="absolute z-[9999] hidden group-hover:block text-red-400"
-                    style={{ marginLeft: "-30px" }}
-                  >
-                    <div className="">
-                      {/* <p>Digital Print Pheijom</p>
-                      <p>Kurta Men</p>
-                      <p>Lengyan</p>
-                      <p>Khudei</p> */}
-                      <CategoryOption
-                        data={isLoading ? [] : menCategory?.data}
-                      />
+              <div className="hidden lg:block  ">
+                <ul className="flex items-center font-semibold gap-5 ">
+                  <li className="relative cursor-pointer group   ">
+                    <div className=" navbar text-[16px]  ">
+                      <span className="flex items-center text-[16px] mt-1">
+                        <CategoryOption
+                          title="MEN"
+                          // data={isLoading ? [] : menCategory?.data}
+                        />
+                        <IoMdArrowDropdown />
+                      </span>
                     </div>
-                  </div>
-                </li>
+                    <div className="absolute z-[9999] hidden group-hover:block text-red-400">
+                      <div className="">
+                        <CategoryOption
+                          data={isLoading ? [] : menCategory?.data}
+                        />
+                      </div>
+                    </div>
+                  </li>
 
-                <li className="relative cursor-pointer group  ">
-                  <div className=" navbar text-[16px] flex ">
-                    <span className="navbar flex items-center text-[16px] mt-1">
-                      <CategoryOption
-                        title="WOMEN"
-                        // data={isLoading ? [] : menCategory?.data}
-                      />
-                      <IoMdArrowDropdown />
-                    </span>
-                  </div>
-                  <div
-                    className="absolute z-[9999] hidden group-hover:block "
-                    style={{ marginLeft: "-90px" }}
-                  >
-                    <div className="flex flex-col ">
-                      {/* <div className="ml-3 "> */}
-                      {/* <p className="text-red-400">Wangkhei phee</p> */}
-                      {/* <div className="ml-8 text-[15px]">
+                  <li className="relative cursor-pointer group  ">
+                    <div className=" navbar text-[16px] flex ">
+                      <span className="flex items-center text-[16px] mt-1">
+                        <CategoryOption title="WOMEN" />
+                        <IoMdArrowDropdown />
+                      </span>
+                    </div>
+                    <div
+                      className="absolute z-[9999] hidden group-hover:block "
+                      style={{ marginLeft: "-90px" }}
+                    >
+                      <div className="">
+                        {/* <div className="ml-3 "> */}
+                        {/* <p className="text-red-400">Wangkhei phee</p> */}
+                        {/* <div className="ml-8 text-[15px]">
                           <p>Ningam samji</p>
                           <p>Kheiroi Thekpa</p>
                           <p>Border Chatpa</p>
@@ -213,40 +202,37 @@ const Navbar = () => {
                           <p>Moirang Phijang</p>
                           <p>Angom mayek</p>
                         </div> */}
-                      <CategoryOption
-                        // title="Women"
-                        data={isLoadingWomenCategory ? [] : womenCategory?.data}
-                      />
-                      {/*removing */}
+                        <CategoryOption
+                          data={
+                            isLoadingWomenCategory ? [] : womenCategory?.data
+                          }
+                        />
+                        {/*removing */}
+                      </div>
                     </div>
-                  </div>
-                </li>
+                  </li>
 
-                <li className="relative cursor-pointer group  ">
-                  <div className=" navbar text-[16px] flex ">
-                    <span className="navbar flex items-center text-[16px] mt-1">
-                      <CategoryOption
-                        title="KIDS"
-                        // data={isLoading ? [] : menCategory?.data}
-                      />
-                      <IoMdArrowDropdown />
-                    </span>
-                  </div>
-                  <div
-                    className="absolute z-[9999] hidden group-hover:block  "
-                    style={{ marginLeft: "-200px" }}
-                  >
-                    <div className="flex flex-col text-red-400  ">
-                      <CategoryOption
-                        // title="Kids"
-                        data={isLoadingKidsCategory ? [] : kidsCategory?.data}
-                      />
-                      {/*removing */}
+                  <li className="relative cursor-pointer group  ">
+                    <div className=" navbar text-[16px] flex ">
+                      <span className="flex items-center text-[16px] mt-1">
+                        <CategoryOption title="KIDS" />
+                        <IoMdArrowDropdown />
+                      </span>
                     </div>
-                  </div>
-                </li>
+                    <div
+                      className="absolute z-[9999] hidden group-hover:block  "
+                      style={{ marginLeft: "-200px" }}
+                    >
+                      <div className="flex flex-col text-red-400  ">
+                        <CategoryOption
+                          data={isLoadingKidsCategory ? [] : kidsCategory?.data}
+                        />
+                        {/*removing */}
+                      </div>
+                    </div>
+                  </li>
 
-                {/* <li className="relative cursor-pointer group  ">
+                  {/* <li className="relative cursor-pointer group  ">
                   <div className=" navbar text-[16px] flex ">
                     <span className="navbar flex items-center text-[16px] mt-1">
                       KIDS
@@ -262,23 +248,23 @@ const Navbar = () => {
                     </ul>
                   </div>
                 </li> */}
-              </ul>
+                </ul>
+              </div>
             </div>
-          </div>
-          {/* navbar right section */}
-          <div className="flex justify-between items-center gap-2">
-            {/* Search bar section */}
-            <div className="relative group hidden sm:block">
-              <input
-                type="text"
-                placeholder="Search for products "
-                className="search-bar"
-              />
-              <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
-            </div>
+            {/* navbar right section */}
+            <div className="flex justify-between items-center gap-2">
+              {/* Search bar section */}
+              <div className="relative group hidden sm:block">
+                <input
+                  type="text"
+                  placeholder="Search for products "
+                  className="search-bar"
+                />
+                <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
+              </div>
 
-            {/* order button section */}
-            <Tooltip className="bg-red-500" label="Carts">
+              {/* order button section */}
+              {/* <Tooltip className=" bg-red-500" label="Carts"> */}
               <NavLink to="/cart" type="button" className="relative p-3">
                 {/* <FaShoppingCart className="text-xl text-gray-600 dark:text-gray-400" /> */}
                 <label htmlFor="">Bags</label>
@@ -286,65 +272,63 @@ const Navbar = () => {
                   {getTotalCartItems()}
                 </div>
               </NavLink>
-            </Tooltip>
-            <Tooltip className="bg-red-500" label="Wishlist">
+              {/* </Tooltip> */}
+              {/* <Tooltip className="bg-red-500" label="Wishlist"> */}
               <NavLink to="/wishlist" type="button" className="relative p-3">
                 {/* <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" /> */}
                 <label htmlFor="">Wishlist</label>
               </NavLink>
-            </Tooltip>
+              {/* </Tooltip> */}
 
-            <div>
-              <Button
-                className="text-black "
-                variant="filled"
-                color="rgba(250, 18, 18, 1)"
-              >
-                <BsFillBoxFill className="m-1" />
-                Seller
-              </Button>
-            </div>
+              <div>
+                <Button
+                  className="text-white px-2 py-[-2px]  "
+                  variant="filled"
+                  color="red"
+                >
+                  <BsFillBoxFill className="m-1" />
+                  Seller
+                </Button>
+              </div>
 
-            {auth?.token && (
-              <Tooltip className="bg-red-500" label="Orders">
+              {auth?.token && (
+                // <Tooltip className="bg-red-500" label="Orders">
                 <NavLink to="/myorder" type="button" className="relative p-3">
                   {/* <BsFillArchiveFill className="text-xl text-gray-600 dark:text-gray-400" /> */}
                   <label htmlFor="">Orders</label>
                 </NavLink>
-              </Tooltip>
-            )}
-            {!auth.token ? (
-              <Tooltip label="Login" className="bg-red-500">
+                // </Tooltip>
+              )}
+              {!auth.token ? (
+                // <Tooltip label="Login" className="bg-red-500">
                 <NavLink to="/login" type="button" className="relative p-3">
                   <button type="button">
-                    <RiAccountCircleLine
-                      size={25}
-                      className=" text-gray-600 dark:text-gray-400"
-                    />
+                    <Avatar src={null} alt="no image here" color="red" />
                   </button>
                 </NavLink>
-              </Tooltip>
-            ) : (
-              <button
-                type="button"
-                className="bg-white w-[80px] h-[30px] outline-black border  dark:text-white dark:bg-black hover:bg-red-500 duration-[3000ms]"
-                onClick={() => {
-                  localStorage.removeItem("auth");
-                  setAuth({
-                    message: "",
-                    token: "",
-                  });
-                }}
-              >
-                Logout
-              </button>
-            )}
-            {/*  darkmode section */}
-            <div>{/* <Darkmode /> */}</div>
+              ) : (
+                // </Tooltip>
+                <button
+                  type="button"
+                  className="bg-white w-[80px] h-[30px] outline-black border  dark:text-white dark:bg-black hover:bg-red-500 duration-[3000ms]"
+                  onClick={() => {
+                    localStorage.removeItem("auth");
+                    setAuth({
+                      message: "",
+                      token: "",
+                    });
+                  }}
+                >
+                  Logout
+                </button>
+              )}
+              {/*  darkmode section */}
+              <div>{/* <Darkmode /> */}</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Navbar;

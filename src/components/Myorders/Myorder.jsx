@@ -6,6 +6,7 @@ import { ShopContext } from "../Context/ShopContext";
 import { Radio, Group } from "@mantine/core";
 import instance from "../../../api";
 import { useNavigate } from "react-router-dom";
+import ChatBox from "../Chat/ChatBox";
 
 const MyOrder = () => {
   const {
@@ -119,7 +120,7 @@ const MyOrder = () => {
         </table>
         <hr className="h-[1px] bg-white border-none" />
       </div>
-
+      <ChatBox />
       <Footer />
     </div>
   );

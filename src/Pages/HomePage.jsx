@@ -13,6 +13,7 @@ import CarouselTraditional from "../components/Hero/CarouselTraditional";
 import Productcomponents from "../components/Productscomponents/Productcomponents";
 import PriceStores from "../components/Pricestores/PriceStores";
 import TopSales from "../components/Topsales/TopSales";
+import ChatBox from "../components/Chat/ChatBox";
 
 const BannerData = {
   discount: "50% OFF",
@@ -23,16 +24,6 @@ const BannerData = {
   title3: "Attire Sales",
   title4: "Rani phi full most rare design ",
   bgColor: "#f42c37",
-};
-const BannerData2 = {
-  discount: "50% OFF",
-  title: "Beauty",
-  date: "1st July to 23rd July",
-  image: pheichom,
-  title2: "Manipur Traditional",
-  title3: "Suit Sales",
-  title4: "Pheichom Kurta suit most rare design beauty",
-  bgColor: "#2dcc6f",
 };
 
 const HomePage = () => {
@@ -49,8 +40,8 @@ const HomePage = () => {
         <PriceStores />
         <Banner data={BannerData} />
         <Products />
-
-        <Banner data={BannerData2} />
+        <ChatBox />
+        {/* <Banner data={BannerData2} /> */}
         <Footer />
       </div>
     </>

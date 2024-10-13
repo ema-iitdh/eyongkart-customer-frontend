@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import CartsItems from "../CartITems/CartItems";
+import ChatBox from "../Chat/ChatBox";
 const Carts = () => {
   return (
     <>
@@ -10,6 +11,7 @@ const Carts = () => {
 
         <CartsItems />
       </div>
+      <ChatBox />
       <Footer />
     </>
   );

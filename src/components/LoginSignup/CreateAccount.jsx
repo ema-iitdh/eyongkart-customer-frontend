@@ -32,44 +32,46 @@ const CreateAccount = () => {
     <>
       <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden pt-16">
         <Navbar />
-        <div className="text-2xl overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex  items-center flex-col pt-8 gap-y-3.5">
-          <div>
-            <h1 className=" flex justify-center pt-4 font-semibold text-gray-500 hover:text-black dark:hover:text-white">
+        <div className="ext-2xl overflow-hidden rounded-3xl min-h-svh sm:min-h-[650px] hero-bg-color flex  items-center flex-col pt-8 gap-y-3.5">
+          <div className="w-[70%]  flex flex-col items-center">
+            <h1 className="pt-4 font-semibold sm:text-[20px] text-[16px] text-gray-500 hover:text-black dark:hover:text-white">
               Create Account
             </h1>
-            <div className="flex flex-col gap-6 mt-5  ">
+            <div className="w-[80%] flex flex-col text-center gap-3 m-8">
               <input
-                value={name}
-                className="w-[600px] h-[50px] text-xl rounded-none indent-2 outline-none "
+                className="sm:h-[50px] h-[30px] sm:text-[18px] text-[15px] rounded-lg indent-2 outline-none"
                 type="name"
-                placeholder="Name"
+                placeholder="UserName"
+                value={password}
                 onChange={(e) => setName(e.target.value)}
               />
               <input
-                value={email}
-                className="w-[600px] h-[50px] text-xl rounded-none indent-2 outline-none "
+                className="sm:h-[50px] h-[30px] sm:text-[18px] text-[15px] rounded-lg indent-2 outline-none"
                 type="email"
-                placeholder="Email Address"
+                placeholder="Email"
+                value={password}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <input
-                value={password}
-                className="w-[600px] h-[50px] text-xl rounded-none indent-2 outline-none "
+                className="sm:h-[50px] h-[30px] sm:text-[18px] text-[15px] rounded-lg indent-2 outline-none"
                 type="password"
                 placeholder="Password"
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button
-                onClick={handleSubmit}
-                type="button"
-                className=" w-[100px] h-[50px] ml-[250px]  outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer"
-              >
-                {loading ? "Creating" : "Create"}
-              </button>
+              <div>
+                <button
+                  onClick={handleSubmit}
+                  type="button"
+                  className="w-[80px] h-[30px] bg-red-500 text-white text-[16px] rounded-full cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 hover:bg-red-600 shadow-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                >
+                  {loading ? "Creating" : "Create"}
+                </button>
+              </div>
             </div>
-            <p className=" text-black dark:text-white mt-6 text-[20px]">
+            <p className="text-black dark:text-white  sm:text-[18px] text-[16px] pl-8">
               Already have an account?{" "}
-              <span className="text-red-600 text-[20px]">
+              <span className="text-red-500 text-[16px]">
                 <Link to="/login" type="button">
                   Login Here
                 </Link>

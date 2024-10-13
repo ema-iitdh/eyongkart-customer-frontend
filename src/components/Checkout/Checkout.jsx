@@ -12,6 +12,7 @@ import { Modal, Button } from "@mantine/core";
 import Swal from "sweetalert2";
 import { Radio, Group } from "@mantine/core";
 import { Checkbox } from "@mantine/core";
+import ChatBox from "../Chat/ChatBox";
 const Checkout = () => {
   const [razorpaytick, setrazorpaytick] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -219,14 +220,14 @@ const Checkout = () => {
       <Navbar />
       <div className=" text-2xl overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex  flex-col pt-8 gap-y-3.5 ">
         <div className="container ">
-          <h4>Address information</h4>
+          <h4 className="text-[18px]">Address information</h4>
         </div>
         <div className="sm:flex   gap-2 ">
-          <div className="container border border-black dark:border-white sm:w-[50%]">
-            <div className=" flex flex-col mb-3 w-[100%] text-[18px] ">
+          <div className="container border border-black dark:border-white w-[95%] sm:w-[50%]">
+            <div className=" flex flex-col mb-3 w-[100%] sm:text-[18px] text-[15px] ">
               <label>Full Name</label>
               <input
-                className="rounded-md w-full h-[40px] text-black indent-2 border-none outline-none  "
+                className="rounded-md w-full h-[30px] sm:h-[40px] text-black indent-2 border-none outline-none  "
                 type="text"
                 name="fullname"
                 placeholder="Enter full name"
@@ -234,10 +235,10 @@ const Checkout = () => {
                 onChange={(e) => setFullName(e.target.value)}
               />
             </div>
-            <div className=" flex flex-col mb-3 w-[100%] text-[18px] ">
+            <div className=" flex flex-col mb-3 w-[100%] sm:text-[18px] text-[15px] ">
               <label> Full Address</label>
               <input
-                className="rounded-md h-[40px] text-black indent-2 border-none outline-none "
+                className="rounded-md sm:h-[40px] h-[30px] text-black indent-2 border-none outline-none "
                 type="address"
                 name="address"
                 placeholder="Enter full address"
@@ -245,10 +246,10 @@ const Checkout = () => {
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
-            <div className=" flex flex-col mb-3 w-[100%] text-[18px] ">
+            <div className=" flex flex-col mb-3 w-[100%] sm:text-[18px] text-[15px] ">
               <label>Phone Number</label>
               <input
-                className="rounded-md h-[40px] text-black indent-2 border-none outline-none "
+                className="rounded-md sm:h-[40px] h-[30px] text-black indent-2 border-none outline-none "
                 type="text"
                 name="phone number"
                 placeholder="Enter phone number"
@@ -256,10 +257,10 @@ const Checkout = () => {
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
-            <div className=" flex flex-col mb-3 w-[100%] text-[18px] ">
+            <div className=" flex flex-col mb-3 w-[100%] sm:text-[18px] text-[15px] ">
               <label>Email Address</label>
               <input
-                className="rounded-md h-[40px] text-black indent-2 border-none outline-none "
+                className="rounded-md sm:h-[40px] h-[30px] text-black indent-2 border-none outline-none "
                 type="email"
                 name="email address"
                 placeholder="Enter email address"
@@ -268,10 +269,10 @@ const Checkout = () => {
               />
             </div>
 
-            <div className="flex gap-4 ">
-              <div className="flex flex-wrap">
+            <div className="flex gap-3 ">
+              <div className="flex flex-wrap sm:h-[40px] h-[30px]">
                 <label
-                  className="w-[95%]  text-[18px] mt-1 mb-1"
+                  className="w-[95%] text-[15px]  mt-1 mb-1"
                   htmlFor="services"
                 >
                   District
@@ -280,7 +281,7 @@ const Checkout = () => {
                 <select
                   onChange={(e) => setDistrict(e.target.value)}
                   id="district"
-                  className="h-[40px] w-[235px] text-black text-[18px] rounded-md border-solid border-[1px] outline-none "
+                  className=" sm:h-[40px] h-[30px] w-[200px] text-black text-[15px] rounded-md border-solid border-[1px] outline-none "
                 >
                   <option value="district">Select District</option>
                   {districtPincode.map((s, i) => (
@@ -294,13 +295,13 @@ const Checkout = () => {
 
               <div className="flex flex-wrap">
                 <label
-                  className="w-[95%] text-[18px] mt-1 mb-1"
+                  className="w-[95%] text-[16px] mt-1 mb-1"
                   htmlFor="pincode"
                 >
                   Pincode
                 </label>
                 <input
-                  className="h-[40px] w-[100%] text-black text-[18px] rounded-md border-solid border-[1px] indent-1 outline-none "
+                  className="sm:h-[40px] h-[30px] w-[100%] text-black text-[15px] rounded-md border-solid border-[1px] indent-1 outline-none "
                   type=""
                   placeholder="Enter Pincode"
                   value={pincode}
@@ -312,10 +313,10 @@ const Checkout = () => {
               </div>
             </div>
 
-            <div className=" flex flex-col mb-3 w-[235px] text-[18px] ">
+            <div className=" flex flex-col mb-3 w-[200px] text-[15px] sm:text-[18px] ">
               <label>State</label>
               <input
-                className="rounded-lg h-[40px] text-black indent-2 border-none outline-none "
+                className="rounded-lg h-[30px] sm:h-[40px] text-black indent-2 border-none outline-none "
                 type="state"
                 name="state"
                 placeholder="Enter state"
@@ -335,26 +336,28 @@ const Checkout = () => {
                 /> */}
                 <Checkbox size="xs" defaultChecked color="red" />
               </button>
-              <label htmlFor="info"> Save the information</label>
+              <label htmlFor="info" className="text-[15px]">
+                {" "}
+                Save the information
+              </label>
             </div>
           </div>
 
           <div className="container mb-4 w-[100%] sm:w-[50%]">
             <div className="flex  mt-[40px] text-[18px]  gap-4 items-start justify-center ">
               <div className="flex flex-1 flex-col border border-black dark:border-white rounded-3xl p-4 justify-between ">
-                <h1> Cart Totals</h1>
+                <h1 className="sm:text-[18px] text-[15px]"> Cart Totals</h1>
                 <div>
                   {checkoutItem ? (
                     <>
                       {checkoutItem.map((p, i) => (
                         <div
                           key={i}
-                          className="bg-white dark:bg-gray-900 flex items-center gap-8 mb-6"
+                          className="bg-white dark:bg-gray-900 flex items-center gap- 2mb-3"
                         >
-                          {" "}
-                          <p className="p-2">
+                          <p className="p-1">
                             <img
-                              className="h-[100px] w-[200px] object-contain"
+                              className="sm:h-[100px] sm:w-[120px] h-[100px] w-[80px] object-fit"
                               src={`http://drive.google.com/thumbnail?id=${p?.image_id[4]?.replace(
                                 /"/g,
                                 ""
@@ -362,24 +365,27 @@ const Checkout = () => {
                               alt="image1"
                             />
                           </p>
-                          <p className="p-2 text-[18px] ">{p.name}</p>
-                          <p className="p-2 text-[18px]">
-                            ₹ {p.new_price}*{p.quantity}
+                          <p className="p-2 sm:text-[18px] text-[15px] ">
+                            {p.name}
+                          </p>
+                          <p className="p-2 sm:text-[18px] text-[15px]">
+                            ₹ {p.new_price}
+                            {/* ₹ {p.new_price}*{p.quantity} */}
                           </p>
                         </div>
                       ))}
                       <div>
-                        <div className=" flex justify-between pt[-15px]">
+                        <div className=" flex justify-between text-[15px] sm:text-[18px] pt-[-15px]">
                           <p>Subtotals</p>
                           <p>₹ {getTotal()}</p>
                         </div>
                         <hr className="h-[1px] bg-white border-none" />
-                        <div className="flex justify-between">
+                        <div className="flex justify-between text-[15px] sm:text-[18px] ">
                           <p>Shipping Fee</p>
                           <p>Free</p>
                         </div>
                         <hr className="h-[1px] bg-white border-none" />
-                        <div className="flex justify-between pt[-15px]">
+                        <div className="flex justify-between pt-[-15px] text-[15px] sm:text-[18px] ">
                           <h3>Totals</h3>
                           <h3>₹ {getTotal()}</h3>
                         </div>
@@ -414,9 +420,9 @@ const Checkout = () => {
                   <button
                     onClick={paymentHandler}
                     type="button"
-                    className="w-[150px] h-[50px] mt-4 outline-none border-none bg-red-500 text-white text-[16px] cursor-pointer rounded-xl"
+                    className="w-[120px] sm:h-[50px] mt-4 outline-none border-none bg-red-500 text-white sm:text-[16px] text-[15px] text-center cursor-pointer rounded-md"
                   >
-                    PROCEED TO PAY
+                    PAY NOW
                   </button>
                 </div>
               </div>
@@ -424,6 +430,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+      <ChatBox />
       <Footer />
     </div>
   );

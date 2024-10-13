@@ -93,27 +93,27 @@ const ProductDisplay = (props) => {
               <div className="container pb-8 pr-0 sm:pb-0">
                 <div className=" sm:flex ml-2 pt-5 pb-5">
                   <div className="flex gap-4">
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
                       <img
-                        className="h-[120px] w-[200px]"
+                        className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px] "
                         src={imgData1}
                         alt="image1"
                         onClick={() => setMainImg(imgData1)}
                       />
                       <img
-                        className="h-[120px] w-[200px]  "
+                        className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px] "
                         src={imgData2}
                         alt="image2"
                         onClick={() => setMainImg(imgData2)}
                       />
                       <img
-                        className="h-[120px] w-[200px]"
+                        className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px] "
                         src={imgData3}
                         alt="image3"
                         onClick={() => setMainImg(imgData3)}
                       />
                       <img
-                        className="h-[120px] w-[200px]"
+                        className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px]"
                         src={imgData4}
                         alt="image4"
                         onClick={() => setMainImg(imgData4)}
@@ -122,13 +122,13 @@ const ProductDisplay = (props) => {
                     <div className="productdisplay-img">
                       {mainImg ? (
                         <img
-                          className="w-[540px] h-[540px]"
+                          className="sm:w-[520px] sm:h-[620px] w-[320px] h-[502px] pr-4"
                           src={mainImg}
                           alt="imag1"
                         />
                       ) : (
                         <img
-                          className="w-[540px] h-[530px]"
+                          className="sm:w-[520px] sm:h-[620px] w-[330px] h-[502px] pr-4 "
                           src={`http://drive.google.com/thumbnail?id=${productData?.image_id[0]?.replace(
                             /"/g,
                             ""
@@ -170,16 +170,16 @@ const ProductDisplay = (props) => {
                       <p> Length : 2.50 Mtr </p>
                       <p>Width: 0.94 Mtr</p>
                     </div>
-                    <div className="flex gap-3 flex-row ">
+                    <div className=" flex gap-2 ">
                       <button
                         onClick={() => {
                           buyNow(productData._id);
                           navigate("/checkout");
                         }}
                         type="button"
-                        className=" w-[100px] h-[58px] outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer "
+                        className=" sm:w-[100px] sm:h-[58px] h-[50px] p-2 outline-none border-none bg-red-500 text-white  text-center rounded-full cursor-pointer"
                       >
-                        BUY NOW
+                        Buy now
                       </button>
 
                       <button
@@ -187,9 +187,9 @@ const ProductDisplay = (props) => {
                           addToCart(productData._id);
                         }}
                         type="button"
-                        className=" w-[100px] h-[58px] outline-none border-none bg-red-500 text-white text-[16px] text-center rounded-full cursor-pointer"
+                        className=" sm:w-[100px] sm:h-[58px] h-[50px] outline-none border-none bg-red-500 text-white text-[13px] text-center rounded-full cursor-pointer"
                       >
-                        ADD TO CART
+                        Add to cart
                       </button>
                     </div>
                     <p className="mt-3 text-[16px]">

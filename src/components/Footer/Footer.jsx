@@ -15,10 +15,10 @@ const FooterLinks = [
     title: "About Us",
     link: "/about",
   },
-  {
-    title: "Contact",
-    link: "/contact",
-  },
+  // {
+  //   title: "Contact",
+  //   link: "/contact",
+  // },
 ];
 
 const Footer = () => {
