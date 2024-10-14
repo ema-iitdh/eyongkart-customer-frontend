@@ -1,11 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-// import App from "./App.css";
 import { FaSearch } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import { RiAccountCircleLine } from "react-icons/ri";
-import Darkmode from "./Darkmode";
 import { Link, NavLink } from "react-router-dom";
-import { isActive } from "@tiptap/react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { GrFavorite } from "react-icons/gr";
 import { ShopContext } from "../Context/ShopContext";
@@ -15,20 +11,19 @@ import { useAuth } from "../Context/auth";
 import instance from "../../../api";
 import { Tooltip, Button } from "@mantine/core";
 import { BsFillBoxFill } from "react-icons/bs";
-import logo from "../../assets/logo.jpg";
 import { useQuery } from "@tanstack/react-query";
 import { Avatar } from "@mantine/core";
-import { IconStar } from "@tabler/icons-react";
-import { IconPhoto } from "@tabler/icons-react";
+import { X, Menu } from "lucide-react";
+import handloom from "./Handloom.json";
+import { Accordion } from "@mantine/core";
 // Remove this
 function CategoryOption({ title, data }) {
   const navigate = useNavigate();
-
+  //hamburger
   return (
     <div className="group relative">
       {/* Main title (category) */}
       <p className="cursor-pointer p-2 hover:bg-red-500">{title}</p>
-
       {/* Dropdown for subcategories */}
       <div className="hidden group-hover:grid absolute left-0 top-0 z-10 bg-gray-100 px-4  grid-cols-3 gap-4  overflow-y-auto w-[600px]">
         {data?.categories?.map((category) => (
@@ -60,12 +55,16 @@ function CategoryOption({ title, data }) {
 
 // till here
 
-const Navbar = () => {
+const Navbar = ({ data }) => {
   const navigate = useNavigate();
   const [DropdownLink, setDropdownLink] = useState([]);
   const [allCategory, setAllCategory] = useState([]);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [auth, setAuth] = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => setIsOpen(!isOpen);
+
   const getAllCategory = async () => {
     try {
       const res = await instance({
@@ -75,9 +74,9 @@ const Navbar = () => {
       // const sortedCategory = res.data.category.sort((a, b) =>
       //   a.name.localeCompare(b.name)
       // );
-      setDropdownLink(
-        res.data.category.sort((a, b) => a.name.localeCompare(b.name))
-      );
+      // setDropdownLink(
+      //   res.data.category.sort((a, b) => a.name.localeCompare(b.name))
+      // );
     } catch (error) {
       console.log(error);
     }
@@ -144,8 +143,8 @@ const Navbar = () => {
         />
       </div> */}
         {/* till here */}
-        <div className="sm:py-2  relative ">
-          <div className="container flex justify-between items-center">
+        <div className=" p-2 relative ">
+          <div className="container flex  justify-between items-center">
             <div className="flex  items-center gap-7">
               <NavLink
                 to="/"
@@ -254,76 +253,204 @@ const Navbar = () => {
             {/* navbar right section */}
             <div className="flex justify-between items-center gap-2">
               {/* Search bar section */}
-              <div className="relative group hidden sm:block">
+              <div className="relative group   sm:block">
                 <input
                   type="text"
                   placeholder="Search for products "
                   className="search-bar"
                 />
-                <FaSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
+                <FaSearch className="text-xl text-gray-600 group-hover:text-primary absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
               </div>
-
               {/* order button section */}
               {/* <Tooltip className=" bg-red-500" label="Carts"> */}
-              <NavLink to="/cart" type="button" className="relative p-3">
-                {/* <FaShoppingCart className="text-xl text-gray-600 dark:text-gray-400" /> */}
-                <label htmlFor="">Bags</label>
-                <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">
-                  {getTotalCartItems()}
-                </div>
-              </NavLink>
-              {/* </Tooltip> */}
-              {/* <Tooltip className="bg-red-500" label="Wishlist"> */}
-              <NavLink to="/wishlist" type="button" className="relative p-3">
-                {/* <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" /> */}
-                <label htmlFor="">Wishlist</label>
-              </NavLink>
-              {/* </Tooltip> */}
+              {/* adding hamburger */}
+              {/*first  */}
+              {/* Hamburger menu button */}
+              <button
+                type="button"
+                onClick={toggleSidebar}
+                className="text-black rounded-md md:hidden"
+              >
+                {!isOpen && <Menu />}
+              </button>
 
-              <div>
-                <Button
-                  className="text-white px-2 py-[-2px]  "
-                  variant="filled"
-                  color="red"
-                >
-                  <BsFillBoxFill className="m-1" />
-                  Seller
-                </Button>
+              {/* Sidebar */}
+              <div
+                className={`fixed top-0 left-0 block md:hidden h-full w-64 bg-white text-red-400 transform transition-transform duration-300 ease-in-out ${
+                  isOpen ? "translate-x-0" : "-translate-x-full"
+                } md:translate-x-0`}
+              >
+                <div className="p-4">
+                  <div className="flex justify-between ">
+                    <NavLink
+                      to="/"
+                      className="text-primary tracking-widest uppercase sm:text-3xl "
+                    >
+                      <img
+                        className="w-[50px] h-[25px] object-fit mb-3 "
+                        src="/mainLogo.png"
+                        alt=""
+                      />
+                    </NavLink>
+                    <button
+                      type="button"
+                      onClick={toggleSidebar}
+                      className="text-black rounded-md md:hidden"
+                    >
+                      <X size={24} />
+                    </button>
+                    {/* <h2 className="text-2xl font-bold mb-5">Menu</h2> */}
+                  </div>
+                  <hr className="h-[2px] text-gray-500 bg-gray-500 " />
+                  <nav>
+                    <ul className="space-y-2">
+                      {/* men */}
+                      <li>
+                        {/* <NavLink to="/sort">
+                          <CategoryOption
+                            title="MEN"
+                            // data={isLoading ? [] : menCategory?.data}
+                          />
+                        </NavLink> */}
+                        <Accordion>
+                          {data?.categories?.map((category) => (
+                            <Accordion.Item
+                              key={category._id}
+                              value={category.title}
+                            >
+                              console.log(data);
+                              <Accordion.Control className="text-red-500">
+                                {category.title}
+                              </Accordion.Control>
+                              <Accordion.Panel>
+                                {category?.subCategories.map((subcategory) => (
+                                  <li key={subcategory._id}>
+                                    <div className="text-black w-full grid grid-col-1">
+                                      <div>{subcategory.subCategoryName}</div>
+                                    </div>
+                                  </li>
+                                ))}
+                              </Accordion.Panel>
+                            </Accordion.Item>
+                          ))}
+                        </Accordion>
+                      </li>
+
+                      <li>
+                        <NavLink
+                          to="/cart"
+                          className="flex items-center space-x-2 p-2 rounded-md hover:bg-red-300"
+                        >
+                          <FaShoppingCart size={20} />
+                          <span>Carts</span>
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/wishlist"
+                          className="flex items-center space-x-2 p-2 rounded-md hover:bg-red-300"
+                        >
+                          <GrFavorite size={20} />
+                          <span>Wishlist</span>
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/myorder"
+                          className="flex items-center space-x-2 p-2 rounded-md hover:bg-red-300"
+                        >
+                          <BsFillArchiveFill size={20} />
+                          <span>Orders</span>
+                        </NavLink>
+                        <NavLink
+                          to=""
+                          className="flex items-center space-x-2 p-2 rounded-md hover:bg-red-300"
+                        >
+                          <BsFillBoxFill size={20} />
+                          <span>Become a Seller</span>
+                        </NavLink>
+                        <NavLink
+                          to="/login"
+                          className="flex items-center space-x-2 p-2 rounded-md hover:bg-red-300"
+                        >
+                          <Avatar size={25} color="red" />
+                          <span>Login</span>
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
               </div>
 
-              {auth?.token && (
-                // <Tooltip className="bg-red-500" label="Orders">
-                <NavLink to="/myorder" type="button" className="relative p-3">
-                  {/* <BsFillArchiveFill className="text-xl text-gray-600 dark:text-gray-400" /> */}
-                  <label htmlFor="">Orders</label>
-                </NavLink>
-                // </Tooltip>
-              )}
-              {!auth.token ? (
-                // <Tooltip label="Login" className="bg-red-500">
-                <NavLink to="/login" type="button" className="relative p-3">
-                  <button type="button">
-                    <Avatar src={null} alt="no image here" color="red" />
-                  </button>
-                </NavLink>
-              ) : (
-                // </Tooltip>
-                <button
-                  type="button"
-                  className="bg-white w-[80px] h-[30px] outline-black border  dark:text-white dark:bg-black hover:bg-red-500 duration-[3000ms]"
-                  onClick={() => {
-                    localStorage.removeItem("auth");
-                    setAuth({
-                      message: "",
-                      token: "",
-                    });
-                  }}
-                >
-                  Logout
-                </button>
-              )}
-              {/*  darkmode section */}
-              <div>{/* <Darkmode /> */}</div>
+              {/* end */}
+              <div className="hidden md:block ">
+                <div className="flex justify-center items-center gap-2">
+                  <Tooltip className="bg-red-500" label="Wishlist">
+                    <NavLink to="/cart" type="button" className="relative p-3">
+                      {/* <FaShoppingCart className="text-xl text-gray-600 dark:text-gray-400" /> */}
+                      <label htmlFor="">Bags</label>
+                      <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">
+                        {getTotalCartItems()}
+                      </div>
+                    </NavLink>
+                  </Tooltip>
+                  <Tooltip className="bg-red-500" label="Wishlist">
+                    <NavLink
+                      to="/wishlist"
+                      type="button"
+                      className="relative p-3"
+                    >
+                      {/* <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" /> */}
+                      <label htmlFor="">Wishlist</label>
+                    </NavLink>
+                  </Tooltip>
+                  <div>
+                    <Button
+                      className="text-white px-2 py-[-2px]  "
+                      variant="filled"
+                      color="red"
+                    >
+                      <BsFillBoxFill className="m-1" />
+                      Seller
+                    </Button>
+                  </div>
+                  {auth?.token && (
+                    // <Tooltip className="bg-red-500" label="Orders">
+                    <NavLink
+                      to="/myorder"
+                      type="button"
+                      className="relative p-3"
+                    >
+                      {/* <BsFillArchiveFill className="text-xl text-gray-600 dark:text-gray-400" /> */}
+                      <label htmlFor="">Orders</label>
+                    </NavLink>
+                    // </Tooltip>
+                  )}
+                  {!auth.token ? (
+                    // <Tooltip label="Login" className="bg-red-500">
+                    <NavLink to="/login" type="button" className="relative p-3">
+                      <button type="button">
+                        <Avatar src={null} alt="no image here" color="red" />
+                      </button>
+                    </NavLink>
+                  ) : (
+                    // </Tooltip>
+                    <button
+                      type="button"
+                      className="bg-white w-[80px] h-[30px] outline-black border  dark:text-white dark:bg-black hover:bg-red-500 duration-[3000ms]"
+                      onClick={() => {
+                        localStorage.removeItem("auth");
+                        setAuth({
+                          message: "",
+                          token: "",
+                        });
+                      }}
+                    >
+                      Logout
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

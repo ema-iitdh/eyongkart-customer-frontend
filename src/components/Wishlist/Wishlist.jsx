@@ -41,6 +41,13 @@ const Wishlist = () => {
     window.scrollTo(0, 0);
     getAllProduct();
   }, []);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    getAllProduct();
+  }, []);
 
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
@@ -69,13 +76,16 @@ const Wishlist = () => {
                   </div>
                   <div className="flex justify-between ">
                     <div>
-                      <h2 className="sm:font-semibold text-[18px]">{p.name}</h2>
-                      <h2 className="font-bold ">
-                        <span className="line-through text-red-600 sm:text-[20px] text-[16px] ">
-                          ₹ {p.old_price}
+                      <h2 className="sm:font-semibold text-[15px]">{p.name}</h2>
+                      <h2 className="sm:font-bold ">
+                        <span className="line-through text-red-600 sm:text-[16px] text-[12px]">
+                          ₹{p.price}
                         </span>
-                        <span className="ml-3 sm:text-[20px] text-[16px]">
-                          ₹ {p.new_price}
+                        <span className="ml-1 text-[12px] sm:text-[16px]">
+                          ₹ {p.discountedPrice}
+                        </span>
+                        <span className=" text-gray-500 text-[10px] sm:text-[14px] ml-1 ">
+                          ({p.discount} % OFF)
                         </span>
                       </h2>
                     </div>
@@ -83,10 +93,9 @@ const Wishlist = () => {
                     <button type="button" className="relative p-3">
                       {/* <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" /> */}
                       <FaHeart
+                        size={17}
                         className={
-                          p.fav === "Yes"
-                            ? "text-red-600 dark:text-gray-400"
-                            : "text-gray-400 dark:text-gray-400"
+                          p.fav === "Yes" ? "text-red-600" : "text-gray-400 "
                         }
                         onClick={(e) => handleIsWistlist(e, p)}
                       />

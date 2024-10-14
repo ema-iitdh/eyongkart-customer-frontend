@@ -1,0 +1,71 @@
+[
+    {
+        "groupName": "MEN",
+        "id": "group1",
+        "data": [
+           
+            {
+                "id": 1,
+                "dress":"Kurta"
+                
+            },
+            {
+                "id": 2,
+                "dress":"Khudei"
+               
+            },
+            {
+                "id": 3,
+                "dress":"Pheijom"
+             
+            }
+          
+        ]
+    },
+    {
+        "groupName": "WOMEN",
+        "id": "group2",
+        "data": [
+            {
+                "id": 1,
+                "dress":"Rani phee "
+             
+            },
+            {
+                "id": 2,
+                "dress":"Wangkhei phee"
+            },
+            {
+                "id": 3,
+                "dress":"Blouse"
+            },
+            {
+                "id": 4,
+                "dress":"Top"
+            }
+           
+        ]
+    },
+    {
+        "groupName": "KIDS",
+        "id": "group3",
+        "data": [
+            {
+                "id": 1,
+                "dress":"Pheijom"
+            },
+            {
+                "id": 2,
+                "dress":"Digital pheijom "
+            },
+            {
+                "id": 3,
+                "dress":"Phanek"
+                
+            }
+          
+        ]
+    }
+   
+    
+]

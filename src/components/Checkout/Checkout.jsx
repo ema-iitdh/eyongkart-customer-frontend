@@ -358,7 +358,7 @@ const Checkout = () => {
                           <p className="p-1">
                             <img
                               className="sm:h-[100px] sm:w-[120px] h-[100px] w-[80px] object-fit"
-                              src={`http://drive.google.com/thumbnail?id=${p?.image_id[4]?.replace(
+                              src={`http://drive.google.com/thumbnail?id=${p?.image_id[0]?.replace(
                                 /"/g,
                                 ""
                               )}`}

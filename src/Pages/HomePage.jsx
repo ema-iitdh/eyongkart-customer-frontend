@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Category from "../components/Category/Category";
 import Category2 from "../components/Category/Category2";
@@ -27,6 +27,12 @@ const BannerData = {
 };
 
 const HomePage = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
       <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">

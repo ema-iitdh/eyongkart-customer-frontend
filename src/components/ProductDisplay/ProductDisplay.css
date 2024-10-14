@@ -56,12 +56,12 @@
   text-decoration: line-through;
 }
 .productdisplay-right-price-new {
-  color: #ff4141;
+  color: red;
 }
 .productdisplay-right-size h1 {
   margin-top: 55px;
   color: #656565;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 600;
 }
 .productdisplay-right-sizes {
@@ -103,7 +103,7 @@
   .productdisplay-right-prices {
     display: flex;
     margin: 40px 0px;
-    gap: 30px;
+    /* gap: 10px; */
     font-size: 22px;
     font-weight: 700;
   }

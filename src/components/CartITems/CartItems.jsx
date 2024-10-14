@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import { TiDeleteOutline } from "react-icons/ti";
 import { ShopContext } from "../Context/ShopContext";
@@ -7,6 +7,12 @@ import instance from "../../../api";
 import { useNavigate } from "react-router-dom";
 
 const CartsItems = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   const {
     getTotalCartAmount,
     data,

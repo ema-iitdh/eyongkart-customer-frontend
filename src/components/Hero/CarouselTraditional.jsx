@@ -98,6 +98,13 @@ const CarouselTraditional = () => {
   useEffect(() => {
     fetchCarouselData();
   }, []);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      speed: 300,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <div className="mt-16 rounded-3xl text-2xl overflow-hidden  min-h-[210px] sm:min-h-[450px] hero-bg-color flex items-center flex-col pt-6 gap-y-3.5">
       <div className="p-4 m-1 w-full ">

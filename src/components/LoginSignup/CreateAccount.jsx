@@ -41,15 +41,15 @@ const CreateAccount = () => {
               <input
                 className="sm:h-[50px] h-[30px] sm:text-[18px] text-[15px] rounded-lg indent-2 outline-none"
                 type="name"
-                placeholder="UserName"
-                value={password}
+                placeholder="Name"
+                value={name}
                 onChange={(e) => setName(e.target.value)}
               />
               <input
                 className="sm:h-[50px] h-[30px] sm:text-[18px] text-[15px] rounded-lg indent-2 outline-none"
                 type="email"
                 placeholder="Email"
-                value={password}
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <input

@@ -28,7 +28,7 @@ const ProductCard = ({ data, type, setWishlistUpdate }) => {
 
   return (
     <div className="mb-10">
-      <div className="grid grid-cols-2  sm:grid-cols-3 md:grid-cols-5 gap-3 ">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 ">
         {products?.map((p) => (
           <div className="group" key={p._id}>
             <div className="relative ">
@@ -40,20 +40,21 @@ const ProductCard = ({ data, type, setWishlistUpdate }) => {
                   ""
                 )}`}
                 alt=""
-                className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px]  object-fit rounded-md"
+                className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
               />
             </div>
             <div className="flex justify-between leading-7">
               <div>
-                <h2 className="font-semibold">{p.name}</h2>
-                <h2 className="font-bold ">
-                  <span className="line-through text-red-600">
-                    ₹ {p.old_price}
+                <h2 className="sm:font-semibold text-[15px]">{p.name}</h2>
+                <h2 className="sm:font-bold ">
+                  <span className="line-through text-red-600 sm:text-[16px] text-[12px]">
+                    ₹{p.price}
                   </span>
-                  <span className="ml-3">₹ {p.new_price}</span>
-                  <span className="text-[15px] text-gray-500 ml-1">
-                    {" "}
-                    20%OFF
+                  <span className="ml-1 text-[12px] sm:text-[16px]">
+                    ₹ {p.discountedPrice}
+                  </span>
+                  <span className=" text-gray-500 text-[10px] sm:text-[14px] ml-1 ">
+                    ({p.discount} % OFF)
                   </span>
                 </h2>
               </div>

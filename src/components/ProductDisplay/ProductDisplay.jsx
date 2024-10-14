@@ -82,6 +82,12 @@ const ProductDisplay = (props) => {
   useEffect(() => {
     fetchProductData();
   }, []);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   // const { product } = props;
   return (
     <>
@@ -92,7 +98,7 @@ const ProductDisplay = (props) => {
             <div className="overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color pb-5">
               <div className="container pb-8 pr-0 sm:pb-0">
                 <div className=" sm:flex ml-2 pt-5 pb-5">
-                  <div className="flex gap-4">
+                  <div className="flex gap-3">
                     <div className="flex flex-col gap-2">
                       <img
                         className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px] "
@@ -138,24 +144,29 @@ const ProductDisplay = (props) => {
                       )}
                     </div>
                   </div>
-                  <div className="productdisplay-right mt-4 sm:mt-0 ">
+                  <div className="productdisplay-right mt-2 sm:mt-0 ">
                     <h1 className="dark:text-white ">{productData.name}</h1>
                     <Rating value={3.5} fractions={2} size="lg" />
 
                     <div className="productdisplay-right-prices">
-                      <div className="productdisplay-right-price-new mt-[-20px]">
-                        ₹ {productData.new_price}{" "}
-                        <span className="line-through text-black">
+                      <div className="text-red-400 mt-[-20px] ">
+                        ₹{productData.price}{" "}
+                        <span className=" text-black ">
+                          ₹{productData.discountedPrice}
+                        </span>
+                        <span className=" text-gray-500 text-[14px] ml-2 ">
+                          ({productData.discount} % OFF)
+                        </span>
+                        {/* <span className="line-through text-black">
                           {" "}
                           ₹ {productData.old_price}
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                     <div className="productdisplay-right-description mt-[-15px]">
-                      A lightweight,usually knitted, close-fitting and a roun
-                      neckline and short sleeves,worn as an outer garment.
+                      {productData.description}
                     </div>
-                    <div className="pt-8 flex text-xl gap-3 font-semibold">
+                    <div className="pt-8 flex sm:text-xl text-[15px] gap-2 font-semibold">
                       Quantity
                       <input
                         className="w-[100px] h-[30px] dark:text-black border border-black "
@@ -166,9 +177,9 @@ const ProductDisplay = (props) => {
                       />
                     </div>
                     <div className="productdisplay-right-size pb-8">
-                      <h1>Size Length</h1>
-                      <p> Length : 2.50 Mtr </p>
-                      <p>Width: 0.94 Mtr</p>
+                      <h1>Size </h1>
+                      <p>Length : {productData.sizelength} </p>
+                      <p>Width : {productData.sizewidth}</p>
                     </div>
                     <div className=" flex gap-2 ">
                       <button
