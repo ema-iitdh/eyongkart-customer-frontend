@@ -1,55 +1,13 @@
-import React from "react";
-import { Carousel } from "@mantine/carousel";
-import rani from "../../assets/images/rani3.jpg";
-import wangkhei from "../../assets/images/wangkhei6.jpg";
-import pheijom from "../../assets/images/pheijom2.jpg";
-// import blouse from "../../assets/images/top3.jpg";
-import phanek from "../../assets/images/phanek4.jpg";
-import top from "../../assets/images/top.jpg";
-import muka from "../../assets/images/muka2.jpg";
+import React, { useEffect, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-const data = [
-  {
-    id: 1,
-    img: rani,
-    name: "Rani phee",
-    new_price: "12000",
-  },
-  {
-    id: 2,
-    img: wangkhei,
-    name: "Wangkhei phee",
-    new_price: "12000",
-  },
-  {
-    id: 3,
-    img: phanek,
-    name: "Phanek phee",
-    new_price: "12000",
-  },
-  {
-    id: 4,
-    img: pheijom,
-    name: "Pheijom phee",
-    new_price: "12000",
-  },
-  {
-    id: 5,
-    img: top,
-    name: "Top phee",
-    new_price: "12000",
-  },
-  {
-    id: 6,
-    img: muka,
-    name: "Muka phee",
-    new_price: "12000",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { fetchProducts } from "../../BaseURL/Product";
+import { Link } from "react-router-dom";
+import { CloudinaryConfig } from "../../../Cloudinary";
 const TopSales = () => {
-  let settings = {
+  const settings = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -84,42 +42,70 @@ const TopSales = () => {
       },
     ],
   };
+  const [filterItems, setFilterItems] = useState([]);
+  const [minDiscount, setMinDiscount] = useState(60);
+  const {
+    data: productData = {},
+    isLoading: isLoadingProducts,
+    isError: isProductError,
+    error: productError,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
+  const productLists = productData.products || [];
 
+  useEffect(() => {
+    const filteredProducts = () => {
+      setFilterItems(
+        productLists.filter((product) => product.discount >= minDiscount)
+      );
+    };
+    filteredProducts();
+  }, [productLists, minDiscount]);
   return (
     <>
-      <div className="pt-2">
-        <div className="overflow-hidden rounded-3xl  sm:h-[420px] h-[330px] hero-bg-color  ">
+      <div className="drop-shadow-md">
+        <div className="overflow-hidden rounded-xl  sm:h-[440px] h-[330px] hero-bg-color  ">
           <div className="container pb-2 ml-0 pr-0  sm:pb-0">
             <h1 className="gap-4 flex justify-start items-start text-2xl font-semibold  text-black hover:text-red-500 dark:text-white p-2 ">
               Top sales
-              <p className="text-[16px] text-red-500">70% Above</p>
+              <p className="text-[16px] text-red-500">Above {minDiscount}% </p>
             </h1>
             <div className="sm:m-auto sm:p-5 sm:w-auto pt-1 pr-8 w-[400px]">
               <Slider {...settings}>
-                {data.map((item, index) => {
+                {filterItems?.map((item, id) => {
                   return (
                     <div
-                      key={index}
-                      className="bg-gray-300 sm:w-20 sm:h-[320px] w-[300px] h-[250px]"
+                      key={item.id}
+                      className="bg-gray-100 drop-shadow-md rounded-md sm:w-24 sm:h-[330px]  w-[300px] h-[230px] "
                     >
                       <div className="">
                         <img
-                          className="sm:w-60 sm:h-60 w-[150px] h-[170px] object-fit block m-auto p-2 "
-                          src={item.img}
+                          className="sm:w-56 sm:h-56 w-[150px] h-[150px] object-fit m-auto p-3"
+                          src={`${
+                            CloudinaryConfig.CLOUDINARY_URL
+                          }/image/upload/${item?.image_id[0]?.replace(
+                            /"/g,
+                            ""
+                          )}`}
                           alt=""
                         />
                       </div>
-                      <div className=" flex justify-around sm:p-2 p-2">
-                        <div className="sm:text-[18px] text-[15px] text-black">
+                      <div className="flex justify-around sm:p-2 p-2">
+                        <div className="sm:text-[16px] text-[13px] text-black">
                           <p className="">{item.name}</p>
-                          <p className=" ">₹ {item.new_price}</p>
+                          <p className="text-red-500 ">
+                            ₹ {item.discountedPrice}
+                          </p>
                         </div>
-                        <button
+                        <Link
+                          to="/checkout"
                           type="button"
-                          className="bg-red-600 hover:bg-red-500 sm:text-[15px] text-[12px] sm:w-[100px]  sm:h-[40px] w-[60px] h-8  text-white rounded-md  "
+                          className="bg-red-600 hover:bg-red-500 sm:text-[14px] text-[10px] text-center pt-2 sm:w-[85px] sm:h-[38px] w-[65px] h-8 text-white rounded-md"
                         >
                           Buy now
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   );

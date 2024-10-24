@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import instance from "../../../api";
 import { Select } from "@mantine/core";
 import ShopCategory from "../../Pages/ShopCategory";
 import axios from "axios";
@@ -10,6 +9,7 @@ import Item from "../Item/Item.jsx";
 import { Group, Button } from "@mantine/core";
 import { ScrollArea } from "@mantine/core";
 import { Link } from "react-router-dom";
+import { Axios } from "../../../api.js";
 const ShopByCategory = () => {
   const params = useParams();
   const [products, setProducts] = useState([]);
@@ -96,11 +96,11 @@ const ShopByCategory = () => {
         console.log(`categoryId: ${category}`);
         console.log(encodeURIComponent(category));
 
-        const res = await instance({
-          url: `/product/getProductsCategoryById/${categoryId}`,
-          // url: `/product/getProductCategoryById?name=${encodeURIComponent(
-          //   category
-          // )}`, // Rani-Phee
+        const res = await Axios({
+          // url: `/product/getProductCategoryById/${categoryId}`,
+          url: `/product/getProductCategoryById?name=${encodeURIComponent(
+            category
+          )}`, // Rani-Phee
           method: "GET",
         });
         setProducts(res.data.product);

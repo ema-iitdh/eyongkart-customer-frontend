@@ -5,7 +5,7 @@ import Navbar from "../Navbar/Navbar";
 import Button from "../Shared/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import instance from "../../../api";
+import { Axios } from "../../../api";
 const CreateAccount = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -15,8 +15,12 @@ const CreateAccount = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    instance
-      .post("/user/register", { role: "User", userName: name, email, password })
+    Axios.post("/user/register", {
+      role: "User",
+      userName: name,
+      email,
+      password,
+    })
       // console.log(name,email,password);
       // setName("");
       // setEmail("");

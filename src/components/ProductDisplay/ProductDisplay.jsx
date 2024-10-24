@@ -8,11 +8,12 @@ import star_dull_icon from "../../assets/images/star_dull_icon.png";
 import productimage from "../../assets/images/rani1.jpg";
 import Button from "../Shared/Button";
 import { useParams } from "react-router-dom";
-import instance from "../../../api";
 import { Rating } from "@mantine/core";
 import { Select } from "@mantine/core";
 import { ShopContext } from "../Context/ShopContext";
 import RelatedProduct from "../RelatedProducts/RelatedProduct";
+import { CloudinaryConfig } from "../../../Cloudinary";
+import { Axios } from "../../../api";
 
 const ProductDisplay = (props) => {
   const { product } = props;
@@ -28,46 +29,42 @@ const ProductDisplay = (props) => {
   console.log(productId);
   const fetchProductData = async () => {
     try {
-      const res = await instance({
+      const res = await Axios({
         url: `/product/getOneProduct/${productId}`,
         method: "GET",
       });
       console.log(res);
       setproductData(res.data.product);
       setImgData1(
-        `http://drive.google.com/thumbnail?id=${res.data.product?.image_id[0]?.replace(
-          /"/g,
-          ""
-        )}`
+        `${
+          CloudinaryConfig.CLOUDINARY_URL
+        }/image/upload/${res.data.product?.image_id[0]?.replace(/"/g, "")}`
       );
       setImgData2(
-        `http://drive.google.com/thumbnail?id=${res.data.product?.image_id[1]?.replace(
-          /"/g,
-          ""
-        )}`
+        `${
+          CloudinaryConfig.CLOUDINARY_URL
+        }/image/upload/${res.data.product?.image_id[1]?.replace(/"/g, "")}`
       );
       setImgData3(
-        `http://drive.google.com/thumbnail?id=${res.data.product?.image_id[2]?.replace(
-          /"/g,
-          ""
-        )}`
+        `${
+          CloudinaryConfig.CLOUDINARY_URL
+        }/image/upload/${res.data.product?.image_id[2]?.replace(/"/g, "")}`
       );
       setImgData4(
-        `http://drive.google.com/thumbnail?id=${res.data.product?.image_id[3]?.replace(
-          /"/g,
-          ""
-        )}`
+        `${
+          CloudinaryConfig.CLOUDINARY_URL
+        }/image/upload/${res.data.product?.image_id[3]?.replace(/"/g, "")}`
       );
       setImgData5(
-        `http://drive.google.com/thumbnail?id=${res.data.product?.image_id[4]?.replace(
-          /"/g,
-          ""
-        )}`
+        `${
+          CloudinaryConfig.CLOUDINARY_URL
+        }/image/upload/${res.data.product?.image_id[4]?.replace(/"/g, "")}`
       );
     } catch (error) {
       console.log(error);
     }
   };
+  console.log("product", productData, product);
   // const getfile = async () => {
   //   try {
   //     const res = await instance({
@@ -135,7 +132,9 @@ const ProductDisplay = (props) => {
                       ) : (
                         <img
                           className="sm:w-[520px] sm:h-[620px] w-[330px] h-[502px] pr-4 "
-                          src={`http://drive.google.com/thumbnail?id=${productData?.image_id[0]?.replace(
+                          src={`${
+                            CloudinaryConfig.CLOUDINARY_URL
+                          }/image/upload/${productData?.image_id[0]?.replace(
                             /"/g,
                             ""
                           )}`}
@@ -145,15 +144,18 @@ const ProductDisplay = (props) => {
                     </div>
                   </div>
                   <div className="productdisplay-right mt-2 sm:mt-0 ">
-                    <h1 className="dark:text-white ">{productData.name}</h1>
+                    <h1 className=" sm:text-[20px] ">{productData.name}</h1>
                     <Rating value={3.5} fractions={2} size="lg" />
 
                     <div className="productdisplay-right-prices">
-                      <div className="text-red-400 mt-[-20px] ">
-                        ₹{productData.price}{" "}
-                        <span className=" text-black ">
+                      <div className="mt-[-20px] ">
+                        <span className=" text-red-500 ">
                           ₹{productData.discountedPrice}
                         </span>
+                        <span className="line-through">
+                          ₹{productData.price}
+                        </span>
+
                         <span className=" text-gray-500 text-[14px] ml-2 ">
                           ({productData.discount} % OFF)
                         </span>

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 // import "./LoginSignup.css";
-import instance from "../../../api";
 import Navbar from "../Navbar/Navbar";
 import Button from "../Shared/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../Context/auth";
+import { Axios } from "../../../api";
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -16,8 +16,7 @@ const Login = () => {
     e.preventDefault();
     toast.success("successfully");
     setLoading(true);
-    instance
-      .post("/user/login", { email, password })
+    Axios.post("/user/login", { email, password })
       // console.log(name,email,password);
       // setName("");
       // setEmail("");

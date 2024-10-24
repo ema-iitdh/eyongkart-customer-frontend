@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createContext } from "react";
 import all_product from "../../assets/all_products";
-import instance from "../../../api";
+import { Axios } from "../../../api";
 
 export const ShopContext = createContext();
 
@@ -31,7 +31,7 @@ const ShopContextProvider = (props) => {
   };
 
   const fetchProducts = async () => {
-    const res = await instance.get("/product/allproduct");
+    const res = await Axios.get("/product/allproduct");
     setData(res.data.products);
     console.log(data);
   };

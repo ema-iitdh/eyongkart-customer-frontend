@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Heading from "../Shared/Heading";
 import ProductCard from "./ProductCard";
-import instance from "../../../api";
+import { Axios } from "../../../api";
+import { useQuery } from "@tanstack/react-query";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -11,7 +12,7 @@ const Products = () => {
 
   const getAllProduct = async () => {
     try {
-      const res = await instance({
+      const res = await Axios({
         url: "/product/allproduct",
         method: "GET",
       });
@@ -20,10 +21,15 @@ const Products = () => {
       console.log(error);
     }
   };
+  const { data: productList } = useQuery({
+    queryKey: ["products"],
+    queryFn: getAllProduct,
+  });
+  console.log(productList);
 
   const getProductbyMenTypes = async () => {
     try {
-      const res = await instance({
+      const res = await Axios({
         url: "/product/getproductType/667019bc4e4491b37de49d2d",
         method: "GET",
       });
@@ -35,7 +41,7 @@ const Products = () => {
 
   const getProductbyWomenTypes = async () => {
     try {
-      const res = await instance({
+      const res = await Axios({
         url: "/product/getproductType/66704a48ec25cce3b11c92e0",
         method: "GET",
       });

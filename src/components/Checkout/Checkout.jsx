@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 import axios from "axios";
-import instance from "../../../api";
 import { toast } from "react-toastify";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
@@ -13,6 +12,8 @@ import Swal from "sweetalert2";
 import { Radio, Group } from "@mantine/core";
 import { Checkbox } from "@mantine/core";
 import ChatBox from "../Chat/ChatBox";
+import { Axios } from "../../../api";
+import { CloudinaryConfig } from "../../../Cloudinary";
 const Checkout = () => {
   const [razorpaytick, setrazorpaytick] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -139,7 +140,7 @@ const Checkout = () => {
         //   }
         // );
         console.log(body);
-        const { data } = await instance.post("/order/validate", {
+        const { data } = await Axios.post("/order/validate", {
           razorpay_order_id: body.razorpay_order_id,
           razorpay_payment_id: body.razorpay_payment_id,
           razorpay_signature: body.razorpay_signature,
@@ -353,12 +354,14 @@ const Checkout = () => {
                       {checkoutItem.map((p, i) => (
                         <div
                           key={i}
-                          className="bg-white dark:bg-gray-900 flex items-center gap- 2mb-3"
+                          className="bg-white dark:bg-gray-900 flex items-center gap-2 mb-3"
                         >
                           <p className="p-1">
                             <img
-                              className="sm:h-[100px] sm:w-[120px] h-[100px] w-[80px] object-fit"
-                              src={`http://drive.google.com/thumbnail?id=${p?.image_id[0]?.replace(
+                              className="sm:h-[100px] sm:w-[100px] h-[100px] w-[80px] object-fit"
+                              src={`${
+                                CloudinaryConfig.CLOUDINARY_URL
+                              }/image/upload/${p?.image_id[0]?.replace(
                                 /"/g,
                                 ""
                               )}`}
@@ -369,7 +372,7 @@ const Checkout = () => {
                             {p.name}
                           </p>
                           <p className="p-2 sm:text-[18px] text-[15px]">
-                            ₹ {p.new_price}
+                            ₹ {p.price}
                             {/* ₹ {p.new_price}*{p.quantity} */}
                           </p>
                         </div>

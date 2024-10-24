@@ -3,7 +3,6 @@ import Navbar from "../Navbar/Navbar";
 import { TiDeleteOutline } from "react-icons/ti";
 import { ShopContext } from "../Context/ShopContext";
 import { Radio, Group } from "@mantine/core";
-import instance from "../../../api";
 import { useNavigate } from "react-router-dom";
 
 const CartsItems = () => {

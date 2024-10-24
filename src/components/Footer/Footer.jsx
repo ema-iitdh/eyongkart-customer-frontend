@@ -34,24 +34,16 @@ const Footer = () => {
             >
               HANDLOOM
             </a>
-            <p className="text-gray-600 dark:text-white/70 lg:pr-24 pt-3">
+            <p className="text-gray-600 dark:text-white/70  pt-3">
               The traditional dress of Manipur, a state in Northeast India, is
               famous for its bright colors and detailed patterns. Manipuri
               traditional dress name depends on whether they are worn by men or
               women. Below we have mentioned Manipuri traditional dress name for
               female and male separately.
             </p>
-            <p className="text-gray-500 mt-4">Made by coding devolpers.</p>
-            <a
-              href="https://brave.com"
-              target="_blank"
-              className="inline-block bg-primary/90 text-white py-2 px-4 mt-4 text-sm rounded-full"
-            >
-              Visit our website
-            </a>
           </div>
           {/* Footer links */}
-          <div className="col-span-2 grid grid-cols-2 sm:grid-cols-3 md:pl-10">
+          <div className="col-span-2 grid grid-cols-2  md:pl-6">
             <div className="py-8 px-4">
               <h1 className="text-xl font-bold sm:text-left mb-3 dark:text-white">
                 Important Links
@@ -61,7 +53,7 @@ const Footer = () => {
                   <li key={index}>
                     <a
                       href={data.link}
-                      className="text-gray-600 dark:text-gray-400 hover:dark:text-white hover:text-black duration-300"
+                      className="text-gray-600 dark:text-gray-400  hover:text-red-500 duration-300"
                     >
                       {data.title}
                     </a>
@@ -81,11 +73,11 @@ const Footer = () => {
                 </div>
                 <div className="flex items-center gap-2 mt-6">
                   <FaMobileAlt />
-                  <p>+91 9362002083</p>
+                  <p>+91 453278999</p>
                 </div>
                 <div className="flex items-center gap-2 mt-6">
                   <FaMobileAlt />
-                  <p> +91 9863059696</p>
+                  <p> +91 567895446</p>
                 </div>
                 {/* social link */}
                 <div className="flex items-center gap-3 mt-6">

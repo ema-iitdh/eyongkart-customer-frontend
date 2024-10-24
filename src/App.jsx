@@ -1,7 +1,6 @@
 import React from "react";
 // import "./App.css";
 import "@mantine/core/styles.css";
-
 import { MantineProvider } from "@mantine/core";
 import HomePage from "./Pages/HomePage";
 import Shop from "../src/components/Header/Shop";
@@ -16,7 +15,6 @@ import ShopCategory from "./Pages/ShopCategory";
 import CreateAccount from "./components/LoginSignup/CreateAccount";
 import Carts from "./components/Header/Carts";
 import Checkout from "./components/Checkout/Checkout";
-
 import Wishlist from "./components/Wishlist/Wishlist";
 import { ToastContainer } from "react-toastify";
 
@@ -25,6 +23,8 @@ import Myorder from "./components/Myorders/Myorder";
 import SidebarSort from "./components/SidebarSort/SidebarSort";
 import RemProductList from "./components/RemProductList";
 import ChatBox from "./components/Chat/ChatBox";
+import SearchBar from "./components/Search/SearchBar";
+import Banner from "./components/Banner/Banner";
 
 const App = () => {
   return (
@@ -39,6 +39,9 @@ const App = () => {
             // path='/shopbycategory'
             element={<ShopByCategory />}
           />
+
+          {/* <Route path="/productdisplay" element={<Banner />} /> */}
+          <Route path="/search" element={<SearchBar />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
@@ -53,7 +56,7 @@ const App = () => {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/myorder" element={<Myorder />} />
-          <Route path="/sort" element={<SidebarSort />} />
+          <Route path="/sort/:productId" element={<SidebarSort />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/chat" element={<ChatBox />} />
           {/* Remove this */}

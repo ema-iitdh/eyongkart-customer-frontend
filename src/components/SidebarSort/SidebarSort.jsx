@@ -5,10 +5,9 @@ import { Group, Button, Select } from "@mantine/core";
 import Shop from "../Header/Shop";
 import { Link } from "react-router-dom";
 import { ScrollArea, Radio } from "@mantine/core";
-import instance from "../../../api";
-import axios from "axios";
 import Item from "../Item/Item";
 import ChatBox from "../Chat/ChatBox";
+import { Axios } from "../../../api";
 
 const SidebarSort = () => {
   const [brand, setBrand] = useState("");
@@ -34,7 +33,7 @@ const SidebarSort = () => {
 
   const handlePrice = async (lcost, hcost) => {
     try {
-      const { data } = await axios.get(
+      const { data } = await Axios.get(
         `http://localhost:3000/product/filterbyprice/${lcost}-${hcost}`
       );
       setproducts(data.products);
