@@ -158,6 +158,7 @@ const CategorySort = () => {
                     {products?.map((p) => (
                       <div className="group " key={p._id}>
                         <div className="relative ">
+                          {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                           <img
                             onClick={() => navigate(`/product/${p._id}`)}
                             src={`${

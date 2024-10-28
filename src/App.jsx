@@ -1,5 +1,5 @@
 import React from "react";
-// import "./App.css";
+import "./App.css";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import HomePage from "./Pages/HomePage";
@@ -29,6 +29,7 @@ import CategorySort from "./components/SidebarSort/CategorySort";
 import SignupForm from "./components/LoginSignup/SignupForm";
 import SignIn from "./components/LoginSignup/SignIn";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import SearchResults from "./components/Search/SearchResult";
 
 const App = () => {
   const queryclient = new QueryClient();
@@ -50,6 +51,7 @@ const App = () => {
           /> */}
 
             <Route path="/search" element={<SearchBar />} />
+            <Route path="/search/:searchTerm" element={<SearchResults />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/sorted" element={<CategorySort />} />
