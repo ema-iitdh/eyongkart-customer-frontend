@@ -55,13 +55,11 @@ const TopSales = () => {
   });
   const productLists = productData.products || [];
 
+  const filteredProducts = () => {
+    return productLists.filter((product) => product.discount >= minDiscount);
+  };
   useEffect(() => {
-    const filteredProducts = () => {
-      setFilterItems(
-        productLists.filter((product) => product.discount >= minDiscount)
-      );
-    };
-    filteredProducts();
+    setFilterItems(filteredProducts());
   }, [productLists, minDiscount]);
   return (
     <>

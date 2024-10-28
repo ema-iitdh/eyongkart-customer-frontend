@@ -152,17 +152,13 @@ const ProductDisplay = (props) => {
                         <span className=" text-red-500 ">
                           ₹{productData.discountedPrice}
                         </span>
-                        <span className="line-through">
+                        <span className="pl-3 line-through">
                           ₹{productData.price}
                         </span>
 
                         <span className=" text-gray-500 text-[14px] ml-2 ">
                           ({productData.discount} % OFF)
                         </span>
-                        {/* <span className="line-through text-black">
-                          {" "}
-                          ₹ {productData.old_price}
-                        </span> */}
                       </div>
                     </div>
                     <div className="productdisplay-right-description mt-[-15px]">

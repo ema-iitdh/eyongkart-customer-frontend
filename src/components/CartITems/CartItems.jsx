@@ -4,6 +4,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { ShopContext } from "../Context/ShopContext";
 import { Radio, Group } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import { CloudinaryConfig } from "../../../Cloudinary";
 
 const CartsItems = () => {
   useEffect(() => {
@@ -42,7 +43,7 @@ const CartsItems = () => {
     let total = 0;
     if (cartItems?.length) {
       cartItems.map((i) => {
-        total = total + i.new_price * i.quantity;
+        total = total + i.discountedPrice * i.quantity;
       });
     }
     return total;
@@ -72,10 +73,9 @@ const CartsItems = () => {
                 <td className="sm:p-2 p-1 ">
                   <img
                     className="h-[50px] sm:h-[120px] w-[50px] sm:w-[200px] object-contain"
-                    src={`http://drive.google.com/thumbnail?id=${item?.image_id[0]?.replace(
-                      /"/g,
-                      ""
-                    )}`}
+                    src={`${
+                      CloudinaryConfig.CLOUDINARY_URL
+                    }/image/upload/${item?.image_id[0]?.replace(/"/g, "")}`}
                     alt="image1"
                   />
                 </td>
@@ -83,7 +83,7 @@ const CartsItems = () => {
                   {item.name}
                 </td>
                 <td className="sm:p-2 p-1 text-[14px] sm:text-[16px]">
-                  ₹ {item.new_price}
+                  ₹ {item.discountedPrice}
                 </td>
                 <td className="sm:p-2 p-1 text-[16px]  text-center   ">
                   <div className="flex gap-0 sm:gap-4 justify-center items-center">
@@ -106,7 +106,7 @@ const CartsItems = () => {
                 </td>
 
                 <td className="p-2 text-[14px] sm:text-[16px] ">
-                  ₹ {item.new_price * item.quantity}
+                  ₹ {item.discountedPrice * item.quantity}
                 </td>
                 <td className="p-2 text-[16px]">
                   <button type="button" className="text-red-500">

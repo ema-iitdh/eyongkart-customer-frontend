@@ -28,48 +28,54 @@ import Banner from "./components/Banner/Banner";
 import CategorySort from "./components/SidebarSort/CategorySort";
 import SignupForm from "./components/LoginSignup/SignupForm";
 import SignIn from "./components/LoginSignup/SignIn";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const App = () => {
+  const queryclient = new QueryClient();
   return (
-    <MantineProvider>
-      <ToastContainer />
-      <BrowserRouter>
-        <Routes>
-          {/* <Route path="/login" element={<Login />} /> */}
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/signup" element={<SignupForm />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<Shop />} />
-          {/* <Route
+    <QueryClientProvider client={queryclient}>
+      <MantineProvider>
+        <ToastContainer />
+        <BrowserRouter>
+          <Routes>
+            {/* <Route path="/login" element={<Login />} /> */}
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/signup" element={<SignupForm />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/shop" element={<Shop />} />
+            {/* <Route
             path="/shopbycategory/:category"
             // path='/shopbycategory'
             element={<ShopByCategory />}
           /> */}
-          <Route path="/sorted" element={<CategorySort />} />
 
-          <Route path="/search" element={<SearchBar />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<Contact />} />
+            <Route path="/search" element={<SearchBar />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/sorted" element={<CategorySort />} />
+            <Route path="/productdisplay" element={<ProductDisplay />} />
+            <Route path="/cart" element={<Carts />} />
+            <Route path="/shop" element={<ShopCategory />} />
+            <Route path="/product" element={<Product />}>
+              <Route path=":productId" element={<ProductDisplay />} />
+            </Route>
 
-          <Route path="/productdisplay" element={<ProductDisplay />} />
-          <Route path="/cart" element={<Carts />} />
-          <Route path="/shop" element={<ShopCategory />} />
-          <Route path="/product" element={<Product />}>
-            <Route path=":productId" element={<ProductDisplay />} />
-          </Route>
-
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/myorder" element={<Myorder />} />
-          <Route path="/sort" element={<SidebarSort />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/chat" element={<ChatBox />} />
-          {/* Remove this */}
-          {/* Remove RemProductList */}
-          <Route path="/productList/:categoryId" element={<RemProductList />} />
-        </Routes>
-      </BrowserRouter>
-    </MantineProvider>
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/myorder" element={<Myorder />} />
+            <Route path="/sort" element={<SidebarSort />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/chat" element={<ChatBox />} />
+            {/* Remove this */}
+            {/* Remove RemProductList */}
+            <Route
+              path="/productList/:categoryId"
+              element={<RemProductList />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </MantineProvider>
+    </QueryClientProvider>
   );
 };
 

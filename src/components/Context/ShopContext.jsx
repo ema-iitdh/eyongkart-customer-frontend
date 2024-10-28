@@ -1,4 +1,5 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect } from "react";
+import { createContext } from "react";
 import all_product from "../../assets/all_products";
 import { Axios } from "../../../api";
 
@@ -58,7 +59,7 @@ const ShopContextProvider = (props) => {
             ? {
                 ...item,
                 quantity: item.quantity + 1,
-                subtotal: (item.quantity + 1) * item.new_price,
+                subtotal: (item.quantity + 1) * item.discountedPrice,
               }
             : item
         );
@@ -66,7 +67,7 @@ const ShopContextProvider = (props) => {
         // If the item is not in the cart, add it with a quantity of 1 and calculate the subtotal
         updatedCartItems = [
           ...prev,
-          { ...addData, quantity: 1, subtotal: addData.new_price },
+          { ...addData, quantity: 1, subtotal: addData.discountedPrice },
         ];
       }
 
@@ -89,7 +90,7 @@ const ShopContextProvider = (props) => {
             ? {
                 ...item,
                 quantity: item.quantity - 1,
-                subtotal: (item.quantity - 1) * item.new_price,
+                subtotal: (item.quantity - 1) * item.discountedPrice,
               }
             : item
         );
@@ -132,7 +133,7 @@ const ShopContextProvider = (props) => {
     let total = 0;
     if (buyProduct.length) {
       buyProduct.map((i) => {
-        total = total + i.new_price * i.quantity;
+        total = total + i.discountedPrice * i.quantity;
       });
     }
     return total;

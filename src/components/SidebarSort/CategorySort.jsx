@@ -3,11 +3,13 @@ import Navbar from "../Navbar/Navbar";
 import ChatBox from "../Chat/ChatBox";
 import Footer from "../Footer/Footer";
 import { Axios } from "../../../api";
+import { FaHeart } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { ScrollArea } from "@mantine/core";
 import { RiArrowDropUpLine } from "react-icons/ri";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import PricesSort from "./PricesSort";
 const getAllProduct = async () => {
   const res = await Axios({
     url: "/product/allproduct",
@@ -17,6 +19,7 @@ const getAllProduct = async () => {
 };
 
 const CategorySort = () => {
+  // const queryClient = useQueryClient();
   const [isCollectionOpen, setIsCollectionOpen] = useState(false);
   const [isPricesOpen, setIsPricesOpen] = useState(false);
   const [isSortByOpen, setIsSortByOpen] = useState(false);
@@ -25,7 +28,7 @@ const CategorySort = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["categorysort"],
     queryFn: getAllProduct,
   });
 
@@ -36,6 +39,11 @@ const CategorySort = () => {
   //   if (isError) {
   //     return <div>Failed to fetch products. Please try again later.</div>;
   //   }
+  // useEffect(() => {
+  //   return () => {
+  //     queryClient.invalidateQueries(["products"]); // Invalidate cache on component unmount
+  //   };
+  // }, [queryClient]);
 
   useEffect(() => {
     window.scrollTo({
@@ -93,61 +101,16 @@ const CategorySort = () => {
                           htmlFor={product._id}
                           className="text-xs md:text-sm"
                         >
-                          {product.name}
+                          {product?.collection?.name}
                         </label>
                       </div>
                     ))}
                   </form>
                 </div>
 
-                <div className="w-full md:w-auto mt-4">
-                  <div className="flex items-center justify-between md:justify-start">
-                    <h3 className="sm:text-lg text-[13px] uppercase font-medium text-slate-500 border-b pb-1 border-slate-300">
-                      Prices
-                    </h3>
-
-                    <button
-                      type="button"
-                      className="md:hidden text-slate-500"
-                      onClick={() => setIsPricesOpen(!isPricesOpen)}
-                      aria-label="Toggle Collection Dropdown"
-                    >
-                      {isPricesOpen ? (
-                        <RiArrowDropUpLine />
-                      ) : (
-                        <RiArrowDropDownLine />
-                      )}
-                    </button>
-                  </div>
-                  <form
-                    className={`text-sm flex flex-col gap-2 py-2 ${
-                      isPricesOpen ? "block" : "hidden"
-                    } md:block`}
-                  >
-                    {products?.map((product) => (
-                      <div
-                        key={product._id}
-                        className="flex items-center gap-3 p-2 md:p-0"
-                      >
-                        <input
-                          type="checkbox"
-                          name="collection"
-                          id={product._id}
-                          className="w-4 h-4"
-                        />
-                        <label
-                          htmlFor={product._id}
-                          className="text-xs md:text-sm"
-                        >
-                          ₹ {product.price}
-                        </label>
-                      </div>
-                    ))}
-                  </form>
-                </div>
-
+                <PricesSort />
                 {/* Sort By Section */}
-                <div className="w-full md:w-auto mt-4">
+                {/* <div className="w-full md:w-auto mt-4">
                   <div className="flex items-center justify-between md:justify-start">
                     <h3 className="sm:text-lg text-[13px] uppercase font-medium text-slate-500 border-b pb-1 border-slate-300">
                       Sort By
@@ -185,7 +148,7 @@ const CategorySort = () => {
                       </label>
                     </div>
                   </form>
-                </div>
+                </div> */}
               </div>
 
               {/* right */}
@@ -195,7 +158,6 @@ const CategorySort = () => {
                     {products?.map((p) => (
                       <div className="group " key={p._id}>
                         <div className="relative ">
-                          {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                           <img
                             onClick={() => navigate(`/product/${p._id}`)}
                             src={`${
@@ -225,7 +187,7 @@ const CategorySort = () => {
                               ({p.discount} % OFF)
                             </span>
                           </div>
-                          {/* <button type="button" className="relative p-3">
+                          <button type="button" className="relative p-3">
                             <FaHeart
                               className={
                                 p.fav === "Yes"
@@ -234,7 +196,7 @@ const CategorySort = () => {
                               }
                               onClick={(e) => handleIsWishlist(e, p)}
                             />
-                          </button> */}
+                          </button>
                         </div>
                       </div>
                     ))}

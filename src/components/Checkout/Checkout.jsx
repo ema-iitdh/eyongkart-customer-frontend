@@ -4,10 +4,7 @@ import Footer from "../Footer/Footer";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
-import axios from "axios";
 import { toast } from "react-toastify";
-import { useDisclosure } from "@mantine/hooks";
-import { Modal, Button } from "@mantine/core";
 import Swal from "sweetalert2";
 import { Radio, Group } from "@mantine/core";
 import { Checkbox } from "@mantine/core";
@@ -65,7 +62,6 @@ const Checkout = () => {
     const pincode = districtPincode.filter(
       (eachDistrict) => eachDistrict.district === district
     );
-    // console.log(pincode[0]?.pincode);
     setPincode(pincode[0]?.pincode);
   }, [district]);
 
@@ -103,7 +99,7 @@ const Checkout = () => {
 
     const receiptId = "qwerty";
     // biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
-    const result = await instance.post("/order", {
+    const result = await Axios.post("/order", {
       buyProduct: getTotal(),
       // biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: <explanation>
       currency: "INR",
@@ -180,9 +176,9 @@ const Checkout = () => {
 
   const getTotal = () => {
     let total = 0;
-    if (checkoutItem && checkoutItem.length) {
+    if (checkoutItem && checkoutItem?.length) {
       checkoutItem.map((i) => {
-        total = total + i.new_price * i.quantity;
+        total = total + i.discountedPrice;
       });
     }
     return total;
@@ -214,7 +210,7 @@ const Checkout = () => {
     });
   };
 
-  console.log("one", buyProduct, "two", checkoutItem);
+  // console.log("one", buyProduct, "two", checkoutItem);
 
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden pt-16">
@@ -372,8 +368,8 @@ const Checkout = () => {
                             {p.name}
                           </p>
                           <p className="p-2 sm:text-[18px] text-[15px]">
-                            ₹ {p.price}
-                            {/* ₹ {p.new_price}*{p.quantity} */}
+                            {/* ₹ {p.discountedPrice}* {p.quantity} */}₹{" "}
+                            {p.discountedPrice}
                           </p>
                         </div>
                       ))}

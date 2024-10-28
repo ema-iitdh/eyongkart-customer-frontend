@@ -29,7 +29,7 @@ const Products = () => {
     queryKey: ["products"],
     queryFn: getAllProduct,
   });
-  console.log("products", productList);
+  // console.log("products", productList);
 
   // filteres Men and Women products
   const filteredProduct = () => {
@@ -75,11 +75,11 @@ const Products = () => {
   //   }
   // };
 
-  // useEffect(() => {
-  //   getAllProduct();
-  //   getProductbyMenTypes();
-  //   getProductbyWomenTypes();
-  // }, [wishlistUpdate]);
+  useEffect(() => {
+    getAllProduct();
+    // filteredMenProductList();
+    // filteredWomenProductList();
+  }, [wishlistUpdate]);
   return (
     <div className="overflow-hidden rounded-3xl min-h-[500px] sm:min-h-[650px]  flex  items-center flex-col pt-6  gap-y-3.5">
       <div className="container">

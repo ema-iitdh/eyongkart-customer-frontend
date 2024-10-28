@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
 export default function CategoryOption({ title, filteredKids }) {
-  console.log("kid", filteredKids);
+  // console.log("kid", filteredKids);
 
   const navigate = useNavigate();
   //hamburger
