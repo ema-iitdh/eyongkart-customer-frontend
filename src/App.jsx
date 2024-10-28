@@ -8,11 +8,11 @@ import ShopByCategory from "../src/components/Header/ShopByCategory";
 import AboutUs from "../src/components/Header/AboutUs";
 import Contact from "../src/components/Header/Contact";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./components/LoginSignup/Login";
+// import Login from "./components/LoginSignup/Login";
 import ProductDisplay from "./components/ProductDisplay/ProductDisplay";
 import Product from "./Pages/Product";
 import ShopCategory from "./Pages/ShopCategory";
-import CreateAccount from "./components/LoginSignup/CreateAccount";
+
 import Carts from "./components/Header/Carts";
 import Checkout from "./components/Checkout/Checkout";
 import Wishlist from "./components/Wishlist/Wishlist";
@@ -25,6 +25,9 @@ import RemProductList from "./components/RemProductList";
 import ChatBox from "./components/Chat/ChatBox";
 import SearchBar from "./components/Search/SearchBar";
 import Banner from "./components/Banner/Banner";
+import CategorySort from "./components/SidebarSort/CategorySort";
+import SignupForm from "./components/LoginSignup/SignupForm";
+import SignIn from "./components/LoginSignup/SignIn";
 
 const App = () => {
   return (
@@ -32,20 +35,22 @@ const App = () => {
       <ToastContainer />
       <BrowserRouter>
         <Routes>
+          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/signup" element={<SignupForm />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<Shop />} />
-          <Route
+          {/* <Route
             path="/shopbycategory/:category"
             // path='/shopbycategory'
             element={<ShopByCategory />}
-          />
+          /> */}
+          <Route path="/sorted" element={<CategorySort />} />
 
-          {/* <Route path="/productdisplay" element={<Banner />} /> */}
           <Route path="/search" element={<SearchBar />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/createaccount" element={<CreateAccount />} />
+
           <Route path="/productdisplay" element={<ProductDisplay />} />
           <Route path="/cart" element={<Carts />} />
           <Route path="/shop" element={<ShopCategory />} />
@@ -56,7 +61,7 @@ const App = () => {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/myorder" element={<Myorder />} />
-          <Route path="/sort/:productId" element={<SidebarSort />} />
+          <Route path="/sort" element={<SidebarSort />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/chat" element={<ChatBox />} />
           {/* Remove this */}

@@ -43,8 +43,8 @@ const CarouselTraditional = () => {
   }, []);
   return (
     // <div className="mt-2">
-    <div className="mt-[60px] drop-shadow-md rounded-xl text-2xl overflow-hidden  min-h-[190px] sm:min-h-[440px] hero-bg-color flex items-center flex-col pt-5 gap-y-3.5">
-      <div className="p-4 m-1 w-full ">
+    <div className=" drop-shadow-md rounded-xl text-2xl overflow-hidden min-h-[180px] sm:min-h-[440px] hero-bg-color flex items-center flex-col pt-3 gap-y-3.5">
+      <div className="p-2  w-full ">
         <Slider {...settings}>
           {carouselData?.map((data) => (
             <div key={data.id}>

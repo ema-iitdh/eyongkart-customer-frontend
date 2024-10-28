@@ -56,7 +56,7 @@ const SidebarSort = () => {
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
       <Navbar />
-      <div className="pt-20 ">
+      <div className="pt-16 ">
         <div className="overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color pb-5 gap-10 flex justify-start">
           <ScrollArea
             h={600}
@@ -227,11 +227,10 @@ const SidebarSort = () => {
                 </div>
               </div>
 
-              {/* <div className="text-[14px]">
+              <div className="text-[14px]">
                 <h2 className="p-2 text-[16px]">SORT BY</h2>
                 <Select
                   placeholder="Sort by"
-                  onChange={setSortCriteria}
                   data={[
                     { value: "price-asc", label: "Price: Low to High" },
                     { value: "price-desc", label: "Price: High to Low" },
@@ -239,57 +238,6 @@ const SidebarSort = () => {
                     { value: "name-desc", label: "Name: Z to A" },
                   ]}
                 />
-              </div> */}
-            </div>
-          </ScrollArea>
-
-          <ScrollArea h={600} type="never" scrollbars="y">
-            <div className="">
-              <h1 className="pt-3 pl-12">Recommended</h1>
-              <Group gap="xs" className="pl-5">
-                <Link to="/sort">
-                  <Button variant="default">All products</Button>
-                </Link>
-                <Link to="/shopByCategory/Rani Phee">
-                  <Button variant="default">Rani phee</Button>
-                </Link>
-                <Link to="/shopByCategory/Wangkhei Phee">
-                  <Button variant="default">Wangkhei phee</Button>
-                </Link>
-                <Link to="/shopByCategory/Digital Print Pheijom">
-                  <Button variant="default">Digital pheijom</Button>
-                </Link>
-                <Link to="/shopByCategory/Phanek">
-                  <Button variant="default">Phanek</Button>
-                </Link>
-                <Link to="/shopByCategory/Blouse">
-                  <Button variant="default">Blouse</Button>
-                </Link>
-                <Link to="/shopByCategory/Top">
-                  <Button variant="default">Top</Button>
-                </Link>
-                <Link to="/shopByCategory/Muka Phee">
-                  <Button variant="default">Muka phee</Button>
-                </Link>
-              </Group>
-
-              <div className="m-5 grid grid-cols-2 sm:grid-cols-4 gap-1 sm:gap-2">
-                {products?.map((item, i) => {
-                  // if (props.category === item.category) {
-                  return (
-                    <Item
-                      key={item._id}
-                      id={item._id}
-                      name={item.name}
-                      img={item?.image_id[0]}
-                      new_price={item.new_price}
-                      old_price={item.old_price}
-                    />
-                  );
-                  //  } else {
-                  //    return null;
-                  //  }
-                })}
               </div>
             </div>
           </ScrollArea>

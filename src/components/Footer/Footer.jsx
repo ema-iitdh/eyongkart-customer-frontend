@@ -23,23 +23,30 @@ const FooterLinks = [
 
 const Footer = () => {
   return (
-    <div className="dark:bg-gray-950">
+    <div className="bg-gray-100">
       <div className="container">
-        <div className="grid md:grid-cols-3 pb-20 pt-5">
+        <div className="grid md:grid-rows-2 pb-20 pt-5">
           {/* company details */}
           <div className="py-8 px-4">
             <a
               href="#"
-              className="text-primary font-semibold tracking-widest text-2xl uppercase sm:text-3xl"
+              className="text-primary font-semibold tracking-widest text-xl uppercase sm:text-2xl"
             >
-              HANDLOOM
+              HANDLOOM & HANDICRAFT
             </a>
             <p className="text-gray-600 dark:text-white/70  pt-3">
-              The traditional dress of Manipur, a state in Northeast India, is
-              famous for its bright colors and detailed patterns. Manipuri
-              traditional dress name depends on whether they are worn by men or
-              women. Below we have mentioned Manipuri traditional dress name for
-              female and male separately.
+              The traditional clothing of the Manipur region of northeastern
+              India is famous for its vibrant colours and detailed patterns. The
+              name of the traditional dress in Manipuri depends on whether a man
+              or a woman wears it. Below are the names of the traditional dress
+              of women's and men's manipuri separately. Manipur's handlooms and
+              handicrafts are famous for their vibrant designs and complex
+              artistry. The handloom division is known for traditional fabrics
+              such as phanek and raniphee, introducing unique patterns and
+              natural dyes. Handicrafts such as bamboo and sugarcane, pottery
+              and jewellery reflect the region's rich cultural heritage and
+              skilled craftsmanship, and each work embodies the tradition and
+              creativity of local craftsmen.
             </p>
           </div>
           {/* Footer links */}
@@ -68,19 +75,11 @@ const Footer = () => {
               <h1 className="text-xl font-bold sm:text-left mb-3 ">Address </h1>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
-                  <GrLocation />
-                  <p>Imphal,Manipur,India</p>
+                  <GrLocation size={20} />
+                  <p>Imphal, Manipur, India</p>
                 </div>
-                <div className="flex items-center gap-2 mt-6">
-                  <FaMobileAlt />
-                  <p>+91 453278999</p>
-                </div>
-                <div className="flex items-center gap-2 mt-6">
-                  <FaMobileAlt />
-                  <p> +91 567895446</p>
-                </div>
-                {/* social link */}
-                <div className="flex items-center gap-3 mt-6">
+
+                {/* <div className="flex items-center gap-3 mt-6">
                   <a href="#">
                     <FaInstagram className="text-3xl hover:text-primary duration-300" />
                   </a>
@@ -93,7 +92,7 @@ const Footer = () => {
                   <a href="#">
                     <FaGithub className="text-3xl hover:text-primary duration-300" />
                   </a>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

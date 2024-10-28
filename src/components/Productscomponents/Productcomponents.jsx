@@ -20,7 +20,7 @@ const ProductComponents = () => {
 
   return (
     <div className="p-2 drop-shadow-md">
-      <div className="  overflow-hidden rounded-xl sm:h-[380px] h-[320px]  hero-bg-color ">
+      <div className="  overflow-hidden rounded-md sm:h-[380px] h-[320px]  hero-bg-color ">
         <ScrollArea type="never">
           <Box>
             <div className=" flex flex-grow gap-2 p-5">

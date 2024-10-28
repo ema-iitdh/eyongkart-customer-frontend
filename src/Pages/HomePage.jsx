@@ -36,16 +36,16 @@ const HomePage = () => {
     <>
       <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
         <Navbar />
-        {/* <Category /> */}
+        <Category />
         <CarouselTraditional />
-        <Productcomponents />
+        {/* <Productcomponents /> */}
         <TopSales />
 
         <PriceStores />
         <Banner />
         <Products />
         <ChatBox />
-        {/* <Banner data={BannerData2} /> */}
+
         <Footer />
       </div>
     </>

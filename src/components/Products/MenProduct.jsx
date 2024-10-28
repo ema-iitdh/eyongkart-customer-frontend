@@ -1,37 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import { FaHeart } from "react-icons/fa";
-import { toast } from "react-toastify";
 import { CloudinaryConfig } from "../../../Cloudinary";
-import { Axios } from "../../../api";
 
-const ProductCard = ({ filteredWomenProductList, type, setWishlistUpdate }) => {
-  const navigate = useNavigate();
-  // const [products, setProducts] = useState(data);
-  console.log("filterewomen product list", filteredWomenProductList);
-
-  const handleIsWishlist = async (e, p) => {
-    e.preventDefault();
-    try {
-      const { data } = await Axios.put(`/product/updatefav/${p._id}`, {
-        fav: p.fav === "No" ? "Yes" : "No",
-      });
-      if (data) {
-        setWishlistUpdate((prev) => !prev);
-      }
-    } catch (error) {
-      toast.error("Something Happened");
-    }
-  };
-
-  // useEffect(() => {
-  //   setProducts(data);
-  // }, [data]);
-
+export default function MenProduct({ filteredMenProductList }) {
+  console.log(filteredMenProductList);
   return (
     <div className="mb-10">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pl-4">
-        {filteredWomenProductList?.map((p) => (
+        {filteredMenProductList?.map((p) => (
           <div className="group " key={p._id}>
             <div className="relative ">
               {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
@@ -71,6 +47,4 @@ const ProductCard = ({ filteredWomenProductList, type, setWishlistUpdate }) => {
       </div>
     </div>
   );
-};
-
-export default ProductCard;
+}

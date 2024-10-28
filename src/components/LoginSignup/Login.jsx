@@ -76,7 +76,7 @@ const Login = () => {
             <p className="text-black dark:text-white  sm:text-[18px] text-[16px] pl-8">
               Forget Password?{" "}
               <span className="text-red-500 text-[16px]">
-                <Link to="/createaccount">Create Account</Link>
+                <Link to="/signup">Create Account</Link>
               </span>
             </p>
           </div>

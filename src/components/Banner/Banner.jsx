@@ -1,5 +1,6 @@
 import React from "react";
 import raniphi from "../../assets/Category/rani.png";
+import { Link } from "react-router-dom";
 const BannerData = {
   discount: "50% OFF",
   title: "Beauty",
@@ -27,13 +28,15 @@ const Banner = () => {
             </h1>
             <p className="text-sm">{BannerData.date}</p>
             <div className="p-3">
-              <button
-                type="button"
-                style={{ color: BannerData.bgColor }}
-                className="bg-white sm:py-2 sm:px-4 p-2  text-[13px]  rounded-full flex text-center"
-              >
-                Shop Now
-              </button>
+              <Link to="/sorted">
+                <button
+                  type="button"
+                  style={{ color: BannerData.bgColor }}
+                  className="bg-white sm:py-2 sm:px-4 p-2  text-[13px]  rounded-full flex text-center"
+                >
+                  Shop Now
+                </button>
+              </Link>
             </div>
           </div>
           {/* second col */}

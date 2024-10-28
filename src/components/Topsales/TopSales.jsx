@@ -65,10 +65,10 @@ const TopSales = () => {
   }, [productLists, minDiscount]);
   return (
     <>
-      <div className="drop-shadow-md">
+      <div className=" mt-2 drop-shadow-md">
         <div className="overflow-hidden rounded-xl  sm:h-[440px] h-[330px] hero-bg-color  ">
           <div className="container pb-2 ml-0 pr-0  sm:pb-0">
-            <h1 className="gap-4 flex justify-start items-start text-2xl font-semibold  text-black hover:text-red-500 dark:text-white p-2 ">
+            <h1 className="gap-4 flex justify-start items-start text-xl font-semibold  text-black hover:text-red-500 dark:text-white p-2 ">
               Top sales
               <p className="text-[16px] text-red-500">Above {minDiscount}% </p>
             </h1>
@@ -78,11 +78,11 @@ const TopSales = () => {
                   return (
                     <div
                       key={item.id}
-                      className="bg-gray-100 drop-shadow-md rounded-md sm:w-24 sm:h-[330px]  w-[300px] h-[230px] "
+                      className="bg-gray-100 drop-shadow-md rounded-md sm:w-24 sm:h-[330px]  w-[300px] h-[240px] "
                     >
                       <div className="">
                         <img
-                          className="sm:w-56 sm:h-56 w-[150px] h-[150px] object-fit m-auto p-3"
+                          className="sm:w-52 sm:h-56 w-[150px] h-[150px] object-fit m-auto p-3"
                           src={`${
                             CloudinaryConfig.CLOUDINARY_URL
                           }/image/upload/${item?.image_id[0]?.replace(
@@ -93,16 +93,24 @@ const TopSales = () => {
                         />
                       </div>
                       <div className="flex justify-around sm:p-2 p-2">
-                        <div className="sm:text-[16px] text-[13px] text-black">
+                        <div className="sm:text-[16px] text-[11px] text-black">
                           <p className="">{item.name}</p>
-                          <p className="text-red-500 ">
-                            ₹ {item.discountedPrice}
+                          <div className="flex">
+                            <p className="text-black pr-1 line-through ">
+                              ₹{item.price}{" "}
+                            </p>
+                            <p className="text-red-500 pr-1 ">
+                              ₹{item.discountedPrice}
+                            </p>
+                          </div>
+                          <p className="text-gray-400 text-[10px] ">
+                            ({item.discount} % OFF)
                           </p>
                         </div>
                         <Link
                           to="/checkout"
                           type="button"
-                          className="bg-red-600 hover:bg-red-500 sm:text-[14px] text-[10px] text-center pt-2 sm:w-[85px] sm:h-[38px] w-[65px] h-8 text-white rounded-md"
+                          className="bg-red-600 hover:bg-red-500 sm:text-[14px] text-[8px] text-center pt-[6px] sm:w-[80px] sm:h-[38px] w-[65px] mt-1 h-6 text-white rounded-md"
                         >
                           Buy now
                         </Link>

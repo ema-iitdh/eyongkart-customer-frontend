@@ -83,18 +83,17 @@ const Navbar = () => {
   return (
     <>
       <div className=" bg-white duration-200 z-40 fixed top-0 right-0 left-0">
-        <div className=" p-2 relative ">
+        <div className=" p-2  relative ">
           <div className=" container flex justify-between items-center sm:text-[16px] ">
-            <div className="flex  items-center gap-7">
-              <NavLink
-                to="/"
-                className="text-primary tracking-widest uppercase sm:text-3xl"
-              >
+            <div className="flex items-center gap-7">
+              <NavLink to="/" className="">
+                {/* <div className="w-[100px] h-[50px] bg-red-400 mb-2"> */}
                 <img
-                  className="w-[80px] h-[50px] object-fit "
-                  src="/final_logo.jpg"
+                  className=" object-contain w-[100px] sm:h-[60px] h-[50px]"
+                  src="/logo.png"
                   alt=""
                 />
+                {/* </div> */}
               </NavLink>
 
               <div className="hidden lg:block  ">
@@ -176,8 +175,8 @@ const Navbar = () => {
                       className="text-primary tracking-widest uppercase sm:text-3xl "
                     >
                       <img
-                        className="w-[50px] h-[25px] object-fit mb-3 "
-                        src="/mainLogo.png"
+                        className="w-[55px] h-[50px] object-contain mb-3 "
+                        src="/logo.png"
                         alt=""
                       />
                     </NavLink>
@@ -232,7 +231,7 @@ const Navbar = () => {
                           className="flex items-center space-x-2 p-2 rounded-md hover:bg-red-300"
                         >
                           <Avatar size={25} color="red" />
-                          <span>Login</span>
+                          <span>Sign In</span>
                         </NavLink>
                       </li>
                     </ul>
