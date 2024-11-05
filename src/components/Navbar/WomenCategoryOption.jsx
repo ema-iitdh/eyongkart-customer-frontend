@@ -13,11 +13,8 @@ export default function WomenCategoryOption({ title, filteredWomen }) {
           <div key={category._id} className="category">
             <NavLink
               key={category._id}
-              to={`/sort/${category._id} `}
+              to={`/sorted/${category._id} `}
               className="font-bold text-red-500 cursor-pointer"
-              onClick={() => {
-                navigate(`/productList/${category._id}`);
-              }}
             >
               {category.name}
             </NavLink>

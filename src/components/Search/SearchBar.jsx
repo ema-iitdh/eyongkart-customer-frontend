@@ -9,7 +9,6 @@ const SearchBar = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch all products when the component mounts
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -40,12 +39,13 @@ const SearchBar = () => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchProduct) {
       navigate(`/search/${searchProduct}`);
+      setSearchProduct("");
     }
   };
 
   const handleProductClick = (product) => {
-    console.log("Selected product:", product);
-    setSearchProduct(product.name);
+    // console.log("Selected product:", product);
+    setSearchProduct("");
     setFilteredProducts([]);
     navigate(`/search/${product.name}`);
   };
@@ -61,7 +61,12 @@ const SearchBar = () => {
         onKeyDown={handleKeyDown}
       />
       <FaSearch
-        onClick={() => searchProduct && navigate(`/search/${searchProduct}`)}
+        onClick={() => {
+          if (searchProduct) {
+            navigate(`/search/${searchProduct}`);
+            setSearchProduct("");
+          }
+        }}
         className="text-xl text-gray-600 group-hover:text-primary absolute top-1/2 -translate-y-1/2 right-3 duration-200 cursor-pointer"
       />
 
@@ -69,9 +74,10 @@ const SearchBar = () => {
       {searchProduct && filteredProducts.length > 0 && (
         <div className="dropdown">
           {filteredProducts.map((product) => (
+            // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
             <div
               key={product.id}
-              className="dropdown-item cursor-pointer"
+              className="dropdown-item cursor-pointer hover:bg-red-400"
               onClick={() => handleProductClick(product)}
             >
               {product.name}

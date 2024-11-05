@@ -16,11 +16,8 @@ export default function CategoryOption({ title, filteredKids }) {
             {/* Category Name */}
             <NavLink
               key={category._id}
-              to={`/sort/${category._id} `}
+              to={`/sorted/${category._id} `}
               className="font-bold text-red-500 cursor-pointer"
-              onClick={() => {
-                navigate(`/productList/${category._id}`);
-              }}
             >
               {category.name}
             </NavLink>

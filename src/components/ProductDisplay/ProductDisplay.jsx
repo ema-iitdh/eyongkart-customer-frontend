@@ -14,9 +14,11 @@ import { ShopContext } from "../Context/ShopContext";
 import RelatedProduct from "../RelatedProducts/RelatedProduct";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { Axios } from "../../../api";
+import { useProductWithComments } from "../../BaseURL/Product";
 
 const ProductDisplay = (props) => {
   const { product } = props;
+
   const navigate = useNavigate();
   const { addToCart, buyNow } = useContext(ShopContext);
   const [productData, setproductData] = useState();
@@ -26,7 +28,8 @@ const ProductDisplay = (props) => {
   const [imgData4, setImgData4] = useState();
   const [mainImg, setMainImg] = useState();
   const { productId } = useParams();
-  console.log(productId);
+  const { data } = useProductWithComments(productId);
+  console.log("rating:", data);
   const fetchProductData = async () => {
     try {
       const res = await Axios({
@@ -65,17 +68,6 @@ const ProductDisplay = (props) => {
     }
   };
   console.log("product", productData, product);
-  // const getfile = async () => {
-  //   try {
-  //     const res = await instance({
-  //       url: `http://drive.google.com/thumbnail?id=${productData?.image_id[0]}`,
-  //       method: "GET",
-  //     });
-  //     setImgData(res);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   useEffect(() => {
     fetchProductData();
   }, []);
@@ -85,7 +77,6 @@ const ProductDisplay = (props) => {
       behavior: "smooth",
     });
   }, []);
-  // const { product } = props;
   return (
     <>
       {productData && (
@@ -97,24 +88,28 @@ const ProductDisplay = (props) => {
                 <div className=" sm:flex ml-2 pt-5 pb-5">
                   <div className="flex gap-3">
                     <div className="flex flex-col gap-2">
+                      {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                       <img
                         className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px] "
                         src={imgData1}
                         alt="image1"
                         onClick={() => setMainImg(imgData1)}
                       />
+                      {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                       <img
                         className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px] "
                         src={imgData2}
                         alt="image2"
                         onClick={() => setMainImg(imgData2)}
                       />
+                      {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                       <img
                         className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px] "
                         src={imgData3}
                         alt="image3"
                         onClick={() => setMainImg(imgData3)}
                       />
+                      {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                       <img
                         className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px]"
                         src={imgData4}
@@ -144,8 +139,10 @@ const ProductDisplay = (props) => {
                     </div>
                   </div>
                   <div className="productdisplay-right mt-2 sm:mt-0 ">
-                    <h1 className=" sm:text-[20px] ">{productData.name}</h1>
-                    <Rating value={3.5} fractions={2} size="lg" />
+                    <h1 className=" sm:text-[20px] text-[15px] ">
+                      {productData.name}
+                    </h1>
+                    <Rating value={3.5} fractions={2} size="md" />
 
                     <div className="productdisplay-right-prices">
                       <div className="mt-[-20px] ">
@@ -161,13 +158,13 @@ const ProductDisplay = (props) => {
                         </span>
                       </div>
                     </div>
-                    <div className="productdisplay-right-description mt-[-15px]">
+                    <div className="sm:text-[16px] text-[13px] mt-[-15px]">
                       {productData.description}
                     </div>
-                    <div className="pt-8 flex sm:text-xl text-[15px] gap-2 font-semibold">
+                    <div className="pt-8 flex sm:text-xl text-[13px] gap-2 font-semibold">
                       Quantity
                       <input
-                        className="w-[100px] h-[30px] dark:text-black border border-black "
+                        className="w-[100px] h-[25px] dark:text-black border border-black "
                         min={1}
                         max={6}
                         type="number"
@@ -175,20 +172,24 @@ const ProductDisplay = (props) => {
                       />
                     </div>
                     <div className="productdisplay-right-size pb-8">
-                      <h1>Size </h1>
-                      <p>Length : {productData.sizelength} </p>
-                      <p>Width : {productData.sizewidth}</p>
+                      <h4>Size </h4>
+                      <p className="sm:text-[16px] text-[13px]">
+                        Length : {productData.sizelength}{" "}
+                      </p>
+                      <p className="sm:text-[16px] text-[13px]">
+                        Width : {productData.sizewidth}
+                      </p>
                     </div>
-                    <div className=" flex gap-2 ">
+                    <div className="flex gap-4 pr-3">
                       <button
                         onClick={() => {
                           buyNow(productData._id);
                           navigate("/checkout");
                         }}
                         type="button"
-                        className=" sm:w-[100px] sm:h-[58px] h-[50px] p-2 outline-none border-none bg-red-500 text-white  text-center rounded-full cursor-pointer"
+                        className="flex items-center justify-center sm:w-[120px] sm:h-[60px] h-[40px] mb-8 outline-none border-none bg-red-400 hover:bg-red-500 transition duration-200 text-white text-center rounded-full cursor-pointer shadow-md"
                       >
-                        Buy now
+                        <span className="font-semibold">Buy Now</span>
                       </button>
 
                       <button
@@ -196,17 +197,18 @@ const ProductDisplay = (props) => {
                           addToCart(productData._id);
                         }}
                         type="button"
-                        className=" sm:w-[100px] sm:h-[58px] h-[50px] outline-none border-none bg-red-500 text-white text-[13px] text-center rounded-full cursor-pointer"
+                        className="flex items-center justify-center sm:w-[120px] sm:h-[60px] h-[40px] outline-none border-none bg-red-400 hover:bg-red-500 transition duration-200 text-white text-[13px] text-center rounded-full cursor-pointer shadow-md"
                       >
-                        Add to cart
+                        <span className="font-semibold">Add to Cart</span>
                       </button>
                     </div>
-                    <p className="mt-3 text-[16px]">
-                      <span className="text-[18px]">Category: </span>
-                      Women, Rani phi and traditional design.
+
+                    <p className="mt-3 sm:text-[16px] text-[13px]">
+                      <span>Category: </span>
+                      Women, {productData.name} and traditional design.
                     </p>
-                    <p className="mt-3 text-[16px]">
-                      <span className="text-[18px]">Tags: </span>
+                    <p className="mt-3 sm:text-[16px] text-[13px]">
+                      <span>Tags: </span>
                       Modern Latest.
                     </p>
                   </div>
@@ -215,7 +217,6 @@ const ProductDisplay = (props) => {
               <RelatedProduct />
             </div>
           </div>
-          {/* <Footer /> */}
         </div>
       )}
     </>

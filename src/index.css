@@ -4,7 +4,7 @@
 
 @layer components {
   .search-bar {
-    @apply sm:group-hover:w-[280px] rounded-full border border-gray-500 px-3 py-1 focus:outline-none flex justify-end text-[14px];
+    @apply sm:w-[300px] rounded-full border border-gray-500 px-3 sm:py-2 py-1 focus:outline-none flex justify-end text-[14px];
   }
 }
 @layer utilities {

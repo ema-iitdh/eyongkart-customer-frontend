@@ -79,14 +79,15 @@ const Checkout = () => {
     });
   }
   const paymentHandler = async () => {
-    if (!razorpaytick) {
-      // alert("Proceeding with Razorpay payment");
-      // navigate("/myorder");
-      return;
+    if (paymentMethod === "razorpay") {
+      // console.log("Proceed with Razorpay payment");
+      // navigate("/razorpay-payment");
     }
     if (paymentMethod === "cash") {
-      navigate("/myorder");
-      return;
+      // setTimeout(() => {
+      alertOk();
+      // navigate("/myorder");
+      // }, 1000);
     }
 
     const res = await loadScript(
@@ -198,7 +199,9 @@ const Checkout = () => {
       text: "Thank you for order",
       icon: "success",
     });
-    // navigate("/myorder");
+    setTimeout(() => {
+      navigate("/myorder");
+    }, 1000);
   };
   const saveInfo = () => {
     Swal.fire({
@@ -393,36 +396,50 @@ const Checkout = () => {
                   ) : (
                     <></>
                   )}
-                  <Radio.Group>
-                    <Group mt="xl">
-                      <Radio
-                        color="red"
-                        value="razorpay"
-                        label="Online Payment /UPI"
-                        checked={razorpaytick}
-                        onChange={(event) =>
-                          setrazorpaytick(event.currentTarget.checked)
-                        }
-                      />
+                  <div>
+                    <Radio.Group>
+                      <Group mt="xl">
+                        <Radio
+                          color="red"
+                          value="razorpay"
+                          label="Online Payment / UPI"
+                          checked={razorpaytick}
+                          onChange={(event) => {
+                            setrazorpaytick(event.currentTarget.checked);
+                            setPaymentMethod("razorpay"); // Set payment method to "razorpay" when selected
+                          }}
+                        />
+                        <Radio
+                          color="red"
+                          value="cash"
+                          label="Cash on Delivery"
+                          onChange={() => {
+                            setrazorpaytick(false); // Reset Razorpay selection if cash is chosen
+                            setPaymentMethod("cash"); // Set payment method to "cash"
+                          }}
+                        />
+                      </Group>
+                    </Radio.Group>
+                    {paymentMethod === "razorpay" && (
+                      <button
+                        onClick={paymentHandler}
+                        type="button"
+                        className="w-[120px] sm:h-[50px] mt-4 outline-none border-none bg-red-500 text-white sm:text-[16px] text-[15px] text-center cursor-pointer rounded-md"
+                      >
+                        PAY NOW
+                      </button>
+                    )}
 
-                      <Radio
-                        value="cash"
-                        color="red"
-                        label="Cash on Delivery"
+                    {paymentMethod === "cash" && (
+                      <button
                         onClick={alertOk}
-                        onChange={() => {
-                          setPaymentMethod("cash");
-                        }}
-                      />
-                    </Group>
-                  </Radio.Group>
-                  <button
-                    onClick={paymentHandler}
-                    type="button"
-                    className="w-[120px] sm:h-[50px] mt-4 outline-none border-none bg-red-500 text-white sm:text-[16px] text-[15px] text-center cursor-pointer rounded-md"
-                  >
-                    PAY NOW
-                  </button>
+                        type="button"
+                        className="w-[120px] sm:h-[50px] mt-4 outline-none border-none bg-red-500 text-white sm:text-[16px] text-[15px] text-center cursor-pointer rounded-md"
+                      >
+                        PAY NOW
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

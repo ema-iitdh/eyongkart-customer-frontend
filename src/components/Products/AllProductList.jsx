@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { FaHeart } from "react-icons/fa";
 import { Axios } from "../../../api";
@@ -20,7 +20,8 @@ export default function AllProductList({ AllProduct }) {
       toast.error("Something Happened");
     }
   };
-  console.log("allproducts", AllProduct);
+
+  // console.log("allproducts", AllProduct);
   return (
     <div className="mb-10">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pl-4">

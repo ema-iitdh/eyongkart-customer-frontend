@@ -40,7 +40,7 @@ const PriceStores = () => {
               {filterItems?.map((item) => {
                 return (
                   <div
-                    key={item.id}
+                    key={item._id}
                     className="bg-gray-100 drop-shadow-md sm:h-[320px] sm:w-[250px] h-[270px] w-[180px] rounded-lg flex flex-col items-center justify-center"
                   >
                     <div className="">

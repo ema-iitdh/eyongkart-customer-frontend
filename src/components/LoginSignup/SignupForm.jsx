@@ -53,20 +53,20 @@ const SignupForm = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+      <div className="bg-white mb-16 p-6 rounded-lg shadow-lg sm:w-full sm:max-w-sm">
         <img
           src="/logo.png"
           alt="logo"
           className="h-8 mx-auto mb-4 object-contain"
         />
-        <h2 className="text-lg font-semibold text-center mb-6">
+        <h2 className="sm:text-lg font-semibold text-center mb-6">
           Create Account
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="name"
-              className="block text-gray-700 font-bold text-[15px] mb-2"
+              className="block text-gray-700 font-bold text-[12px] sm:text-[15px] mb-2"
             >
               Your name
             </label>
@@ -86,12 +86,12 @@ const SignupForm = () => {
           <div className="mb-4">
             <label
               htmlFor="mobileNumber"
-              className="block text-gray-700 font-bold text-[15px] mb-2"
+              className="block text-gray-700 font-bold text-[12px] sm:text-[15px] mb-2"
             >
               Mobile number
             </label>
             <div className="flex">
-              <select className="p-2 h-8 sm:text-[15px] text-[12px] border border-gray-300 rounded-md mr-2">
+              <select className="p-2 h-8 sm:text-[14px] text-[12px] border border-gray-300 rounded-md mr-2">
                 <option value="+91">IN +91</option>
                 {/* Add more country codes if needed */}
               </select>
@@ -114,7 +114,7 @@ const SignupForm = () => {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-gray-700 font-bold text-[15px] mb-2"
+              className="block text-gray-700 font-bold text-[12px] sm:text-[15px] mb-2"
             >
               Password
             </label>
@@ -135,7 +135,7 @@ const SignupForm = () => {
               type="submit"
               className="w-full bg-red-400 text-white p-1 h-8 sm:text-[15px] text-[12px] rounded-md hover:bg-red-500 transition duration-300 font-semibold"
             >
-              Verify mobile number
+              Verify
             </button>
           </Link>
         </form>

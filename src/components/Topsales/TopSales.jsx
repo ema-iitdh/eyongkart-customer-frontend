@@ -4,8 +4,9 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "../../BaseURL/Product";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CloudinaryConfig } from "../../../Cloudinary";
+import { Button } from "@mantine/core";
 const TopSales = () => {
   const settings = {
     dots: true,
@@ -44,6 +45,7 @@ const TopSales = () => {
   };
   const [filterItems, setFilterItems] = useState([]);
   const [minDiscount, setMinDiscount] = useState(60);
+  const navigate = useNavigate();
   const {
     data: productData = {},
     isLoading: isLoadingProducts,
@@ -75,7 +77,7 @@ const TopSales = () => {
                 {filterItems?.map((item, id) => {
                   return (
                     <div
-                      key={item.id}
+                      key={item._id}
                       className="bg-gray-100 drop-shadow-md rounded-md sm:w-24 sm:h-[330px]  w-[300px] h-[240px] "
                     >
                       <div className="">
@@ -105,13 +107,13 @@ const TopSales = () => {
                             ({item.discount} % OFF)
                           </p>
                         </div>
-                        <Link
+                        <button
                           to="/checkout"
                           type="button"
                           className="bg-red-600 hover:bg-red-500 sm:text-[14px] text-[8px] text-center pt-[6px] sm:w-[80px] sm:h-[38px] w-[65px] mt-1 h-6 text-white rounded-md"
                         >
                           Buy now
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   );

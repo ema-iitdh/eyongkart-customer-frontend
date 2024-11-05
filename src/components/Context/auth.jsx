@@ -9,10 +9,6 @@ const AuthProvider = ({ children }) => {
     token: "",
   });
 
-  // const contextValue = {
-  //   auth,
-  // };
-
   useEffect(() => {
     let isLogin = localStorage.getItem("auth");
     if (isLogin) {

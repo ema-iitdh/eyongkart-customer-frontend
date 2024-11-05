@@ -47,7 +47,7 @@ const CarouselTraditional = () => {
       <div className="p-2  w-full ">
         <Slider {...settings}>
           {carouselData?.map((data) => (
-            <div key={data.id}>
+            <div key={data._id}>
               <div className="grid grid-cols-2 sm:grid-cols-2 gap-x-10">
                 <div className="flex flex-col justify-center sm:gap-6 gap-4 sm:pl-4 sm:pt-0  sm:text-left text-left order-2 sm:order-1 relative z-10">
                   <h1 className="text-2xl sm:text-6xl lg:text-2xl font-bold">

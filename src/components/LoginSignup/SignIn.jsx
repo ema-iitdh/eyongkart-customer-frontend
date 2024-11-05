@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { toast } from "react-toastify";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // State for loading
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const validateForm = () => {
     const newErrors = {};
@@ -15,15 +18,24 @@ const SignIn = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted:", { email });
+      setLoading(true); // Set loading to true
+      toast.success("Successfully signed in!");
 
+      // Simulating a sign-in process (e.g., API call)
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulating a delay
+
+      // Reset the form fields
       setEmail("");
       setErrors({});
+
+      // Navigate to home page
+      navigate("/"); // Redirect to home
+      setLoading(false); // Set loading to false
     } else {
       setErrors(validationErrors);
     }
@@ -31,74 +43,59 @@ const SignIn = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+      <div className="bg-white mb-16 p-6 rounded-lg shadow-lg sm:w-full sm:max-w-sm">
         <img
           src="/logo.png"
-          alt=" Logo"
+          alt="Logo"
           className="h-8 mx-auto mb-4 object-contain"
         />
 
-        <h2 className="text-lg font-semibold text-center mb-6">Sign In</h2>
+        <h2 className="sm:text-lg font-semibold text-center mb-6">Sign In</h2>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              htmlFor="emailOrPhone"
-              className="block text-gray-700 font-bold text-[15px] mb-2"
+              htmlFor="email"
+              className="block text-gray-700 font-bold text-[12px] sm:text-[15px] mb-2"
             >
               Email
             </label>
             <input
               type="text"
-              id="emailOrPhone"
+              id="email"
               className="w-full h-8 sm:text-[15px] text-[12px] p-2 border border-gray-300 rounded-md"
               placeholder="Enter your email"
               value={email}
-              onChange={(e) => setEmailOrPhone(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={loading} // Disable input during loading
             />
             {errors.email && (
               <p className="text-red-600 text-[10px] mt-1">{errors.email}</p>
             )}
           </div>
-          <Link to="/">
-            <button
-              type="submit"
-              className="w-full bg-red-400 text-white p-1 h-8 sm:text-[15px] text-[12px] rounded-md hover:bg-red-500 transition duration-300 font-semibold"
-            >
-              Continue
-            </button>
-          </Link>
+          <button
+            type="submit"
+            className={`w-full bg-red-400 text-white p-1 h-8 sm:text-[15px] text-[12px] rounded-md hover:bg-red-500 transition duration-300 font-semibold ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`} // Disable button during loading
+            disabled={loading} // Disable button during loading
+          >
+            {loading ? "Loading..." : "Continue"}{" "}
+            {/* Change button text during loading */}
+          </button>
         </form>
-
-        {/* <p className="text-gray-600 mt-4 text-[12px] text-center">
-          By continuing, you agree to Eyongkart's{" "}
-          <a href="#" className="text-blue-500">
-            Conditions of Use
-          </a>{" "}
-          and{" "}
-          <a href="#" className="text-blue-500">
-            Privacy Notice
-          </a>
-          .
-        </p> */}
-
-        {/* <div className="text-center mt-4">
-          <a href="#" className="text-blue-500 text-sm">
-            Need help?
-          </a>
-        </div> */}
 
         <div className="border-t border-gray-300 mt-4 pt-4">
           <p className="text-center text-gray-600 text-[12px]">
-            <a href="#" className="text-blue-500">
+            <a href="/" className="text-blue-500">
               Shop on Eyongkart Business
             </a>
           </p>
           <p className="text-center text-gray-600 text-[12px]">
             New to Eyongkart?{" "}
-            <a href="/signup" className="text-blue-500">
+            <Link to="/signup" className="text-blue-500">
               Create your Eyongkart account
-            </a>
+            </Link>
           </p>
         </div>
       </div>

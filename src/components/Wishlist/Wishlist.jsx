@@ -38,10 +38,9 @@ const Wishlist = () => {
     }
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    getAllProduct();
-  }, []);
+  // useEffect(() => {
+  //   getAllProduct();
+  // }, []);
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -64,7 +63,6 @@ const Wishlist = () => {
                     {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                     <img
                       onClick={() => {
-                        // navigate("/shop")
                         navigate(`/product/${p._id}`);
                       }}
                       src={`${
@@ -91,7 +89,6 @@ const Wishlist = () => {
                     </div>
 
                     <button type="button" className="relative p-3">
-                      {/* <GrFavorite className="text-xl text-gray-600 dark:text-gray-400" /> */}
                       <FaHeart
                         size={17}
                         className={
