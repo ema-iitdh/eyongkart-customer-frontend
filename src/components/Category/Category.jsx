@@ -32,11 +32,11 @@ const Category = () => {
                   <Link to={`/sorted/${item._id}`} key={item._id}>
                     <button
                       type="button"
-                      className="bg-white hover:bg-red-400 drop-shadow-md sm:h-[50px] sm:w-[130px] h-[40px] w-[100px] rounded-2xl flex items-center justify-center"
+                      className="bg-white hover:bg-red-400 hover:text-slate-50 drop-shadow-md sm:h-[50px] sm:w-[130px] h-[40px] w-[100px] rounded-2xl flex items-center justify-center"
                       disabled={isLoading} // Disable button when loading
                     >
                       <div className="w-full flex flex-col justify-center items-center text-center">
-                        <h2 className="text-black sm:text-[15px] drop-shadow-md text-[12px] hover:text-white">
+                        <h2 className="text-black sm:text-[15px] drop-shadow-md text-[12px] ">
                           {item.name}
                         </h2>
                       </div>

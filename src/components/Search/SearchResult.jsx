@@ -21,9 +21,42 @@ const SearchResults = () => {
       setLoading(true);
       const res = await Axios.get("/product/allproduct");
 
-      const filteredProducts = res.data.products.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      // const filteredProducts = res.data.products.filter(
+      //   (product) =>
+      //     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      //     product.category?.name
+      //       .toLowerCase()
+      //       .includes(searchTerm.toLowerCase()) ||
+      //     product.subcategory?.subCategoryName
+      //       .toLowerCase()
+      //       .includes(searchTerm.toLowerCase()) ||
+      //     product.collection?.name
+      //       .toLowerCase()
+      //       .includes(searchTerm.toLowerCase())
+      // );
+
+      const normalizedSearchTerm = searchTerm.replace(/\s+/g, "").toLowerCase();
+
+      const filteredProducts = res.data.products.filter((product) => {
+        const normalizedName = product.name.replace(/\s+/g, "").toLowerCase();
+        const normalizedCategory = product.category?.name
+          .replace(/\s+/g, "")
+          .toLowerCase();
+        const normalizedSubcategory = product.subcategory?.subCategoryName
+          .replace(/\s+/g, "")
+          .toLowerCase();
+        const normalizedCollection = product.collection?.name
+          .replace(/\s+/g, "")
+          .toLowerCase();
+
+        return (
+          normalizedName.includes(normalizedSearchTerm) ||
+          normalizedCategory?.includes(normalizedSearchTerm) ||
+          normalizedSubcategory?.includes(normalizedSearchTerm) ||
+          normalizedCollection?.includes(normalizedSearchTerm)
+        );
+      });
+
       setProducts(filteredProducts);
       setLoading(false);
     } catch (error) {

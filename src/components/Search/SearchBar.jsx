@@ -30,8 +30,14 @@ const SearchBar = () => {
     setSearchProduct(value);
 
     // Filter products based on the search term
-    const filtered = products.filter((product) =>
-      product.name.toLowerCase().includes(value.toLowerCase())
+    const filtered = products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(value.toLowerCase()) ||
+        product.category?.name.toLowerCase().includes(value.toLowerCase()) ||
+        product.subcategory?.subCategoryName
+          .toLowerCase()
+          .includes(value.toLowerCase()) ||
+        product.collection?.name.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredProducts(filtered);
   };

@@ -8,13 +8,14 @@ import star_dull_icon from "../../assets/images/star_dull_icon.png";
 import productimage from "../../assets/images/rani1.jpg";
 import Button from "../Shared/Button";
 import { useParams } from "react-router-dom";
-import { Rating } from "@mantine/core";
+import { Rating, ScrollArea } from "@mantine/core";
 import { Select } from "@mantine/core";
 import { ShopContext } from "../Context/ShopContext";
 import RelatedProduct from "../RelatedProducts/RelatedProduct";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { Axios } from "../../../api";
-import { useProductWithComments } from "../../BaseURL/Product";
+import { useProductWithComments } from "../../BaseURL/Product.js";
+import Reviews from "../Reviews/Reviews";
 
 const ProductDisplay = (props) => {
   const { product } = props;
@@ -29,7 +30,7 @@ const ProductDisplay = (props) => {
   const [mainImg, setMainImg] = useState();
   const { productId } = useParams();
   const { data } = useProductWithComments(productId);
-  console.log("rating:", data);
+
   const fetchProductData = async () => {
     try {
       const res = await Axios({
@@ -83,14 +84,14 @@ const ProductDisplay = (props) => {
         <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
           <Navbar />
           <div className="pt-20 ">
-            <div className="overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color pb-5">
+            <div className="overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] pb-5">
               <div className="container pb-8 pr-0 sm:pb-0">
                 <div className=" sm:flex ml-2 pt-5 pb-5">
                   <div className="flex gap-3">
                     <div className="flex flex-col gap-2">
                       {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                       <img
-                        className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px] "
+                        className="sm:w-[170px] sm:h-[150px] w-[170px] h-[120px] "
                         src={imgData1}
                         alt="image1"
                         onClick={() => setMainImg(imgData1)}
@@ -138,11 +139,21 @@ const ProductDisplay = (props) => {
                       )}
                     </div>
                   </div>
+
                   <div className="productdisplay-right mt-2 sm:mt-0 ">
                     <h1 className=" sm:text-[20px] text-[15px] ">
                       {productData.name}
                     </h1>
-                    <Rating value={3.5} fractions={2} size="md" />
+                    <div className="flex items-center gap-2 py-2">
+                      <Rating
+                        value={productData?.averageRating}
+                        fractions={2}
+                      />{" "}
+                      <span className="text-orange-500 sm:text-[16px] text-[12px] gap-2">
+                        ({productData?.totalReviews})
+                      </span>
+                      <span>Reviews</span>
+                    </div>
 
                     <div className="productdisplay-right-prices">
                       <div className="mt-[-20px] ">
@@ -180,7 +191,7 @@ const ProductDisplay = (props) => {
                         Width : {productData.sizewidth}
                       </p>
                     </div>
-                    <div className="flex gap-4 pr-3">
+                    <div className="flex gap-3 pr-3">
                       <button
                         onClick={() => {
                           buyNow(productData._id);
@@ -189,7 +200,9 @@ const ProductDisplay = (props) => {
                         type="button"
                         className="flex items-center justify-center sm:w-[120px] sm:h-[60px] h-[40px] mb-8 outline-none border-none bg-red-400 hover:bg-red-500 transition duration-200 text-white text-center rounded-full cursor-pointer shadow-md"
                       >
-                        <span className="font-semibold">Buy Now</span>
+                        <span className="sm:font-semibold sm:text-[16px] text-[13px]">
+                          Buy Now
+                        </span>
                       </button>
 
                       <button
@@ -199,7 +212,9 @@ const ProductDisplay = (props) => {
                         type="button"
                         className="flex items-center justify-center sm:w-[120px] sm:h-[60px] h-[40px] outline-none border-none bg-red-400 hover:bg-red-500 transition duration-200 text-white text-[13px] text-center rounded-full cursor-pointer shadow-md"
                       >
-                        <span className="font-semibold">Add to Cart</span>
+                        <span className="sm:font-semibold sm:text-[16px] text-[13px]">
+                          Add to Cart
+                        </span>
                       </button>
                     </div>
 
@@ -215,6 +230,7 @@ const ProductDisplay = (props) => {
                 </div>
               </div>
               <RelatedProduct />
+              <Reviews />
             </div>
           </div>
         </div>

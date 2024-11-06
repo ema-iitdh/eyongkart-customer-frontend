@@ -7,10 +7,12 @@ export async function fetchProducts() {
 }
 
 //rating
-const fetchProductWithComments = async (productId) => {
-  const response = await Axios.get(`/products/${productId}/comments`);
+export async function fetchProductWithComments(productId) {
+  const response = await Axios.get(
+    `/commentrating/comment/product/${productId}`
+  );
   return response.data;
-};
+}
 
 export const useProductWithComments = (productId) => {
   return useQuery(["productWithComments", productId], () =>

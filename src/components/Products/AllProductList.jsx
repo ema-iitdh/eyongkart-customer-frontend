@@ -3,6 +3,7 @@ import { CloudinaryConfig } from "../../../Cloudinary";
 import { FaHeart } from "react-icons/fa";
 import { Axios } from "../../../api";
 import { useNavigate } from "react-router-dom";
+import { Rating } from "@mantine/core";
 
 export default function AllProductList({ AllProduct }) {
   const navigate = useNavigate();
@@ -41,6 +42,12 @@ export default function AllProductList({ AllProduct }) {
             <div className="flex justify-between leading-6">
               <div>
                 <h2 className="sm:font-semibold text-[15px]">{p?.name}</h2>
+                <div className="flex items-center gap-2 py-2">
+                  <Rating value={p?.averageRating} fractions={2} />{" "}
+                  <span className="text-orange-500 text-sm">
+                    ({p?.totalReviews})
+                  </span>
+                </div>
                 <h3 className="gap-2">
                   <span className="ml-1 text-red-600 text-[12px] sm:text-[15px] ">
                     ₹{p.discountedPrice}

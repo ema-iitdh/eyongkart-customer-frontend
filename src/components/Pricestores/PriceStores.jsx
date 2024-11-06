@@ -29,30 +29,30 @@ const PriceStores = () => {
 
   return (
     <div className="p-2 drop-shadow-md">
-      <div className="overflow-hidden rounded-xl sm:h-[400px] h-[350px] hero-bg-color">
-        <h1 className="gap-4 flex justify-start items-start text-xl font-semibold  text-black hover:text-red-500 dark:text-white p-2 ">
+      <div className="overflow-hidden rounded-xl sm:h-[420px] h-[350px] hero-bg-color">
+        <h1 className="gap-4 flex justify-start items-start text-xl font-semibold  text-black hover:text-red-500  p-2 ">
           Product price below
           <p className="text-[16px] text-red-500">₹2000 </p>
         </h1>
         <ScrollArea type="never">
           <Box>
-            <div className="flex flex-grow gap-2 p-5">
+            <div className="flex flex-grow gap-2 p-3">
               {filterItems?.map((item) => {
                 return (
                   <div
                     key={item._id}
-                    className="bg-gray-100 drop-shadow-md sm:h-[320px] sm:w-[250px] h-[270px] w-[180px] rounded-lg flex flex-col items-center justify-center"
+                    className="bg-gray-100 drop-shadow-md sm:h-[340px] sm:w-[250px] h-[260px] w-[180px] rounded-lg flex flex-col items-center "
                   >
                     <div className="">
                       <img
-                        className="sm:w-52 sm:h-56 w-[150px] h-[150px] object-fit m-auto p-3"
+                        className="sm:w-52 sm:h-56 w-[150px] h-[160px] object-fit m-auto p-3"
                         src={`${
                           CloudinaryConfig.CLOUDINARY_URL
                         }/image/upload/${item?.image_id[0]?.replace(/"/g, "")}`}
                         alt=""
                       />
                     </div>
-                    <div className="flex justify-around sm:p-2 p-2">
+                    <div className="flex justify-between sm:p-2 p-2 gap-1 sm:gap-2">
                       <div className="sm:text-[16px] text-[11px] text-black">
                         <p className="">{item.name}</p>
                         <div className="flex">
@@ -70,7 +70,7 @@ const PriceStores = () => {
                       <Link
                         to="/checkout"
                         type="button"
-                        className="bg-red-600 hover:bg-red-500 sm:text-[14px] text-[8px] text-center pt-[6px] sm:w-[80px] sm:h-[38px] w-[65px] mt-1 h-6 text-white rounded-md"
+                        className="bg-red-600 hover:bg-red-500 sm:text-[14px] text-[8px] text-center pt-[6px] sm:w-[80px] sm:h-[38px] w-[50px] mt-1 h-6 text-white rounded-md"
                       >
                         Buy now
                       </Link>

@@ -8,8 +8,6 @@ import AllProductList from "./AllProductList";
 
 const Products = () => {
   const [products, setProducts] = useState();
-  const [productMenTypes, setProductMenTypes] = useState([]);
-  const [productWomenTypes, setProductWomenTypes] = useState([]);
   const [wishlistUpdate, setWishlistUpdate] = useState(false);
   const [filteredWomenProductList, setFilterWomnenProductList] = useState([]);
   const [filteredMenProductList, setFilterMenProductList] = useState([]);
@@ -29,7 +27,7 @@ const Products = () => {
     queryKey: ["products"],
     queryFn: getAllProduct,
   });
-  // console.log("products", productList);
+  console.log("products", productList);
 
   // filteres Men and Women products
   const filteredProduct = () => {
@@ -45,10 +43,9 @@ const Products = () => {
       setFilterMenProductList(filteredMenProduct);
     }
   };
-  console.log("filtermen", filteredMenProductList);
   useEffect(() => {
     filteredProduct();
-  }, [productList]); // Adding productList as a dependency
+  }, [productList]);
   //end
 
   // const getProductbyMenTypes = async () => {
@@ -62,23 +59,8 @@ const Products = () => {
   //     console.log(error );
   //   }
   // };
-
-  // const getProductbyWomenTypes = async () => {
-  //   try {
-  //     const res = await Axios({
-  //       url: "/product/getproductType/66704a48ec25cce3b11c92e0",
-  //       method: "GET",
-  //     });
-  //     setProductWomenTypes(res.data.productType);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   useEffect(() => {
     getAllProduct();
-    // filteredMenProductList();
-    // filteredWomenProductList();
   }, [wishlistUpdate]);
   return (
     <div className="overflow-hidden rounded-3xl min-h-[500px] sm:min-h-[650px]  flex  items-center flex-col pt-6  gap-y-3.5">
