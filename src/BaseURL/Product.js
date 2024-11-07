@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { Axios } from "../../api";
 
 export async function fetchProducts() {
@@ -7,15 +6,10 @@ export async function fetchProducts() {
 }
 
 //rating
-export async function fetchProductWithComments(productId) {
+
+export const fetchProductWithComments = async (productId) => {
   const response = await Axios.get(
     `/commentrating/comment/product/${productId}`
   );
   return response.data;
-}
-
-export const useProductWithComments = (productId) => {
-  return useQuery(["productWithComments", productId], () =>
-    fetchProductWithComments(productId)
-  );
 };

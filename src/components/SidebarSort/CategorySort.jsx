@@ -43,6 +43,7 @@ const CategorySort = () => {
   const productDetails = products?.filter(
     (product) => product.category._id === categoryId
   );
+  // console.log("gg", productDetails);
 
   const handleNavigate = (productId) => {
     setLoading(true);

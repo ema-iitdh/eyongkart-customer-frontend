@@ -1,20 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-import Footer from "../Footer/Footer";
 import "./ProductDisplay.css";
-import star_icon from "../../assets/images/star_icon.png";
-import star_dull_icon from "../../assets/images/star_dull_icon.png";
-import productimage from "../../assets/images/rani1.jpg";
-import Button from "../Shared/Button";
 import { useParams } from "react-router-dom";
 import { Rating, ScrollArea } from "@mantine/core";
 import { Select } from "@mantine/core";
 import { ShopContext } from "../Context/ShopContext";
-import RelatedProduct from "../RelatedProducts/RelatedProduct";
+// import RelatedProduct from "../RelatedProducts/RelatedProduct";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { Axios } from "../../../api";
-import { useProductWithComments } from "../../BaseURL/Product.js";
+import { fetchProductWithComments } from "../../BaseURL/Product.js";
 import Reviews from "../Reviews/Reviews";
 
 const ProductDisplay = (props) => {
@@ -29,7 +24,7 @@ const ProductDisplay = (props) => {
   const [imgData4, setImgData4] = useState();
   const [mainImg, setMainImg] = useState();
   const { productId } = useParams();
-  const { data } = useProductWithComments(productId);
+  const { data } = fetchProductWithComments(productId);
 
   const fetchProductData = async () => {
     try {
@@ -229,7 +224,8 @@ const ProductDisplay = (props) => {
                   </div>
                 </div>
               </div>
-              <RelatedProduct />
+              {/* <RelatedProduct currentProduct={productData} /> */}
+
               <Reviews />
             </div>
           </div>
