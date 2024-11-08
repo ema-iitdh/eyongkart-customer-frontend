@@ -46,19 +46,7 @@ const Products = () => {
   useEffect(() => {
     filteredProduct();
   }, [productList]);
-  //end
 
-  // const getProductbyMenTypes = async () => {
-  //   try {
-  //     const res = await Axios({
-  //       url: "/product/getproductType/667019bc4e4491b37de49d2d",
-  //       method: "GET",
-  //     });
-  //     setProductMenType s(res.data.productType);
-  //   } catch (error) {
-  //     console.log(error );
-  //   }
-  // };
   useEffect(() => {
     getAllProduct();
   }, [wishlistUpdate]);

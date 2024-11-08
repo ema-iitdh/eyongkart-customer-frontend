@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../components/Context/ShopContext";
-import Item from "../components/Item/Item";
+// import Item from "../components/Item/Item";
 import { Skeleton } from "@mantine/core";
 import { FaSearch } from "react-icons/fa";
 const ShopCategory = ({ products, isSearch, isLoading }) => {
@@ -9,7 +9,7 @@ const ShopCategory = ({ products, isSearch, isLoading }) => {
   return (
     <>
       <div className="m-2 grid grid-cols-2 sm:grid-cols-4 gap-2">
-        {products && products.length === 0 && isSearch !== "" ? (
+        {/* {products && products.length === 0 && isSearch !== "" ? (
           <p className="flex justify-center items-center flex-col text-xl">
             Not Match Product found
           </p>
@@ -27,7 +27,7 @@ const ShopCategory = ({ products, isSearch, isLoading }) => {
               />
             );
           })
-        )}
+        )} */}
         {isLoading && (
           <>
             <Skeleton height={300} width={250} square="xl" />

@@ -1,27 +1,14 @@
 import React from "react";
 import { FaHeart } from "react-icons/fa";
 import { CloudinaryConfig } from "../../../Cloudinary";
-import { Axios } from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { Rating } from "@mantine/core";
+import { handleIsWishlist } from "../WishlistFunction/WishlistFunction";
 
 export default function MenProduct({ filteredMenProductList }) {
-  console.log(filteredMenProductList);
+  // console.log(filteredMenProductList);
   const navigate = useNavigate();
 
-  const handleIsWishlist = async (e, p) => {
-    e.preventDefault();
-    try {
-      const { data } = await Axios.put(`/product/updatefav/${p._id}`, {
-        fav: p.fav === "No" ? "Yes" : "No",
-      });
-      if (data) {
-        setWishlistUpdate((prev) => !prev);
-      }
-    } catch (error) {
-      toast.error("Something Happened");
-    }
-  };
   return (
     <div className="mb-10">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pl-4">

@@ -3,9 +3,10 @@ import { ScrollArea, Box } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { fetchProducts } from "../../BaseURL/Product";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const PriceStores = () => {
+  const navigate = useNavigate();
   const [filterItems, setFilterItems] = useState([]);
 
   const {
@@ -41,10 +42,12 @@ const PriceStores = () => {
                 return (
                   <div
                     key={item._id}
-                    className="bg-gray-100 drop-shadow-md sm:h-[340px] sm:w-[250px] h-[260px] w-[180px] rounded-lg flex flex-col items-center "
+                    className="bg-gray-100 drop-shadow-md sm:h-[340px] sm:w-[250px] h-[240px] w-[180px] rounded-lg flex flex-col items-center "
                   >
                     <div className="">
+                      {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                       <img
+                        onClick={() => navigate(`/product/${item._id}`)}
                         className="sm:w-52 sm:h-56 w-[150px] h-[160px] object-fit m-auto p-3"
                         src={`${
                           CloudinaryConfig.CLOUDINARY_URL
@@ -52,7 +55,7 @@ const PriceStores = () => {
                         alt=""
                       />
                     </div>
-                    <div className="flex justify-between sm:p-2 p-2 gap-1 sm:gap-2">
+                    <div className="flex justify-between sm:p-2 p-2 gap-1 sm:gap-2 sm:pl-4 pl-3 w-full">
                       <div className="sm:text-[16px] text-[11px] text-black">
                         <p className="">{item.name}</p>
                         <div className="flex">
@@ -67,13 +70,13 @@ const PriceStores = () => {
                           ({item.discount} % OFF)
                         </p>
                       </div>
-                      <Link
-                        to="/checkout"
+                      <button
+                        onClick={() => navigate(`/product/${item._id}`)}
                         type="button"
-                        className="bg-red-600 hover:bg-red-500 sm:text-[14px] text-[8px] text-center pt-[6px] sm:w-[80px] sm:h-[38px] w-[50px] mt-1 h-6 text-white rounded-md"
+                        className="bg-red-600 hover:bg-red-500 sm:text-[16px] text-[10px] text-center pt-[4px] sm:w-[80px] sm:h-[38px] w-[50px]  h-6 text-white rounded-md"
                       >
-                        Buy now
-                      </Link>
+                        Visit
+                      </button>
                     </div>
                   </div>
                 );

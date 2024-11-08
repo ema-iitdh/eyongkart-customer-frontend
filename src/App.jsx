@@ -3,14 +3,14 @@ import "./App.css";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import HomePage from "./Pages/HomePage";
-import Shop from "../src/components/Header/Shop";
-import ShopByCategory from "../src/components/Header/ShopByCategory";
+// import Shop from "../src/components/Header/Shop";
+// import ShopByCategory from "../src/components/Header/ShopByCategory";
 import AboutUs from "../src/components/Header/AboutUs";
 import Contact from "../src/components/Header/Contact";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProductDisplay from "./components/ProductDisplay/ProductDisplay";
 import Product from "./Pages/Product";
-import ShopCategory from "./Pages/ShopCategory";
+// import ShopCategory from "./Pages/ShopCategory";
 
 import Carts from "./components/Header/Carts";
 import Checkout from "./components/Checkout/Checkout";
@@ -19,7 +19,7 @@ import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import Myorder from "./components/Myorders/Myorder";
-import SidebarSort from "./components/SidebarSort/SidebarSort";
+// import SidebarSort from "./components/SidebarSort/SidebarSort";
 import RemProductList from "./components/RemProductList";
 import ChatBox from "./components/Chat/ChatBox";
 import SearchBar from "./components/Search/SearchBar";
@@ -43,11 +43,11 @@ const App = () => {
             <Route path="/signup" element={<SignupForm />} />
             <Route path="/" element={<HomePage />} />
 
-            <Route path="/shop" element={<Shop />} />
-            <Route
+            {/* <Route path="/shop" element={<Shop />} /> */}
+            {/* <Route
               path="/shopbycategory/:category"
               element={<ShopByCategory />}
-            />
+            /> */}
 
             <Route path="/search" element={<SearchBar />} />
             <Route path="/search/:searchTerm" element={<SearchResults />} />
@@ -55,7 +55,7 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             {/* <Route path="/productdisplay" element={<ProductDisplay />} /> */}
             <Route path="/cart" element={<Carts />} />
-            <Route path="/shop" element={<ShopCategory />} />
+            {/* <Route path="/shop" element={<ShopCategory />} /> */}
             <Route path="/product" element={<Product />}>
               <Route path=":productId" element={<ProductDisplay />} />
             </Route>

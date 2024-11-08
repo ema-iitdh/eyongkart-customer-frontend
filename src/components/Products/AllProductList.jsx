@@ -1,26 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { FaHeart } from "react-icons/fa";
-import { Axios } from "../../../api";
+
 import { useNavigate } from "react-router-dom";
 import { Rating } from "@mantine/core";
+import { handleIsWishlist } from "../WishlistFunction/WishlistFunction";
 
 export default function AllProductList({ AllProduct }) {
   const navigate = useNavigate();
-
-  const handleIsWishlist = async (e, p) => {
-    e.preventDefault();
-    try {
-      const { data } = await Axios.put(`/product/updatefav/${p._id}`, {
-        fav: p.fav === "No" ? "Yes" : "No",
-      });
-      if (data) {
-        setWishlistUpdate((prev) => !prev);
-      }
-    } catch (error) {
-      toast.error("Something Happened");
-    }
-  };
 
   // console.log("allproducts", AllProduct);
   return (

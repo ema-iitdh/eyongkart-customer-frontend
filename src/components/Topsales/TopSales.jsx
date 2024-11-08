@@ -97,7 +97,7 @@ const TopSales = () => {
                           alt=""
                         />
                       </div>
-                      <div className="flex sm:p-2 p-2 sm:pl-8 pl-4">
+                      <div className="flex  sm:pl-8 pl-4 w-full">
                         <div className="sm:text-[16px] text-[11px] text-black">
                           <p className="">{item.name}</p>
                           <div className="flex items-center gap-2 py-2">
@@ -128,13 +128,6 @@ const TopSales = () => {
                             onClick={(e) => handleIsWishlist(e, p)}
                           />
                         </button> */}
-                        {/* <Link
-                          to="/checkout"
-                          type="button"
-                          className="bg-red-600 hover:bg-red-500 sm:text-[14px] text-[8px] text-center pt-[6px] sm:w-[80px] sm:h-[38px] w-[65px] mt-1 h-6 text-white rounded-md"
-                        >
-                          Buy now
-                        </Link> */}
                       </div>
                     </div>
                   );

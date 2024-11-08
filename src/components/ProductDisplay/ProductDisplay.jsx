@@ -3,14 +3,14 @@ import Navbar from "../Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import "./ProductDisplay.css";
 import { useParams } from "react-router-dom";
-import { Rating, ScrollArea } from "@mantine/core";
-import { Select } from "@mantine/core";
+import { Rating } from "@mantine/core";
 import { ShopContext } from "../Context/ShopContext";
 // import RelatedProduct from "../RelatedProducts/RelatedProduct";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { Axios } from "../../../api";
 import { fetchProductWithComments } from "../../BaseURL/Product.js";
 import Reviews from "../Reviews/Reviews";
+import RelatedProduct from "../RelatedProducts/RelatedProduct.jsx";
 
 const ProductDisplay = (props) => {
   const { product } = props;
@@ -213,18 +213,18 @@ const ProductDisplay = (props) => {
                       </button>
                     </div>
 
-                    <p className="mt-3 sm:text-[16px] text-[13px]">
+                    {/* <p className="mt-3 sm:text-[16px] text-[13px]">
                       <span>Category: </span>
                       Women, {productData.name} and traditional design.
                     </p>
                     <p className="mt-3 sm:text-[16px] text-[13px]">
                       <span>Tags: </span>
                       Modern Latest.
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>
-              {/* <RelatedProduct currentProduct={productData} /> */}
+              <RelatedProduct productId={productId} />
 
               <Reviews />
             </div>

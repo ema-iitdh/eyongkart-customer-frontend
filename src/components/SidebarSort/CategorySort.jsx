@@ -10,14 +10,15 @@ import Navbar from "../Navbar/Navbar";
 import ChatBox from "../Chat/ChatBox";
 import Footer from "../Footer/Footer";
 import { Axios } from "../../../api";
+import { fetchProducts } from "../../BaseURL/Product";
 
-const getAllProduct = async () => {
-  const res = await Axios({
-    url: "/product/allproduct",
-    method: "GET",
-  });
-  return res.data.products;
-};
+// const getAllProduct = async () => {
+//   const res = await Axios({
+//     url: "/product/allproduct",
+//     method: "GET",
+//   });
+//   return res.data.products;
+// };
 
 const CategorySort = () => {
   const { categoryId } = useParams();
@@ -30,7 +31,7 @@ const CategorySort = () => {
     isError,
   } = useQuery({
     queryKey: ["categorysort"],
-    queryFn: getAllProduct,
+    queryFn: fetchProducts,
   });
 
   useEffect(() => {
@@ -129,7 +130,7 @@ const CategorySort = () => {
                                   ₹{p.price}
                                 </span>
                               </h3>
-                              <span className="text-gray-500 text-[10px] sm:text-[14px] ml-1">
+                              <span className="text-gray-500 text-[10px] ml-2">
                                 ({p.discount} % OFF)
                               </span>
                             </div>

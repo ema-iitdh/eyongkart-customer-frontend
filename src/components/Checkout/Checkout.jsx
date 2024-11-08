@@ -414,8 +414,8 @@ const Checkout = () => {
                           value="cash"
                           label="Cash on Delivery"
                           onChange={() => {
-                            setrazorpaytick(false); // Reset Razorpay selection if cash is chosen
-                            setPaymentMethod("cash"); // Set payment method to "cash"
+                            setrazorpaytick(false);
+                            setPaymentMethod("cash");
                           }}
                         />
                       </Group>

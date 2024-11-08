@@ -1,33 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
-import { toast } from "react-toastify";
+
 import { CloudinaryConfig } from "../../../Cloudinary";
-import { Axios } from "../../../api";
+
 import { Rating } from "@mantine/core";
+import { handleIsWishlist } from "../WishlistFunction/WishlistFunction";
 
 const ProductCard = ({ filteredWomenProductList, type, setWishlistUpdate }) => {
   const navigate = useNavigate();
   // const [products, setProducts] = useState(data);
   console.log("filterewomen product list", filteredWomenProductList);
-
-  const handleIsWishlist = async (e, p) => {
-    e.preventDefault();
-    try {
-      const { data } = await Axios.put(`/product/updatefav/${p._id}`, {
-        fav: p.fav === "No" ? "Yes" : "No",
-      });
-      if (data) {
-        setWishlistUpdate((prev) => !prev);
-      }
-    } catch (error) {
-      toast.error("Something Happened");
-    }
-  };
-
-  // useEffect(() => {
-  //   setProducts(data);
-  // }, [data]);
 
   return (
     <div className="mb-10">
