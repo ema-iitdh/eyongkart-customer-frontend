@@ -30,14 +30,14 @@ const PriceStores = () => {
 
   return (
     <div className="p-2 drop-shadow-md">
-      <div className="overflow-hidden rounded-xl sm:h-[420px] h-[350px] hero-bg-color">
+      <div className="overflow-hidden rounded-xl sm:h-[420px] h-[330px] hero-bg-color">
         <h1 className="gap-4 flex justify-start items-start text-xl font-semibold  text-black hover:text-red-500  p-2 ">
           Product price below
           <p className="text-[16px] text-red-500">₹2000 </p>
         </h1>
         <ScrollArea type="never">
           <Box>
-            <div className="flex flex-grow gap-2 p-3">
+            <div className="flex sm:gap-5 gap-2 p-2">
               {filterItems?.map((item) => {
                 return (
                   <div
@@ -66,14 +66,14 @@ const PriceStores = () => {
                             ₹{item.discountedPrice}
                           </p>
                         </div>
-                        <p className="text-gray-400 text-[10px] ">
+                        <p className="text-emerald-500 text-[10px] ">
                           ({item.discount} % OFF)
                         </p>
                       </div>
                       <button
                         onClick={() => navigate(`/product/${item._id}`)}
                         type="button"
-                        className="bg-red-600 hover:bg-red-500 sm:text-[16px] text-[10px] text-center pt-[4px] sm:w-[80px] sm:h-[38px] w-[50px]  h-6 text-white rounded-md"
+                        className="bg-red-600 hover:bg-red-500 sm:text-[16px] text-[10px] text-center pt-[3px] sm:w-[80px] sm:h-[38px] w-[45px]  h-6 text-white rounded-md"
                       >
                         Visit
                       </button>

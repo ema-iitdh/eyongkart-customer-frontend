@@ -9,31 +9,17 @@ import { Rating } from "@mantine/core";
 const Reviews = () => {
   const { productId } = useParams();
   // const [review, setReview] = useState([]);
-  const {
-    data: reviewData = {},
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: reviewData = {} } = useQuery({
     queryKey: ["review", productId],
     queryFn: () => fetchProductWithComments(productId),
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error fetching reviews.</div>;
-  }
-
   const commentRatings = reviewData.commentRating || [];
-  // console.log("fff", commentRatings);
 
   //filter
   const filteredComments = commentRatings?.filter(
     (comment) => comment?.productId._id === productId
   );
-  // console.log("hh", filteredComments);
 
   return (
     <div className="w-full p-4 bg-gray-100">

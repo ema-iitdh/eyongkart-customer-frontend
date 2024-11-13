@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import { CloudinaryConfig } from "../../../Cloudinary";
-import { ScrollArea } from "@mantine/core";
+import { Rating, ScrollArea, Skeleton } from "@mantine/core";
 import { useParams } from "react-router-dom";
 import Sort from "./Sort";
 import Navbar from "../Navbar/Navbar";
@@ -12,18 +12,9 @@ import Footer from "../Footer/Footer";
 import { Axios } from "../../../api";
 import { fetchProducts } from "../../BaseURL/Product";
 
-// const getAllProduct = async () => {
-//   const res = await Axios({
-//     url: "/product/allproduct",
-//     method: "GET",
-//   });
-//   return res.data.products;
-// };
-
 const CategorySort = () => {
   const { categoryId } = useParams();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
   const {
     data: products,
@@ -40,36 +31,107 @@ const CategorySort = () => {
       behavior: "smooth",
     });
   }, []);
-  //filter
+
   const productDetails = products?.filter(
     (product) => product.category._id === categoryId
   );
-  // console.log("gg", productDetails);
 
   const handleNavigate = (productId) => {
-    setLoading(true);
-    setTimeout(() => {
-      navigate(`/product/${productId}`);
-      setLoading(false);
-    }, 500);
+    navigate(`/product/${productId}`);
   };
 
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
       <Navbar />
-      <div className="pt-16 ">
-        <div className="overflow-hidden min-h-[550px] sm:min-h-[650px] hero-bg-color pb-5 gap-10 flex justify-start">
+      <div className="pt-16">
+        <div className="overflow-hidden min-h-[550px] sm:min-h-[650px] pb-5 gap-10 flex justify-start">
           <div className="mr-[30px] sm:p-2 pl-8 mt-4">
             <div className="lg:grid grid-cols-[250px,1fr] gap-3">
-              {/* Left */}
               <Sort />
 
-              {/* Right */}
               <ScrollArea h={580} type="never">
                 <div>
-                  {(productDetails || []).length === 0 ? (
-                    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
-                      <div className="flex flex-col items-center bg-white border border-gray-300 rounded-lg p-6 sm:p-8 shadow-lg w-full max-w-sm sm:max-w-md text-center">
+                  {isLoading ? (
+                    <div className="grid  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:pl-2 pt-3">
+                      {[...Array(8)].map((_, index) => (
+                        <Skeleton
+                          key={index}
+                          height={200}
+                          width="100%"
+                          radius="md"
+                          className="sm:h-[230px] sm:w-[250px] w-[160px] h-[170px] bg-gray-200 mb-4"
+                        />
+                      ))}
+                    </div>
+                  ) : productDetails && productDetails.length > 0 ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:pl-2 pt-3">
+                      {productDetails.map((p) => (
+                        <div
+                          className="group shadow-md hover:shadow-lg border border-gray-400 sm:p-3 p-2 rounded-md"
+                          key={p._id}
+                        >
+                          <div className="relative">
+                            {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+                            <div
+                              onClick={() => handleNavigate(p._id)}
+                              className="cursor-pointer"
+                            >
+                              <img
+                                src={`${
+                                  CloudinaryConfig.CLOUDINARY_URL
+                                }/image/upload/${p?.image_id[0]?.replace(
+                                  /"/g,
+                                  ""
+                                )}`}
+                                alt="Product"
+                                className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
+                              />
+                              <button
+                                type="button"
+                                className="absolute top-2 right-2 bg-slate-50 p-[5px] sm:p-[8px] rounded-full"
+                              >
+                                <FaHeart
+                                  className={
+                                    p.fav === "Yes"
+                                      ? "text-red-600"
+                                      : "text-gray-400"
+                                  }
+                                  onClick={(e) => handleIsWishlist(e, p)}
+                                />
+                              </button>
+                            </div>
+                          </div>
+                          <div className="w-full flex justify-between sm:p-2 mt-2">
+                            <div className="sm:text-[16px] text-[12px] text-black">
+                              <p>{p.name}</p>
+                              <div className="flex items-center gap-3 py-2">
+                                <Rating
+                                  value={p?.averageRating}
+                                  fractions={2}
+                                />
+                                <span className="text-orange-500 sm:text-sm text-[10px]">
+                                  ({p?.totalReviews})
+                                </span>
+                              </div>
+                              <div className="flex w-[130px] sm:w-[160px]">
+                                <p className="text-black pr-1 line-through">
+                                  ₹{p.price}
+                                </p>
+                                <p className="text-red-500 pr-1">
+                                  ₹{p.discountedPrice}
+                                </p>
+                                <p className="text-emerald-500 text-[10px]">
+                                  ({p.discount} % OFF)
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center w-full min-h-[calc(100vh-200px)] sm:p-36 sm:pt-10 pb-20">
+                      <div className="flex flex-col items-center bg-white border border-gray-300 rounded-lg p-6 sm:p-8 shadow-lg w-full max-w-3xl text-center">
                         <img
                           src="/Product-is-Empty.png"
                           alt="No products found"
@@ -89,64 +151,6 @@ const CategorySort = () => {
                           Browse Categories
                         </Link>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:pl-4 mt-2">
-                      {productDetails?.map((p) => (
-                        <div className="group" key={p._id}>
-                          <div className="relative">
-                            {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-                            <div
-                              onClick={() => handleNavigate(p._id)}
-                              className="cursor-pointer"
-                            >
-                              <img
-                                src={`${
-                                  CloudinaryConfig.CLOUDINARY_URL
-                                }/image/upload/${p?.image_id[0]?.replace(
-                                  /"/g,
-                                  ""
-                                )}`}
-                                alt=""
-                                className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
-                              />
-                              {loading && (
-                                <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
-                                  <span className="loader"></span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          <div className="flex justify-between leading-6">
-                            <div>
-                              <h2 className="sm:font-semibold text-[15px]">
-                                {p.name}
-                              </h2>
-                              <h3 className="gap-3">
-                                <span className="ml-1 text-red-600 text-[12px] sm:text-[15px]">
-                                  ₹{p.discountedPrice}
-                                </span>
-                                <span className="pl-2 line-through sm:text-[15px] text-[12px]">
-                                  ₹{p.price}
-                                </span>
-                              </h3>
-                              <span className="text-gray-500 text-[10px] ml-2">
-                                ({p.discount} % OFF)
-                              </span>
-                            </div>
-                            <button type="button" className="relative p-3">
-                              <FaHeart
-                                className={
-                                  p.fav === "Yes"
-                                    ? "text-red-600"
-                                    : "text-gray-400"
-                                }
-                                onClick={(e) => handleIsWishlist(e, p)}
-                              />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
                     </div>
                   )}
                 </div>

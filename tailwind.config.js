@@ -19,6 +19,21 @@ export default {
           sm: "3rem",
         },
       },
+      keyframes: {
+        pop: {
+          "0%": { transform: "scale(0)" },
+          "80%": { transform: "scale(1.1)" },
+          "100%": { transform: "scale(1)" },
+        },
+        draw: {
+          "0%": { width: "0", height: "0" },
+          "100%": { width: "1.25rem", height: "2.5rem" },
+        },
+      },
+      animation: {
+        pop: "pop 0.6s ease-in-out",
+        draw: "draw 0.6s ease-in-out 0.3s forwards",
+      },
     },
   },
 

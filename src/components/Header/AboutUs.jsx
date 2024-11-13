@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+import ChatBox from "../Chat/ChatBox";
 const AboutUs = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
       <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden pt-16">
@@ -10,7 +17,7 @@ const AboutUs = () => {
           <h1 className=" flex justify-center pt-4 font-semibold text-gray-500 hover:text-red-500 dark:hover:text-white">
             About Us
           </h1>
-          <div className=" container flex flex-col  sm:text-xl text-[15px] gap-2 mt-5 ">
+          <div className=" container flex flex-col  sm:text-xl text-[15px] gap-2 mt-2 ">
             <p>Eyongkart shopping - Imphal, Manipur</p>
             <p>
               Manipur online handloom shopping,delivering Manipur products
@@ -35,8 +42,8 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+      <ChatBox />
       <Footer />
-      {/* </div> */}
     </>
   );
 };

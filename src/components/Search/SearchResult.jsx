@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Axios } from "../../../api";
 import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { FaHeart } from "react-icons/fa";
-import { ScrollArea, Skeleton } from "@mantine/core";
+import { Rating, ScrollArea, Skeleton } from "@mantine/core";
 import Sort from "../SidebarSort/Sort";
 import ChatBox from "../Chat/ChatBox";
+import { handleIsWishlist } from "../WishlistFunction/WishlistFunction";
 
 const SearchResults = () => {
+  const navigate = useNavigate();
   const { searchTerm } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,20 +22,6 @@ const SearchResults = () => {
     try {
       setLoading(true);
       const res = await Axios.get("/product/allproduct");
-
-      // const filteredProducts = res.data.products.filter(
-      //   (product) =>
-      //     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      //     product.category?.name
-      //       .toLowerCase()
-      //       .includes(searchTerm.toLowerCase()) ||
-      //     product.subcategory?.subCategoryName
-      //       .toLowerCase()
-      //       .includes(searchTerm.toLowerCase()) ||
-      //     product.collection?.name
-      //       .toLowerCase()
-      //       .includes(searchTerm.toLowerCase())
-      // );
 
       const normalizedSearchTerm = searchTerm.replace(/\s+/g, "").toLowerCase();
 
@@ -69,45 +57,35 @@ const SearchResults = () => {
     fetchProducts();
   }, [searchTerm]);
 
-  const handleIsWishlist = async (e, product) => {
-    e.preventDefault();
-    try {
-      const { data } = await Axios.put(`/product/updatefav/${product._id}`, {
-        fav: product.fav === "No" ? "Yes" : "No",
-      });
-      if (data) {
-        setProducts((prevProducts) =>
-          prevProducts.map((p) =>
-            p._id === product._id ? { ...p, fav: data.fav } : p
-          )
-        );
-      }
-    } catch (error) {
-      console.error("Something happened:", error);
-    }
-  };
-
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 pt-16">
       <Navbar />
-      <div className="flex flex-col sm:flex-row gap-4 p-4 min-h-[550px] sm:min-h-[650px] hero-bg-color">
+      <div className="flex flex-col sm:flex-row gap-4 p-4 min-h-[550px] sm:min-h-[650px] ">
         <div className=" w-full sm:w-[280px]">
           <Sort />
         </div>
-        <div className="w-full p-2 ml-2">
+        <div className="w-full p-2 ">
           {loading ? (
-            <div className="grid sm:grid-cols-2 grid-rows-2 gap-2">
-              <Skeleton height={300} width={250} />
-              <Skeleton height={300} width={250} />
-              <Skeleton height={300} width={250} />
-              <Skeleton height={300} width={250} />
+            <div className="grid  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:pl-2 pt-3">
+              {[...Array(8)].map((_, index) => (
+                <Skeleton
+                  key={index}
+                  height={200}
+                  width="100%"
+                  radius="md"
+                  className="sm:h-[230px] sm:w-[250px] w-[160px] h-[170px] bg-gray-200 mb-4"
+                />
+              ))}
             </div>
           ) : (
             <ScrollArea h={500} type="never">
               {products.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:pl-2 ">
                   {products.map((product) => (
-                    <div className="group" key={product._id}>
+                    <div
+                      className="group shadow-md hover:shadow-lg border border-gray-400 sm:p-3 p-2 rounded-md"
+                      key={product._id}
+                    >
                       <div className="relative">
                         {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                         <img
@@ -119,57 +97,72 @@ const SearchResults = () => {
                             ""
                           )}`}
                           alt={product.name}
-                          className="sm:h-[200px] sm:w-[220px] w-[150px] h-[170px] object-fit rounded-md"
+                          className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
                         />
-                      </div>
-                      <div className="flex justify-between items-center mt-3">
-                        <div>
-                          <h2 className="text-[15px] font-semibold">
-                            {product.name}
-                          </h2>
-                          <div className="flex items-center gap-2">
-                            <span className="text-red-600 text-[14px]">
-                              ₹{product.discountedPrice}
-                            </span>
-                            <span className="line-through text-gray-500 text-[12px]">
-                              ₹{product.price}
-                            </span>
-                          </div>
-                          <span className="text-gray-500 text-[10px]">
-                            ({product.discount} % OFF)
-                          </span>
-                        </div>
                         <button
                           type="button"
-                          className="p-3 sm:mr-4"
-                          onClick={(e) => handleIsWishlist(e, product)}
+                          className="absolute top-2 right-2 bg-slate-50 p-[5px] sm:p-[8px] rounded-full"
                         >
                           <FaHeart
-                            size={20}
                             className={
                               product.fav === "Yes"
                                 ? "text-red-600"
                                 : "text-gray-400"
                             }
+                            onClick={(e) => handleIsWishlist(e, product)}
                           />
                         </button>
+                      </div>
+                      <div className="w-full flex justify-between sm:p-2 mt-2">
+                        <div className="sm:text-[16px] text-[12px] text-black ">
+                          <p className="">{product.name}</p>
+                          <div className="flex items-center gap-3 py-2">
+                            <Rating
+                              value={product?.averageRating}
+                              fractions={2}
+                            />
+                            <span className="text-orange-500 sm:text-sm text-[10px]">
+                              ({product?.totalReviews})
+                            </span>
+                          </div>
+                          <div className="flex w-[130px] sm:w-[160px]">
+                            <p className="text-black pr-1 line-through">
+                              ₹{product.price}
+                            </p>
+                            <p className="text-red-500 pr-1">
+                              ₹{product.discountedPrice}
+                            </p>
+                            <p className="text-emerald-500 text-[10px]">
+                              ({product.discount} % OFF)
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="text-center bg-white border text-red-600 rounded-lg p-6 max-w-xs md:max-w-md w-full shadow-md">
-                  <img
-                    src="/Product is Empty.png"
-                    alt="No products found"
-                    className="mx-auto mb-4 w-24 h-24"
-                  />
-                  <p className="text-lg font-semibold">
-                    No products found for "{searchTerm}"
-                  </p>
-                  <p className="text-sm text-red-500 mt-2">
-                    Try searching with a different products.
-                  </p>
+                <div className="flex items-center justify-center w-full min-h-[calc(100vh-200px)] sm:p-36 sm:pt-10 pb-20">
+                  <div className="flex flex-col items-center bg-white border border-gray-300 rounded-lg p-6 sm:p-8 shadow-lg w-full max-w-3xl text-center">
+                    <img
+                      src="/Product-is-Empty.png"
+                      alt="No products found"
+                      className="w-20 h-20 sm:w-24 sm:h-24 mb-4"
+                    />
+                    <p className="text-gray-800 font-semibold text-lg sm:text-xl mb-2">
+                      No Products Available "{searchTerm}"
+                    </p>
+                    <p className="text-gray-500 text-sm sm:text-base mb-4">
+                      We're sorry, but there are no products to display here.
+                      Try searching with different products.
+                    </p>
+                    <Link
+                      to="/"
+                      className="mt-4 px-4 py-2 bg-red-400 text-white text-sm font-medium rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                    >
+                      Browse
+                    </Link>
+                  </div>
                 </div>
               )}
             </ScrollArea>

@@ -12,35 +12,34 @@ import { FaHeart } from "react-icons/fa";
 const TopSales = () => {
   const settings = {
     dots: true,
-    infinite: true,
-    speed: 500,
+    infinite: false,
+    speed: 100,
     slidesToShow: 4,
-    slidesToScroll: 2,
-    initialSlide: 0,
+    slidesToScroll: 4,
+    initialSlide: 1,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 5,
           slidesToScroll: 3,
           infinite: true,
           dots: true,
         },
       },
       {
-        breakpoint: 768,
+        breakpoint: 600,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 2,
           initialSlide: 2,
         },
       },
       {
-        breakpoint: 640,
+        breakpoint: 480,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-          initialSlide: 1,
         },
       },
     ],
@@ -68,8 +67,8 @@ const TopSales = () => {
 
   return (
     <>
-      <div className=" mt-2 drop-shadow-md">
-        <div className="overflow-hidden rounded-xl  sm:h-[440px] h-[330px] hero-bg-color  ">
+      <div className=" mt-2 drop-shadow-md sm:m-3">
+        <div className="overflow-hidden rounded-xl  sm:h-[440px] h-[320px] hero-bg-color ">
           <div className="container pb-2 ml-0 pr-0  sm:pb-0">
             <h1 className="gap-4 flex justify-start items-start text-xl font-semibold  text-black hover:text-red-500 dark:text-white p-2 ">
               Top sales
@@ -77,17 +76,17 @@ const TopSales = () => {
             </h1>
             <div className="sm:m-auto sm:p-3 sm:w-auto pr-8 w-[400px]">
               <Slider {...settings}>
-                {filterItems?.map((item, id) => {
+                {filterItems?.map((item) => {
                   return (
                     <div
                       key={item._id}
-                      className="bg-gray-100 drop-shadow-md rounded-md sm:w-16 sm:h-[340px] w-[300px] h-[240px] "
+                      className="bg-gray-100 sm:p-2 drop-shadow-md rounded-md sm:w-[500px] sm:h-[330px] w-[300px] h-[240px] "
                     >
                       <div className="">
                         {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                         <img
                           onClick={() => navigate(`/product/${item._id}`)}
-                          className="sm:w-52 sm:h-56 w-[150px] h-[150px] object-fit m-auto p-2"
+                          className="sm:w-52 sm:h-52 w-[150px] h-[150px] object-fit m-auto p-2 "
                           src={`${
                             CloudinaryConfig.CLOUDINARY_URL
                           }/image/upload/${item?.image_id[0]?.replace(
@@ -113,21 +112,11 @@ const TopSales = () => {
                             <p className="text-red-500 pr-1 ">
                               ₹{item.discountedPrice}
                             </p>
-                            <p className="text-gray-400 text-[10px] ">
+                            <p className="text-emerald-500 text-[10px] ">
                               ({item.discount} % OFF)
                             </p>
                           </div>
                         </div>
-                        {/* <button type="button" className="relative p-3">
-                          <FaHeart
-                            className={
-                              item.fav === "Yes"
-                                ? "text-red-600"
-                                : "text-gray-400"
-                            }
-                            onClick={(e) => handleIsWishlist(e, p)}
-                          />
-                        </button> */}
                       </div>
                     </div>
                   );

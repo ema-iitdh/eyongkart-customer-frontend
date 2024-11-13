@@ -67,22 +67,41 @@ const RelatedProduct = ({ productId }) => {
               relatedProducts.map((product) => (
                 <div
                   key={product._id}
-                  className="bg-white sm:h-[330px] sm:w-[250px] h-[270px] w-[180px] shadow-lg transition-shadow duration-300 rounded-lg overflow-hidden p-3 flex flex-col items-center"
-                  onClick={() => {
-                    setCurrentProductId(product._id);
-                    navigate(`/product/${product._id}`);
-                    setTimeout(() => window.location.reload(), 0);
-                  }}
+                  className="bg-white sm:h-[330px] sm:w-[250px] h-[270px] w-[180px] shadow-lg transition-shadow duration-300 border border-gray-400 rounded-lg overflow-hidden p-3 flex flex-col items-center"
                 >
-                  <img
-                    className="sm:h-[190px] sm:w-[220px] w-[150px] h-[170px] p-2 object-fit rounded-md"
-                    src={`${
-                      CloudinaryConfig.CLOUDINARY_URL
-                    }/image/upload/${product?.image_id[0]?.replace(/"/g, "")}`}
-                    alt={product.name}
-                  />
+                  <div className="relative">
+                    {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+                    <img
+                      onClick={() => {
+                        setCurrentProductId(product._id);
+                        navigate(`/product/${product._id}`);
+                        setTimeout(() => window.location.reload(), 0);
+                      }}
+                      className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
+                      src={`${
+                        CloudinaryConfig.CLOUDINARY_URL
+                      }/image/upload/${product?.image_id[0]?.replace(
+                        /"/g,
+                        ""
+                      )}`}
+                      alt={product.name}
+                    />
+                    <button
+                      type="button"
+                      className="absolute top-2 right-2 bg-slate-50 p-[5px] sm:p-[8px] rounded-full"
+                    >
+                      <FaHeart
+                        className={
+                          product.fav === "Yes"
+                            ? "text-red-600"
+                            : "text-gray-400"
+                        }
+                        onClick={(e) => handleIsWishlist(e, product)}
+                      />
+                    </button>
+                  </div>
                   <div className="w-full flex justify-between sm:p-2">
-                    <div className="sm:text-[16px] text-[11px] text-black">
+                    <div className="sm:text-[16px] text-[12px] text-black">
                       <p className="">{product.name}</p>
                       <div className="flex items-center gap-3 py-2">
                         <Rating value={product?.averageRating} fractions={2} />
@@ -97,25 +116,10 @@ const RelatedProduct = ({ productId }) => {
                         <p className="text-red-500 pr-1">
                           ₹{product.discountedPrice}
                         </p>
-                        <p className="text-gray-400 text-[10px]">
+                        <p className="text-emerald-500 text-[10px]">
                           ({product.discount} % OFF)
                         </p>
                       </div>
-                    </div>
-                    <div className="pl-4">
-                      <button
-                        type="button"
-                        className="relative sm:p-3 pr-3 pt-2"
-                      >
-                        <FaHeart
-                          className={
-                            product.fav === "Yes"
-                              ? "text-red-600"
-                              : "text-gray-400"
-                          }
-                          onClick={(e) => handleIsWishlist(e, product)}
-                        />
-                      </button>
                     </div>
                   </div>
                 </div>

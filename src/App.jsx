@@ -3,14 +3,12 @@ import "./App.css";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import HomePage from "./Pages/HomePage";
-// import Shop from "../src/components/Header/Shop";
-// import ShopByCategory from "../src/components/Header/ShopByCategory";
+
 import AboutUs from "../src/components/Header/AboutUs";
 import Contact from "../src/components/Header/Contact";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProductDisplay from "./components/ProductDisplay/ProductDisplay";
 import Product from "./Pages/Product";
-// import ShopCategory from "./Pages/ShopCategory";
 
 import Carts from "./components/Header/Carts";
 import Checkout from "./components/Checkout/Checkout";
@@ -19,17 +17,18 @@ import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import Myorder from "./components/Myorders/Myorder";
-// import SidebarSort from "./components/SidebarSort/SidebarSort";
+
 import RemProductList from "./components/RemProductList";
 import ChatBox from "./components/Chat/ChatBox";
 import SearchBar from "./components/Search/SearchBar";
-import Banner from "./components/Banner/Banner";
+
 import CategorySort from "./components/SidebarSort/CategorySort";
 import SignupForm from "./components/LoginSignup/SignupForm";
 import SignIn from "./components/LoginSignup/SignIn";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SearchResults from "./components/Search/SearchResult";
 import Category from "./components/Category/Category";
+import OrderConfirmation from "./components/Myorders/OrderConfirm";
 
 const App = () => {
   const queryclient = new QueryClient();
@@ -51,8 +50,9 @@ const App = () => {
 
             <Route path="/search" element={<SearchBar />} />
             <Route path="/search/:searchTerm" element={<SearchResults />} />
+
             <Route path="/about" element={<AboutUs />} />
-            <Route path="/contact" element={<Contact />} />
+
             {/* <Route path="/productdisplay" element={<ProductDisplay />} /> */}
             <Route path="/cart" element={<Carts />} />
             {/* <Route path="/shop" element={<ShopCategory />} /> */}
@@ -63,6 +63,7 @@ const App = () => {
             <Route path="/sorted/:categoryId" element={<CategorySort />} />
             <Route path="/category" element={<Category />} />
 
+            <Route path="/orderconfirm" element={<OrderConfirmation />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/myorder" element={<Myorder />} />

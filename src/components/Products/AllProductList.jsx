@@ -1,61 +1,68 @@
 import React from "react";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { FaHeart } from "react-icons/fa";
-
 import { useNavigate } from "react-router-dom";
-import { Rating } from "@mantine/core";
+import { Rating, ScrollArea } from "@mantine/core";
 import { handleIsWishlist } from "../WishlistFunction/WishlistFunction";
+import { useWishlist } from "../../hooks/useWistlist";
 
 export default function AllProductList({ AllProduct }) {
   const navigate = useNavigate();
 
-  // console.log("allproducts", AllProduct);
   return (
-    <div className="mb-10">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pl-4">
-        {AllProduct?.products?.map((p) => (
-          <div className="group " key={p._id}>
-            <div className="relative ">
-              {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-              <img
-                onClick={() => navigate(`/product/${p._id}`)}
-                src={`${
-                  CloudinaryConfig.CLOUDINARY_URL
-                }/image/upload/${p?.image_id[0]?.replace(/"/g, "")}`}
-                alt=""
-                className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md "
-              />
-            </div>
-            <div className="flex justify-between leading-6">
-              <div>
-                <h2 className="sm:font-semibold text-[15px]">{p?.name}</h2>
-                <div className="flex items-center gap-2 py-2">
-                  <Rating value={p?.averageRating} fractions={2} />{" "}
-                  <span className="text-orange-500 text-sm">
-                    ({p?.totalReviews})
-                  </span>
-                </div>
-                <h3 className="gap-2">
-                  <span className="ml-1 text-red-600 text-[12px] sm:text-[15px] ">
-                    ₹{p.discountedPrice}
-                  </span>
-                  <span className="pl-2 line-through sm:text-[15px] text-[12px]">
-                    ₹{p.price}
-                  </span>
-                </h3>
-                <span className=" text-gray-500 text-[10px] sm:text-[14px] ml-1 ">
-                  ({p.discount} % OFF)
-                </span>
-              </div>
-              <button type="button" className="relative p-3">
-                <FaHeart
-                  className={p.fav === "Yes" ? "text-red-600" : "text-gray-400"}
-                  onClick={(e) => handleIsWishlist(e, p)}
+    <div className="mb-6 sm:mt-2 p-3">
+      {/* <ScrollArea type="never" h={400}> */}
+      <div className="grid grid-cols-2 p-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+        {AllProduct?.products?.map((p) => {
+          const { isInWishlist, toggleWishlist } = useWishlist(p._id, p?.fav);
+
+          return (
+            <div
+              className="group shadow-md hover:shadow-lg border border-gray-400 sm:p-3 p-2 rounded-md"
+              key={p._id}
+            >
+              <div className="relative">
+                {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+                <img
+                  onClick={() => navigate(`/product/${p._id}`)}
+                  src={`${
+                    CloudinaryConfig.CLOUDINARY_URL
+                  }/image/upload/${p?.image_id[0]?.replace(/"/g, "")}`}
+                  alt={p.name}
+                  className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
                 />
-              </button>
+                <button
+                  type="button"
+                  className="absolute top-2 right-2 bg-slate-50 p-[5px] sm:p-[8px] rounded-full"
+                >
+                  <FaHeart
+                    size={15}
+                    className={isInWishlist ? "text-red-600" : "text-gray-400"}
+                    onClick={toggleWishlist}
+                  />
+                </button>
+              </div>
+              <div className="w-full flex justify-between sm:p-2 mt-2">
+                <div className="sm:text-[16px] text-[12px] text-black">
+                  <p>{p.name}</p>
+                  <div className="flex items-center gap-3 py-2">
+                    <Rating value={p?.averageRating} fractions={2} />
+                    <span className="text-orange-500 sm:text-sm text-[10px]">
+                      ({p?.totalReviews})
+                    </span>
+                  </div>
+                  <div className="flex w-[130px] sm:w-[160px]">
+                    <p className="text-black pr-1 line-through">₹{p.price}</p>
+                    <p className="text-red-500 pr-1">₹{p.discountedPrice}</p>
+                    <p className="text-emerald-500 text-[10px]">
+                      ({p.discount} % OFF)
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

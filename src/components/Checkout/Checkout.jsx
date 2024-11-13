@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -193,15 +193,8 @@ const Checkout = () => {
     }
   }, []);
 
-  const alertOk = () => {
-    Swal.fire({
-      title: "Good job!",
-      text: "Thank you for order",
-      icon: "success",
-    });
-    setTimeout(() => {
-      navigate("/myorder");
-    }, 1000);
+  const handlePayment = () => {
+    navigate("/orderconfirm");
   };
   const saveInfo = () => {
     Swal.fire({
@@ -213,21 +206,20 @@ const Checkout = () => {
     });
   };
 
-  // console.log("one", buyProduct, "two", checkoutItem);
-
   return (
-    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden pt-16">
+    <div className="bg-white dark:bg-gray-900 duration-200 overflow-hidden pt-16">
       <Navbar />
-      <div className=" text-2xl overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex  flex-col pt-8 gap-y-3.5 ">
-        <div className="container ">
-          <h4 className="text-[18px]">Address information</h4>
+      <div className="text-2xl overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] flex flex-col pt-5 gap-y-4">
+        <div className="container  mx-auto px-4">
+          <h4 className="text-[18px] underline">Address Information</h4>
         </div>
-        <div className="sm:flex   gap-2 ">
-          <div className="container border border-black dark:border-white w-[95%] sm:w-[50%]">
-            <div className=" flex flex-col mb-3 w-[100%] sm:text-[18px] text-[15px] ">
-              <label>Full Name</label>
+
+        <div className="sm:flex gap-4 sm:px-4 px-2 flex-col   sm:flex-row">
+          <div className="container sm:mb-4 sm:mt-2 border  drop-shadow-lg border-gray-300 w-full sm:w-[48%] p-4 rounded-lg">
+            <div className="flex flex-col mb-4">
+              <label className="text-sm sm:text-[16px]">Full Name</label>
               <input
-                className="rounded-md w-full h-[30px] sm:h-[40px] text-black indent-2 border-none outline-none  "
+                className="rounded-md w-full h-[40px] text-black indent-2 border border-gray-300 outline-none sm:text-[16px] text-[14px]"
                 type="text"
                 name="fullname"
                 placeholder="Enter full name"
@@ -235,21 +227,23 @@ const Checkout = () => {
                 onChange={(e) => setFullName(e.target.value)}
               />
             </div>
-            <div className=" flex flex-col mb-3 w-[100%] sm:text-[18px] text-[15px] ">
-              <label> Full Address</label>
+
+            <div className="flex flex-col mb-4">
+              <label className="text-sm sm:text-[16px]">Full Address</label>
               <input
-                className="rounded-md sm:h-[40px] h-[30px] text-black indent-2 border-none outline-none "
-                type="address"
+                className="rounded-md w-full h-[40px] text-black indent-2 border border-gray-300 outline-none sm:text-[16px] text-[14px]"
+                type="text"
                 name="address"
                 placeholder="Enter full address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
-            <div className=" flex flex-col mb-3 w-[100%] sm:text-[18px] text-[15px] ">
-              <label>Phone Number</label>
+
+            <div className="flex flex-col mb-4">
+              <label className="text-sm sm:text-[16px]">Phone Number</label>
               <input
-                className="rounded-md sm:h-[40px] h-[30px] text-black indent-2 border-none outline-none "
+                className="rounded-md w-full h-[40px] text-black indent-2 border border-gray-300 outline-none sm:text-[16px] text-[14px]"
                 type="text"
                 name="phone number"
                 placeholder="Enter phone number"
@@ -257,10 +251,11 @@ const Checkout = () => {
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
-            <div className=" flex flex-col mb-3 w-[100%] sm:text-[18px] text-[15px] ">
-              <label>Email Address</label>
+
+            <div className="flex flex-col mb-4">
+              <label className="text-sm sm:text-[16px]">Email Address</label>
               <input
-                className="rounded-md sm:h-[40px] h-[30px] text-black indent-2 border-none outline-none "
+                className="rounded-md w-full h-[40px] text-black indent-2 border border-gray-300 outline-none sm:text-[16px] text-[14px]"
                 type="email"
                 name="email address"
                 placeholder="Enter email address"
@@ -269,55 +264,41 @@ const Checkout = () => {
               />
             </div>
 
-            <div className="flex gap-3 ">
-              <div className="flex flex-wrap sm:h-[40px] h-[30px]">
-                <label
-                  className="w-[95%] text-[15px]  mt-1 mb-1"
-                  htmlFor="services"
-                >
-                  District
-                </label>
-
-                <select
-                  onChange={(e) => setDistrict(e.target.value)}
-                  id="district"
-                  className=" sm:h-[40px] h-[30px] w-[200px] text-black text-[15px] rounded-md border-solid border-[1px] outline-none "
-                >
-                  <option value="district">Select District</option>
-                  {districtPincode.map((s, i) => (
-                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                    <option key={i} value={s.district}>
-                      {s.district}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="flex flex-wrap">
-                <label
-                  className="w-[95%] text-[16px] mt-1 mb-1"
-                  htmlFor="pincode"
-                >
-                  Pincode
-                </label>
-                <input
-                  className="sm:h-[40px] h-[30px] w-[100%] text-black text-[15px] rounded-md border-solid border-[1px] indent-1 outline-none "
-                  type=""
-                  placeholder="Enter Pincode"
-                  value={pincode}
-                  maxLength={6}
-                  onChange={(e) => setPincode(e.target.value)}
-                  name="pincode"
-                  required
-                />
-              </div>
+            <div className="flex flex-col mb-4">
+              <label className="text-sm sm:text-[16px]">District</label>
+              <select
+                onChange={(e) => setDistrict(e.target.value)}
+                id="district"
+                className="rounded-md w-full h-[40px] border border-gray-300 outline-none sm:text-[16px] text-[14px]"
+              >
+                <option value="district">Select District</option>
+                {districtPincode.map((s, i) => (
+                  <option key={i} value={s.district}>
+                    {s.district}
+                  </option>
+                ))}
+              </select>
             </div>
 
-            <div className=" flex flex-col mb-3 w-[200px] text-[15px] sm:text-[18px] ">
-              <label>State</label>
+            <div className="flex flex-col mb-4">
+              <label className="text-sm sm:text-[16px]">Pincode</label>
               <input
-                className="rounded-lg h-[30px] sm:h-[40px] text-black indent-2 border-none outline-none "
-                type="state"
+                className="rounded-md w-full h-[40px] text-black indent-2 border border-gray-300 outline-none sm:text-[16px] text-[14px]"
+                type="text"
+                placeholder="Enter Pincode"
+                value={pincode}
+                maxLength={6}
+                onChange={(e) => setPincode(e.target.value)}
+                name="pincode"
+                required
+              />
+            </div>
+
+            <div className="flex flex-col mb-4">
+              <label className="text-sm sm:text-[16px]">State</label>
+              <input
+                className="rounded-md w-full h-[40px] text-black indent-2 border border-gray-300 outline-none sm:text-[16px] text-[14px]"
+                type="text"
                 name="state"
                 placeholder="Enter state"
                 value={state}
@@ -326,126 +307,101 @@ const Checkout = () => {
               />
             </div>
 
-            <div className="text-[18px] gap-2">
-              <button onClick={saveInfo}>
-                {/* <input
-                  className="bg-red-400 checked:bg-red-500 border-2 border-gray-300 rounded-sm"
-                  name="info"
-                  id="info"
-                  type="checkbox"
-                /> */}
-                <Checkbox size="xs" defaultChecked color="red" />
-              </button>
-              <label htmlFor="info" className="text-[15px]">
-                {" "}
-                Save the information
-              </label>
+            <div className="flex items-center gap-2 text-sm sm:text-[16px]">
+              <Checkbox size="xs" defaultChecked color="red" />
+              <label htmlFor="info">Save the information</label>
             </div>
           </div>
 
-          <div className="container mb-4 w-[100%] sm:w-[50%]">
-            <div className="flex  mt-[40px] text-[18px]  gap-4 items-start justify-center ">
-              <div className="flex flex-1 flex-col border border-black dark:border-white rounded-3xl p-4 justify-between ">
-                <h1 className="sm:text-[18px] text-[15px]"> Cart Totals</h1>
-                <div>
-                  {checkoutItem ? (
-                    <>
-                      {checkoutItem.map((p, i) => (
-                        <div
-                          key={i}
-                          className="bg-white dark:bg-gray-900 flex items-center gap-2 mb-3"
-                        >
-                          <p className="p-1">
-                            <img
-                              className="sm:h-[100px] sm:w-[100px] h-[100px] w-[80px] object-fit"
-                              src={`${
-                                CloudinaryConfig.CLOUDINARY_URL
-                              }/image/upload/${p?.image_id[0]?.replace(
-                                /"/g,
-                                ""
-                              )}`}
-                              alt="image1"
-                            />
-                          </p>
-                          <p className="p-2 sm:text-[18px] text-[15px] ">
-                            {p.name}
-                          </p>
-                          <p className="p-2 sm:text-[18px] text-[15px]">
-                            {/* ₹ {p.discountedPrice}* {p.quantity} */}₹{" "}
-                            {p.discountedPrice}
-                          </p>
-                        </div>
-                      ))}
-                      <div>
-                        <div className=" flex justify-between text-[15px] sm:text-[18px] pt-[-15px]">
-                          <p>Subtotals</p>
-                          <p>₹ {getTotal()}</p>
-                        </div>
-                        <hr className="h-[1px] bg-white border-none" />
-                        <div className="flex justify-between text-[15px] sm:text-[18px] ">
-                          <p>Shipping Fee</p>
-                          <p>Free</p>
-                        </div>
-                        <hr className="h-[1px] bg-white border-none" />
-                        <div className="flex justify-between pt-[-15px] text-[15px] sm:text-[18px] ">
-                          <h3>Totals</h3>
-                          <h3>₹ {getTotal()}</h3>
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                  <div>
-                    <Radio.Group>
-                      <Group mt="xl">
-                        <Radio
-                          color="red"
-                          value="razorpay"
-                          label="Online Payment / UPI"
-                          checked={razorpaytick}
-                          onChange={(event) => {
-                            setrazorpaytick(event.currentTarget.checked);
-                            setPaymentMethod("razorpay"); // Set payment method to "razorpay" when selected
-                          }}
+          <div className="container mb-4 w-full  mt-4 sm:w-[48%]  p-4 border  border-gray-300 drop-shadow-lg rounded-lg">
+            <h1 className="text-[16px] sm:text-[18px]">Cart Totals</h1>
+            <div>
+              {checkoutItem ? (
+                <>
+                  {checkoutItem.map((p, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center border border-gray-300 rounded-lg gap-2 mb-3"
+                    >
+                      <p className="p-1">
+                        <img
+                          className="h-[80px] sm:h-[100px] w-[80px] sm:w-[100px] object-cover"
+                          src={`${
+                            CloudinaryConfig.CLOUDINARY_URL
+                          }/image/upload/${p?.image_id[0]?.replace(/"/g, "")}`}
+                          alt="product"
                         />
-                        <Radio
-                          color="red"
-                          value="cash"
-                          label="Cash on Delivery"
-                          onChange={() => {
-                            setrazorpaytick(false);
-                            setPaymentMethod("cash");
-                          }}
-                        />
-                      </Group>
-                    </Radio.Group>
-                    {paymentMethod === "razorpay" && (
-                      <button
-                        onClick={paymentHandler}
-                        type="button"
-                        className="w-[120px] sm:h-[50px] mt-4 outline-none border-none bg-red-500 text-white sm:text-[16px] text-[15px] text-center cursor-pointer rounded-md"
-                      >
-                        PAY NOW
-                      </button>
-                    )}
-
-                    {paymentMethod === "cash" && (
-                      <button
-                        onClick={alertOk}
-                        type="button"
-                        className="w-[120px] sm:h-[50px] mt-4 outline-none border-none bg-red-500 text-white sm:text-[16px] text-[15px] text-center cursor-pointer rounded-md"
-                      >
-                        PAY NOW
-                      </button>
-                    )}
+                      </p>
+                      <p className="p-2 sm:text-[16px] text-[14px]">{p.name}</p>
+                      <p className="p-2 sm:text-[16px] text-[14px]">
+                        ₹ {p.discountedPrice}
+                      </p>
+                    </div>
+                  ))}
+                  <div className="flex justify-between sm:text-[16px] text-[14px] pt-[-15px]">
+                    <p>Subtotals</p>
+                    <p>₹ {getTotal()}</p>
                   </div>
-                </div>
-              </div>
+                  <hr className="h-[1px] bg-gray-300 border-none" />
+                  <div className="flex justify-between sm:text-[16px] text-[14px]">
+                    <p>Shipping Fee</p>
+                    <p>Free</p>
+                  </div>
+                  <hr className="h-[1px] bg-gray-300 border-none" />
+                  <div className="flex justify-between sm:text-[16px] text-[14px] pt-[-15px]">
+                    <h3>Totals</h3>
+                    <h3>₹ {getTotal()}</h3>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+              <Radio.Group>
+                <Group mt="xl">
+                  <Radio
+                    color="red"
+                    value="razorpay"
+                    label="Online Payment / UPI"
+                    checked={razorpaytick}
+                    onChange={(event) => {
+                      setrazorpaytick(event.currentTarget.checked);
+                      setPaymentMethod("razorpay");
+                    }}
+                  />
+                  <Radio
+                    color="red"
+                    value="cash"
+                    label="Cash on Delivery"
+                    onChange={() => {
+                      setrazorpaytick(false);
+                      setPaymentMethod("cash");
+                    }}
+                  />
+                </Group>
+              </Radio.Group>
+              {paymentMethod === "razorpay" && (
+                <button
+                  onClick={paymentHandler}
+                  type="button"
+                  className="w-[120px] sm:h-[50px] mt-4 outline-none border-none bg-red-500 text-white sm:text-[16px] text-[14px] text-center cursor-pointer rounded-md"
+                >
+                  PAY NOW
+                </button>
+              )}
+              {paymentMethod === "cash" && (
+                <button
+                  onClick={handlePayment}
+                  type="button"
+                  className="w-[120px] sm:h-[50px] mt-4 outline-none border-none bg-red-500 text-white sm:text-[16px] text-[14px] text-center cursor-pointer rounded-md"
+                >
+                  PAY NOW
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
+
       <ChatBox />
       <Footer />
     </div>

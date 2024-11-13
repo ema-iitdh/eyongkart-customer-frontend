@@ -159,7 +159,7 @@ const ProductDisplay = (props) => {
                           ₹{productData.price}
                         </span>
 
-                        <span className=" text-gray-500 text-[14px] ml-2 ">
+                        <span className=" text-emerald-500 text-[14px] ml-2 ">
                           ({productData.discount} % OFF)
                         </span>
                       </div>
@@ -212,15 +212,6 @@ const ProductDisplay = (props) => {
                         </span>
                       </button>
                     </div>
-
-                    {/* <p className="mt-3 sm:text-[16px] text-[13px]">
-                      <span>Category: </span>
-                      Women, {productData.name} and traditional design.
-                    </p>
-                    <p className="mt-3 sm:text-[16px] text-[13px]">
-                      <span>Tags: </span>
-                      Modern Latest.
-                    </p> */}
                   </div>
                 </div>
               </div>

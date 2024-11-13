@@ -1,10 +1,114 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
-import { TiDeleteOutline } from "react-icons/ti";
+import { FaTimes } from "react-icons/fa"; // Importing FaTimes for remove icon
 import { ShopContext } from "../Context/ShopContext";
-import { Radio, Group } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { CloudinaryConfig } from "../../../Cloudinary";
+
+const CartItem = ({ item, substractQuantity, addToCart, removeFromCart }) => (
+  <div className="flex flex-row   border border-gray-400 rounded-lg shadow-lg p-6 transition-all hover:shadow-2xl">
+    <div className="w-full sm:w-[120px]  sm:h-[150px] h-[150px] flex justify-center items-center mb-4 sm:mb-0">
+      <img
+        className="sm:w-full sm:h-full w-[120px] h-[160px] object-fit rounded-lg"
+        src={`${
+          CloudinaryConfig.CLOUDINARY_URL
+        }/image/upload/${item?.image_id[0]?.replace(/"/g, "")}`}
+        alt={item.name}
+      />
+    </div>
+
+    <div className=" sm:ml-4 flex flex-col  justify-between w-full">
+      <div className="flex justify-between mb-2">
+        <h3 className=" sm:text-xl font-semibold text-black text-[15px]">
+          {item.name}
+        </h3>
+        <button
+          type="button"
+          className="text-red-500 p-1 hover:text-red-600 transition"
+          onClick={() => removeFromCart(item._id)}
+        >
+          <FaTimes size={20} />
+        </button>
+      </div>
+
+      {/* <div className="flex justify-between text-[15px] mb-2"> */}
+      <div className=" flex sm:text[18px] text-[14px]">
+        <p className="font-semibold sm:text[18px] text-red-400 ">
+          ₹{item.discountedPrice}
+        </p>
+        <p className="font-semibold sm:text[18px] text-black line-through pl-2 ">
+          ₹{item.price}
+        </p>
+        <p className="font-semibold text-gray-500 pl-2 ">
+          ({item.discount}%OFF)
+        </p>
+      </div>
+
+      {/* </div> */}
+
+      <div className="flex justify-between  pr-3">
+        <p className="font-semibold text-gray-800 sm:text-[18px] text-[14px] ">
+          Qty: {item.quantity}
+        </p>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            className="bg-gray-200 hover:bg-gray-300 rounded-full w-6 h-6 flex justify-center items-center transition"
+            onClick={() => substractQuantity(item._id)}
+          >
+            <span className="font-bold text-xl">-</span>
+          </button>
+          <span className="flex justify-center items-center font-semibold text-lg text-black dark:text-white">
+            {item.quantity}
+          </span>
+          <button
+            type="button"
+            className="bg-gray-200 hover:bg-gray-300 rounded-full w-6 h-6 flex justify-center items-center transition"
+            onClick={() => addToCart(item._id)}
+          >
+            <span className="font-bold text-xl">+</span>
+          </button>
+        </div>
+      </div>
+      <h3 className="font-semibold text-black ">
+        SubTotal: ₹ {item.discountedPrice * item.quantity}
+      </h3>
+      {/* <div className="flex justify-between items-center mt-4"> */}
+      {/* </div> */}
+    </div>
+  </div>
+);
+
+const CartTotals = ({ total, navigate }) => (
+  <div className="mt-8 bg-white border border-gray-400 p-6 rounded-lg shadow-lg transition-all hover:shadow-2xl">
+    <h2 className="text-xl font-semibold text-black dark:text-white mb-4">
+      Cart Totals
+    </h2>
+    <div className="flex justify-between mb-4">
+      <p className="text-lg text-gray-700 dark:text-gray-300">Subtotals</p>
+      <p className="text-lg text-black dark:text-white">₹ {total}</p>
+    </div>
+    <div className="flex justify-between mb-4">
+      <p className="text-lg text-gray-700 dark:text-gray-300">Shipping Fee</p>
+      <p className="text-lg text-black dark:text-white">Free</p>
+    </div>
+    <hr className="my-4 border-t border-gray-300 dark:border-gray-600" />
+    <div className="flex justify-between text-lg font-semibold">
+      <h3>Total</h3>
+      <h3>₹ {total}</h3>
+    </div>
+
+    <div className="mt-6 flex justify-center">
+      <button
+        type="button"
+        className="w-[250px] h-[50px] bg-red-500 text-white text-[16px] rounded-lg hover:bg-red-600 transition cursor-pointer"
+        onClick={() => navigate("/checkout")}
+      >
+        PROCEED TO CHECKOUT
+      </button>
+    </div>
+  </div>
+);
 
 const CartsItems = () => {
   useEffect(() => {
@@ -13,168 +117,50 @@ const CartsItems = () => {
       behavior: "smooth",
     });
   }, []);
+
   const {
     getTotalCartAmount,
-    data,
     cartItems,
     substractQuantity,
     addToCart,
     removeFromCart,
-    buyFromCart,
   } = useContext(ShopContext);
   const navigate = useNavigate();
-
-  const [razorpaytick, setrazorpaytick] = useState(false);
-  function loadScript(src) {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-      document.body.appendChild(script);
-    });
-  }
 
   const getTotal = () => {
     let total = 0;
     if (cartItems?.length) {
-      cartItems.map((i) => {
-        total = total + i.discountedPrice * i.quantity;
+      cartItems.forEach((i) => {
+        total += i.discountedPrice * i.quantity;
       });
     }
     return total;
   };
+
   return (
-    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
+    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 top-0 overflow-hidden">
       <Navbar />
 
-      <div className=" text-xl overflow-hidden min-h-[550px] sm:min-h-[650px] hero-bg-color flex flex-col pt-8 gap-y-3.5 ">
-        <table className=" min-w-full  text-center dark:text-white text-black text-[13px] sm:text-[20px]">
-          <thead>
-            <tr className="bg-gray-200 dark:bg-gray-800 gap-2">
-              <th className="p-1 sm:p-2">Products</th>
-              <th className="p-1 sm:p-2">Title</th>
-              <th className="p-1 pl-4 pr-2 sm:p-2">Price</th>
-              <th className="p-1 sm:p-2">Quantity</th>
-              <th className="p-1 pl-4 pr-3 sm:p-2">SubTotal</th>
-              <th className="p-1 sm:p-2">Remove</th>
-            </tr>
-          </thead>
-          <tbody>
+      <div className="py-8 px-4 sm:px-8 flex flex-col gap-10">
+        {cartItems.length > 0 ? (
+          <div className="space-y-6">
             {cartItems.map((item, index) => (
-              <tr
+              <CartItem
                 key={index}
-                className="bg-white border border-black  dark:bg-gray-900"
-              >
-                <td className="sm:p-2 p-1 ">
-                  <img
-                    className="h-[50px] sm:h-[120px] w-[50px] sm:w-[200px] object-contain"
-                    src={`${
-                      CloudinaryConfig.CLOUDINARY_URL
-                    }/image/upload/${item?.image_id[0]?.replace(/"/g, "")}`}
-                    alt="image1"
-                  />
-                </td>
-                <td className="sm:p-2 p-1 text-[14px] sm:text-[16px] ">
-                  {item.name}
-                </td>
-                <td className="sm:p-2 p-1 text-[14px] sm:text-[16px]">
-                  ₹ {item.discountedPrice}
-                </td>
-                <td className="sm:p-2 p-1 text-[16px]  text-center   ">
-                  <div className="flex gap-0 sm:gap-4 justify-center items-center">
-                    <button
-                      type="button"
-                      onClick={() => substractQuantity(item._id)}
-                      className="hover:bg-gray-200 px-2 sm:px-4 "
-                    >
-                      -
-                    </button>
-                    {item.quantity}
-                    <button
-                      type="button"
-                      onClick={() => addToCart(item._id)}
-                      className="hover:bg-gray-200 px-2 sm:px-4"
-                    >
-                      +
-                    </button>
-                  </div>
-                </td>
-
-                <td className="p-2 text-[14px] sm:text-[16px] ">
-                  ₹ {item.discountedPrice * item.quantity}
-                </td>
-                <td className="p-2 text-[16px]">
-                  <button type="button" className="text-red-500">
-                    <TiDeleteOutline
-                      size={26}
-                      onClick={() => {
-                        removeFromCart(item._id);
-                      }}
-                    />
-                  </button>
-                </td>
-              </tr>
+                item={item}
+                substractQuantity={substractQuantity}
+                addToCart={addToCart}
+                removeFromCart={removeFromCart}
+              />
             ))}
-          </tbody>
-        </table>
-        <hr className="h-[1px] bg-white border-none" />
-      </div>
+          </div>
+        ) : (
+          <div className="text-center text-lg font-semibold text-gray-500 ">
+            Your cart is empty! Start shopping now.
+          </div>
+        )}
 
-      <div className="sm:flex mt-[50px] text-[18px] pl-32 gap-8 items-start sm:justify-center ">
-        <div className="flex w-4/5 sm:w-2/4 flex-col border border-black dark:border-white rounded-3xl p-4 justify-between  gap-10 mb-[100px]">
-          <h1> Cart Totals</h1>
-          <div>
-            <div className=" flex justify-between pt[-15px]">
-              <p>Subtotals</p>
-              <p>₹ {getTotal()}</p>
-            </div>
-            <hr className="h-[1px] bg-white border-none" />
-            <div className="flex justify-between">
-              <p>Shipping Fee</p>
-              <p>Free</p>
-            </div>
-            <hr className="h-[1px] bg-white border-none" />
-            <div className="flex justify-between pt[-15px]">
-              <h3>Totals</h3>
-              <h3>₹ {getTotal()}</h3>
-            </div>
-          </div>
-          <div className="w-full h-fit flex justify-center">
-            <button
-              type="button"
-              className="w-[250px] h-[50px] outline-none border-none px-3 bg-red-500 text-white text-[16px]
-            cursor-pointer rounded-lg"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate("/checkout");
-              }}
-            >
-              PROCEED TO CHECKOUT
-            </button>
-          </div>
-        </div>
-        {/* <div className="flex flex-1 flex-col text-[16px] ">
-          <p className="text-gray-400">If you have promocode,Enter here</p>
-          <div className=" flex w-[300px] mt-3 pl-5 h-[50px] bg-gray-200 dark:bg-gray-200 ">
-            <input
-              className="border-none outline-none bg-transparent text-[16px] w-[330px] h-[50px] text-black"
-              type="text"
-              name=""
-              placeholder="promocode"
-            />
-            <button
-              type="button"
-              className="w-[150px] h-[50px] text-[16px] bg-red-500 text-white cursor-pointer"
-            >
-              SUBMIT
-            </button>
-          </div>
-        </div> */}
+        <CartTotals total={getTotal()} navigate={navigate} />
       </div>
     </div>
   );

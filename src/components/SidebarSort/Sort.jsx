@@ -31,9 +31,9 @@ const Sort = () => {
   }, []);
   return (
     <>
-      <div className="bg-white p-2 sm:min-h-[calc(100vh-120px)] ">
+      <div className="bg-white p-2 sm:min-h-[calc(100vh-120px)] border border-black ">
         {/* Category Section */}
-        <div className="w-full md:w-auto">
+        <div className="w-full md:w-auto  ">
           <div className="flex items-center justify-between md:justify-start">
             <h3 className="sm:text-lg text-[13px] uppercase font-medium text-slate-500 border-b pb-1 border-slate-300">
               Collection

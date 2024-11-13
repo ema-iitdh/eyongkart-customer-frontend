@@ -1,124 +1,81 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { TiDeleteOutline } from "react-icons/ti";
 import { ShopContext } from "../Context/ShopContext";
-import { Radio, Group } from "@mantine/core";
+import { CloudinaryConfig } from "../../../Cloudinary";
 import { useNavigate } from "react-router-dom";
 import ChatBox from "../Chat/ChatBox";
-import { CloudinaryConfig } from "../../../Cloudinary";
 
 const MyOrder = () => {
-  const {
-    getTotalCartAmount,
-    data,
-    cartItems,
-    substractQuantity,
-    addToCart,
-    removeFromCart,
-    buyFromCart,
-  } = useContext(ShopContext);
-  const navigate = useNavigate();
-
-  function loadScript(src) {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-      document.body.appendChild(script);
-    });
-  }
+  const { cartItems, removeFromCart } = useContext(ShopContext);
 
   const getTotal = () => {
     let total = 0;
     if (cartItems?.length) {
-      cartItems.map((i) => {
-        total = total + i.discountedPrice * i.quantity;
+      cartItems.forEach((item) => {
+        total += item.discountedPrice * item.quantity;
       });
     }
     return total;
   };
+
   return (
-    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
+    <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
       <Navbar />
+      <div className="container mx-auto px-4 sm:px-6 py-14">
+        <h1 className="pt-6 sm:text-2xl font-semibold text-center mb-8">
+          My Orders
+        </h1>
 
-      <div className=" text-xl overflow-hidden min-h-[550px] sm:min-h-[650px] hero-bg-color flex flex-col pt-24 gap-y-3.5 ">
-        <table className=" min-w-full  text-center dark:text-white text-black text-[13px] sm:text-[20px]">
-          <thead>
-            <tr className="bg-gray-200 dark:bg-gray-800 gap-2">
-              <th className="p-1 sm:p-2">Products</th>
-              <th className="p-1 sm:p-2">Title</th>
-              <th className="p-1 pl-4 pr-2 sm:p-2">Price</th>
-              <th className="p-1 sm:p-2">Quantity</th>
-              <th className="p-1 pl-4 pr-3 sm:p-2">SubTotal</th>
-              <th className="p-1 sm:p-2">Remove</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cartItems.map((item, index) => (
-              <tr
-                key={index}
-                className="bg-white border border-black  dark:bg-gray-900"
-              >
-                <td className="sm:p-2 p-1 ">
-                  <img
-                    className="h-[50px] sm:h-[120px] w-[50px] sm:w-[200px] object-contain"
-                    src={`${
-                      CloudinaryConfig.CLOUDINARY_URL
-                    }/image/upload/${item?.image_id[0]?.replace(/"/g, "")}`}
-                    alt="image1"
-                  />
-                </td>
-                <td className="sm:p-2 p-1 text-[14px] sm:text-[16px] ">
-                  {item.name}
-                </td>
-                <td className="sm:p-2 p-1 text-[14px] sm:text-[16px]">
-                  ₹ {item.discountedPrice}
-                </td>
-                <td className="sm:p-2 p-1 text-[16px]  text-center   ">
-                  <div className="flex gap-0 sm:gap-4 justify-center items-center">
-                    {/* <button
-                      type="button"
-                      onClick={() => substractQuantity(item._id)}
-                      className="hover:bg-gray-200 px-2 sm:px-4 "
-                    >
-                      -
-                    </button> */}
-                    {item.quantity}
-                    {/* <button
-                      type="button"
-                      onClick={() => addToCart(item._id)}
-                      className="hover:bg-gray-200 px-2 sm:px-4"
-                    >
-                      +
-                    </button> */}
+        <div className="space-y-6 ">
+          {cartItems.map((item, index) => (
+            <div
+              key={index}
+              className="bg-white border hover:bg-gray-100 border-gray-400 shadow-lg rounded-lg sm:gap-5 overflow-hidden flex flex-col sm:flex-row"
+            >
+              {/* Product Image */}
+              <div className="flex-shrink-0 w-full sm:w-48 h-48 sm:h-56 flex justify-center items-center">
+                <img
+                  className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px]  p-3 object-fit"
+                  src={`${
+                    CloudinaryConfig.CLOUDINARY_URL
+                  }/image/upload/${item?.image_id[0]?.replace(/"/g, "")}`}
+                  alt={item.name}
+                />
+              </div>
+
+              <div className="p-2 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 ">
+                    {item.name}
+                  </h3>
+                  <div className="flex justify-between items-center mt-2">
+                    <p className="text-xl font-semibold text-gray-800 dark:text-white">
+                      ₹ {item.discountedPrice}
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Qty: {item.quantity}
+                    </p>
                   </div>
-                </td>
+                  <p className="mt-2 text-lg font-semibold text-gray-900 dark:text-white">
+                    Subtotal: ₹ {item.discountedPrice * item.quantity}
+                  </p>
+                </div>
 
-                <td className="p-2 text-[14px] sm:text-[16px] ">
-                  ₹ {item.discountedPrice * item.quantity}
-                </td>
-                <td className="p-2 text-[16px]">
-                  <button type="button" className="text-red-500">
-                    <TiDeleteOutline
-                      size={26}
-                      onClick={() => {
-                        removeFromCart(item._id);
-                      }}
-                    />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <hr className="h-[1px] bg-white border-none" />
+                {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+                <button
+                  onClick={() => removeFromCart(item._id)}
+                  className="mt-4 text-red-500 hover:text-red-700 transition duration-200 flex items-center justify-center w-full sm:w-[100px] py-2 rounded-lg border border-red-500"
+                >
+                  <TiDeleteOutline size={20} className="mr-2" /> Remove
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+
       <ChatBox />
       <Footer />
     </div>

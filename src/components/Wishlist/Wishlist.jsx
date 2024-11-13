@@ -7,11 +7,17 @@ import { FaHeart } from "react-icons/fa6";
 import ChatBox from "../Chat/ChatBox";
 import { Axios } from "../../../api";
 import { CloudinaryConfig } from "../../../Cloudinary";
+import { Rating } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
+import LogoLoading from "../../Pages/LogoLoading";
+
 const Wishlist = () => {
+  const navigate = useNavigate();
   const { cartItems, removeFromCart } = useContext(ShopContext);
 
   const [products, setProducts] = useState([]);
-  const [filterProduct, setFilterProduct] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
+
   const getAllProduct = async () => {
     try {
       const { data } = await Axios({
@@ -19,12 +25,14 @@ const Wishlist = () => {
         method: "GET",
       });
       setProducts(data.products.filter((i) => i.fav === "Yes"));
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
-  const handleIsWistlist = async (e, p) => {
+  const handleWishlist = async (e, p) => {
     e.preventDefault();
     try {
       const { data } = await Axios.put(`/product/updatefav/${p._id}`, {
@@ -34,13 +42,10 @@ const Wishlist = () => {
         getAllProduct();
       }
     } catch (error) {
-      toast.error("Something Happen");
+      console.error("Something happened while updating the wishlist");
     }
   };
 
-  // useEffect(() => {
-  //   getAllProduct();
-  // }, []);
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -50,60 +55,64 @@ const Wishlist = () => {
   }, []);
 
   return (
-    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden ">
+    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
       <Navbar />
-
-      <div className=" text-xl overflow-hidden min-h-[550px] sm:min-h-[650px] hero-bg-color flex flex-col pt-8 gap-y-3.5 ">
-        <div className="overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] hero-bg-color flex  items-center flex-col pt-16 gap-y-3.5">
-          <div className="">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 pl-5 gap-2">
-              {products.map((p) => (
-                <div className="group" key={p._id}>
-                  <div className="relative">
-                    {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-                    <img
-                      onClick={() => {
-                        navigate(`/product/${p._id}`);
-                      }}
-                      src={`${
-                        CloudinaryConfig.CLOUDINARY_URL
-                      }/image/upload/${p?.image_id[0]?.replace(/"/g, "")}`}
-                      alt=""
-                      className="sm:h-[190px] sm:w-[220px] w-[150px] h-[170px]  object-fit rounded-md"
+      {loading ? (
+        <LogoLoading />
+      ) : (
+        <div className="pt-16 p-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:p-3 p-2 pl-3">
+            {products.map((p) => (
+              <div
+                className="group shadow-md hover:shadow-lg border border-gray-400 sm:p-3 p-2 rounded-md"
+                key={p._id}
+              >
+                <div className="relative">
+                  <img
+                    onClick={() => {
+                      navigate(`/product/${p._id}`);
+                    }}
+                    src={`${
+                      CloudinaryConfig.CLOUDINARY_URL
+                    }/image/upload/${p?.image_id[0]?.replace(/"/g, "")}`}
+                    alt={p.name}
+                    className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
+                  />
+                  <button
+                    type="button"
+                    className="absolute top-2 right-2 bg-slate-50 p-[5px] sm:p-[8px] rounded-full"
+                  >
+                    <FaHeart
+                      className={
+                        p.fav === "Yes" ? "text-red-600" : "text-gray-400"
+                      }
+                      onClick={(e) => handleWishlist(e, p)}
                     />
-                  </div>
-                  <div className="flex justify-between ">
-                    <div>
-                      <h2 className="sm:font-semibold text-[15px]">{p.name}</h2>
-                      <h2 className="sm:font-bold ">
-                        <span className="line-through  sm:text-[16px] text-[12px]">
-                          ₹{p.price}
-                        </span>
-                        <span className="ml-1 text-red-600 text-[12px] sm:text-[16px]">
-                          ₹ {p.discountedPrice}
-                        </span>
-                        <span className=" text-gray-500 text-[10px] sm:text-[14px] ml-1 ">
-                          ({p.discount} % OFF)
-                        </span>
-                      </h2>
+                  </button>
+                </div>
+                <div className="w-full flex justify-between sm:p-2 pl-2 pt-2">
+                  <div className="sm:text-[16px] text-[12px] text-black">
+                    <p>{p.name}</p>
+                    <div className="flex items-center gap-3 py-2">
+                      <Rating value={p?.averageRating} fractions={2} />
+                      <span className="text-orange-500 sm:text-sm text-[10px]">
+                        ({p?.totalReviews})
+                      </span>
                     </div>
-
-                    <button type="button" className="relative p-3">
-                      <FaHeart
-                        size={17}
-                        className={
-                          p.fav === "Yes" ? "text-red-600" : "text-gray-400 "
-                        }
-                        onClick={(e) => handleIsWistlist(e, p)}
-                      />
-                    </button>
+                    <div className="flex w-[130px] sm:w-[160px]">
+                      <p className="text-black pr-1 line-through">₹{p.price}</p>
+                      <p className="text-red-500 pr-1">₹{p.discountedPrice}</p>
+                      <p className="text-emerald-500 text-[10px]">
+                        ({p.discount} % OFF)
+                      </p>
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      )}
       <ChatBox />
       <Footer />
     </div>
