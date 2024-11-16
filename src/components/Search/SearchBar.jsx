@@ -24,12 +24,10 @@ const SearchBar = () => {
     fetchProducts();
   }, []);
 
-  // Handle search input change
   const handleOnChange = (e) => {
     const value = e.target.value;
     setSearchProduct(value);
 
-    // Filter products based on the search term
     const filtered = products.filter(
       (product) =>
         product.name.toLowerCase().includes(value.toLowerCase()) ||
@@ -50,7 +48,6 @@ const SearchBar = () => {
   };
 
   const handleProductClick = (product) => {
-    // console.log("Selected product:", product);
     setSearchProduct("");
     setFilteredProducts([]);
     navigate(`/search/${product.name}`);
@@ -76,7 +73,6 @@ const SearchBar = () => {
         className="text-xl text-gray-600 group-hover:text-primary absolute top-1/2 -translate-y-1/2 right-3 duration-200 cursor-pointer"
       />
 
-      {/* Display filtered product list */}
       {searchProduct && filteredProducts.length > 0 && (
         <div className="dropdown">
           {filteredProducts.map((product) => (

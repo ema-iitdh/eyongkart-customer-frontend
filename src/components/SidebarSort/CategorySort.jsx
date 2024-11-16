@@ -9,7 +9,7 @@ import Sort from "./Sort";
 import Navbar from "../Navbar/Navbar";
 import ChatBox from "../Chat/ChatBox";
 import Footer from "../Footer/Footer";
-import { Axios } from "../../../api";
+
 import { fetchProducts } from "../../BaseURL/Product";
 
 const CategorySort = () => {
@@ -17,11 +17,11 @@ const CategorySort = () => {
   const navigate = useNavigate();
 
   const {
-    data: products,
+    data: products = [],
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["categorysort"],
+    queryKey: ["categoryproductsort"],
     queryFn: fetchProducts,
   });
 
@@ -31,8 +31,9 @@ const CategorySort = () => {
       behavior: "smooth",
     });
   }, []);
+  const productsArray = products?.products || [];
 
-  const productDetails = products?.filter(
+  const productDetails = productsArray?.filter(
     (product) => product.category._id === categoryId
   );
 
@@ -65,7 +66,7 @@ const CategorySort = () => {
                     </div>
                   ) : productDetails && productDetails.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:pl-2 pt-3">
-                      {productDetails.map((p) => (
+                      {productDetails?.map((p) => (
                         <div
                           className="group shadow-md hover:shadow-lg border border-gray-400 sm:p-3 p-2 rounded-md"
                           key={p._id}
@@ -113,14 +114,14 @@ const CategorySort = () => {
                                   ({p?.totalReviews})
                                 </span>
                               </div>
-                              <div className="flex w-[130px] sm:w-[160px]">
-                                <p className="text-black pr-1 line-through">
+                              <div className="flex w-full  ">
+                                <p className="text-[13px] sm:text-[15px]  pr-2 line-through opacity-65">
                                   ₹{p.price}
                                 </p>
-                                <p className="text-red-500 pr-1">
+                                <p className="text-red-500 pr-1 sm:text-[16px] text-[14px]">
                                   ₹{p.discountedPrice}
                                 </p>
-                                <p className="text-emerald-500 text-[10px]">
+                                <p className="text-emerald-500 sm:text-[13px] text-[11px]">
                                   ({p.discount} % OFF)
                                 </p>
                               </div>

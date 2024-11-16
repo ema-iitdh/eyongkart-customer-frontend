@@ -115,13 +115,13 @@ const Checkout = () => {
     const { amount, id: order_id, currency } = result.data;
 
     const options = {
-      key: "rzp_test_JIH6EhvgsXj43w", // Enter the Key ID generated from the Dashboard
-      amount: amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      key: "rzp_test_JIH6EhvgsXj43w",
+      amount: amount * 100,
       currency,
-      name: "Supriya ch", //your business name
+      name: "Supriya ch",
       description: "Test Transaction",
       image: "https://example.com/your_logo",
-      order_id: order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      order_id: order_id,
       handler: async (response) => {
         const body = {
           ...response,
@@ -150,10 +150,9 @@ const Checkout = () => {
         }
       },
       prefill: {
-        //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-        name: "Web Dev Matrix", //your customer's name
+        name: "Web Dev Matrix",
         email: "webdevmatrix@example.com",
-        contact: "9000000000", //Provide the customer's phone number for better conversion rates
+        contact: "9000000000",
       },
       notes: {
         address: "Razorpay Corporate Office",
@@ -214,8 +213,8 @@ const Checkout = () => {
           <h4 className="text-[18px] underline">Address Information</h4>
         </div>
 
-        <div className="sm:flex gap-4 sm:px-4 px-2 flex-col   sm:flex-row">
-          <div className="container sm:mb-4 sm:mt-2 border  drop-shadow-lg border-gray-300 w-full sm:w-[48%] p-4 rounded-lg">
+        <div className="sm:flex gap-4 sm:px-4 px-2 flex-col sm:flex-row">
+          <div className="container sm:mb-4 sm:mt-2 border  border-gray-300 w-full sm:w-[48%] p-4 rounded-lg">
             <div className="flex flex-col mb-4">
               <label className="text-sm sm:text-[16px]">Full Name</label>
               <input

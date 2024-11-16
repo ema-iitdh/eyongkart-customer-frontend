@@ -89,9 +89,9 @@ const Navbar = () => {
   return (
     <>
       <div className=" bg-white duration-200 z-40 fixed top-0 right-0 left-0">
-        <div className=" p-2  relative ">
+        <div className=" p-2 relative ">
           <div className=" container flex justify-between items-center sm:text-[16px] ">
-            <div className="flex items-center gap-7">
+            <div className="flex items-center gap-7 ">
               <NavLink to="/" onClick={handleScrollToTop}>
                 <img
                   className=" object-contain w-[100px] sm:h-[60px] h-[50px]"
@@ -99,54 +99,51 @@ const Navbar = () => {
                   alt=""
                 />
               </NavLink>
-
               <div className="hidden lg:block  ">
-                <ul className="flex items-center font-semibold gap-8 ">
+                <ul className="  flex items-center font-semibold gap-8 ">
                   <li className="relative cursor-pointer group   ">
-                    <div className=" navbar text-[15px]  ">
-                      <span className="flex items-center text-[16px] mt-1">
-                        <MenCategoryOption title="MEN" />
-                        <IoMdArrowDropdown />
-                      </span>
-                    </div>
-                    <div className="absolute z-[9999] hidden group-hover:block text-red-400">
-                      <div className="">
-                        <MenCategoryOption filteredMen={filteredMen} />
-                      </div>
+                    {/* <div className=" text-[15px]  "> */}
+                    <span className="  flex items-center text-[16px] mt-1">
+                      <MenCategoryOption title="MEN" />
+                      {/* <IoMdArrowDropdown /> */}
+                    </span>
+                    {/* </div> */}
+                    <div className=" absolute z-[9999] hidden group-hover:block text-red-400">
+                      <MenCategoryOption filteredMen={filteredMen} />
                     </div>
                   </li>
 
                   <li className="relative cursor-pointer group  ">
-                    <div className=" navbar text-[16px] flex ">
-                      <span className="flex items-center text-[16px] mt-1">
-                        <WomenCategoryOption title="WOMEN" />
-                        <IoMdArrowDropdown />
-                      </span>
-                    </div>
+                    {/* <div className="text-[16px] flex "> */}
+                    <span className="flex items-center text-[16px] mt-1">
+                      <WomenCategoryOption title="WOMEN" />
+                      {/* <IoMdArrowDropdown /> */}
+                    </span>
+                    {/* </div> */}
                     <div
-                      className="absolute z-[9999] hidden group-hover:block "
+                      className="absolute z-[9999] hidden group-hover:block text-red-400 "
                       style={{ marginLeft: "-90px" }}
                     >
-                      <div className="">
-                        <WomenCategoryOption filteredWomen={filteredWomen} />
-                      </div>
+                      {/* <div className=""> */}
+                      <WomenCategoryOption filteredWomen={filteredWomen} />
+                      {/* </div> */}
                     </div>
                   </li>
 
                   <li className="relative cursor-pointer group  ">
-                    <div className=" navbar text-[16px] flex ">
-                      <span className="flex items-center text-[16px] mt-1">
-                        <CategoryOption title="KIDS" />
-                        <IoMdArrowDropdown />
-                      </span>
-                    </div>
+                    {/* <div className=" navbar text-[16px] flex "> */}
+                    <span className="flex items-center text-[16px] mt-1">
+                      <CategoryOption title="KIDS" />
+                      {/* <IoMdArrowDropdown /> */}
+                    </span>
+                    {/* </div> */}
                     <div
                       className="absolute z-[9999] hidden group-hover:block  "
                       style={{ marginLeft: "-200px" }}
                     >
-                      <div className="flex flex-col text-red-400  ">
-                        <CategoryOption filteredKids={filteredKids} />
-                      </div>
+                      {/* <div className="flex flex-col text-red-400  "> */}
+                      <CategoryOption filteredKids={filteredKids} />
+                      {/* </div> */}
                     </div>
                   </li>
                 </ul>

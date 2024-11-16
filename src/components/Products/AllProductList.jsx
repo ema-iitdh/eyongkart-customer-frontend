@@ -43,7 +43,7 @@ export default function AllProductList({ AllProduct }) {
                 </button>
               </div>
               <div className="w-full flex justify-between sm:p-2 mt-2">
-                <div className="sm:text-[16px] text-[12px] text-black">
+                <div className="sm:text-[16px] text-[12px] text-black ">
                   <p>{p.name}</p>
                   <div className="flex items-center gap-3 py-2">
                     <Rating value={p?.averageRating} fractions={2} />
@@ -51,10 +51,14 @@ export default function AllProductList({ AllProduct }) {
                       ({p?.totalReviews})
                     </span>
                   </div>
-                  <div className="flex w-[130px] sm:w-[160px]">
-                    <p className="text-black pr-1 line-through">₹{p.price}</p>
-                    <p className="text-red-500 pr-1">₹{p.discountedPrice}</p>
-                    <p className="text-emerald-500 text-[10px]">
+                  <div className="flex w-full  ">
+                    <p className="text-[13px] sm:text-[15px]  pr-2 line-through opacity-65">
+                      ₹{p.price}
+                    </p>
+                    <p className="text-red-500 pr-1 sm:text-[16px] text-[14px]">
+                      ₹{p.discountedPrice}
+                    </p>
+                    <p className="text-emerald-500 sm:text-[13px] text-[11px]">
                       ({p.discount} % OFF)
                     </p>
                   </div>

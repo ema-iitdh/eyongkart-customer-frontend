@@ -2,19 +2,21 @@ import React from "react";
 import { FaHeart } from "react-icons/fa";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { useNavigate } from "react-router-dom";
-import { Rating, ScrollArea } from "@mantine/core";
-import { handleIsWishlist } from "../WishlistFunction/WishlistFunction";
+import { Rating } from "@mantine/core";
 import { useWishlist } from "../../hooks/useWistlist";
 
 export default function MenProduct({ filteredMenProductList }) {
-  // console.log(filteredMenProductList);
   const navigate = useNavigate();
+
+  // Sort the products in alphabetical order by name
+  const sortedProductList = filteredMenProductList?.sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
 
   return (
     <div className="mb-6 sm:mt-2 p-3">
-      {/* <ScrollArea type="never" h={400}> */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-        {filteredMenProductList?.map((p) => {
+        {sortedProductList?.map((p) => {
           const { isInWishlist, toggleWishlist } = useWishlist(p._id, p?.fav);
 
           return (
@@ -22,7 +24,7 @@ export default function MenProduct({ filteredMenProductList }) {
               className="group shadow-md hover:shadow-lg border border-gray-400 sm:p-3 p-2 rounded-md"
               key={p._id}
             >
-              <div className="relative ">
+              <div className="relative">
                 {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                 <img
                   onClick={() => navigate(`/product/${p._id}`)}
@@ -30,7 +32,7 @@ export default function MenProduct({ filteredMenProductList }) {
                     CloudinaryConfig.CLOUDINARY_URL
                   }/image/upload/${p?.image_id[0]?.replace(/"/g, "")}`}
                   alt=""
-                  className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md "
+                  className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
                 />
                 <button
                   type="button"
@@ -44,7 +46,7 @@ export default function MenProduct({ filteredMenProductList }) {
                 </button>
               </div>
               <div className="w-full flex justify-between sm:p-2 mt-2">
-                <div className="sm:text-[16px] text-[12px] text-black ">
+                <div className="sm:text-[16px] text-[12px] text-black">
                   <p className="">{p.name}</p>
                   <div className="flex items-center gap-3 py-2">
                     <Rating value={p?.averageRating} fractions={2} />
@@ -52,10 +54,14 @@ export default function MenProduct({ filteredMenProductList }) {
                       ({p?.totalReviews})
                     </span>
                   </div>
-                  <div className="flex w-[130px] sm:w-[160px]">
-                    <p className="text-black pr-1 line-through">₹{p.price}</p>
-                    <p className="text-red-500 pr-1">₹{p.discountedPrice}</p>
-                    <p className="text-emerald-500 text-[10px]">
+                  <div className="flex w-full">
+                    <p className="text-[13px] sm:text-[15px] pr-2 line-through opacity-65">
+                      ₹{p.price}
+                    </p>
+                    <p className="text-red-500 pr-1 sm:text-[16px] text-[14px]">
+                      ₹{p.discountedPrice}
+                    </p>
+                    <p className="text-emerald-500 sm:text-[13px] text-[11px]">
                       ({p.discount} % OFF)
                     </p>
                   </div>

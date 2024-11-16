@@ -1,84 +1,90 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PricesSort from "./PricesSort";
-import { RiArrowDropUpLine } from "react-icons/ri";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import { RiArrowDropUpLine, RiArrowDropDownLine } from "react-icons/ri";
 import { Axios } from "../../../api";
 import { useQuery } from "@tanstack/react-query";
-const getAllProduct = async () => {
-  const res = await Axios({
-    url: "/product/allproduct",
-    method: "GET",
-  });
+import { useParams } from "react-router-dom";
 
-  return res.data.products;
+const getCollectionName = async (categoryId, subcategoryId) => {
+  const url = subcategoryId
+    ? `/product/sorted/${categoryId}/${subcategoryId}`
+    : `/product/sorted/${categoryId}`;
+
+  const res = await Axios.get(url);
+  return res.data.collections;
 };
+
 const Sort = () => {
+  const { categoryId, subcategoryId } = useParams();
   const [isCollectionOpen, setIsCollectionOpen] = useState(false);
+
   const {
-    data: products,
+    data: collectionData,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["categorysort"],
-    queryFn: getAllProduct,
+    queryKey: ["collectionsort", categoryId, subcategoryId],
+    queryFn: () => getCollectionName(categoryId, subcategoryId),
+    enabled: !!categoryId,
   });
 
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, []);
   return (
-    <>
-      <div className="bg-white p-2 sm:min-h-[calc(100vh-120px)] border border-black ">
-        {/* Category Section */}
-        <div className="w-full md:w-auto  ">
-          <div className="flex items-center justify-between md:justify-start">
-            <h3 className="sm:text-lg text-[13px] uppercase font-medium text-slate-500 border-b pb-1 border-slate-300">
-              Collection
-            </h3>
-
-            <button
-              type="button"
-              className="md:hidden text-slate-500"
-              onClick={() => setIsCollectionOpen(!isCollectionOpen)}
-              aria-label="Toggle Collection Dropdown"
-            >
-              {isCollectionOpen ? (
-                <RiArrowDropUpLine />
-              ) : (
-                <RiArrowDropDownLine />
-              )}
-            </button>
-          </div>
-          <form
-            className={`text-sm flex flex-col gap-2 py-2 ${
-              isCollectionOpen ? "block" : "hidden"
-            } md:block`}
+    <div className="bg-white p-2 sm:min-h-[calc(100vh-120px)] border border-black">
+      {/* Collection Section */}
+      <div className="w-full md:w-auto">
+        <div className="flex items-center justify-between md:justify-start">
+          <h3 className="sm:text-lg text-[13px] uppercase font-medium text-slate-500 border-b pb-1 border-slate-300">
+            Collection
+          </h3>
+          <button
+            type="button"
+            className="md:hidden text-slate-500"
+            onClick={() => setIsCollectionOpen(!isCollectionOpen)}
+            aria-label="Toggle Collection Dropdown"
           >
-            {products?.map((product) => (
+            {isCollectionOpen ? <RiArrowDropUpLine /> : <RiArrowDropDownLine />}
+          </button>
+        </div>
+        <form
+          className={`text-sm flex flex-col gap-2 py-2 ${
+            isCollectionOpen ? "block" : "hidden"
+          } md:block`}
+        >
+          {isLoading ? (
+            <div className="flex justify-center items-center py-4">
+              <p className="text-[15px] font-semibold text-gray-500 animate-pulse">
+                Loading collections...
+              </p>
+            </div>
+          ) : isError ? (
+            <div className="flex justify-center items-center py-4">
+              <p className="text-[15px] font-semibold text-red-500">
+                No collections.
+              </p>
+            </div>
+          ) : (
+            collectionData?.map((collection) => (
               <div
-                key={product._id}
+                key={collection._id}
                 className="flex items-center gap-3 p-2 md:p-0"
               >
                 <input
                   type="checkbox"
                   name="collection"
-                  id={product._id}
+                  id={collection._id}
                   className="w-4 h-4"
                 />
-                <label htmlFor={product._id} className="text-xs md:text-sm">
-                  {product?.collection?.name}
+                <label htmlFor={collection._id} className="text-xs md:text-sm">
+                  {collection}
                 </label>
               </div>
-            ))}
-          </form>
-        </div>
-
-        <PricesSort />
+            ))
+          )}
+        </form>
       </div>
-    </>
+
+      <PricesSort />
+    </div>
   );
 };
 

@@ -1,20 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
-
 import { CloudinaryConfig } from "../../../Cloudinary";
-
-import { Rating, ScrollArea } from "@mantine/core";
+import { Rating } from "@mantine/core";
 import { useWishlist } from "../../hooks/useWistlist";
 
 const ProductCard = ({ filteredWomenProductList }) => {
   const navigate = useNavigate();
-  console.log("filterewomen product list", filteredWomenProductList);
+
+  // Sort the products in alphabetical order by name
+  const sortedProductList = filteredWomenProductList?.sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
 
   return (
     <div className="mb-6 sm:mt-2 p-3">
       <div className="grid grid-cols-2 p-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-        {filteredWomenProductList?.map((product) => {
+        {sortedProductList?.map((product) => {
           const { isInWishlist, toggleWishlist } = useWishlist(
             product._id,
             product?.fav
@@ -33,7 +35,7 @@ const ProductCard = ({ filteredWomenProductList }) => {
                     CloudinaryConfig.CLOUDINARY_URL
                   }/image/upload/${product?.image_id[0]?.replace(/"/g, "")}`}
                   alt=""
-                  className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md "
+                  className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
                 />
                 <button
                   type="button"
@@ -55,15 +57,15 @@ const ProductCard = ({ filteredWomenProductList }) => {
                       ({product?.totalReviews})
                     </span>
                   </div>
-                  <div className="flex w-[130px] sm:w-[160px]">
-                    <p className="text-black pr-1 line-through">
+                  <div className="flex w-full">
+                    <p className="text-[13px] sm:text-[15px] pr-2 line-through opacity-65">
                       ₹{product.price}
                     </p>
-                    <p className="text-red-500 pr-1">
+                    <p className="text-red-500 pr-1 sm:text-[16px] text-[14px]">
                       ₹{product.discountedPrice}
                     </p>
-                    <p className="text-emerald-500 text-[10px]">
-                      ({product.discount}% OFF)
+                    <p className="text-emerald-500 sm:text-[13px] text-[11px]">
+                      ({product.discount} % OFF)
                     </p>
                   </div>
                 </div>

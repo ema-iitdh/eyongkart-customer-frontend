@@ -14,10 +14,8 @@ import Carts from "./components/Header/Carts";
 import Checkout from "./components/Checkout/Checkout";
 import Wishlist from "./components/Wishlist/Wishlist";
 import { ToastContainer } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
 import Myorder from "./components/Myorders/Myorder";
-
 import RemProductList from "./components/RemProductList";
 import ChatBox from "./components/Chat/ChatBox";
 import SearchBar from "./components/Search/SearchBar";
@@ -42,36 +40,31 @@ const App = () => {
             <Route path="/signup" element={<SignupForm />} />
             <Route path="/" element={<HomePage />} />
 
-            {/* <Route path="/shop" element={<Shop />} /> */}
-            {/* <Route
-              path="/shopbycategory/:category"
-              element={<ShopByCategory />}
-            /> */}
-
             <Route path="/search" element={<SearchBar />} />
             <Route path="/search/:searchTerm" element={<SearchResults />} />
 
             <Route path="/about" element={<AboutUs />} />
 
-            {/* <Route path="/productdisplay" element={<ProductDisplay />} /> */}
             <Route path="/cart" element={<Carts />} />
-            {/* <Route path="/shop" element={<ShopCategory />} /> */}
+
             <Route path="/product" element={<Product />}>
               <Route path=":productId" element={<ProductDisplay />} />
             </Route>
 
-            <Route path="/sorted/:categoryId" element={<CategorySort />} />
+            <Route
+              path="/sorted/:categoryId/:subcategoryId?"
+              element={<CategorySort />}
+            />
             <Route path="/category" element={<Category />} />
 
             <Route path="/orderconfirm" element={<OrderConfirmation />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/myorder" element={<Myorder />} />
-            {/* <Route path="/sort" element={<SidebarSort />} /> */}
+
             <Route path="/contact" element={<Contact />} />
             <Route path="/chat" element={<ChatBox />} />
-            {/* Remove this */}
-            {/* Remove RemProductList */}
+
             <Route
               path="/productList/:categoryId"
               element={<RemProductList />}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { fetchProducts } from "../../BaseURL/Product";
 import { Rating } from "@mantine/core";
@@ -21,7 +21,6 @@ const RelatedProduct = ({ productId }) => {
     queryFn: fetchProducts,
   });
 
-  // Find the current product by its ID
   const currentProduct = relatedproducts?.products?.find(
     (product) => product._id === currentProductId
   );
@@ -38,7 +37,6 @@ const RelatedProduct = ({ productId }) => {
   }
 
   useEffect(() => {
-    // Scroll to top smoothly when currentProductId changes
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentProductId]);
 
@@ -54,6 +52,13 @@ const RelatedProduct = ({ productId }) => {
   if (isError) {
     return <div>Error fetching products</div>;
   }
+  // const queryClient = useQueryClient();
+  const handleOnclickProduct = (productId) => {
+    setCurrentProductId(productId);
+    navigate(`/product/${productId}`);
+    // queryClient.invalidateQueries(["relatedproduct", productId]);
+    // console.log("working");
+  };
 
   return (
     <>
@@ -73,9 +78,7 @@ const RelatedProduct = ({ productId }) => {
                     {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                     <img
                       onClick={() => {
-                        setCurrentProductId(product._id);
-                        navigate(`/product/${product._id}`);
-                        setTimeout(() => window.location.reload(), 0);
+                        handleOnclickProduct(product._id);
                       }}
                       className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
                       src={`${
@@ -109,14 +112,14 @@ const RelatedProduct = ({ productId }) => {
                           ({product?.totalReviews})
                         </span>
                       </div>
-                      <div className="flex w-[130px] sm:w-[160px]">
-                        <p className="text-black pr-1 line-through">
+                      <div className="flex w-full  ">
+                        <p className="text-[13px] sm:text-[15px]  pr-2 line-through opacity-65">
                           ₹{product.price}
                         </p>
-                        <p className="text-red-500 pr-1">
+                        <p className="text-red-500 pr-1 sm:text-[16px] text-[14px]">
                           ₹{product.discountedPrice}
                         </p>
-                        <p className="text-emerald-500 text-[10px]">
+                        <p className="text-emerald-500 sm:text-[13px] text-[11px]">
                           ({product.discount} % OFF)
                         </p>
                       </div>

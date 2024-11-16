@@ -24,14 +24,20 @@ const PriceStores = () => {
   const filteredProducts = () => {
     return productLists.filter((product) => product.discountedPrice <= 2000);
   };
+
   useEffect(() => {
-    setFilterItems(filteredProducts());
+    const filtered = filteredProducts();
+    // Sort products by discountedPrice in ascending order
+    const sorted = filtered.sort(
+      (a, b) => a.discountedPrice - b.discountedPrice
+    );
+    setFilterItems(sorted);
   }, [productLists]);
 
   return (
     <div className="p-2 drop-shadow-md">
       <div className="overflow-hidden rounded-xl sm:h-[420px] h-[330px] hero-bg-color">
-        <h1 className="gap-4 flex justify-start items-start text-xl font-semibold  text-black hover:text-red-500  p-2 ">
+        <h1 className="gap-4 flex justify-start items-start text-xl font-semibold text-black hover:text-red-500 p-2">
           Product price below
           <p className="text-[16px] text-red-500">₹2000 </p>
         </h1>
@@ -58,22 +64,22 @@ const PriceStores = () => {
                     <div className="flex justify-between sm:p-2 p-2 gap-1 sm:gap-2 sm:pl-4 pl-3 w-full">
                       <div className="sm:text-[16px] text-[11px] text-black">
                         <p className="">{item.name}</p>
-                        <div className="flex">
-                          <p className="text-black pr-1 line-through ">
-                            ₹{item.price}{" "}
+                        <div className="flex w-full">
+                          <p className="text-[13px] sm:text-[15px] pr-2 line-through opacity-65">
+                            ₹{item.price}
                           </p>
-                          <p className="text-red-500 pr-1 ">
+                          <p className="text-red-500 pr-1 sm:text-[16px] text-[14px]">
                             ₹{item.discountedPrice}
                           </p>
                         </div>
-                        <p className="text-emerald-500 text-[10px] ">
+                        <p className="text-emerald-500 sm:text-[13px] text-[11px]">
                           ({item.discount} % OFF)
                         </p>
                       </div>
                       <button
                         onClick={() => navigate(`/product/${item._id}`)}
                         type="button"
-                        className="bg-red-600 hover:bg-red-500 sm:text-[16px] text-[10px] text-center pt-[3px] sm:w-[80px] sm:h-[38px] w-[45px]  h-6 text-white rounded-md"
+                        className="bg-red-600 hover:bg-red-500 sm:text-[16px] text-[10px] text-center pt-[3px] sm:w-[80px] sm:h-[38px] w-[45px] h-6 text-white rounded-md"
                       >
                         Visit
                       </button>

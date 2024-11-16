@@ -40,6 +40,8 @@ const TopSales = () => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
+          infinite: true,
+          dots: true,
         },
       },
     ],
@@ -105,14 +107,14 @@ const TopSales = () => {
                               ({item?.totalReviews})
                             </span>
                           </div>
-                          <div className="flex">
-                            <p className="text-black pr-1 line-through ">
-                              ₹{item.price}{" "}
+                          <div className="flex w-full  ">
+                            <p className="text-[13px] sm:text-[15px]  pr-2 line-through opacity-65">
+                              ₹{item.price}
                             </p>
-                            <p className="text-red-500 pr-1 ">
+                            <p className="text-red-500 pr-1 sm:text-[16px] text-[14px]">
                               ₹{item.discountedPrice}
                             </p>
-                            <p className="text-emerald-500 text-[10px] ">
+                            <p className="text-emerald-500 sm:text-[13px] text-[11px]">
                               ({item.discount} % OFF)
                             </p>
                           </div>

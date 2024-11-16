@@ -25,7 +25,8 @@ const SearchResults = () => {
 
       const normalizedSearchTerm = searchTerm.replace(/\s+/g, "").toLowerCase();
 
-      const filteredProducts = res.data.products.filter((product) => {
+      // Try exact match first
+      let filteredProducts = res.data.products.filter((product) => {
         const normalizedName = product.name.replace(/\s+/g, "").toLowerCase();
         const normalizedCategory = product.category?.name
           .replace(/\s+/g, "")
@@ -45,6 +46,37 @@ const SearchResults = () => {
         );
       });
 
+      if (filteredProducts.length === 0) {
+        const partialSearchTerms = [];
+        for (let i = 1; i <= normalizedSearchTerm.length; i++) {
+          partialSearchTerms.push(normalizedSearchTerm.slice(0, i));
+        }
+
+        filteredProducts = res.data.products.filter((product) => {
+          const normalizedName = product.name.replace(/\s+/g, "").toLowerCase();
+          const normalizedCategory = product.category?.name
+            .replace(/\s+/g, "")
+            .toLowerCase();
+          const normalizedSubcategory = product.subcategory?.subCategoryName
+            .replace(/\s+/g, "")
+            .toLowerCase();
+          const normalizedCollection = product.collection?.name
+            .replace(/\s+/g, "")
+            .toLowerCase();
+
+          return partialSearchTerms.some(
+            (term) =>
+              normalizedName.startsWith(term) ||
+              normalizedCategory?.startsWith(term) ||
+              normalizedSubcategory?.startsWith(term) ||
+              normalizedCollection?.startsWith(term)
+          );
+        });
+      }
+
+      // Sort the products in alphabetical order by name
+      filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+
       setProducts(filteredProducts);
       setLoading(false);
     } catch (error) {
@@ -61,12 +93,12 @@ const SearchResults = () => {
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 pt-16">
       <Navbar />
       <div className="flex flex-col sm:flex-row gap-4 p-4 min-h-[550px] sm:min-h-[650px] ">
-        <div className=" w-full sm:w-[280px]">
+        <div className="w-full sm:w-[280px]">
           <Sort />
         </div>
         <div className="w-full p-2 ">
           {loading ? (
-            <div className="grid  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:pl-2 pt-3">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:pl-2 pt-3">
               {[...Array(8)].map((_, index) => (
                 <Skeleton
                   key={index}
@@ -80,14 +112,13 @@ const SearchResults = () => {
           ) : (
             <ScrollArea h={500} type="never">
               {products.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:pl-2 ">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:pl-2">
                   {products.map((product) => (
                     <div
                       className="group shadow-md hover:shadow-lg border border-gray-400 sm:p-3 p-2 rounded-md"
                       key={product._id}
                     >
                       <div className="relative">
-                        {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                         <img
                           onClick={() => navigate(`/product/${product._id}`)}
                           src={`${
@@ -114,7 +145,7 @@ const SearchResults = () => {
                         </button>
                       </div>
                       <div className="w-full flex justify-between sm:p-2 mt-2">
-                        <div className="sm:text-[16px] text-[12px] text-black ">
+                        <div className="sm:text-[16px] text-[12px] text-black">
                           <p className="">{product.name}</p>
                           <div className="flex items-center gap-3 py-2">
                             <Rating
@@ -125,14 +156,14 @@ const SearchResults = () => {
                               ({product?.totalReviews})
                             </span>
                           </div>
-                          <div className="flex w-[130px] sm:w-[160px]">
-                            <p className="text-black pr-1 line-through">
+                          <div className="flex w-full  ">
+                            <p className="text-[13px] sm:text-[15px]  pr-2 line-through opacity-65">
                               ₹{product.price}
                             </p>
-                            <p className="text-red-500 pr-1">
+                            <p className="text-red-500 pr-1 sm:text-[16px] text-[14px]">
                               ₹{product.discountedPrice}
                             </p>
-                            <p className="text-emerald-500 text-[10px]">
+                            <p className="text-emerald-500 sm:text-[13px] text-[11px]">
                               ({product.discount} % OFF)
                             </p>
                           </div>

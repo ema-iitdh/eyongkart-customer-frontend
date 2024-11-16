@@ -17,7 +17,7 @@ const Footer = () => {
   });
 
   const footerdatasub = footersub.footerSubHeading || [];
-  console.log("subfooter", footerdatasub);
+  // console.log("subfooter", footerdatasub);
 
   return (
     <div className="bg-gray-100">
