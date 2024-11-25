@@ -108,7 +108,9 @@ const CategorySort = React.memo(() => {
                       />
                     ))}
                   </div>
-                ) : (
+                ) : paginateProducts(
+                    selectPriceRange ? filteredProduct : productDetails
+                  ).length > 0 ? (
                   <>
                     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:pl-2 pt-3">
                       {paginateProducts(
@@ -174,6 +176,7 @@ const CategorySort = React.memo(() => {
                       ))}
                     </div>
                     {/* Pagination */}
+
                     <div className="flex justify-center mt-32 gap-2 items-center ">
                       {/* First Page Arrow */}
                       <button
@@ -255,6 +258,7 @@ const CategorySort = React.memo(() => {
 
                       {/* Last Page Arrow */}
                       <button
+                        type="button"
                         onClick={() => setCurrentPage(totalPages)}
                         disabled={currentPage === totalPages}
                         className={`px-3 py-1 rounded-md ${
@@ -267,6 +271,23 @@ const CategorySort = React.memo(() => {
                       </button>
                     </div>
                   </>
+                ) : (
+                  <div className="flex items-center justify-center w-full min-h-[calc(100vh-200px)] sm:p-36 sm:pt-10 pb-20">
+                    <div className="flex flex-col items-center bg-white border border-gray-300 rounded-lg p-6 sm:p-8 shadow-lg w-full max-w-3xl text-center">
+                      <img
+                        src="/nofound.svg"
+                        alt="No products found"
+                        className="w-20 h-20 sm:w-24 sm:h-24 mb-4"
+                      />
+                      <p className="text-gray-800 font-semibold text-lg sm:text-xl mb-2">
+                        No Products Available for this Price Range
+                      </p>
+                      <p className="text-gray-500 text-sm sm:text-base mb-4">
+                        We're sorry, but no products are available for this
+                        category. Check back later.
+                      </p>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
