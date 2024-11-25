@@ -9,6 +9,7 @@ import TopSales from "../components/Topsales/TopSales";
 import ChatBox from "../components/Chat/ChatBox";
 import Category from "../components/Category/Category";
 import LogoLoading from "./LogoLoading";
+import Handicraft from "../components/Handicraft/Handicraft";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true);
@@ -37,6 +38,7 @@ const HomePage = () => {
           <CarouselTraditional />
           <TopSales />
           <PriceStores />
+          <Handicraft />
           <Banner />
           <Products />
           <ChatBox />

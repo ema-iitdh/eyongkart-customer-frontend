@@ -4,11 +4,10 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProducts } from "../../BaseURL/Product";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CloudinaryConfig } from "../../../Cloudinary";
-import { Button, Rating } from "@mantine/core";
-import { Axios } from "../../../api";
-import { FaHeart } from "react-icons/fa";
+import { Rating } from "@mantine/core";
+
 const TopSales = () => {
   const settings = {
     dots: true,
@@ -21,7 +20,7 @@ const TopSales = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 5,
+          slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
           dots: true,
@@ -32,7 +31,8 @@ const TopSales = () => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 2,
-          initialSlide: 2,
+          infinite: true,
+          dots: true,
         },
       },
       {
@@ -107,11 +107,11 @@ const TopSales = () => {
                               ({item?.totalReviews})
                             </span>
                           </div>
-                          <div className="flex w-full  ">
-                            <p className="text-[13px] sm:text-[15px]  pr-2 line-through opacity-65">
+                          <div className="flex items-center gap-1">
+                            <p className="text-[13px] sm:text-[15px]  line-through opacity-65">
                               ₹{item.price}
                             </p>
-                            <p className="text-red-500 pr-1 sm:text-[16px] text-[14px]">
+                            <p className="text-red-500  sm:text-[15px] text-[14px]">
                               ₹{item.discountedPrice}
                             </p>
                             <p className="text-emerald-500 sm:text-[13px] text-[11px]">

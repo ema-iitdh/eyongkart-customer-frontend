@@ -14,7 +14,12 @@ const getCollectionName = async (categoryId, subcategoryId) => {
   return res.data.collections;
 };
 
-const Sort = () => {
+const Sort = ({
+  prices,
+  handleSelectPrice,
+  selectPriceRange,
+  filteredProduct,
+}) => {
   const { categoryId, subcategoryId } = useParams();
   const [isCollectionOpen, setIsCollectionOpen] = useState(false);
 
@@ -27,6 +32,7 @@ const Sort = () => {
     queryFn: () => getCollectionName(categoryId, subcategoryId),
     enabled: !!categoryId,
   });
+  console.log("colllectionsData", collectionData);
 
   return (
     <div className="bg-white p-2 sm:min-h-[calc(100vh-120px)] border border-black">
@@ -42,7 +48,11 @@ const Sort = () => {
             onClick={() => setIsCollectionOpen(!isCollectionOpen)}
             aria-label="Toggle Collection Dropdown"
           >
-            {isCollectionOpen ? <RiArrowDropUpLine /> : <RiArrowDropDownLine />}
+            {isCollectionOpen ? (
+              <RiArrowDropUpLine size={30} />
+            ) : (
+              <RiArrowDropDownLine size={30} />
+            )}
           </button>
         </div>
         <form
@@ -63,14 +73,12 @@ const Sort = () => {
               </p>
             </div>
           ) : (
-            collectionData?.map((collection) => (
-              <div
-                key={collection._id}
-                className="flex items-center gap-3 p-2 md:p-0"
-              >
+            collectionData?.map((collection, index) => (
+              <div key={index} className="flex items-center gap-3 p-2 md:p-0">
                 <input
                   type="checkbox"
                   name="collection"
+                  value={`${collection.name}`}
                   id={collection._id}
                   className="w-4 h-4"
                 />
@@ -83,7 +91,12 @@ const Sort = () => {
         </form>
       </div>
 
-      <PricesSort />
+      <PricesSort
+        prices={prices}
+        filteredProduct={filteredProduct}
+        handleSelectPrice={handleSelectPrice}
+        selectPriceRange={selectPriceRange}
+      />
     </div>
   );
 };

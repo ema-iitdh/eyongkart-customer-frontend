@@ -27,6 +27,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SearchResults from "./components/Search/SearchResult";
 import Category from "./components/Category/Category";
 import OrderConfirmation from "./components/Myorders/OrderConfirm";
+import BecomeSeller from "./components/Seller/Seller";
 
 const App = () => {
   const queryclient = new QueryClient();
@@ -65,10 +66,11 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/chat" element={<ChatBox />} />
 
-            <Route
+            {/* <Route
               path="/productList/:categoryId"
               element={<RemProductList />}
-            />
+            /> */}
+            <Route path="/sellerlogin" element={<BecomeSeller />} />
           </Routes>
         </BrowserRouter>
       </MantineProvider>

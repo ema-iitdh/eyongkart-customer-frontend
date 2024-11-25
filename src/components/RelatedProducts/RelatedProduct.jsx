@@ -4,14 +4,14 @@ import { CloudinaryConfig } from "../../../Cloudinary";
 import { fetchProducts } from "../../BaseURL/Product";
 import { Rating } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import { handleIsWishlist } from "../WishlistFunction/WishlistFunction";
 import { FaHeart } from "react-icons/fa";
 import { ScrollArea, Box } from "@mantine/core";
+import { useWishlist } from "../../hooks/useWistlist";
 
 const RelatedProduct = ({ productId }) => {
   const [currentProductId, setCurrentProductId] = useState(productId);
   const navigate = useNavigate();
-
+  const { isInWishlists, toggleWishlist } = useWishlist();
   const {
     data: relatedproducts,
     isLoading,
@@ -52,12 +52,10 @@ const RelatedProduct = ({ productId }) => {
   if (isError) {
     return <div>Error fetching products</div>;
   }
-  // const queryClient = useQueryClient();
+
   const handleOnclickProduct = (productId) => {
     setCurrentProductId(productId);
     navigate(`/product/${productId}`);
-    // queryClient.invalidateQueries(["relatedproduct", productId]);
-    // console.log("working");
   };
 
   return (
@@ -90,16 +88,18 @@ const RelatedProduct = ({ productId }) => {
                       alt={product.name}
                     />
                     <button
+                      onClick={(e) => {
+                        toggleWishlist(product._id);
+                      }}
                       type="button"
                       className="absolute top-2 right-2 bg-slate-50 p-[5px] sm:p-[8px] rounded-full"
                     >
                       <FaHeart
                         className={
-                          product.fav === "Yes"
+                          isInWishlists(product._id)
                             ? "text-red-600"
                             : "text-gray-400"
                         }
-                        onClick={(e) => handleIsWishlist(e, product)}
                       />
                     </button>
                   </div>

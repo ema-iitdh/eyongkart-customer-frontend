@@ -2,49 +2,45 @@ import React, { useEffect, useState } from "react";
 import { ScrollArea, Box } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { CloudinaryConfig } from "../../../Cloudinary";
-import { fetchProducts } from "../../BaseURL/Product";
 import { Link, useNavigate } from "react-router-dom";
+import Heading from "../Shared/Heading";
 
-const PriceStores = () => {
+import { fetchProducts } from "../../BaseURL/Product";
+
+const Handicraft = () => {
   const navigate = useNavigate();
-  const [filterItems, setFilterItems] = useState([]);
+  const [filteredHandicraftList, setFilterHandicraftList] = useState([]);
 
-  const {
-    data: productData = {},
-    isLoading: isLoadingProducts,
-    isError: isProductError,
-    error: productError,
-  } = useQuery({
-    queryKey: ["products"],
+  const { data: handicraftData = {} } = useQuery({
+    queryKey: ["handicraft"],
     queryFn: fetchProducts,
   });
 
-  const productLists = productData.products || [];
-
-  const filteredProducts = () => {
-    return productLists.filter((product) => product.discountedPrice <= 2000);
-  };
+  const handicraftLists = handicraftData?.products || [];
 
   useEffect(() => {
-    const filtered = filteredProducts();
-    // Sort products by discountedPrice in ascending order
-    const sorted = filtered.sort(
-      (a, b) => a.discountedPrice - b.discountedPrice
+    const filteredHandicraftProduct = handicraftLists?.filter(
+      (handicraftItem) => handicraftItem?.gender === "Neutral"
     );
-    setFilterItems(sorted);
-  }, [productLists]);
+
+    const sortedHandicraftList = filteredHandicraftProduct?.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+
+    setFilterHandicraftList(sortedHandicraftList);
+  }, [handicraftLists]);
 
   return (
     <div className="p-2 drop-shadow-md">
-      <div className="overflow-hidden rounded-xl sm:h-[420px] h-[330px] hero-bg-color">
-        <h1 className="gap-4 flex justify-start items-start text-xl font-semibold text-black hover:text-red-500 p-2">
-          Product price below
-          <p className="text-[16px] text-red-500">₹2000 </p>
-        </h1>
+      <div className="overflow-hidden rounded-xl sm:h-[420px] h-[330px] ">
+        <Heading
+          title="Handicraft Products"
+          subtitle={"Explore our products"}
+        />
         <ScrollArea type="never">
           <Box>
             <div className="flex sm:gap-5 gap-2 p-2">
-              {filterItems?.map((item) => {
+              {filteredHandicraftList?.map((item) => {
                 return (
                   <div
                     key={item._id}
@@ -57,13 +53,16 @@ const PriceStores = () => {
                         className="sm:w-52 sm:h-56 w-[150px] h-[160px] object-fit m-auto p-3"
                         src={`${
                           CloudinaryConfig.CLOUDINARY_URL
-                        }/image/upload/${item?.image_id[0]?.replace(/"/g, "")}`}
+                        }/image/upload/${item?.image_id?.[0]?.replace(
+                          /"/g,
+                          ""
+                        )}`}
                         alt=""
                       />
                     </div>
                     <div className="flex justify-between sm:p-1 p-1 gap-1 sm:gap-2 sm:pl-4 pl-3 w-full">
                       <div className="sm:text-[16px] text-[11px] text-black">
-                        <p className="">{item.name}</p>
+                        <p className="">{item?.name}</p>
                         <div className="flex items-center">
                           <p className="text-[13px] sm:text-[15px] pr-2 line-through opacity-65">
                             ₹{item.price}
@@ -95,4 +94,4 @@ const PriceStores = () => {
   );
 };
 
-export default PriceStores;
+export default Handicraft;

@@ -16,6 +16,7 @@ import SearchBar from "../Search/SearchBar";
 import CategoryOption from "./CategoryOption";
 import WomenCategoryOption from "./WomenCategoryOption";
 import MenCategoryOption from "./MenCategoryOption";
+import HandicraftOption from "./HandicraftOption";
 
 const Navbar = () => {
   const [auth, setAuth] = useAuth();
@@ -66,7 +67,7 @@ const Navbar = () => {
     .filter((category) => category.gender?.toLowerCase() === "female")
     .sort((a, b) => a.name?.localeCompare(b.name));
 
-  const { data: kidsCategory, isLoading: isLoadingKidsCategory } = useQuery({
+  const { data: kidsCategory } = useQuery({
     queryKey: ["kidsCategory"],
     queryFn: () =>
       Axios({
@@ -78,6 +79,20 @@ const Navbar = () => {
   const filteredKids = kidsCategories.sort((a, b) =>
     a.name?.localeCompare(b.name)
   );
+
+  const { data: handicraftCategory } = useQuery({
+    queryKey: ["handicraftCategory"],
+    queryFn: () =>
+      Axios({
+        url: "/category?gender=neutral&isProductForKids=false",
+        method: "GET",
+      }),
+  });
+
+  const handicraftCategories = handicraftCategory?.data?.categories || [];
+  const filteredHandicraft = handicraftCategories
+    .filter((category) => category.gender?.toLowerCase() === "neutral")
+    .sort((a, b) => a.name?.localeCompare(b.name));
 
   const handleScrollToTop = () => {
     window.scrollTo({
@@ -100,50 +115,54 @@ const Navbar = () => {
                 />
               </NavLink>
               <div className="hidden lg:block  ">
-                <ul className="  flex items-center font-semibold gap-8 ">
+                <ul className="  flex items-center font-semibold gap-4 ">
                   <li className="relative cursor-pointer group   ">
-                    {/* <div className=" text-[15px]  "> */}
                     <span className="  flex items-center text-[16px] mt-1">
                       <MenCategoryOption title="MEN" />
-                      {/* <IoMdArrowDropdown /> */}
                     </span>
-                    {/* </div> */}
+
                     <div className=" absolute z-[9999] hidden group-hover:block text-red-400">
                       <MenCategoryOption filteredMen={filteredMen} />
                     </div>
                   </li>
 
                   <li className="relative cursor-pointer group  ">
-                    {/* <div className="text-[16px] flex "> */}
                     <span className="flex items-center text-[16px] mt-1">
                       <WomenCategoryOption title="WOMEN" />
-                      {/* <IoMdArrowDropdown /> */}
                     </span>
-                    {/* </div> */}
+
                     <div
                       className="absolute z-[9999] hidden group-hover:block text-red-400 "
                       style={{ marginLeft: "-90px" }}
                     >
-                      {/* <div className=""> */}
                       <WomenCategoryOption filteredWomen={filteredWomen} />
-                      {/* </div> */}
                     </div>
                   </li>
 
                   <li className="relative cursor-pointer group  ">
-                    {/* <div className=" navbar text-[16px] flex "> */}
                     <span className="flex items-center text-[16px] mt-1">
                       <CategoryOption title="KIDS" />
-                      {/* <IoMdArrowDropdown /> */}
                     </span>
-                    {/* </div> */}
+
                     <div
                       className="absolute z-[9999] hidden group-hover:block  "
                       style={{ marginLeft: "-200px" }}
                     >
-                      {/* <div className="flex flex-col text-red-400  "> */}
                       <CategoryOption filteredKids={filteredKids} />
-                      {/* </div> */}
+                    </div>
+                  </li>
+                  <li className="relative cursor-pointer group  ">
+                    <span className="flex items-center text-[16px] mt-1">
+                      <HandicraftOption title="HANDICRAFT" />
+                    </span>
+
+                    <div
+                      className="absolute z-[9999] hidden group-hover:block  "
+                      style={{ marginLeft: "-200px" }}
+                    >
+                      <HandicraftOption
+                        filteredHandicraft={filteredHandicraft}
+                      />
                     </div>
                   </li>
                 </ul>
@@ -193,10 +212,13 @@ const Navbar = () => {
                   <nav>
                     <ul className="space-y-2">
                       <li>
-                        <CategoryOption title="MEN" filteredMen={filteredMen} />
+                        <MenCategoryOption
+                          title="MEN"
+                          filteredMen={filteredMen}
+                        />
                       </li>
                       <li>
-                        <CategoryOption
+                        <WomenCategoryOption
                           title="WOMEN"
                           filteredWomen={filteredWomen}
                         />
@@ -205,6 +227,12 @@ const Navbar = () => {
                         <CategoryOption
                           title="KIDS"
                           filteredKids={filteredKids}
+                        />
+                      </li>
+                      <li>
+                        <HandicraftOption
+                          title="HANDICRAFT"
+                          filteredHandicraft={filteredHandicraft}
                         />
                       </li>
                       <li>
@@ -234,7 +262,7 @@ const Navbar = () => {
                           <span>Orders</span>
                         </NavLink>
                         <NavLink
-                          to=""
+                          to="/sellerlogin"
                           className="flex items-center space-x-2 p-2 rounded-md hover:bg-red-300"
                         >
                           <BsFillBoxFill size={20} />
@@ -273,16 +301,7 @@ const Navbar = () => {
                       <label htmlFor="">Wishlist</label>
                     </NavLink>
                   </Tooltip>
-                  <div>
-                    <Button
-                      className="text-white px-2 py-[-2px]  "
-                      variant="filled"
-                      color="red"
-                    >
-                      <BsFillBoxFill className="m-1" />
-                      Seller
-                    </Button>
-                  </div>
+
                   {/* {auth?.token && ( */}
                   <Tooltip className="bg-red-500" label="Orders">
                     <NavLink to="/myorder" type="button" className="relative ">
@@ -314,6 +333,16 @@ const Navbar = () => {
                       Logout
                     </button>
                   )} */}
+                  <NavLink to="/sellerlogin">
+                    <Button
+                      className="text-white px-2 py-[-2px]  "
+                      variant="filled"
+                      color="red"
+                    >
+                      <BsFillBoxFill className="m-1" />
+                      Seller
+                    </Button>
+                  </NavLink>
                 </div>
               </div>
             </div>

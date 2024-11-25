@@ -8,8 +8,10 @@ import { useWishlist } from "../../hooks/useWistlist";
 const ProductCard = ({ filteredWomenProductList }) => {
   const navigate = useNavigate();
 
-  // Sort the products in alphabetical order by name
-  const sortedProductList = filteredWomenProductList?.sort((a, b) =>
+  const { isInWishlists, toggleWishlist } = useWishlist();
+
+  const displayedWomenProducts = filteredWomenProductList?.slice(0, 15);
+  const sortedProductList = displayedWomenProducts?.sort((a, b) =>
     a.name.localeCompare(b.name)
   );
 
@@ -17,11 +19,6 @@ const ProductCard = ({ filteredWomenProductList }) => {
     <div className="mb-6 sm:mt-2 p-3">
       <div className="grid grid-cols-2 p-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
         {sortedProductList?.map((product) => {
-          const { isInWishlist, toggleWishlist } = useWishlist(
-            product._id,
-            product?.fav
-          );
-
           return (
             <div
               className="group shadow-md hover:shadow-lg border border-gray-400 sm:p-3 p-2 rounded-md"
@@ -38,13 +35,18 @@ const ProductCard = ({ filteredWomenProductList }) => {
                   className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
                 />
                 <button
+                  onClick={(e) => {
+                    toggleWishlist(product._id);
+                  }}
                   type="button"
                   className="absolute top-2 right-2 bg-slate-50 p-[5px] sm:p-[8px] rounded-full"
                 >
                   <FaHeart
-                    size={15}
-                    className={isInWishlist ? "text-red-600" : "text-gray-400"}
-                    onClick={toggleWishlist}
+                    className={
+                      isInWishlists(product._id)
+                        ? "text-red-600"
+                        : "text-gray-400"
+                    }
                   />
                 </button>
               </div>
@@ -57,11 +59,11 @@ const ProductCard = ({ filteredWomenProductList }) => {
                       ({product?.totalReviews})
                     </span>
                   </div>
-                  <div className="flex w-full">
-                    <p className="text-[13px] sm:text-[15px] pr-2 line-through opacity-65">
+                  <div className="flex items-center gap-1">
+                    <p className="text-[13px] sm:text-[15px]  line-through opacity-65">
                       ₹{product.price}
                     </p>
-                    <p className="text-red-500 pr-1 sm:text-[16px] text-[14px]">
+                    <p className="text-red-500  sm:text-[15px] text-[14px]">
                       ₹{product.discountedPrice}
                     </p>
                     <p className="text-emerald-500 sm:text-[13px] text-[11px]">

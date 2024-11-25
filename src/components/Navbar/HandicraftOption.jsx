@@ -1,15 +1,17 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
-export default function MenCategoryOption({ title, filteredMen }) {
+export default function HandicraftOption({ title, filteredHandicraft }) {
   const navigate = useNavigate();
 
   return (
     <div className="group relative">
+      {/* Main title (category) */}
       <p className="cursor-pointer p-2 hover:bg-red-500">{title}</p>
       {/* Dropdown for subcategories */}
       <div className="hidden group-hover:grid absolute left-0 top-0 z-10 bg-gray-100 px-4 grid-cols-3 gap-4 overflow-y-auto w-[600px]">
-        {filteredMen?.map((category) => (
+        {filteredHandicraft?.map((category) => (
           <div key={category._id} className="category">
+            {/* Category Name */}
             <NavLink
               key={category._id}
               to={`/sorted/${category._id} `}

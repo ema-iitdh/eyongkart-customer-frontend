@@ -28,7 +28,7 @@ const Category = () => {
       <div className="overflow-hidden rounded-xl sm:h-[100px] h-[60px]">
         <ScrollArea type="never">
           <Box>
-            <div className="flex flex-grow gap-2 p-2 sm:mt-4">
+            <div className="flex flex-grow sm:gap-2 gap-6 p-2 sm:mt-4">
               {categoryList?.map((item) => (
                 <Link to={`/sorted/${item._id}`} key={item._id}>
                   <button

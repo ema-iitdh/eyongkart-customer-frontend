@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { toast } from "react-toastify";
 import { Axios } from "../../../api";
 
-// const [wishlistUpdate, setWishlistUpdate] = useState(false);
-export const handleIsWishlist = async (e, p) => {
+export const handleIsWishlist = async (e, product, updateProductState) => {
   e.preventDefault();
+
   try {
-    const { data } = await Axios.put(`/product/updatefav/${p._id}`, {
-      fav: p.fav === "No" ? "Yes" : "No",
+    const newFavStatus = product.fav === "No" ? "Yes" : "No";
+    const { data } = await Axios.put(`/product/updatefav/${product._id}`, {
+      fav: newFavStatus,
     });
+
     if (data) {
-      setWishlistUpdate((prev) => !prev);
-      toast.success("Success");
+      updateProductState(product._id, newFavStatus);
+
+      toast.success(
+        newFavStatus === "Yes"
+          ? "Added to wishlist successfully!"
+          : "Removed from wishlist."
+      );
     }
   } catch (error) {
-    a;
-    toast.error("Something Happened");
+    console.error("Error updating wishlist:", error);
+    toast.error("Something went wrong. Please try again.");
   }
 };

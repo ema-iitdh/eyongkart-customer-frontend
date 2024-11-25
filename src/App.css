@@ -1,8 +1,6 @@
-
 #root {
   box-sizing: border-box;
-  /* overflow-x: hidden;
-  overflow-y: hidden; */
+
   overflow: hidden;
 }
 
@@ -42,7 +40,7 @@
   color: #888;
 }
 
-.wrapper::-webkit-scrollbar{
+.wrapper::-webkit-scrollbar {
   width: 0;
 }
 
@@ -67,6 +65,3 @@
   border-bottom: 1px solid #f0f0f0;
   transition: background-color 0.2s;
 }
-
-
-
