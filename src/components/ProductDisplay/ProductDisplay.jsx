@@ -7,7 +7,6 @@ import { Rating } from "@mantine/core";
 import { ShopContext } from "../Context/ShopContext";
 import { CloudinaryConfig } from "../../../Cloudinary";
 import { Axios } from "../../../api";
-import Slider from "react-slick";
 import Reviews from "../Reviews/Reviews";
 import RelatedProduct from "../RelatedProducts/RelatedProduct.jsx";
 import LogoLoading from "../../Pages/LogoLoading.jsx";
@@ -18,7 +17,7 @@ const ProductDisplay = (props) => {
   const navigate = useNavigate();
   const { addToCart, buyNow } = useContext(ShopContext);
 
-  const [mainImg, setMainImg] = useState();
+  const [mainImg, setMainImg] = useState(null);
   const { productId } = useParams();
   const [loading, setLoading] = useState(true);
 
@@ -57,6 +56,11 @@ const ProductDisplay = (props) => {
   }/image/upload/${productData?.image_id[3]?.replace(/"/g, "")}`;
 
   useEffect(() => {
+    if (productData?.image_id) {
+      setMainImg(imgData1);
+    }
+  }, [productData]);
+  useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -75,55 +79,47 @@ const ProductDisplay = (props) => {
               <div className="overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] pb-5">
                 <div className="container pb-8 pr-0 sm:pb-0">
                   <div className="sm:flex lg:flex  sm:pt-3 pb-5">
-                    <div className="flex gap-3">
-                      <div className="flex flex-col gap-2">
-                        {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-                        <img
-                          className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px]"
-                          src={imgData1}
-                          alt="image1"
-                          onClick={() => setMainImg(imgData1)}
-                        />
-                        {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-                        <img
-                          className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px]"
-                          src={imgData2}
-                          alt="image2"
-                          onClick={() => setMainImg(imgData2)}
-                        />
-                        {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-                        <img
-                          className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px]"
-                          src={imgData3}
-                          alt="image3"
-                          onClick={() => setMainImg(imgData3)}
-                        />
-                        {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-                        <img
-                          className="sm:w-[180px] sm:h-[150px] w-[170px] h-[120px]"
-                          src={imgData4}
-                          alt="image4"
-                          onClick={() => setMainImg(imgData4)}
-                        />
+                    <div className="flex flex-col sm:flex-row sm:items-start items-center gap-4">
+                      {/* Main Image Section */}
+                      <div className="flex justify-center w-full sm:w-[520px] ">
+                        <div className="w-full sm:h-[520px] h-[400px]">
+                          <img
+                            className="w-full p-3 h-full object-contain border rounded-md"
+                            src={
+                              mainImg ||
+                              `${
+                                CloudinaryConfig.CLOUDINARY_URL
+                              }/image/upload/${productData?.image_id[0]?.replace(
+                                /"/g,
+                                ""
+                              )}`
+                            }
+                            alt="Main Product"
+                          />
+                        </div>
                       </div>
-                      <div className="productdisplay-img">
-                        {mainImg ? (
-                          <img
-                            className="sm:w-[520px] sm:h-[620px] w-[320px] h-[502px] pr-4"
-                            src={mainImg}
-                            alt="main"
-                          />
-                        ) : (
-                          <img
-                            className="sm:w-[520px] sm:h-[620px] w-[330px] h-[502px] pr-4"
-                            src={`${
-                              CloudinaryConfig.CLOUDINARY_URL
-                            }/image/upload/${productData?.image_id[0]?.replace(
-                              /"/g,
-                              ""
-                            )}`}
-                            alt="main"
-                          />
+
+                      {/* Thumbnails Section */}
+                      <div className="flex sm:flex-col flex-row gap-2 sm:w-[120px] w-full sm:overflow-visible overflow-x-auto">
+                        {[imgData1, imgData2, imgData3, imgData4].map(
+                          (img, index) => (
+                            <div
+                              key={index}
+                              className="flex-shrink-0 w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] pl-3"
+                            >
+                              {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+                              <img
+                                src={img}
+                                alt={`Thumbnail ${index + 1}`}
+                                onClick={() => setMainImg(img)}
+                                className={`w-full h-full object-cover border rounded-md cursor-pointer transition-transform hover:scale-105 ${
+                                  mainImg === img
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                }`}
+                              />
+                            </div>
+                          )
                         )}
                       </div>
                     </div>

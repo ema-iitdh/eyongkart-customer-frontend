@@ -66,10 +66,6 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/chat" element={<ChatBox />} />
 
-            {/* <Route
-              path="/productList/:categoryId"
-              element={<RemProductList />}
-            /> */}
             <Route path="/sellerlogin" element={<BecomeSeller />} />
           </Routes>
         </BrowserRouter>

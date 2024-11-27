@@ -275,9 +275,9 @@ const CategorySort = React.memo(() => {
                   <div className="flex items-center justify-center w-full min-h-[calc(100vh-200px)] sm:p-36 sm:pt-10 pb-20">
                     <div className="flex flex-col items-center bg-white border border-gray-300 rounded-lg p-6 sm:p-8 shadow-lg w-full max-w-3xl text-center">
                       <img
-                        src="/nofound.svg"
+                        src="/nofound.png"
                         alt="No products found"
-                        className="w-20 h-20 sm:w-24 sm:h-24 mb-4"
+                        className="w-28 h-20  sm:h-24 sm:w-32 mb-4"
                       />
                       <p className="text-gray-800 font-semibold text-lg sm:text-xl mb-2">
                         No Products Available for this Price Range

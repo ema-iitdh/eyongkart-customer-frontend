@@ -3,24 +3,18 @@ import { ScrollArea, Box, Loader } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { Axios } from "../../../api";
 import { Link } from "react-router-dom";
+import { fetchCategory } from "../../BaseURL/Category";
 
 const Category = () => {
   const [loading, setLoading] = useState(true);
 
-  const fetchCategories = async () => {
-    setLoading(true);
-    const response = await Axios.get("/category");
-    return response.data;
-  };
-
   const { data, isLoading } = useQuery({
     queryKey: "categories",
-    queryFn: fetchCategories,
+    queryFn: fetchCategory,
   });
 
-  // Sort categories alphabetically by name
   const categoryList = data?.categories
-    ?.sort((a, b) => a.name.localeCompare(b.name)) // Sorting categories alphabetically
+    ?.sort((a, b) => a.name.localeCompare(b.name))
     .map((category) => category);
 
   return (
