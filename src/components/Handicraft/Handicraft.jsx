@@ -26,6 +26,15 @@ const Handicraft = () => {
   });
   const subCategoryDataLists = subCategoryData?.subCategory || [];
 
+  const sortedSubCategoryDataLists = [...subCategoryDataLists].sort((a, b) => {
+    if (a.subCategoryName && b.subCategoryName) {
+      return a.subCategoryName
+        .toLowerCase()
+        .localeCompare(b.subCategoryName.toLowerCase());
+    }
+    return 0;
+  });
+
   useEffect(() => {
     let filteredProducts = handicraftLists?.filter(
       (handicraftItem) => handicraftItem?.gender === "Neutral"
@@ -68,7 +77,7 @@ const Handicraft = () => {
         </div>
         <ScrollArea type="never">
           <Box className="flex flex-grow gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full h-9">
-            {subCategoryDataLists.map((subcategory) => (
+            {sortedSubCategoryDataLists?.map((subcategory) => (
               <button
                 type="button"
                 key={subcategory._id}

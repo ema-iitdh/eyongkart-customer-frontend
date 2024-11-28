@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { fetchProductWithComments } from "../../BaseURL/Product";
 import { useParams } from "react-router-dom";
 import { Rating } from "@mantine/core";
 
 const Reviews = () => {
   const { productId } = useParams();
-  // const [review, setReview] = useState([]);
   const { data: reviewData = {} } = useQuery({
     queryKey: ["review", productId],
     queryFn: () => fetchProductWithComments(productId),
@@ -16,9 +14,9 @@ const Reviews = () => {
 
   const commentRatings = reviewData.commentRating || [];
 
-  //filter
+  // Ensure the filter works properly by checking if the productId exists
   const filteredComments = commentRatings?.filter(
-    (comment) => comment?.productId._id === productId
+    (comment) => comment?.productId?._id === productId
   );
 
   return (
@@ -27,7 +25,7 @@ const Reviews = () => {
         Customer Reviews
       </h2>
       <div>
-        {(filteredComments || []).length === 0 ? (
+        {(filteredComments?.length || 0) === 0 ? (
           <div className="flex flex-col items-center py-10 bg-white shadow-md rounded-lg border border-gray-200">
             <h3 className="text-gray-600 text-lg font-medium">
               No reviews yet
@@ -56,15 +54,17 @@ const Reviews = () => {
                     <div className="flex gap-2">
                       <BsFillPersonFill size={20} color="red" />
                       <h3 className="font-semibold text-gray-900">
-                        {review.userId?.userName}
+                        {review.userId?.userName || "Anonymous"}
                       </h3>
                     </div>
                     <span className="text-sm text-gray-500">
                       {new Date(review.createdAt).toLocaleDateString()}
                     </span>
                   </div>
-                  <Rating value={review.ratings[0]?.rating} fractions={2} />{" "}
-                  {/* <p>{review.ratings[0]?.rating}</p> */}
+                  <Rating
+                    value={review.ratings?.[0]?.rating || 0}
+                    fractions={2}
+                  />
                   <p className="text-gray-700 font-bold text-[15px]">
                     {review.title}
                   </p>

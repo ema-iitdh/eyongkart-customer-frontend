@@ -17,7 +17,7 @@ const TopSales = () => {
     slidesToScroll: 4,
     responsive: [
       {
-        breakpoint: 1200, // For large screens
+        breakpoint: 1200,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 3,
@@ -26,7 +26,7 @@ const TopSales = () => {
         },
       },
       {
-        breakpoint: 1024, // For medium-sized screens
+        breakpoint: 1024,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 2,
@@ -35,7 +35,7 @@ const TopSales = () => {
         },
       },
       {
-        breakpoint: 768, // For tablets
+        breakpoint: 768,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 2,
@@ -44,7 +44,7 @@ const TopSales = () => {
         },
       },
       {
-        breakpoint: 480, // For small mobile screens
+        breakpoint: 480,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -71,7 +71,14 @@ const TopSales = () => {
   const productLists = productData.products || [];
 
   const filteredProducts = () => {
-    return productLists.filter((product) => product.discount >= minDiscount);
+    return productLists
+      .filter((product) => product.discount >= minDiscount)
+      .sort((a, b) => {
+        if (b.discount !== a.discount) {
+          return b.discount - a.discount;
+        }
+        return a.name.localeCompare(b.name);
+      });
   };
 
   useEffect(() => {
