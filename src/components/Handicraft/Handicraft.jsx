@@ -111,7 +111,7 @@ const Handicraft = () => {
                     CloudinaryConfig.CLOUDINARY_URL
                   }/image/upload/${item?.image_id?.[0]?.replace(/"/g, "")}`}
                   alt={item.name}
-                  className="sm:w-52 sm:h-56 w-[150px] h-[160px] object-fit m-auto"
+                  className="sm:w-52 sm:h-52 w-[150px] h-[160px] object-cover rounded-md m-auto"
                 />
                 <div className="flex justify-between sm:pb-2 p-1 gap-1 sm:gap-2 sm:pl-4 pl-3 sm:pr-3 w-full">
                   <div className="sm:text-[16px] text-[11px] text-black">

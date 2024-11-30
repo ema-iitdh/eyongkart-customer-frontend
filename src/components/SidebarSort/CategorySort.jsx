@@ -60,7 +60,7 @@ const CategorySort = React.memo(() => {
 
   const productsArray = products?.products || [];
   const productDetails = productsArray.filter(
-    (product) => product.category._id === categoryId
+    (product) => product.category && product.category._id === categoryId
   );
 
   const handleNavigate = (productId) => {
@@ -131,7 +131,7 @@ const CategorySort = React.memo(() => {
                                 ""
                               )}`}
                               alt="Product"
-                              className="cursor-pointer sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
+                              className="cursor-pointer sm:h-52 sm:w-[240px] w-[150px] h-[170px] object-cover rounded-md"
                             />
                             <button
                               onClick={(e) => toggleWishlist(product._id)}
@@ -176,7 +176,6 @@ const CategorySort = React.memo(() => {
                       ))}
                     </div>
                     {/* Pagination */}
-
                     <div className="flex justify-center mt-32 gap-2 items-center ">
                       {/* First Page Arrow */}
                       <button
@@ -227,8 +226,8 @@ const CategorySort = React.memo(() => {
                                 onClick={() => setCurrentPage(page)}
                                 className={`px-3 py-1 rounded-md ${
                                   currentPage === page
-                                    ? "bg-red-400 text-white"
-                                    : "bg-red-200 text-gray-700"
+                                    ? "bg-red-500 text-white"
+                                    : "bg-gray-200 text-gray-700"
                                 }`}
                               >
                                 {page}
@@ -272,30 +271,15 @@ const CategorySort = React.memo(() => {
                     </div>
                   </>
                 ) : (
-                  <div className="flex items-center justify-center w-full min-h-[calc(100vh-200px)] sm:p-36 sm:pt-10 pb-20">
-                    <div className="flex flex-col items-center bg-white border border-gray-300 rounded-lg p-6 sm:p-8 shadow-lg w-full max-w-3xl text-center">
-                      <img
-                        src="/nofound.png"
-                        alt="No products found"
-                        className="w-28 h-20  sm:h-24 sm:w-32 mb-4"
-                      />
-                      <p className="text-gray-800 font-semibold text-lg sm:text-xl mb-2">
-                        No Products Available for this Price Range
-                      </p>
-                      <p className="text-gray-500 text-sm sm:text-base mb-4">
-                        We're sorry, but no products are available for this
-                        category. Check back later.
-                      </p>
-                    </div>
-                  </div>
+                  <p>No products found</p>
                 )}
               </div>
             </div>
           </div>
         </div>
+        <ChatBox />
+        <Footer />
       </div>
-      <Footer />
-      <ChatBox />
     </div>
   );
 });

@@ -140,14 +140,14 @@ const SearchResults = () => {
                               ""
                             )}`}
                             alt={product.name}
-                            className="sm:h-[190px] sm:w-[250px] w-[150px] h-[170px] object-fit rounded-md"
+                            className="sm:h-52 sm:w-[240px] w-[150px] h-[170px] object-cover  rounded-md"
                           />
                           <button
                             onClick={(e) => {
                               toggleWishlist(product._id);
                             }}
                             type="button"
-                            className="absolute top-2 right-2 bg-slate-50 p-[5px] sm:p-[8px] rounded-full"
+                            className="absolute top-2 right-3 bg-slate-50 p-[5px] sm:p-[8px] rounded-full"
                           >
                             <FaHeart
                               className={

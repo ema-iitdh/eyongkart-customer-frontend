@@ -35,31 +35,31 @@ const PriceStores = () => {
 
   return (
     <div className="p-2 drop-shadow-md">
-      <div className="overflow-hidden rounded-xl sm:h-[450px] h-[330px] ">
+      <div className="overflow-hidden rounded-xl sm:h-[450px] h-[340px] ">
         <h1 className="gap-4 flex justify-start items-start text-base sm:text-xl font-semibold text-black  p-2">
           Product price below
           <p className="text-[20px] sm:text-[25px] text-red-500">₹2000 </p>
         </h1>
         <div className="overflow-x-scroll scrollbar-hide flex space-x-4 pb-3 scroll-smooth">
-          <div className="flex sm:gap-5 gap-4 p-2">
+          <div className="flex sm:gap-5 gap-3 p-2">
             {filterItems?.map((item) => {
               return (
                 <div
                   key={item._id}
-                  className="bg-gray-100 drop-shadow-md sm:h-[340px] sm:w-[250px] h-[240px] w-[180px] rounded-lg flex flex-col items-center "
+                  className="bg-gray-100 sm:p-3 pt-2 drop-shadow-md rounded-md sm:w-[250px] sm:h-[340px] h-[270px] w-[180px] "
                 >
-                  <div className="">
+                  <div>
                     {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                     <img
                       onClick={() => navigate(`/product/${item._id}`)}
-                      className="sm:w-52 sm:h-56 w-[150px] h-[160px] object-fit m-auto p-3"
+                      className="sm:w-52 sm:h-52 w-[150px] h-[170px] object-cover  m-auto rounded-md"
                       src={`${
                         CloudinaryConfig.CLOUDINARY_URL
                       }/image/upload/${item?.image_id[0]?.replace(/"/g, "")}`}
                       alt=""
                     />
                   </div>
-                  <div className="flex justify-between sm:p-1 p-1 gap-1 sm:gap-2 sm:pl-4 pl-3 sm:pr-3 w-full">
+                  <div className="flex justify-between sm:p-1 pt-3 p-1 sm:pt-3 gap-2 sm:gap-2 sm:pl-4 pl-3 sm:pr-3 w-full">
                     <div className="sm:text-[16px] text-[11px] text-black">
                       <p className="">{item.name}</p>
                       <div className="flex items-center">
