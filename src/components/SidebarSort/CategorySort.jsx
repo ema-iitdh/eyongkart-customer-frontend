@@ -271,7 +271,17 @@ const CategorySort = React.memo(() => {
                     </div>
                   </>
                 ) : (
-                  <p>No products found</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:pl-2 pt-4">
+                    {[...Array(8)].map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        height={200}
+                        width="100%"
+                        radius="md"
+                        className="sm:h-[230px] sm:w-[250px] w-[160px] h-[170px] bg-gray-200 mb-4"
+                      />
+                    ))}
+                  </div>
                 )}
               </div>
             </div>
