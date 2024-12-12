@@ -16,7 +16,7 @@ import Wishlist from "./components/Wishlist/Wishlist";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Myorder from "./components/Myorders/Myorder";
-import RemProductList from "./components/RemProductList";
+
 import ChatBox from "./components/Chat/ChatBox";
 import SearchBar from "./components/Search/SearchBar";
 
@@ -28,6 +28,10 @@ import SearchResults from "./components/Search/SearchResult";
 import Category from "./components/Category/Category";
 import OrderConfirmation from "./components/Myorders/OrderConfirm";
 import BecomeSeller from "./components/Seller/Seller";
+import HowToSellOn from "./components/Seller/SellerToSellOn";
+import SellerDashboard from "./SellerSite/SellerDashboard";
+import SellerProduct from "./SellerSite/SellerProduct";
+import SellerOrder from "./SellerSite/SellerOrder";
 
 const App = () => {
   const queryclient = new QueryClient();
@@ -66,7 +70,14 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/chat" element={<ChatBox />} />
 
-            <Route path="/sellerlogin" element={<BecomeSeller />} />
+            <Route path="/sellerform" element={<BecomeSeller />} />
+            <Route path="/sellOn" element={<HowToSellOn />} />
+          </Routes>
+          <Routes>
+            {/* <Route path="/selleradmin" element={<SellerSidebarLayout />} /> */}
+            <Route path="/sellerdashboard" element={<SellerDashboard />} />
+            <Route path="/sellerproduct" element={<SellerProduct />} />
+            <Route path="/sellerorder" element={<SellerOrder />} />
           </Routes>
         </BrowserRouter>
       </MantineProvider>

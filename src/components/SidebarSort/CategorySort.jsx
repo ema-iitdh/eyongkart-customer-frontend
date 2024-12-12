@@ -271,16 +271,21 @@ const CategorySort = React.memo(() => {
                     </div>
                   </>
                 ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:pl-2 pt-4">
-                    {[...Array(8)].map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        height={200}
-                        width="100%"
-                        radius="md"
-                        className="sm:h-[230px] sm:w-[250px] w-[160px] h-[170px] bg-gray-200 mb-4"
+                  <div className="flex items-center justify-center w-full min-h-[calc(100vh-200px)] sm:p-36 sm:pt-10 pb-20">
+                    <div className="flex flex-col items-center bg-white  p-6 sm:p-8  w-full max-w-3xl text-center">
+                      <img
+                        src="/nofound.png"
+                        alt="No products found"
+                        className="w-24 h-20 sm:w-32 sm:h-24 mb-4"
                       />
-                    ))}
+                      <p className="text-gray-800 font-semibold text-lg sm:text-xl mb-2">
+                        No Products Available for products.
+                      </p>
+                      <p className="text-gray-500 text-sm sm:text-base mb-4">
+                        We're sorry, but no products are available for this
+                        category. Check back later.
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>

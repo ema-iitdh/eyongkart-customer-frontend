@@ -274,7 +274,7 @@ const SearchResults = () => {
                 </div>
               ) : (
                 <div className="flex items-center justify-center w-full min-h-[calc(100vh-200px)] sm:p-36 sm:pt-10 pb-20">
-                  <div className="flex flex-col items-center bg-white border border-gray-300 rounded-lg p-6 sm:p-8 shadow-lg w-full max-w-3xl text-center">
+                  <div className="flex flex-col items-center bg-white  p-6 sm:p-8 w-full max-w-3xl text-center">
                     <img
                       src="/nofound.png"
                       alt="No products found"
@@ -289,9 +289,6 @@ const SearchResults = () => {
                     </p>
                   </div>
                 </div>
-                // <div className="text-center">
-                //   No Products found for &apos;{searchTerm}&apos;
-                // </div>
               )}
             </>
           )}

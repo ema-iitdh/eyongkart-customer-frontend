@@ -262,7 +262,7 @@ const Navbar = () => {
                           <span>Orders</span>
                         </NavLink>
                         <NavLink
-                          to="/sellerlogin"
+                          to="/sellOn"
                           className="flex items-center space-x-2 p-2 rounded-md hover:bg-red-300"
                         >
                           <BsFillBoxFill size={20} />
@@ -333,7 +333,7 @@ const Navbar = () => {
                       Logout
                     </button>
                   )} */}
-                  <NavLink to="/sellerlogin">
+                  <NavLink to="/sellOn">
                     <Button
                       className="text-white px-2 py-[-2px]  "
                       variant="filled"
