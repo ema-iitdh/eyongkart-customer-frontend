@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { IoMdArrowDropdown } from "react-icons/io";
 import { GrFavorite } from "react-icons/gr";
 import { ShopContext } from "../Context/ShopContext";
 import { BsFillArchiveFill } from "react-icons/bs";
@@ -22,7 +21,22 @@ const Navbar = () => {
   const [auth, setAuth] = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
+  const sidebarRef = useRef(null);
+
   const toggleSidebar = () => setIsOpen(!isOpen);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const getAllCategory = async () => {
     try {
@@ -133,7 +147,7 @@ const Navbar = () => {
 
                     <div
                       className="absolute z-[9999] hidden group-hover:block text-red-400 "
-                      style={{ marginLeft: "-90px" }}
+                      style={{ marginLeft: "-70px" }}
                     >
                       <WomenCategoryOption filteredWomen={filteredWomen} />
                     </div>
@@ -146,7 +160,7 @@ const Navbar = () => {
 
                     <div
                       className="absolute z-[9999] hidden group-hover:block  "
-                      style={{ marginLeft: "-200px" }}
+                      style={{ marginLeft: "-170px" }}
                     >
                       <CategoryOption filteredKids={filteredKids} />
                     </div>
@@ -158,7 +172,7 @@ const Navbar = () => {
 
                     <div
                       className="absolute z-[9999] hidden group-hover:block  "
-                      style={{ marginLeft: "-200px" }}
+                      style={{ marginLeft: "-240px" }}
                     >
                       <HandicraftOption
                         filteredHandicraft={filteredHandicraft}
@@ -184,8 +198,11 @@ const Navbar = () => {
 
               {/* Sidebar */}
               <div
+                ref={sidebarRef}
                 className={`fixed top-0 left-0 h-full w-64 md:w-80 lg:w-96 bg-white text-red-400 transform transition-transform duration-300 ease-in-out ${
-                  isOpen ? "translate-x-0" : "-translate-x-full"
+                  isOpen
+                    ? "translate-x-0 border border-gray-200"
+                    : "-translate-x-full"
                 }`}
               >
                 <div className="p-4">
@@ -215,24 +232,28 @@ const Navbar = () => {
                         <MenCategoryOption
                           title="MEN"
                           filteredMen={filteredMen}
+                          toggleSidebar={toggleSidebar}
                         />
                       </li>
                       <li>
                         <WomenCategoryOption
                           title="WOMEN"
                           filteredWomen={filteredWomen}
+                          toggleSidebar={toggleSidebar}
                         />
                       </li>
                       <li>
                         <CategoryOption
                           title="KIDS"
                           filteredKids={filteredKids}
+                          toggleSidebar={toggleSidebar}
                         />
                       </li>
                       <li>
                         <HandicraftOption
                           title="HANDICRAFT"
                           filteredHandicraft={filteredHandicraft}
+                          toggleSidebar={toggleSidebar}
                         />
                       </li>
                       <li>

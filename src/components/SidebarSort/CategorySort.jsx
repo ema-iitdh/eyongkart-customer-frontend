@@ -12,7 +12,6 @@ import Footer from "../Footer/Footer";
 import { fetchProducts } from "../../BaseURL/Product";
 import { Axios } from "../../../api";
 
-// Price range fetching function...
 const getPriceRanges = async () => {
   const res = await Axios.get("/pricerange/getpriceranges");
   return res.data;
@@ -29,7 +28,7 @@ const CategorySort = React.memo(() => {
   const navigate = useNavigate();
   const [selectPriceRange, setSelectPriceRange] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 1;
+  const itemsPerPage = 2;
 
   const {
     data: prices,

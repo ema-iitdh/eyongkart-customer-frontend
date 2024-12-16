@@ -21,8 +21,8 @@ const SellerProduct = () => {
   return (
     <>
       <SellerSidebarLayout pageTitle="Products">
-        <div>
-          <div className="p-4 bg-gray-100 flex sm:justify-between gap-28 ">
+        <div className="sm:p-4 bg-blue-50  min-h-screen">
+          <div className="flex sm:justify-between space-x-32  ">
             <h1 className="text-2xl font-bold text-gray-800 mb-4">Products</h1>
             <Button
               className="bg-green-500 hover:bg-green-600 text-white mr-16 "

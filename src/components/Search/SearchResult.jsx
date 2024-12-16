@@ -7,12 +7,23 @@ import { CloudinaryConfig } from "../../../Cloudinary";
 import { FaHeart } from "react-icons/fa";
 import { Rating, ScrollArea, Skeleton } from "@mantine/core";
 import Sort from "../SidebarSort/Sort";
-import ChatBox from "../Chat/ChatBox";
 
 import { useWishlist } from "../../hooks/useWistlist";
+import { useQuery } from "@tanstack/react-query";
+const getPriceRanges = async () => {
+  const res = await Axios.get("/pricerange/getpriceranges");
+  return res.data;
+};
 
+const getFilteredPrice = async (category, priceRange) => {
+  const url = `/product/filterbyprice/${category}/${priceRange}`;
+  const res = await Axios.get(url);
+  return res.data.products;
+};
 const SearchResults = () => {
+  const { categoryId, subcategoryId } = useParams();
   const navigate = useNavigate();
+  const [selectPriceRange, setSelectPriceRange] = useState("");
   const { searchTerm } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,7 +32,28 @@ const SearchResults = () => {
   const totalPages = Math.ceil(products.length / itemsPerPage);
 
   const { isInWishlists, toggleWishlist } = useWishlist();
+  //
+  const {
+    data: prices,
+    isLoading: priceLoading,
+    isError: priceError,
+  } = useQuery({
+    queryKey: ["priceranges"],
+    queryFn: getPriceRanges,
+    staleTime: 1000 * 60 * 5,
+  });
 
+  const { data: filteredProduct = [] } = useQuery({
+    queryKey: ["filteredPrices", categoryId, selectPriceRange],
+    queryFn: () => getFilteredPrice(categoryId, selectPriceRange),
+    enabled: selectPriceRange !== "",
+    staleTime: 1000 * 60 * 5,
+  });
+  const handleSelectPrice = (priceRange) => {
+    setSelectPriceRange(priceRange);
+    setCurrentPage(1);
+  };
+  //
   const fetchProducts = async () => {
     if (!searchTerm) return;
 
@@ -104,7 +136,14 @@ const SearchResults = () => {
       <Navbar />
       <div className="flex flex-col sm:flex-row gap-3 p-4 min-h-[550px] sm:min-h-[650px]">
         <div className="w-full sm:w-[280px]">
-          <Sort />
+          <Sort
+            prices={prices}
+            handleSelectPrice={handleSelectPrice}
+            isError={priceError}
+            isLoading={priceLoading}
+            selectPriceRange={selectPriceRange}
+            filteredProduct={filteredProduct}
+          />
         </div>
         <div className="w-full p-2">
           {loading ? (

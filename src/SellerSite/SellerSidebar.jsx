@@ -15,7 +15,7 @@ const SellerSidebarLayout = ({ children, pageTitle }) => {
       >
         <div className="p-4 text-center border-b border-gray-200 dark:border-gray-700">
           <h1 className="text-lg font-bold text-gray-800 dark:text-white">
-            Admin Dashboard
+            Admin Seller Dashboard
           </h1>
         </div>
         <nav className="mt-6">
@@ -87,7 +87,7 @@ const SellerSidebarLayout = ({ children, pageTitle }) => {
           </button>
 
           {/* Page Title */}
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white lg:pr-40">
+          <h2 className="text-xl  font-semibold text-gray-800 dark:text-white ">
             {pageTitle}
           </h2>
 
