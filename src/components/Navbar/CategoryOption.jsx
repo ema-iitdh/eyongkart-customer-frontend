@@ -86,7 +86,7 @@ export default function CategoryOption({ title, filteredKids, toggleSidebar }) {
           {/* Main title (category) */}
           <p className="cursor-pointer p-2 text-lg hover:bg-red-500">{title}</p>
           {/* Dropdown for subcategories */}
-          <div className="hidden group-hover:grid absolute left-0 top-0 z-10 bg-gray-100 px-4 grid-cols-3 gap-4 overflow-y-auto w-[600px]">
+          <div className="hidden group-hover:grid absolute left-0 top-0 z-10 bg-gray-50 px-4 grid-cols-3 gap-4 overflow-y-auto w-[600px]">
             {filteredKids?.map((category) => (
               <div key={category._id} className="category">
                 {/* Category Name */}

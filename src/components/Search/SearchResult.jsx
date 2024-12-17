@@ -28,7 +28,7 @@ const SearchResults = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const itemsPerPage = 4;
   const totalPages = Math.ceil(products.length / itemsPerPage);
 
   const { isInWishlists, toggleWishlist } = useWishlist();

@@ -65,13 +65,13 @@ const RelatedProduct = ({ productId }) => {
       <h1 className="text-center sm:text-[24px] font-semibold underline text-gray-800">
         Related Products
       </h1>
-      <div className="overflow-x-scroll scrollbar-hide flex space-x-4 pb-3 scroll-smooth">
+      <div className="overflow-x-scroll scrollbar-hide flex space-x-4 pb-2 scroll-smooth">
         <div className="flex flex-grow gap-2 p-3 sm:pl-4 mt-2 pb-5">
           {relatedProducts?.length > 0 ? (
             relatedProducts.map((product) => (
               <div
                 key={product._id}
-                className="bg-white sm:h-[330px] sm:w-[250px] h-[270px] w-[180px] shadow-lg transition-shadow duration-300 border border-gray-400 rounded-lg overflow-hidden p-3 flex flex-col items-center"
+                className="bg-white sm:h-[350px] sm:w-[250px] h-[300px] w-[180px] shadow-lg transition-shadow duration-300 border border-gray-400 rounded-lg overflow-hidden p-3 flex flex-col items-center"
               >
                 <div className="relative">
                   {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}

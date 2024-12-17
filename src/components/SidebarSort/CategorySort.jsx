@@ -28,7 +28,7 @@ const CategorySort = React.memo(() => {
   const navigate = useNavigate();
   const [selectPriceRange, setSelectPriceRange] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const itemsPerPage = 4;
 
   const {
     data: prices,
@@ -146,9 +146,9 @@ const CategorySort = React.memo(() => {
                               />
                             </button>
                           </div>
-                          <div className="w-full flex justify-between sm:p-2 mt-2">
-                            <div className="sm:text-[16px] text-[12px] text-black">
-                              <p>{product.name}</p>
+                          <div className="w-full flex justify-between sm:p-1 mt-2">
+                            <div className="sm:text-[16px]  text-[12px] text-black">
+                              <p className="w-full ">{product.name}</p>
                               <div className="flex items-center gap-3 py-2">
                                 <Rating
                                   value={product?.averageRating}
