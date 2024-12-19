@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { CloudinaryConfig } from "../../../Cloudinary";
-import { Rating, ScrollArea, Skeleton } from "@mantine/core";
+import { Rating, Skeleton } from "@mantine/core";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { useWishlist } from "../../hooks/useWistlist";
@@ -17,8 +17,8 @@ const getPriceRanges = async () => {
   return res.data;
 };
 
-const getFilteredPrice = async (category, priceRange) => {
-  const url = `/product/filterbyprice/${category}/${priceRange}`;
+const getFilteredPrice = async (subcategory, priceRange) => {
+  const url = `/product/filterbyprice/${subcategory}/${priceRange}`;
   const res = await Axios.get(url);
   return res.data.products;
 };
@@ -41,8 +41,9 @@ const CategorySort = React.memo(() => {
   });
 
   const { data: filteredProduct = [] } = useQuery({
-    queryKey: ["filteredPrices", categoryId, selectPriceRange],
-    queryFn: () => getFilteredPrice(categoryId, selectPriceRange),
+    queryKey: ["filteredPrices", categoryId, subcategoryId, selectPriceRange],
+    queryFn: () =>
+      getFilteredPrice(categoryId, subcategoryId, selectPriceRange),
     enabled: selectPriceRange !== "",
     staleTime: 1000 * 60 * 5,
   });
@@ -58,10 +59,18 @@ const CategorySort = React.memo(() => {
   });
 
   const productsArray = products?.products || [];
+  // const productDetails = productsArray.filter(
+  //   (product) =>
+  //     product.subcategory && product.subcategory._id === subcategoryId
+  // );
   const productDetails = productsArray.filter(
-    (product) => product.category && product.category._id === categoryId
+    (product) =>
+      product.category &&
+      product.category._id === categoryId &&
+      product.subcategory &&
+      product.subcategory._id === subcategoryId
   );
-
+  // console.log("products:", categoryId);
   const handleNavigate = (productId) => {
     navigate(`/product/${productId}`);
   };

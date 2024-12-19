@@ -18,15 +18,12 @@ const Handicraft = () => {
     queryFn: fetchProducts,
   });
   const handicraftLists = handicraftData?.products || [];
-  console.log("hhhh", handicraftLists);
 
-  // category subcategory fetching
   const { data: subCategoryData = {} } = useQuery({
     queryKey: ["subcategorylist"],
     queryFn: fetchSubCategory,
   });
   const subCategoryDataLists = subCategoryData?.subCategory || [];
-  console.log("sub", subCategoryDataLists);
 
   const sortedSubCategoryDataLists = [...subCategoryDataLists].sort((a, b) => {
     if (a.subCategoryName && b.subCategoryName) {

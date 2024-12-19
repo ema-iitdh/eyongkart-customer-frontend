@@ -31,12 +31,14 @@ const RelatedProduct = ({ productId }) => {
       // Ensure product.subcategory exists before accessing category
       const subcategoryMatch =
         product.subcategory &&
-        product.subcategory.category === currentProduct.subcategory.category;
+        product.subcategory._id === currentProduct.subcategory._id;
       const isDifferentProduct = product._id !== currentProduct._id;
 
       return subcategoryMatch && isDifferentProduct;
     });
   }
+
+  console.log("related", relatedProducts);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
