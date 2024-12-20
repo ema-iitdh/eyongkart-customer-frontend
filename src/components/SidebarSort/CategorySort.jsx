@@ -59,17 +59,16 @@ const CategorySort = React.memo(() => {
   });
 
   const productsArray = products?.products || [];
+  const productDetails = productsArray.filter(
+    (product) => product.category && product.category._id === categoryId
+  );
   // const productDetails = productsArray.filter(
   //   (product) =>
-  //     product.subcategory && product.subcategory._id === subcategoryId
+  //     product.category &&
+  //     product.category._id === categoryId &&
+  //     product.subcategory &&
+  //     product.subcategory._id === subcategoryId
   // );
-  const productDetails = productsArray.filter(
-    (product) =>
-      product.category &&
-      product.category._id === categoryId &&
-      product.subcategory &&
-      product.subcategory._id === subcategoryId
-  );
   // console.log("products:", categoryId);
   const handleNavigate = (productId) => {
     navigate(`/product/${productId}`);
