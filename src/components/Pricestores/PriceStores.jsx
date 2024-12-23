@@ -64,10 +64,10 @@ const PriceStores = () => {
                   <div className="text-black pl-3 sm:text-[16px] text-[12px]">
                     <p className="truncate">{item.name}</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <p className="line-through text-gray-500 sm:text-[14px] text-[11px]">
+                      <p className="line-through text-gray-500 sm:text-[15px] text-[13px]">
                         ₹{item.price}
                       </p>
-                      <p className="text-red-500 font-bold sm:text-[16px] text-[13px]">
+                      <p className="text-red-500 font-bold sm:text-[18px] text-[15px]">
                         ₹{item.discountedPrice}
                       </p>
                       <p className="text-emerald-500 sm:text-[13px] text-[11px] mt-1">

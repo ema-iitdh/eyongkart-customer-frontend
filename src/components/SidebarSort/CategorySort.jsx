@@ -17,8 +17,13 @@ const getPriceRanges = async () => {
   return res.data;
 };
 
-const getFilteredPrice = async (subcategory, priceRange) => {
-  const url = `/product/filterbyprice/${subcategory}/${priceRange}`;
+// const getFilteredPrice = async (subcategory, priceRange) => {
+//   const url = `/product/filterbyprice/${subcategory}/${priceRange}`;
+//   const res = await Axios.get(url);
+//   return res.data.products;
+// };
+const getFilteredPrice = async (categoryId, subcategoryId, priceRange) => {
+  const url = `/product/filterbyprice/${categoryId}/${subcategoryId}/${priceRange}`;
   const res = await Axios.get(url);
   return res.data.products;
 };
@@ -44,7 +49,7 @@ const CategorySort = React.memo(() => {
     queryKey: ["filteredPrices", categoryId, subcategoryId, selectPriceRange],
     queryFn: () =>
       getFilteredPrice(categoryId, subcategoryId, selectPriceRange),
-    enabled: selectPriceRange !== "",
+    enabled: selectPriceRange !== "", // Query enabled only when a price range is selected
     staleTime: 1000 * 60 * 5,
   });
 
@@ -59,17 +64,19 @@ const CategorySort = React.memo(() => {
   });
 
   const productsArray = products?.products || [];
-  const productDetails = productsArray.filter(
-    (product) => product.category && product.category._id === categoryId
-  );
   // const productDetails = productsArray.filter(
-  //   (product) =>
-  //     product.category &&
-  //     product.category._id === categoryId &&
-  //     product.subcategory &&
-  //     product.subcategory._id === subcategoryId
+  //   (product) => product.category && product.category._id === categoryId
   // );
-  // console.log("products:", categoryId);
+  const productDetails = productsArray.filter((product) => {
+    return (
+      product.category &&
+      product.category._id === categoryId &&
+      (subcategoryId
+        ? product.subcategory && product.subcategory._id === subcategoryId
+        : true)
+    );
+  });
+
   const handleNavigate = (productId) => {
     navigate(`/product/${productId}`);
   };
