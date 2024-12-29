@@ -38,7 +38,7 @@ const Footer = () => {
                     />
                     {footer?.title}
                   </a>
-                  <p className="text-gray-600 sm:text-[18px] text-[13px] pt-3">
+                  <p className="text-gray-600 sm:text-[18px] text-[16px] pt-3">
                     {footer?.description}
                   </p>
                 </div>
@@ -53,7 +53,7 @@ const Footer = () => {
                   <h1 className="text-xl font-bold sm:text-left mb-3 dark:text-white">
                     {data.name}
                   </h1>
-                  <ul>
+                  <ul className="text-xl">
                     {data?.footerlink?.map((link) => (
                       <li key={link._id}>
                         <Link

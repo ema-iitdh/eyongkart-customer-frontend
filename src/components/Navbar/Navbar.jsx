@@ -332,13 +332,66 @@ const Navbar = () => {
                   </Tooltip>
                   {/* )} */}
                   {/* {!auth.token ? ( */}
-                  <Tooltip label="Login" className="bg-red-500">
-                    <NavLink to="/login" type="button" className="relative p-2">
-                      <button type="button">
-                        <Avatar src={null} alt="no image here" color="red" />
+
+                  <div className="relative group">
+                    <NavLink to="/login" className="relative p-2">
+                      <button type="button" className="focus:outline-none">
+                        <Avatar src={null} alt="User Avatar" color="red" />
                       </button>
                     </NavLink>
-                  </Tooltip>
+
+                    {/* Dropdown Menu */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2  w-60 lg:w-72 xl:w-80 bg-white shadow-lg rounded-lg opacity-0 group-hover:opacity-100 group-hover:block transition-opacity duration-300 hidden z-10">
+                      <div className="p-4">
+                        <NavLink
+                          to="/login"
+                          className="ml-24 mt-8 bg-red-500  hover:underline text-white  p-2 rounded-lg font-medium transition duration-300"
+                        >
+                          Your Account
+                        </NavLink>
+                        <p className="text-[14px] mt-2 pl-12">
+                          New customer?
+                          <NavLink
+                            to="/signup"
+                            className="underline text-blue-500"
+                          >
+                            {" "}
+                            Start here.
+                          </NavLink>
+                        </p>
+                        <NavLink
+                          to="/myorder"
+                          className="block text-gray-700 hover:bg-gray-100 p-2 rounded-lg font-medium transition duration-300"
+                        >
+                          Your Orders
+                        </NavLink>
+                        <NavLink
+                          to="/wishlist"
+                          className="block text-gray-700 hover:bg-gray-100 p-2 rounded-lg font-medium transition duration-300"
+                        >
+                          Your Wish List
+                        </NavLink>
+                        <NavLink
+                          to="/"
+                          className="block text-gray-700 hover:bg-gray-100 p-2 rounded-lg font-medium transition duration-300"
+                        >
+                          Your Recommendations
+                        </NavLink>
+                        <NavLink
+                          to="/sellOn"
+                          className="block text-gray-700 hover:bg-gray-100 p-2 rounded-lg font-medium transition duration-300"
+                        >
+                          Your Seller Account
+                        </NavLink>
+                        <NavLink
+                          to="/privacypolicy"
+                          className="block text-gray-700 hover:bg-gray-100 p-2 rounded-lg font-medium transition duration-300"
+                        >
+                          Manage Your Content and Devices
+                        </NavLink>
+                      </div>
+                    </div>
+                  </div>
                   {/* ) : ( */}
                   {/* <button
                       type="button"
@@ -358,7 +411,7 @@ const Navbar = () => {
                     <Button
                       className="text-white px-2 py-[-2px]  "
                       variant="filled"
-                      color="red"
+                      color="green"
                     >
                       <BsFillBoxFill className="m-1" />
                       Seller

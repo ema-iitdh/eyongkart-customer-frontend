@@ -93,7 +93,7 @@ const SignIn = () => {
           </p>
           <p className="text-center text-gray-600 text-[12px]">
             New to Eyongkart?{" "}
-            <Link to="/signup" className="text-blue-500">
+            <Link to="/signup" className="text-red-500">
               Create your Eyongkart account
             </Link>
           </p>
