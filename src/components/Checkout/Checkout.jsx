@@ -4,7 +4,7 @@ import Footer from "../Footer/Footer";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
-import { toast } from "react-toastify";
+import { alert } from "react-alertify";
 import Swal from "sweetalert2";
 import { Radio, Group } from "@mantine/core";
 import { Checkbox } from "@mantine/core";
@@ -56,7 +56,11 @@ const Checkout = () => {
       behavior: "smooth",
     });
   }, []);
-
+  
+  useEffect(() => {
+    localStorage.setItem("checkoutItem", JSON.stringify(cartItems));
+  }, [cartItems]);
+  
   useEffect(() => {
     console.log(district);
     const pincode = districtPincode.filter(
@@ -78,10 +82,19 @@ const Checkout = () => {
       document.body.appendChild(script);
     });
   }
+  const [isAddressVerified, setIsAddressVerified] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+
   const paymentHandler = async () => {
+    if(!isAddressVerified){
+      Swal.fire("Error","Please Verify your address before processing","error");
+      return;
+    }
+
     if (paymentMethod === "razorpay") {
       // console.log("Proceed with Razorpay payment");
-      // navigate("/razorpay-payment");
+      navigate("/razorpay-payment");
     }
     if (paymentMethod === "cash") {
       // setTimeout(() => {
@@ -143,7 +156,7 @@ const Checkout = () => {
           razorpay_signature: body.razorpay_signature,
         });
         if (data.msg === "success") {
-          toast.success(`Payment Success with Payment ID: ${data.paymentId}`);
+          alert.success(`Payment Success with Payment ID: ${data.paymentId}`);
           localStorage.removeItem("cartItems");
           getInitialCartItems();
           navigate("/myorder");
@@ -178,7 +191,7 @@ const Checkout = () => {
     let total = 0;
     if (checkoutItem && checkoutItem?.length) {
       checkoutItem.map((i) => {
-        total = total + i.discountedPrice;
+        total = total + i.discountedPrice*i.quantity;
       });
     }
     return total;
@@ -193,6 +206,10 @@ const Checkout = () => {
   }, []);
 
   const handlePayment = () => {
+    if(!isAddressVerified){
+      Swal.fire("Error","Please Verify your address before processing","error");
+      return;
+    }
     navigate("/orderconfirm");
   };
   const saveInfo = () => {
@@ -204,12 +221,55 @@ const Checkout = () => {
       timer: 1500,
     });
   };
-
+  const verify = () => {
+    const phoneRegex = /^[6-9]\d{9}$/; // Validates Indian phone numbers
+    const pincodeRegex = /^\d{6}$/; // Validates a 6-digit pincode
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Validates email format
+  
+    if (!fullname.trim()) {
+      Swal.fire("Error", "Full name is required.", "error");
+      return;
+    }
+  
+    if (!address.trim()) {
+      Swal.fire("Error", "Address is required.", "error");
+      return;
+    }
+  
+    if (!phonenumber.trim() || !phoneRegex.test(phonenumber)) {
+      Swal.fire("Error", "Enter a valid 10-digit phone number.", "error");
+      return;
+    }
+  
+    if (!email.trim() || !emailRegex.test(email)) {
+      Swal.fire("Error", "Enter a valid email address.", "error");
+      return;
+    }
+  
+    if (!district.trim() || district === "district") {
+      Swal.fire("Error", "Please select a district.", "error");
+      return;
+    }
+  
+    if (!pincode.trim() || !pincodeRegex.test(pincode)) {
+      Swal.fire("Error", "Enter a valid 6-digit pincode.", "error");
+      return;
+    }
+  
+    if (!state.trim()) {
+      Swal.fire("Error", "State is required.", "error");
+      return;
+    }
+  
+    Swal.fire("Success", "Address is valid!", "success");
+    setIsAddressVerified(true);
+  };
+  
   return (
     <div className="bg-white dark:bg-gray-900 duration-200 overflow-hidden pt-16">
       <Navbar />
-      <div className="text-2xl overflow-hidden rounded-3xl min-h-[550px] sm:min-h-[650px] flex flex-col pt-5 gap-y-4">
-        <div className="container  mx-auto px-4">
+      <div className="text-2xl overflow-hidden rounded-3xl min-h-[550px]  sm:min-h-[650px] flex flex-col pt-5 gap-y-4">
+        <div className="container  mx-auto px-4 ">
           <h4 className="text-[18px] underline">Address Information</h4>
         </div>
 
@@ -310,6 +370,13 @@ const Checkout = () => {
               <Checkbox size="xs" defaultChecked color="red" />
               <label htmlFor="info">Save the information</label>
             </div>
+            <button
+                  onClick={verify}
+                  type="button"
+                  className="w-[200px] sm:h-[50px] mt-4 outline-none border-none bg-red-500 text-white sm:text-[16px] text-[14px] text-center cursor-pointer rounded-md"
+                >
+                  VERIFY ADDRESS
+                </button>
           </div>
 
           <div className="container mb-4 w-full  mt-4 sm:w-[48%]  p-4 border  border-gray-300 drop-shadow-lg rounded-lg">
@@ -392,6 +459,7 @@ const Checkout = () => {
                   onClick={handlePayment}
                   type="button"
                   className="w-[120px] sm:h-[50px] mt-4 outline-none border-none bg-red-500 text-white sm:text-[16px] text-[14px] text-center cursor-pointer rounded-md"
+                  //disabled={!isAddressVerified}
                 >
                   PAY NOW
                 </button>

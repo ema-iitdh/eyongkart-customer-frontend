@@ -29,7 +29,7 @@ const RelatedProduct = ({ productId }) => {
   if (currentProduct) {
     relatedProducts = relatedproducts?.products?.filter((product) => {
       const subcategoryMatch =
-        product.subcategory.category === currentProduct.subcategory.category;
+        product?.subcategory?.category === currentProduct?.subcategory?.category;//Optional Chaning
       const isDifferentProduct = product._id !== currentProduct._id;
 
       return subcategoryMatch && isDifferentProduct;
