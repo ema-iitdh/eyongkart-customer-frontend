@@ -32,7 +32,7 @@ const Footer = () => {
                     className="text-primary font-semibold tracking-widest text-xl uppercase sm:text-2xl"
                   >
                     <img
-                      className="ml-24 sm:ml-0 mb-1 object-contain w-[100px] sm:h-[70px] h-[70px]"
+                      className="ml-24 sm:ml-0 mb-1 object-cover w-[100px] sm:h-[70px] h-[70px]"
                       src="/logo.png"
                       alt="Logo"
                     />

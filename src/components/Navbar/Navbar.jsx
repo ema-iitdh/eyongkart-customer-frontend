@@ -119,11 +119,11 @@ const Navbar = () => {
     <>
       <div className=" bg-white duration-200 z-40 fixed top-0 right-0 left-0">
         <div className=" p-2 relative ">
-          <div className=" container flex justify-between items-center sm:text-[16px] ">
+          <div className=" pr-4 flex justify-between items-center sm:text-[16px] ">
             <div className="flex items-center gap-7 ">
               <NavLink to="/" onClick={handleScrollToTop}>
                 <img
-                  className=" object-contain w-[100px] sm:h-[60px] h-[50px]"
+                  className=" w-[100px] h-[50px] object-cover sm:h-[60px]"
                   src="/logo.png"
                   alt=""
                 />
@@ -205,14 +205,14 @@ const Navbar = () => {
                     : "-translate-x-full"
                 }`}
               >
-                <div className="p-4">
+                <div className="p-2">
                   <div className="flex justify-between">
                     <NavLink
                       to="/"
-                      className="text-primary tracking-widest uppercase sm:text-3xl"
+                      className="text-primary  tracking-widest uppercase sm:text-3xl"
                     >
                       <img
-                        className="w-[55px] h-[50px] object-contain mb-3"
+                        className="w-[100px] h-[50px] object-cover mb-2 "
                         src="/logo.png"
                         alt="Logo"
                       />

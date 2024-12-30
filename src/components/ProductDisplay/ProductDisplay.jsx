@@ -85,7 +85,7 @@ const ProductDisplay = (props) => {
                       <div className="flex justify-center w-full sm:w-[520px] ">
                         <div className="w-full pr-3 sm:h-[520px] h-[400px]">
                           <img
-                            className="w-full p-3 h-full object-cover  rounded-md"
+                            className="w-full p-3 h-full object-cover rounded-md"
                             src={
                               mainImg ||
                               `${
