@@ -1,29 +1,29 @@
-import React, { useLayoutEffect } from "react";
-import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
-import ChatBox from "../Chat/ChatBox";
+import React, { useLayoutEffect } from 'react';
+import Navbar from '../common/Navbar/Navbar';
+import Footer from '../Footer/Footer';
+import ChatBox from '../Chat/ChatBox';
 
 const TermsAndConditions = () => {
   useLayoutEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   }, []);
   return (
     <>
       <Navbar />
-      <div className="bg-gray-50 min-h-screen py-12 px-4 sm:px-8">
-        <div className="max-w-4xl mx-auto">
-          <header className="mb-8 text-center">
-            <h1 className="sm:text-3xl text-2xl font-bold text-gray-900 mt-6">
+      <div className='bg-gray-50 min-h-screen py-12 px-4 sm:px-8'>
+        <div className='max-w-4xl mx-auto'>
+          <header className='mb-8 text-center'>
+            <h1 className='sm:text-3xl text-2xl font-bold text-gray-900 mt-6'>
               Terms and Conditions
             </h1>
           </header>
 
-          <main className="space-y-6 text-gray-700 text-sm sm:text-base">
+          <main className='space-y-6 text-gray-700 text-sm sm:text-base'>
             <section>
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800 mb-2">
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800 mb-2'>
                 Introduction
               </h2>
               <p>
@@ -35,10 +35,10 @@ const TermsAndConditions = () => {
             </section>
 
             <section>
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800 mb-2">
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800 mb-2'>
                 Your Responsibilities
               </h2>
-              <ul className="list-disc pl-5">
+              <ul className='list-disc pl-5'>
                 <li>
                   Provide accurate and up-to-date information when registering.
                 </li>
@@ -54,10 +54,10 @@ const TermsAndConditions = () => {
             </section>
 
             <section>
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800 mb-2">
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800 mb-2'>
                 Restrictions
               </h2>
-              <ul className="list-disc pl-5">
+              <ul className='list-disc pl-5'>
                 <li>
                   Do not engage in activities that harm or disrupt Eyongkart's
                   operations.
@@ -73,14 +73,14 @@ const TermsAndConditions = () => {
             </section>
 
             <section>
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800 mb-2">
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800 mb-2'>
                 Payments and Refunds
               </h2>
-              <ul className="list-disc pl-5">
+              <ul className='list-disc pl-5'>
                 <li>All payments must be completed at the time of purchase.</li>
                 <li>
-                  Refunds are processed in accordance with our{" "}
-                  <span className="font-medium">Refund Policy</span>. Refer to
+                  Refunds are processed in accordance with our{' '}
+                  <span className='font-medium'>Refund Policy</span>. Refer to
                   the policy for detailed terms.
                 </li>
                 <li>
@@ -91,7 +91,7 @@ const TermsAndConditions = () => {
             </section>
 
             <section>
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800 mb-2">
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800 mb-2'>
                 Liability
               </h2>
               <p>
@@ -102,7 +102,7 @@ const TermsAndConditions = () => {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
+              <h2 className='text-xl font-semibold text-gray-800 mb-2'>
                 Termination
               </h2>
               <p>
@@ -113,18 +113,18 @@ const TermsAndConditions = () => {
             </section>
 
             <section>
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800 mb-2">
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800 mb-2'>
                 Privacy
               </h2>
               <p>
-                Your privacy is important to us. Please review our{" "}
-                <span className="font-medium">Privacy Policy</span> to
+                Your privacy is important to us. Please review our{' '}
+                <span className='font-medium'>Privacy Policy</span> to
                 understand how we handle your data.
               </p>
             </section>
 
             <section>
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800 mb-2">
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800 mb-2'>
                 Updates
               </h2>
               <p>
@@ -135,15 +135,15 @@ const TermsAndConditions = () => {
             </section>
 
             <section>
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800 mb-2">
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800 mb-2'>
                 Contact
               </h2>
               <p>
                 If you have any questions or concerns about these Terms and
-                Conditions, feel free to contact us at{" "}
+                Conditions, feel free to contact us at{' '}
                 <a
-                  href="mailto:support@eyongkart.com"
-                  className="text-blue-600 underline"
+                  href='mailto:support@eyongkart.com'
+                  className='text-blue-600 underline'
                 >
                   support@eyongkart.com
                 </a>

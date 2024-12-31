@@ -1,91 +1,155 @@
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
-
-import { fetchFooter, fetchFooterSub } from "../../BaseURL/Footer";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { v4 } from 'uuid';
 
 const Footer = () => {
-  const { data: footer = {} } = useQuery({
-    queryKey: ["footer"],
-    queryFn: fetchFooter,
-  });
-  const footerdata = footer.footer || [];
-
-  const { data: footersub = {} } = useQuery({
-    queryKey: ["footersub"],
-    queryFn: fetchFooterSub,
-  });
-
-  const footerdatasub = footersub.footerSubHeading || [];
-  // console.log("subfooter", footerdatasub);
-
   return (
-    <div className="bg-gray-100">
-      <div className="container">
-        <div className="grid md:grid-rows-1 ">
-          <div className="py-8 px-2">
-            {footerdata?.map((footer) => {
-              return (
-                <div key={footer._id}>
-                  <a
-                    href="#"
-                    className="text-primary font-semibold tracking-widest text-xl uppercase sm:text-2xl"
-                  >
-                    <img
-                      className="ml-24 sm:ml-0 mb-1 object-contain w-[100px] sm:h-[70px] h-[70px]"
-                      src="/logo.png"
-                      alt="Logo"
-                    />
-                    {footer?.title}
-                  </a>
-                  <p className="text-gray-600 sm:text-[18px] text-[16px] pt-3">
-                    {footer?.description}
-                  </p>
-                </div>
-              );
-            })}
+    <footer className='bg-gradient-to-b from-gray-50 to-gray-100'>
+      <div className='container mx-auto px-4 pt-16 pb-8'>
+        <div className='grid lg:grid-cols-4 md:grid-cols-2 gap-12'>
+          {/* Brand Section */}
+          <div className='col-span-1'>
+            <div className='flex flex-col space-y-4'>
+              <img
+                className='w-[180px] h-[100px] object-contain'
+                src='/logo_latest.jpeg'
+                alt='EyongKart Logo'
+              />
+              <p className='text-gray-600 text-sm leading-relaxed'>
+                Discover the rich heritage of handloom products at EyongKart. We
+                bring you authentic, handcrafted treasures that celebrate
+                traditional artisanship and cultural excellence.
+              </p>
+              <div className='flex space-x-4 pt-4'>
+                <Link
+                  to='/facebook'
+                  className='text-gray-600 hover:text-blue-600 transition-colors'
+                >
+                  <FaFacebook size={24} />
+                </Link>
+                <Link
+                  to='/twitter'
+                  className='text-gray-600 hover:text-blue-400 transition-colors'
+                >
+                  <FaTwitter size={24} />
+                </Link>
+                <Link
+                  to='/instagram'
+                  className='text-gray-600 hover:text-pink-600 transition-colors'
+                >
+                  <FaInstagram size={24} />
+                </Link>
+                <Link
+                  to='/linkedin'
+                  className='text-gray-600 hover:text-blue-800 transition-colors'
+                >
+                  <FaLinkedin size={24} />
+                </Link>
+              </div>
+            </div>
           </div>
-          {/* Footer links */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-4">
-            {footerdatasub?.map((data) => (
-              <div key={data._id}>
+
+          {/* Quick Links */}
+          <div className='col-span-1'>
+            <h3 className='text-lg font-bold mb-6 text-gray-900'>
+              Quick Links
+            </h3>
+            <ul className='space-y-3'>
+              {['Home', 'About Us', 'Products', 'Contact'].map(
+                (item, index) => (
+                  <li key={v4()}>
+                    <Link
+                      to={
+                        item === 'Home'
+                          ? '/'
+                          : `/${item.toLowerCase().replace(' ', '')}`
+                      }
+                      className='text-gray-600 hover:text-red-500 transition-colors duration-300 text-sm flex items-center'
+                    >
+                      <span className='hover:translate-x-1 transition-transform duration-300'>
+                        {item}
+                      </span>
+                    </Link>
+                  </li>
+                )
+              )}
+            </ul>
+          </div>
+
+          {/* Customer Service */}
+          <div className='col-span-1'>
+            <h3 className='text-lg font-bold mb-6 text-gray-900'>
+              Customer Service
+            </h3>
+            <ul className='space-y-3'>
+              {[
+                ['Shipping & Delivery', '/shipping'],
+                ['Returns & Refunds', '/cancel'],
+                ['Terms & Conditions', '/tac'],
+                ['Privacy Policy', '/privacypolicy'],
+              ].map(([text, path], index) => (
+                <li key={v4()}>
+                  <Link
+                    to={path}
+                    className='text-gray-600 hover:text-red-500 transition-colors duration-300 text-sm flex items-center'
+                  >
+                    <span className='hover:translate-x-1 transition-transform duration-300'>
+                      {text}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div className='col-span-1'>
+            <h3 className='text-lg font-bold mb-6 text-gray-900'>
+              Get In Touch
+            </h3>
+            <div className='space-y-4'>
+              <div className='flex items-start space-x-3'>
+                <div className='min-w-[24px] text-red-500'>📧</div>
                 <div>
-                  <h1 className="text-xl font-bold sm:text-left mb-3 dark:text-white">
-                    {data.name}
-                  </h1>
-                  <ul className="text-xl">
-                    {data?.footerlink?.map((link) => (
-                      <li key={link._id}>
-                        <Link
-                          to={
-                            link.name === "About Us"
-                              ? "/about"
-                              : link.name === "Privacy Policy"
-                              ? "/privacypolicy"
-                              : link.name === "Term and Conditions"
-                              ? "/tac"
-                              : link.name === "Cancellation & Refund"
-                              ? "/cancel"
-                              : link.name === "Shipping & Delivery"
-                              ? "/shipping"
-                              : link.name === "Contact Us"
-                              ? "/contact"
-                              : "/"
-                          }
-                          className="text-gray-600 sm:text-[16px] text-[14px] hover:text-red-500 cursor-pointer duration-300"
-                        >
-                          {link?.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                  <p className='text-gray-600 text-sm'>support@eyongkart.com</p>
                 </div>
               </div>
-            ))}
+              <div className='flex items-start space-x-3'>
+                <div className='min-w-[24px] text-red-500'>📞</div>
+                <div>
+                  <p className='text-gray-600 text-sm'>+91 123 456 7890</p>
+                </div>
+              </div>
+              <div className='flex items-start space-x-3'>
+                <div className='min-w-[24px] text-red-500'>📍</div>
+                <div>
+                  <p className='text-gray-600 text-sm'>
+                    Uripok,
+                    <br />
+                    Manipur, India
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className='mt-16 pt-8 border-t border-gray-200'>
+          <div className='flex flex-col md:flex-row justify-between items-center'>
+            <p className='text-gray-600 text-sm'>
+              © {new Date().getFullYear()} EyongKart. All rights reserved.
+            </p>
+            <div className='mt-4 md:mt-0'>
+              <p className='text-gray-500 text-sm'>
+                Crafted with ❤️ for Manipur (Relief Camp) Artisans
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

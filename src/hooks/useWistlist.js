@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
-import { Axios } from "../../api";
-import { toast } from "react-toastify";
+import { useState, useEffect, useCallback } from 'react';
+import Axios from '../api/axiosInstance';
+import { toast } from 'react-toastify';
 
 export const useWishlist = () => {
   const [isInWishlist, setIsInWishlist] = useState({}); // Initialize as an object
@@ -9,27 +9,27 @@ export const useWishlist = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await Axios.get("/product/allproduct");
+        const { data } = await Axios.get('/product/allproduct');
 
         if (!Array.isArray(data?.products)) {
-          console.error("Invalid products data:", data);
-          toast.error("Failed to load products.");
+          console.error('Invalid products data:', data);
+          toast.error('Failed to load products.');
           return;
         }
 
         const wishlistState = data.products.reduce((acc, product) => {
           if (product?._id && product?.fav !== undefined) {
-            acc[product._id] = product.fav === "Yes";
+            acc[product._id] = product.fav === 'Yes';
           } else {
-            console.warn("Product missing id or fav:", product);
+            console.warn('Product missing id or fav:', product);
           }
           return acc;
         }, {});
 
         setIsInWishlist(wishlistState);
       } catch (error) {
-        console.error("Error fetching products:", error);
-        toast.error("Failed to load products.");
+        console.error('Error fetching products:', error);
+        toast.error('Failed to load products.');
       } finally {
         setLoading(false);
       }
@@ -41,7 +41,7 @@ export const useWishlist = () => {
   const toggleWishlist = useCallback(
     async (productId) => {
       try {
-        const newFavStatus = isInWishlist[productId] ? "No" : "Yes";
+        const newFavStatus = isInWishlist[productId] ? 'No' : 'Yes';
         const { data } = await Axios.put(`/product/updatefav/${productId}`, {
           fav: newFavStatus,
         });
@@ -49,20 +49,20 @@ export const useWishlist = () => {
         if (data) {
           setIsInWishlist((prev) => ({
             ...prev,
-            [productId]: newFavStatus === "Yes",
+            [productId]: newFavStatus === 'Yes',
           }));
 
-          if (newFavStatus === "Yes") {
-            toast.success("Added to wishlist!");
+          if (newFavStatus === 'Yes') {
+            toast.success('Added to wishlist!');
           } else {
-            toast.info("Removed from wishlist.");
+            toast.info('Removed from wishlist.');
           }
         } else {
-          toast.error("Failed to update wishlist.");
+          toast.error('Failed to update wishlist.');
         }
       } catch (error) {
-        console.error("Error updating wishlist:", error);
-        toast.error("Something went wrong.");
+        console.error('Error updating wishlist:', error);
+        toast.error('Something went wrong.');
       }
     },
     [isInWishlist]

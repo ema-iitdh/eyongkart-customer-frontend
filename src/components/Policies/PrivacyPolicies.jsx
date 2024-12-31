@@ -1,30 +1,30 @@
-import React, { useLayoutEffect } from "react";
-import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
-import ChatBox from "../Chat/ChatBox";
+import React, { useLayoutEffect } from 'react';
+import Navbar from '../common/Navbar/Navbar';
+import Footer from '../Footer/Footer';
+import ChatBox from '../Chat/ChatBox';
 
 const PrivacyPolicy = () => {
   useLayoutEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   }, []);
   return (
     <>
-      <div className="bg-gray-50 min-h-screen py-10 px-5 sm:px-10">
+      <div className='bg-gray-50 min-h-screen py-10 px-5 sm:px-10'>
         <Navbar />
-        <div className="mt-12 pb-10">
-          <h1 className="sm:text-3xl text-2xl font-bold text-center text-gray-900 mb-8">
+        <div className='mt-12 pb-10'>
+          <h1 className='sm:text-3xl text-2xl font-bold text-center text-gray-900 mb-8'>
             Privacy Policy
           </h1>
 
-          <div className="space-y-8 max-w-6xl mx-auto">
-            <section className="space-y-3">
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800">
+          <div className='space-y-8 max-w-6xl mx-auto'>
+            <section className='space-y-3'>
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800'>
                 Introduction
               </h2>
-              <p className="text-gray-700 leading-relaxed">
+              <p className='text-gray-700 leading-relaxed'>
                 At Eyongkart, your privacy is of utmost importance to us. This
                 Privacy Policy explains how we collect, use, and protect your
                 personal information when you interact with our platform. By
@@ -33,11 +33,11 @@ const PrivacyPolicy = () => {
               </p>
             </section>
 
-            <section className="space-y-3">
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800">
+            <section className='space-y-3'>
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800'>
                 Information We Collect
               </h2>
-              <ul className="list-disc pl-6 text-gray-700 space-y-4">
+              <ul className='list-disc pl-6 text-gray-700 space-y-4'>
                 <li>
                   Personal details such as your name, email address, phone
                   number, and delivery address when you create an account or
@@ -54,11 +54,11 @@ const PrivacyPolicy = () => {
               </ul>
             </section>
 
-            <section className="space-y-3">
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800">
+            <section className='space-y-3'>
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800'>
                 How We Use Your Information
               </h2>
-              <ul className="list-disc pl-6 text-gray-700 space-y-4">
+              <ul className='list-disc pl-6 text-gray-700 space-y-4'>
                 <li>
                   To provide seamless shopping experiences, including processing
                   your orders and managing your account.
@@ -75,11 +75,11 @@ const PrivacyPolicy = () => {
               </ul>
             </section>
 
-            <section className="space-y-3">
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800">
+            <section className='space-y-3'>
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800'>
                 Data Protection Measures
               </h2>
-              <p className="text-gray-700 leading-relaxed">
+              <p className='text-gray-700 leading-relaxed'>
                 At Eyongkart, we prioritize the security of your personal
                 information. We implement advanced encryption, secure servers,
                 and regularly update our security practices to prevent
@@ -87,11 +87,11 @@ const PrivacyPolicy = () => {
               </p>
             </section>
 
-            <section className="space-y-3">
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800">
+            <section className='space-y-3'>
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800'>
                 Sharing Information with Third Parties
               </h2>
-              <p className="text-gray-700 leading-relaxed">
+              <p className='text-gray-700 leading-relaxed'>
                 We do not sell or rent your personal information to third
                 parties. However, we may share your information with trusted
                 partners, such as delivery services and payment gateways, to
@@ -100,11 +100,11 @@ const PrivacyPolicy = () => {
               </p>
             </section>
 
-            <section className="space-y-3">
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800">
+            <section className='space-y-3'>
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800'>
                 Your Rights
               </h2>
-              <p className="text-gray-700 leading-relaxed">
+              <p className='text-gray-700 leading-relaxed'>
                 You have full control over your personal data. You can request
                 to access, update, or delete your information by reaching out to
                 us. To exercise these rights, please contact us using the
@@ -112,11 +112,11 @@ const PrivacyPolicy = () => {
               </p>
             </section>
 
-            <section className="space-y-3">
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800">
+            <section className='space-y-3'>
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800'>
                 Policy Updates
               </h2>
-              <p className="text-gray-700 leading-relaxed">
+              <p className='text-gray-700 leading-relaxed'>
                 Our Privacy Policy is subject to periodic updates to reflect
                 changes in our practices or comply with legal requirements. We
                 encourage you to review this page regularly to stay informed
@@ -124,15 +124,15 @@ const PrivacyPolicy = () => {
               </p>
             </section>
 
-            <section className="space-y-3">
-              <h2 className="sm:text-2xl text-xl font-semibold text-gray-800">
+            <section className='space-y-3'>
+              <h2 className='sm:text-2xl text-xl font-semibold text-gray-800'>
                 Contact Us
               </h2>
-              <p className="text-gray-700 leading-relaxed">
+              <p className='text-gray-700 leading-relaxed'>
                 If you have any questions or concerns regarding our Privacy
                 Policy, please feel free to contact us at:
               </p>
-              <p className="text-gray-700 font-semibold">
+              <p className='text-gray-700 font-semibold'>
                 Email: support@eyongkart.com
               </p>
             </section>
