@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Heading from "../Shared/Heading";
-import ProductCard from "./ProductCard";
-import { Axios } from "../../../api";
-import { useQuery } from "@tanstack/react-query";
-import MenProduct from "./MenProduct";
-import AllProductList from "./AllProductList";
-import { Spinner } from "./Spinner";
+import React, { useEffect, useState } from 'react';
+import Heading from '../Shared/Heading';
+import ProductCard from './ProductCard';
+import Axios from '../../api/axiosInstance';
+import { useQuery } from '@tanstack/react-query';
+import MenProduct from './MenProduct';
+import AllProductList from './AllProductList';
+import { Spinner } from './Spinner';
 
 const Products = () => {
   const [products, setProducts] = useState();
@@ -18,8 +18,8 @@ const Products = () => {
     try {
       setLoading(true);
       const res = await Axios({
-        url: "/product/allproduct",
-        method: "GET",
+        url: '/product/allproduct',
+        method: 'GET',
       });
       setProducts(res.data.products);
       setLoading(false);
@@ -30,7 +30,7 @@ const Products = () => {
   };
 
   const { data: productList, isLoading } = useQuery({
-    queryKey: ["products"],
+    queryKey: ['products'],
     queryFn: getAllProduct,
   });
 
@@ -38,12 +38,12 @@ const Products = () => {
   const filteredProduct = () => {
     if (productList?.products) {
       const filteredWomenProduct = productList?.products?.filter(
-        (productListItem) => productListItem?.gender === "Female"
+        (productListItem) => productListItem?.gender === 'Female'
       );
       setFilterWomnenProductList(filteredWomenProduct);
 
       const filteredMenProduct = productList?.products?.filter(
-        (productListItem) => productListItem?.gender === "Male"
+        (productListItem) => productListItem?.gender === 'Male'
       );
       setFilterMenProductList(filteredMenProduct);
     }
@@ -59,41 +59,41 @@ const Products = () => {
 
   if (loading || isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className='flex justify-center items-center min-h-screen'>
         <Spinner />
       </div>
     );
   }
 
   return (
-    <div className="overflow-hidden rounded-3xl min-h-[500px] sm:min-h-[650px] flex items-center flex-col pt-6 gap-y-3.5">
+    <div className='overflow-hidden rounded-3xl min-h-[500px] sm:min-h-[650px] flex items-center flex-col pt-6 gap-y-3.5'>
       <div>
-        <Heading title="Latest Products" subtitle={"Explore our products"} />
+        <Heading title='Latest Products' subtitle={'Explore our products'} />
         <AllProductList
           AllProduct={productList}
-          type="all"
+          type='all'
           setWishlistUpdate={setWishlistUpdate}
         />
       </div>
 
       <div>
-        <Heading title="Men Products" subtitle={"Explore our men products"} />
+        <Heading title='Men Products' subtitle={'Explore our men products'} />
         <MenProduct
           filteredMenProductList={filteredMenProductList}
-          type="men"
+          type='men'
           setWishlistUpdate={setWishlistUpdate}
         />
       </div>
 
       <div>
         <Heading
-          title="Women Products"
-          subtitle={"Explore our women products"}
+          title='Women Products'
+          subtitle={'Explore our women products'}
         />
         <ProductCard
           filteredWomenProductList={filteredWomenProductList}
           product={productList?.products.map((product) => product)}
-          type="women"
+          type='women'
           setWishlistUpdate={setWishlistUpdate}
         />
       </div>

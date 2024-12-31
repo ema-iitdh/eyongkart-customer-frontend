@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { createContext } from "react";
-import all_product from "../../assets/all_products";
-import { Axios } from "../../../api";
+import React, { useState, useEffect } from 'react';
+import { createContext } from 'react';
+import all_product from '../../assets/all_products';
+import Axios from '../../api/axiosInstance';
 
 export const ShopContext = createContext();
 
 const getInitialCartItems = () => {
-  const cart = window.localStorage.getItem("cartItems");
+  const cart = window.localStorage.getItem('cartItems');
   return cart ? JSON.parse(cart) : [];
 };
 
@@ -17,21 +17,21 @@ const ShopContextProvider = (props) => {
 
   const buyNow = (id) => {
     const addData = data.filter((data) => data._id === id);
-    localStorage.setItem("checkoutItem", JSON.stringify(addData));
+    localStorage.setItem('checkoutItem', JSON.stringify(addData));
     setBuyProduct(addData);
   };
 
   const buyFromCart = () => {
-    let items = localStorage.getItem("cartItems");
+    let items = localStorage.getItem('cartItems');
     if (items) {
       items = JSON.parse(items);
-      localStorage.setItem("checkoutItem", JSON.stringify(items));
+      localStorage.setItem('checkoutItem', JSON.stringify(items));
       setBuyProduct(items);
     }
   };
 
   const fetchProducts = async () => {
-    const res = await Axios.get("/product/allproduct");
+    const res = await Axios.get('/product/allproduct');
     setData(res.data.products);
     console.log(data);
   };
@@ -63,7 +63,7 @@ const ShopContextProvider = (props) => {
           ];
         }
         // Save updated cart to localStorage
-        localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
         return updatedCartItems;
       });
     }
@@ -98,7 +98,7 @@ const ShopContextProvider = (props) => {
       const updatedCartItems = prev.filter((item) => item._id !== itemId);
 
       // Update the cart in local storage
-      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
 
       return updatedCartItems;
 
