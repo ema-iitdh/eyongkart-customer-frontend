@@ -1,43 +1,45 @@
-import { addressService } from '@/api/services/address.service';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import { addressService } from "@/api/services/address.service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 export const useAddress = () => {
   return useQuery({
-    queryKey: ['address'],
+    queryKey: ["address"],
     queryFn: addressService.getMyAddress,
   });
 };
 
 export const useCreateAddress = () => {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationKey: ['address'],
+    mutationKey: ["address"],
     mutationFn: addressService.addAddress,
     onSuccess() {
-      toast.success('Address added successfully');
+      queryClient.invalidateQueries(["address"]);
+      toast.success("Address added successfully");
     },
     onError() {
-      toast.error('Failed to add address');
+      toast.error("Failed to add address");
     },
   });
 };
 
 export const useUpdateAddress = () => {
   return useMutation({
-    mutationKey: ['address'],
+    mutationKey: ["address"],
     mutationFn: addressService.updateAddress,
   });
 };
 
 export const useDeleteAddress = () => {
   return useMutation({
-    mutationKey: ['address'],
+    mutationKey: ["address"],
     mutationFn: addressService.deleteAddress,
     onSuccess() {
-      toast.success('Address deleted successfully');
+      toast.success("Address deleted successfully");
     },
     onError() {
-      toast.error('Failed to delete address');
+      toast.error("Failed to delete address");
     },
   });
 };
