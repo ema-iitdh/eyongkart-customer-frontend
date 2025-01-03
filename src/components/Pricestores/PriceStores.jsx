@@ -47,7 +47,7 @@ const PriceStores = () => {
   }
 
   return (
-    <section className='py-8 bg-gradient-to-b from-gray-50 to-white'>
+    <section className='py-8'>
       <div className='container mx-auto px-4'>
         <div className='flex  items-center justify-center mb-2'>
           <h2 className='text-3xl items-center flex drop-shadow-lg text-center font-bold text-gray-800'>

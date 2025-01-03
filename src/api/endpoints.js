@@ -1,6 +1,7 @@
 export const API_ENDPOINTS = {
   auth: {
     login: '/user/login',
+    googleLogin: '/user/googlelogin',
     register: '/user/register',
     logout: '/user/logout',
     // TODO: WILL IMPLEMENT THIS LATER
@@ -63,6 +64,7 @@ export const API_ENDPOINTS = {
     detail: (id) => `/product/getOneProduct/${id}`,
     getProductByShopId: (shopId) => `/product/shop/${shopId}`,
     getProductBySellerId: (sellerId) => `/product/seller/${sellerId}`,
+    carousel: '/product/carousel',
     // !!! ADMIN ONLY
     add: '/product/create',
     update: (productId) => `/product/update/${productId}`,
@@ -89,5 +91,10 @@ export const API_ENDPOINTS = {
     delete: (shopId) => `/shop/delete/${shopId}`,
     // !! Implement this ASAP
     list: '/shop/getAllShops',
+  },
+  eyongkartInfo: {
+    getEyongkartInfo: '/eyongkartInfo/get',
+    updateEyongkartInfo: (eyongkartInfoId) =>
+      `/eyongkartInfo/update/${eyongkartInfoId}`,
   },
 };

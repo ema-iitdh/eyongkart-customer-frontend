@@ -21,10 +21,7 @@ export default function Wishlist() {
 
   // Get product details for each wishlist item
   const { data: products, isLoading: isProductsLoading } = useQuery({
-    queryKey: [
-      'products',
-      wishlistData?.wishlist?.items?.map((item) => item.product),
-    ],
+    queryKey: ['wishlist-products', wishlistData?.wishlist?.items],
     queryFn: async () => {
       // Return early if no items
       if (!wishlistData?.wishlist?.items?.length) {
@@ -33,33 +30,49 @@ export default function Wishlist() {
 
       // Fetch products
       try {
-        const productResponses = await Promise.all(
-          wishlistData.wishlist.items.map((item) =>
-            productService.getProductById(item.product)
-          )
+        const productPromises = wishlistData.wishlist.items.map((item) =>
+          productService.getProductById(item.product)
         );
-        return productResponses;
+
+        const responses = await Promise.all(productPromises);
+
+        // Filter out any failed requests and map to product data
+        const validProducts = responses
+          .filter((response) => response?.product) // Only keep successful responses
+          .map((response) => response.product);
+
+        if (validProducts.length === 0) {
+          throw new Error('No valid products found');
+        }
+
+        return validProducts;
       } catch (error) {
-        console.error('Error fetching products:', error);
-        return [];
+        console.error('Error fetching wishlist products:', error);
+        throw error; // Let React Query handle the error state
       }
     },
     enabled: !!wishlistData?.wishlist?.items?.length,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    retry: 2, // Retry failed requests twice
   });
 
   useEffect(() => {
     if (wishlistData?.wishlist?.items && products) {
-      const enrichedWishlist = wishlistData.wishlist.items.map(
-        (item, index) => ({
-          ...item,
-          product: {
-            ...products[index]?.product,
-          },
-          variant: products?.[index]?.product?.variants?.find(
-            (variant) => variant._id === item?.variantId?.[0]
-          ),
+      const enrichedWishlist = wishlistData.wishlist.items
+        .map((item) => {
+          const productData = products.find((p) => p._id === item.product);
+          if (!productData) return null;
+
+          return {
+            ...item,
+            product: productData,
+            variant: productData.variants?.find(
+              (variant) => variant._id === item?.variantId?.[0]
+            ),
+          };
         })
-      );
+        .filter(Boolean); // Remove any null items
+
       setLocalWishlist(enrichedWishlist);
     } else {
       setLocalWishlist([]);

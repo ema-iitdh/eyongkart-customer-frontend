@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProducts } from '@/features/products/hooks/useProducts';
 import { debounce } from 'lodash';
+import { ROUTES } from '@/constants/routes';
 
 const SearchBar = () => {
   const [searchProduct, setSearchProduct] = useState('');
+  const [searchInputValue, setSearchInputValue] = useState(''); // New state for input value
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const searchRef = useRef(null);
   const navigate = useNavigate();
@@ -24,11 +26,15 @@ const SearchBar = () => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setIsSearchOpen(false);
         setSearchProduct('');
+        setSearchInputValue('');
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      debouncedSetSearch.cancel(); // Cancel any pending debounce on unmount
+    };
   }, []);
 
   const debouncedSetSearch = debounce((value) => {
@@ -37,29 +43,40 @@ const SearchBar = () => {
 
   const handleOnChange = (e) => {
     const value = e.target.value;
+    setSearchInputValue(value); // Update input value immediately
     debouncedSetSearch(value);
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && searchProduct) {
-      navigate(`/search/${searchProduct}`);
+  const handleSearch = () => {
+    if (searchInputValue.trim()) {
+      navigate(
+        `${ROUTES.COLLECTIONS}/Result?search=${searchInputValue.trim()}`
+      );
       setSearchProduct('');
+      setSearchInputValue('');
       setIsSearchOpen(false);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    // Changed from handleKeyUp to handleKeyDown
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Prevent default form submission
+      handleSearch();
     }
   };
 
   const handleProductClick = (product) => {
+    if (!product?._id) return; // Guard against invalid product data
     setSearchProduct('');
+    setSearchInputValue('');
     setIsSearchOpen(false);
-    navigate(`/product/${product._id}`);
+    navigate(`${ROUTES.PRODUCT.LIST}/${product._id}`);
   };
 
-  const handleSearch = () => {
-    if (searchProduct) {
-      navigate(`/search/${searchProduct}`);
-      setSearchProduct('');
-      setIsSearchOpen(false);
-    }
+  const clearSearch = () => {
+    setSearchProduct('');
+    setSearchInputValue('');
   };
 
   return (
@@ -109,20 +126,20 @@ const SearchBar = () => {
                 <input
                   type='text'
                   placeholder='Search for products'
+                  value={searchInputValue}
                   className='w-full xl:w-48 py-1.5 px-4 pr-8 rounded-full border border-gray-300 focus:ring-1 focus:ring-gray-300 focus:outline-none text-sm'
                   onChange={handleOnChange}
                   onKeyDown={handleKeyDown}
+                  aria-label='Search products'
                 />
                 <button
                   type='button'
-                  onClick={handleSearch}
+                  onClick={searchInputValue ? clearSearch : handleSearch}
                   className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-red-500 transition-colors flex items-center justify-center'
+                  aria-label={searchInputValue ? 'Clear search' : 'Search'}
                 >
-                  {searchProduct ? (
-                    <IoMdClose
-                      className='w-4 h-4 cursor-pointer'
-                      onClick={() => setSearchProduct('')}
-                    />
+                  {searchInputValue ? (
+                    <IoMdClose className='w-4 h-4 cursor-pointer' />
                   ) : (
                     <FaSearch className='w-4 h-4' />
                   )}
@@ -144,7 +161,7 @@ const SearchBar = () => {
                   {filteredProducts.map((product) => (
                     <button
                       type='button'
-                      key={product.id}
+                      key={product.id || product._id}
                       className='w-full px-3 py-1.5 text-left hover:bg-red-50 transition-colors flex items-center gap-2 text-sm'
                       onClick={() => handleProductClick(product)}
                     >

@@ -17,7 +17,7 @@ const TopSales = () => {
 
   const filteredProducts = useMemo(() => {
     return productData?.products
-      .filter((product) =>
+      ?.filter((product) =>
         product?.variants.some(
           (variant) => variant.price.discount >= minDiscount
         )

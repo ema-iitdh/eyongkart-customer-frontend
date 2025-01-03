@@ -1,9 +1,8 @@
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import React from 'react';
-import './App.css';
 
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Outlet } from 'react-router-dom';
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,6 +11,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AppRoutes from './routes';
 import { ROUTES } from './constants/routes';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import ErrorBoundary from './components/common/ErrorBoundary';
 
 const queryclient = new QueryClient({
   defaultOptions: {
@@ -24,7 +25,7 @@ const queryclient = new QueryClient({
         console.error('Query error:', error);
         if (error.response?.status === 401) {
           // Handle unauthorized error
-          window.location.href = '/login';
+          localStorage.clear();
         } else if (error.response?.status === 404) {
           // Handle not found error
           console.error('Resource not found');
@@ -48,16 +49,42 @@ const queryclient = new QueryClient({
 });
 
 const App = () => {
+  // Get Google client ID from environment variable
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+  // Validate client ID exists
+  if (!googleClientId) {
+    console.error(
+      'Missing Google OAuth client ID. Please check your .env file'
+    );
+    return null;
+  }
+
   return (
-    <QueryClientProvider client={queryclient}>
-      <MantineProvider>
-        <ToastContainer />
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </MantineProvider>
-      <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryclient}>
+        <GoogleOAuthProvider clientId={googleClientId}>
+          <MantineProvider>
+            <ToastContainer
+              position='top-right'
+              autoClose={500}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme='light'
+            />
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
+          </MantineProvider>
+        </GoogleOAuthProvider>
+        <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 };
 

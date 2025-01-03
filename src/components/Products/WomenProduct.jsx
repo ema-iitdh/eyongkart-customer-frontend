@@ -5,9 +5,11 @@ import ProductCard from '../common/ProductCard';
 import HorizontalScrollWithViewMore from '../common/HorizontalScrollWithViewMore';
 import { ROUTES } from '@/constants/routes';
 
-export default function MenProduct() {
+export default function WomenProduct() {
   const navigate = useNavigate();
-  const { data: products, isLoading } = useProducts({ filter: 'gender=Male' });
+  const { data: products, isLoading } = useProducts({
+    filter: 'gender=Female',
+  });
 
   if (isLoading) {
     return (
@@ -23,14 +25,14 @@ export default function MenProduct() {
     <div className='py-8 container mx-auto'>
       <div className='flex justify-center items-center mb-6'>
         <h2 className='text-3xl font-bold text-gray-700 drop-shadow-lg'>
-          Men's Collection
+          Women's Collection
         </h2>
       </div>
 
       <HorizontalScrollWithViewMore
         initialItemsToShow={4}
         itemClassName='w-[280px]'
-        onViewMore={() => navigate(`${ROUTES.COLLECTIONS}/Men?gender=Male`)}
+        onViewMore={() => navigate(`${ROUTES.COLLECTIONS}/Women?gender=Female`)}
       >
         {menProducts?.map((product) => (
           <ProductCard key={product._id} product={product} />

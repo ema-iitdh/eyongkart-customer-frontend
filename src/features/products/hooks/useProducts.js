@@ -1,10 +1,21 @@
 import { productService } from '@/api/services/product.service';
 import { useQuery } from '@tanstack/react-query';
 
-export const useProducts = ({ filter = '' }) => {
+export const useProducts = ({ filter = '' }, options) => {
   return useQuery({
     queryKey: ['products', filter],
-    queryFn: () => productService.getProducts({ filter }),
+    queryFn: () => {
+      console.log('inside queryFn');
+      return productService.getProducts({ filter });
+    },
+    ...options,
+  });
+};
+
+export const useCarouselProducts = () => {
+  return useQuery({
+    queryKey: ['carouselProducts'],
+    queryFn: () => productService.getProducts({ filter: 'limit=50' }),
   });
 };
 

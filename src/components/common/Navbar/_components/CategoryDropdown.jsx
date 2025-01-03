@@ -1,7 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
-
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useCategory } from '@/features/category/hooks/useCategory';
@@ -43,7 +42,7 @@ export default function CategoryDropdown() {
 
   return (
     <nav className='hidden lg:block'>
-      <ul className='flex items-center gap-8 text-sm font-["Poppins"]'>
+      <ul className='flex items-center gap-8 text-sm font-["Inter"]'>
         {[
           { title: 'MEN', items: filteredMen },
           { title: 'WOMEN', items: filteredWomen },
@@ -58,7 +57,7 @@ export default function CategoryDropdown() {
           >
             <motion.button
               type='button'
-              className='flex items-center gap-1 py-4 font-medium hover:text-red-500 transition-colors'
+              className='flex items-center gap-1 py-4 font-semibold hover:text-red-500 transition-colors'
               onClick={() =>
                 setActiveDropdown(title === activeDropdown ? null : title)
               }
@@ -93,7 +92,7 @@ export default function CategoryDropdown() {
                   }}
                 >
                   {items.length === 0 && (
-                    <div className='text-sm text-gray-500'>
+                    <div className='text-sm text-gray-500 font-medium'>
                       No categories found
                     </div>
                   )}
@@ -116,7 +115,8 @@ export default function CategoryDropdown() {
                       >
                         <NavLink
                           to={`${ROUTES.COLLECTIONS}/${category.name}?category=${category._id}`}
-                          className='block font-semibold text-gray-800 hover:text-red-500 transition-colors tracking-wide'
+                          className='block font-bold text-gray-800 hover:text-red-500 transition-colors tracking-wide'
+                          onClick={() => setActiveDropdown(null)}
                         >
                           {category.name}
                         </NavLink>
@@ -136,7 +136,8 @@ export default function CategoryDropdown() {
                               >
                                 <NavLink
                                   to={`${ROUTES.COLLECTIONS}/${subCategory.subCategoryName}?category=${category._id}&subcategory=${subCategory._id}`}
-                                  className='text-sm text-gray-600 hover:text-red-500 transition-colors block font-light'
+                                  className='text-sm text-gray-600 hover:text-red-500 transition-colors block font-medium'
+                                  onClick={() => setActiveDropdown(null)}
                                 >
                                   {subCategory.subCategoryName}
                                 </NavLink>

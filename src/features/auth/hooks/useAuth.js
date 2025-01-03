@@ -64,7 +64,11 @@ export const useSignup = () => {
     mutationFn: authService.register,
     onSuccess: (data) => {
       queryClient.invalidateQueries('user');
-      navigate(ROUTES.LOGIN);
+      navigate(ROUTES.LOGIN, {
+        state: {
+          message: 'Account created successfully! Please login to continue.',
+        },
+      });
     },
   });
 };
@@ -72,6 +76,7 @@ export const useSignup = () => {
 // Logout hook
 export const useLogout = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { logout } = useAuthenticationStore();
 
   return useMutation({
@@ -80,9 +85,26 @@ export const useLogout = () => {
       logout();
       queryClient.clear();
       toast.success('Logged out successfully');
+      navigate(ROUTES.LOGIN, { replace: true });
     },
     onError() {
       toast.error('Failed to logout');
+    },
+  });
+};
+
+export const useGoogleLogin = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { setIsAuthenticated, setUser } = useAuthenticationStore();
+
+  return useMutation({
+    mutationFn: authService.googleLogin,
+    onSuccess: (data) => {
+      setIsAuthenticated(true);
+      setUser(data.user);
+      queryClient.invalidateQueries('user');
+      navigate(ROUTES.HOME, { replace: true });
     },
   });
 };

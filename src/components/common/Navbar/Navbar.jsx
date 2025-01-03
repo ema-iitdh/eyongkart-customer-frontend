@@ -48,7 +48,7 @@ const Navbar = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <div className='sticky top-0 right-0 left-0 z-40 bg-white shadow-md px-5'>
+    <div className=' z-40 bg-white shadow-md px-5'>
       <div className='container mx-auto px-2'>
         <div className='flex items-center justify-between h-14'>
           <div className='flex items-center gap-4'>
@@ -94,7 +94,7 @@ const Navbar = () => {
                   <div className='flex items-center gap-2'>
                     {/* <span className='text-sm text-gray-700'>{user?.email}</span> */}
                     <Avatar
-                      src={user?.avatar}
+                      src={user?.picture}
                       alt={user?.email}
                       color='red'
                       size='md'
@@ -104,7 +104,7 @@ const Navbar = () => {
                       <div className='p-4 space-y-3'>
                         <div className='flex items-center gap-3 pb-3 border-b border-gray-200'>
                           <Avatar
-                            src={user?.avatar}
+                            src={user?.picture}
                             alt={user?.email}
                             color='red'
                             size='md'

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaBox, FaCheckCircle, FaClock, FaShoppingBag } from 'react-icons/fa';
 import { Button, Badge } from '@mantine/core';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { CloudinaryConfig } from '../../../Cloudinary';
 import { useGetMyOrders } from '@/features/orders/hooks/userOrders';
 import Navbar from '@/components/common/Navbar/Navbar';
@@ -13,6 +13,13 @@ export default function Orders() {
   const { data: ordersData, isLoading } = useGetMyOrders();
   const [deliveredOrders, setDeliveredOrders] = useState([]);
   const [pendingOrders, setPendingOrders] = useState([]);
+  const { state } = useLocation();
+
+  useEffect(() => {
+    if (state?.message) {
+      toast.success(state.message);
+    }
+  }, [state]);
 
   useEffect(() => {
     if (ordersData?.orders) {

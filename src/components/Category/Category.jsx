@@ -28,7 +28,7 @@ const Category = () => {
   return (
     <div className='bg-[#EFF4FF] py-4'>
       <div className='container mx-auto px-4'>
-        <h2 className='text-xl font-bold text-gray-800 mb-4 text-center'>
+        <h2 className='text-xl font-bold text-gray-800 text-center'>
           Browse Categories
         </h2>
 
@@ -43,11 +43,30 @@ const Category = () => {
           </div>
         ) : (
           <HorizontalScrollerWithButton>
+            <Link
+              to={`${ROUTES.COLLECTIONS}/All Products`}
+              key={'all-products'}
+              className='flex-shrink-0'
+            >
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  background:
+                    'linear-gradient(to right, #EEF2FF, #E0E7FF, #C7D2FE)',
+                }}
+                whileTap={{ scale: 0.95 }}
+                className='px-4 py-2 bg-gradient-to-r from-white via-blue-50 to-indigo-50 rounded-full shadow hover:shadow-md transition-all border border-blue-50'
+              >
+                <span className='text-xs font-medium text-gray-700 whitespace-nowrap tracking-wide'>
+                  All Products
+                </span>
+              </motion.div>
+            </Link>
             {categoryList?.map((item) => (
               <Link
                 to={`${ROUTES.COLLECTIONS}/${item.name}?category=${item._id}`}
                 key={item._id}
-                className='flex-shrink-0 my-2'
+                className='flex-shrink-0'
               >
                 <motion.div
                   whileHover={{

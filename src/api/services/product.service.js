@@ -7,6 +7,11 @@ export const productService = {
     return response.data;
   },
 
+  getCarouselProducts: async () => {
+    const response = await Axios.get(API_ENDPOINTS.products.carousel);
+    return response.data;
+  },
+
   getProductById: async (id) => {
     const response = await Axios.get(API_ENDPOINTS.products.detail(id));
     return response.data;

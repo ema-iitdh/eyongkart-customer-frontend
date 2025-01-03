@@ -9,6 +9,12 @@ export const authService = {
     });
     return response.data;
   },
+  googleLogin: async ({ token }) => {
+    const response = await Axios.post(API_ENDPOINTS.auth.googleLogin, {
+      token,
+    });
+    return response.data;
+  },
   register: async ({ userName, email, password, phone }) => {
     const response = await Axios.post(API_ENDPOINTS.auth.register, {
       userName,
