@@ -105,7 +105,7 @@ const HorizontalScrollerWithButton = ({
       >
         <motion.div
           ref={scrollContainerRef}
-          className='flex gap-4 overflow-x-auto scroll-smooth px-5 lg:px-14 py-4'
+          className='flex gap-1  overflow-x-auto scroll-smooth px-5 lg:px-14 py-4'
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',

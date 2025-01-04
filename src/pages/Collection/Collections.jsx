@@ -1,95 +1,163 @@
 import ProductCard from '@/components/common/ProductCard';
+import ProductCardSkeleton from '@/components/common/ProductCardSkeleton';
 import { useProducts } from '@/features/products/hooks/useProducts';
-import { Loader, Text, Title } from '@mantine/core';
-import { motion } from 'framer-motion';
-import { useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 
-const Collections = () => {
-  const { title } = useParams();
+export default function Collections() {
   const [searchParams] = useSearchParams();
-  const filter = searchParams.toString();
+  const { title } = useParams();
+  const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const { ref, inView } = useInView();
+  const location = useLocation();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    setProducts([]);
+    setPage(1);
+    setIsLoadingMore(false);
+  }, [location.pathname]);
+
+  const { data, isLoading, error } = useProducts(
+    {
+      filter: searchParams.toString() + (page ? `&page=${page}` : ''),
+    },
+    {
+      staleTime: 0,
+      refetchOnMount: true,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+      onSuccess: (data) => {
+        if (page === 1) {
+          setProducts(data?.products || []);
+        } else {
+          const uniqueProducts = data?.products?.filter(
+            (product) => !products.some((p) => p._id === product._id)
+          );
+          setProducts((prev) => [...prev, ...(uniqueProducts || [])]);
+        }
+        setIsLoadingMore(false);
+      },
+    }
+  );
+
+  // Get all products without filters for suggestions
+  const { data: allProductsData } = useProducts(
+    { filter: 'limit=50' },
+    { enabled: !isLoading && data?.products && !data.products.length }
+  );
+
+  const hasNextPage = data?.pagination?.hasNextPage;
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    return () => {
+      setProducts([]);
+      setPage(1);
+      setIsLoadingMore(false);
+    };
   }, []);
 
-  console.log(filter);
+  useEffect(() => {
+    if (inView && hasNextPage && !isLoadingMore) {
+      setIsLoadingMore(true);
+      setPage((prev) => prev + 1);
+    }
+  }, [inView, hasNextPage, isLoadingMore]);
 
-  const { data, isLoading, error } = useProducts({
-    filter,
-  });
-
-  const products = data?.products;
-
-  if (isLoading) {
+  if (isLoading && page === 1) {
     return (
-      <div className='flex justify-center items-center min-h-[400px]'>
-        <Loader size='xl' variant='dots' />
+      <div className='container mx-auto px-2 py-8'>
+        <h1 className='text-4xl font-extrabold text-center my-8'>
+          <div className='h-12 bg-gray-200 rounded animate-pulse w-1/3 mx-auto' />
+        </h1>
+        <div className='grid grid-cols-sm md:grid-cols-md gap-6 gap-y-8'>
+          {[...Array(8)].map((_, index) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            <ProductCardSkeleton key={index} />
+          ))}
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className='flex justify-center items-center min-h-[400px]'>
-        <Text color='red'>Something went wrong. Please try again later.</Text>
+      <div className='min-h-screen flex flex-col justify-center items-center'>
+        <div className='text-red-500 text-xl font-semibold mb-4'>
+          Oops! Something went wrong
+        </div>
+        <div className='text-gray-600'>{error?.message}</div>
+      </div>
+    );
+  }
+
+  // Show "No Products Found" and suggested products
+  if (!isLoading && data?.products && !data.products.length) {
+    return (
+      <div className='container mx-auto px-2 py-8'>
+        <div className='text-center mb-12'>
+          <div className='text-3xl font-bold text-gray-400 mb-4'>
+            No Products Found
+          </div>
+          <p className='text-gray-600'>
+            We couldn't find any products matching your criteria.
+          </p>
+        </div>
+
+        {allProductsData?.products && allProductsData.products.length > 0 && (
+          <div>
+            <h2 className='text-2xl font-bold text-center mb-8'>
+              You might be interested in these products
+            </h2>
+            <div className='grid grid-cols-sm md:grid-cols-md gap-6 gap-y-8'>
+              {allProductsData.products.map((product) => (
+                <div
+                  key={product._id}
+                  className='transform transition-all duration-300 hover:scale-105'
+                >
+                  <ProductCard product={product} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className='w-full'
-    >
-      <div className='text-center mb-12'>
-        <Title
-          order={1}
-          className='text-4xl capitalize font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-800 bg-clip-text text-transparent mb-4 animate-pop'
-        >
-          {title}
-        </Title>
-      </div>
+    <div className=' mx-auto pb-8'>
+      <h1 className='text-xl md:text-3xl font-extrabold text-center mb-8 '>
+        <span className='relative bg-gradient-to-r group from-yellow-500 to-orange-400 bg-clip-text text-transparent uppercase tracking-wider'>
+          {title || 'Collections'}
+          <div className='h-[3px] w-1/3 group-hover:w-full transition-all duration-300 absolute -bottom-1 rounded-full left-0 bg-gradient-to-r from-yellow-500 to-orange-400' />
+        </span>
+      </h1>
 
-      <motion.div
-        className='grid grid-cols-sm md:grid-cols-md gap-4'
-        variants={{
-          hidden: { opacity: 0 },
-          show: {
-            opacity: 1,
-            transition: {
-              staggerChildren: 0.1,
-            },
-          },
-        }}
-        initial='hidden'
-        animate='show'
-      >
+      <div className='grid grid-cols-sm md:grid-cols-md gap-1 gap-y-8'>
         {products?.map((product) => (
-          <motion.div
+          <div
             key={product._id}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              show: { opacity: 1, y: 0 },
-            }}
+            className='transform transition-all duration-300 hover:scale-105'
           >
             <ProductCard product={product} />
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
 
-      {products?.length === 0 && (
-        <div className='text-center py-12'>
-          <Text size='lg' color='dimmed'>
-            No products found in the collection.
-          </Text>
+      {isLoadingMore && (
+        <div className='grid grid-cols-sm md:grid-cols-md gap-2 gap-y-8 py-8'>
+          {[...Array(4)].map((_, index) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            <ProductCardSkeleton key={index} />
+          ))}
         </div>
       )}
-    </motion.div>
-  );
-};
 
-export default Collections;
+      <div ref={ref} className='h-20 mt-4' />
+    </div>
+  );
+}

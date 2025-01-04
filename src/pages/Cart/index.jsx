@@ -27,9 +27,15 @@ export default function Cart() {
   const { mutate: removeFromCart } = useRemoveFromCart();
   const { mutate: clearCart } = useClearCart();
 
-  const [localCart, setLocalCart] = useState(cartData?.cart || []);
+  const [localCart, setLocalCart] = useState([]);
   const [cartItemProducts, setCartItemProducts] = useState([]);
   const [productsFetched, setProductsFetched] = useState(false);
+
+  useEffect(() => {
+    if (cartData?.cart) {
+      setLocalCart(cartData.cart);
+    }
+  }, [cartData]);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -81,18 +87,18 @@ export default function Cart() {
     }
   }, [localCart, queryClient]);
 
-  useEffect(() => {
-    if (cartData?.cart) {
-      setLocalCart(cartData.cart);
-    }
-  }, [cartData]);
-
   const totalAmount = useMemo(() => {
     if (!cartItemProducts?.length) return 0;
-    return cartItemProducts.reduce(
-      (acc, item) => acc + (item?.price || 0) * (item?.quantity || 0),
-      0
-    );
+    return cartItemProducts.reduce((acc, item) => {
+      console.log(item);
+      return (
+        acc +
+        (item?.product?.variants?.price?.discountedPrice ||
+          item?.product?.discountedPrice ||
+          0) *
+          (item?.quantity || 0)
+      );
+    }, 0);
   }, [cartItemProducts]);
 
   const debouncedUpdateCart = useMemo(
@@ -126,7 +132,7 @@ export default function Cart() {
     removeFromCart(productId);
   };
 
-  if (isLoading) {
+  if (isLoading || (cartData?.cart?.length && !productsFetched)) {
     return (
       <div className='min-h-screen flex justify-center items-center bg-gradient-to-br from-violet-50 to-fuchsia-50'>
         <div className='animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-violet-600' />
@@ -134,7 +140,7 @@ export default function Cart() {
     );
   }
 
-  if (!cartItemProducts?.length) {
+  if (!isLoading && !cartData?.cart?.length) {
     return (
       <div className='min-h-screen bg-gradient-to-br from-violet-50 to-fuchsia-50 flex flex-col items-center justify-center p-4'>
         <motion.div
@@ -214,7 +220,7 @@ export default function Cart() {
 
                   <div className='flex-1 space-y-1 sm:space-y-2 text-center sm:text-left'>
                     <div>
-                      <h3 className='text-base sm:text-lg font-semibold text-gray-800'>
+                      <h3 className='text-base sm:text-lg  text-gray-800'>
                         {item?.product?.name}
                       </h3>
                       {item?.variant && (
@@ -229,8 +235,10 @@ export default function Cart() {
                         </Badge>
                       )}
                     </div>
-                    <p className='text-lg sm:text-xl font-bold text-violet-600'>
-                      ₹{item?.price?.toLocaleString?.()}
+                    <p className='text-lg sm:text-xl font-bold text-gray-800'>
+                      ₹
+                      {item?.product?.variants?.price?.discountedPrice?.toLocaleString?.() ||
+                        item?.product?.discountedPrice?.toLocaleString?.()}
                     </p>
                   </div>
 
@@ -288,7 +296,7 @@ export default function Cart() {
             <div className='flex flex-col gap-4'>
               <div className='space-y-1 text-center sm:text-left'>
                 <p className='text-gray-600 text-xs sm:text-sm'>Total Amount</p>
-                <p className='text-2xl sm:text-3xl font-bold text-violet-600'>
+                <p className='text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 text-transparent bg-clip-text'>
                   ₹{totalAmount?.toLocaleString?.()}
                 </p>
               </div>

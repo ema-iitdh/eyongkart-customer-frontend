@@ -1,20 +1,22 @@
-import AuthLayout from "@/layouts/AuthLayout";
-import CollectionLayout from "@/layouts/CollectionLayout";
-import MainLayout from "@/layouts/MainLayout";
-import Login from "@/pages/Auth/Login";
-import Signup from "@/pages/Auth/Signup";
-import Collections from "@/pages/Collection/Collections";
-import HomePage from "@/pages/Home";
-import Product from "@/pages/Product";
-import { Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
-import { ROUTES } from "../constants/routes";
-import RedirectAuthenticatedUser from "./RedirectAuthenticatedUser";
-import Cart from "@/pages/Cart";
-import Checkout from "@/pages/Checkout";
-import Wishlist from "@/pages/Wishlist";
-import Orders from "@/pages/Order";
-import OrderDetail from "@/pages/Order/OrderDetail";
+import AuthLayout from '@/layouts/AuthLayout';
+import CollectionLayout from '@/layouts/CollectionLayout';
+import MainLayout from '@/layouts/MainLayout';
+import Login from '@/pages/Auth/Login';
+import Signup from '@/pages/Auth/Signup';
+import Collections from '@/pages/Collection/Collections';
+import HomePage from '@/pages/Home';
+import Product from '@/pages/Product';
+import { Suspense } from 'react';
+import { Outlet, Route, Routes } from 'react-router-dom';
+import { ROUTES } from '../constants/routes';
+import RedirectAuthenticatedUser from './RedirectAuthenticatedUser';
+import Cart from '@/pages/Cart';
+import Checkout from '@/pages/Checkout';
+import Wishlist from '@/pages/Wishlist';
+import Orders from '@/pages/Order';
+import OrderDetail from '@/pages/Order/OrderDetail';
+import Navbar from '@/components/common/Navbar/Navbar';
+import AboutUs from '@/pages/AboutUs';
 
 // TODO: Add ERROR BOUNDARY
 export default function AppRoutes() {
@@ -45,11 +47,12 @@ export default function AppRoutes() {
           <Route path={ROUTES.WISHLIST} element={<Wishlist />} />
           <Route path={ROUTES.MY_ORDER} element={<Orders />} />
           <Route path={ROUTES.ORDER_DETAIL} element={<OrderDetail />} />
+          <Route path={ROUTES.ABOUT_US} element={<AboutUs />} />
           <Route
-            path="*"
+            path='*'
             element={
-              <div className="bg-gradient-to-br  from-slate-200 via-blue-100 to-orange-200 text-gray-500 font-extrabold text-3xl min-h-[100svh] grid place-items-center lg:text-6xl">
-                {" "}
+              <div className='bg-gradient-to-br  from-slate-200 via-blue-100 to-orange-200 text-gray-500 font-extrabold text-3xl min-h-[100svh] grid place-items-center lg:text-6xl'>
+                {' '}
                 Coming soon...
               </div>
             }

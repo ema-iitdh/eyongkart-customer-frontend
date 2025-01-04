@@ -15,6 +15,7 @@ import raniphi from '@/assets/Category/rani.png';
 import { ROUTES } from '@/constants/routes';
 import { useCategory } from '@/features/category/hooks/useCategory';
 import Footer from '@/components/Footer/Footer';
+import WomenProduct from '@/components/Products/WomenProduct';
 
 const HomePage = () => {
   const { data: products, isLoading } = useProducts({ filter: '' });
@@ -56,7 +57,8 @@ const HomePage = () => {
         <Handicraft />
         <LatestProducts />
         <MenProduct />
-        <Banner
+        <WomenProduct />
+        {/* <Banner
           discount={50}
           title='Beauty'
           date='1st July to 30th July'
@@ -67,7 +69,7 @@ const HomePage = () => {
           to={`${ROUTES.COLLECTIONS}/Beauty?${
             beautyCategory ? `category=${beautyCategory._id}&` : ''
           }variants.price.discount_gte=50`}
-        />
+        /> */}
         <Footer />
       </div>
     </>

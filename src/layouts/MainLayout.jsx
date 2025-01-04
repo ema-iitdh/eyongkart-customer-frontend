@@ -12,9 +12,11 @@ export default function MainLayout() {
   }, [location]);
 
   return (
-    <div className='min-h-screen bg-gray-100 relative'>
-      <Navbar />
-      <main>
+    <div className='w-full'>
+      <div className='sticky top-0 z-40'>
+        <Navbar />
+      </div>
+      <main className='w-full'>
         <Outlet />
       </main>
     </div>

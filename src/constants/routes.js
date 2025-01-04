@@ -7,7 +7,7 @@ export const ROUTES = {
   COLLECTIONS_PRODUCTS: '/collections/:title',
   SEARCH: '/search',
   SEARCH_RESULTS: '/search/:searchTerm',
-  ABOUT: '/about',
+  ABOUT_US: '/about-us',
   CART: '/cart',
   PRODUCT: {
     LIST: '/product',

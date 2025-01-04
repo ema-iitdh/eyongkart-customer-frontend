@@ -151,13 +151,13 @@ export default function Product() {
   return (
     <div className='min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50'>
       <div className='container mx-auto px-4 py-8'>
-        <div className='grid md:grid-cols-2 gap-8 bg-white/40 backdrop-blur-sm rounded-3xl p-6 shadow-xl'>
+        <div className='grid md:grid-cols-2 gap-8 bg-white/40 backdrop-blur-sm rounded-3xl p-6 md:shadow-xl'>
           {/* Image Gallery */}
           <div className='space-y-4'>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className='relative w-4/5 mx-auto aspect-square rounded-2xl overflow-hidden shadow-lg'
+              className='relative w-4/5 mx-auto aspect-square rounded-2xl overflow-hidden md:shadow-lg'
             >
               <AnimatePresence mode='wait'>
                 <motion.img
@@ -179,7 +179,7 @@ export default function Product() {
                     variantId: selectedVariant || 'none',
                   });
                 }}
-                className='absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg'
+                className='absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-3 rounded-full md:shadow-lg'
                 type='button'
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -250,7 +250,7 @@ export default function Product() {
                   fractions={2}
                   size='md'
                 />
-                <span className='text-purple-600'>
+                <span className='text-gray-600'>
                   ({product?.totalReviews} reviews)
                 </span>
               </div>
@@ -268,11 +268,11 @@ export default function Product() {
             )}
 
             <div>
-              <p className='text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent'>
+              <p className='text-3xl font-bold bg-gray-800 bg-clip-text text-transparent'>
                 ₹
                 {currentVariant
                   ? currentVariant.price.discountedPrice
-                  : product?.price}
+                  : product?.discountedPrice}
               </p>
               {(currentVariant?.price.discount > 0 ||
                 product?.discount > 0) && (
@@ -281,7 +281,7 @@ export default function Product() {
                     ₹
                     {currentVariant
                       ? currentVariant.price.basePrice
-                      : product?.originalPrice}
+                      : product?.price}
                   </span>
                   <span className='text-green-500 font-semibold'>
                     ({currentVariant?.price.discount || product?.discount}% OFF)
@@ -296,7 +296,7 @@ export default function Product() {
 
             <div className='flex items-center gap-4 mb-4'>
               <motion.div
-                className='flex items-center gap-2 bg-white/80 backdrop-blur-sm p-1 rounded-lg shadow-md'
+                className='flex items-center gap-2 bg-white/80 backdrop-blur-sm p-1 rounded-lg md:shadow-md'
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
@@ -304,7 +304,7 @@ export default function Product() {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  className='p-2 rounded-lg bg-purple-100 text-purple-600 hover:bg-purple-200 transition-colors'
+                  className='p-2 rounded-lg bg-purple-100 text-gray-600 hover:bg-purple-200 transition-colors'
                   onClick={() => handleQuantityChange(quantity - 1)}
                   disabled={quantity <= 1}
                 >
@@ -331,7 +331,7 @@ export default function Product() {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  className='p-2 rounded-lg bg-purple-100 text-purple-600 hover:bg-purple-200 transition-colors'
+                  className='p-2 rounded-lg bg-purple-100 text-gray-600 hover:bg-purple-200 transition-colors'
                   onClick={() => handleQuantityChange(quantity + 1)}
                   disabled={quantity >= 99}
                 >
@@ -340,14 +340,14 @@ export default function Product() {
               </motion.div>
             </div>
 
-            <div className='flex gap-3'>
+            <div className='flex flex-col md:flex-row gap-3'>
               <Button
                 size='md'
-                className={`flex-1 bg-gradient-to-r ${
+                className={`flex-1 py-3 px-4 bg-gradient-to-r ${
                   isInCart
                     ? 'from-red-600 to-red-700 hover:from-red-700 hover:to-red-800'
-                    : 'from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
-                } text-white font-semibold transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
+                    : 'from-yellow-800 to-orange-800 hover:from-yellow-700 hover:to-orange-700'
+                } text-white font-semibold transform hover:scale-105 transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
                 leftIcon={<FaShoppingCart />}
                 disabled={currentVariant?.stock.status === 'out_of_stock'}
                 onClick={handleAddToCart}
@@ -356,7 +356,7 @@ export default function Product() {
               </Button>
               <Button
                 size='md'
-                className='flex-1 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white font-semibold transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
+                className='flex-1 py-3 px-4 bg-gradient-to-r from-green-800 to-green-700 hover:from-green-900 hover:to-black text-white font-semibold transform hover:scale-105 transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
                 disabled={currentVariant?.stock.status === 'out_of_stock'}
                 onClick={handleBuyNow}
               >

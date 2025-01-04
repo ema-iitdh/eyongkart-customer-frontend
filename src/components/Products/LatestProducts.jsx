@@ -1,7 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '@/features/products/hooks/useProducts';
 import ProductCard from '../common/ProductCard';
+import Button from '../Shared/Button';
+import { ROUTES } from '@/constants/routes';
 
 export default function LatestProducts() {
   const navigate = useNavigate();
@@ -33,6 +35,32 @@ export default function LatestProducts() {
       <h2 className='text-3xl uppercase text-center my-10 drop-shadow-lg tracking-wider font-bold'>
         Latest Products
       </h2>
+      <Link
+        to={`${ROUTES.COLLECTIONS}/All Products`}
+        className='flex justify-end pr-10 py-4'
+      >
+        <button
+          type='button'
+          className='inline-flex items-center px-4 py-2 text-sm font-semibold text-purple-600 bg-purple-100 rounded-lg hover:bg-purple-200 hover:text-purple-700 transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg'
+        >
+          View All Products
+          {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+          <svg
+            className='w-4 h-4 ml-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M13 7l5 5m0 0l-5 5m5-5H6'
+            />
+          </svg>
+        </button>
+      </Link>
       <div className='grid grid-cols-sm sm:grid-cols-md gap-2 gap-y-6 auto-rows-auto'>
         {latestProducts?.map((product) => (
           <ProductCard key={product._id} product={product} />
