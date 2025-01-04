@@ -213,7 +213,6 @@ export default function Wishlist() {
       </div>
 
       <ChatBox />
-      <Footer />
     </div>
   );
 }

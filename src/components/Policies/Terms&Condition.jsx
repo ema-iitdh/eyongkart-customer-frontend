@@ -154,7 +154,6 @@ const TermsAndConditions = () => {
         </div>
       </div>
       <ChatBox />
-      <Footer />
     </>
   );
 };

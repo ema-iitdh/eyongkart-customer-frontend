@@ -1,4 +1,5 @@
 import Navbar from '@/components/common/Navbar/Navbar';
+import Footer from '@/components/Footer/Footer';
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
@@ -19,6 +20,7 @@ export default function MainLayout() {
       <main className='w-full'>
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 }

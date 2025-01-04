@@ -70,7 +70,6 @@ const HomePage = () => {
             beautyCategory ? `category=${beautyCategory._id}&` : ''
           }variants.price.discount_gte=50`}
         /> */}
-        <Footer />
       </div>
     </>
   );

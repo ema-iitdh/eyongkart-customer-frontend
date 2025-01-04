@@ -106,7 +106,6 @@ const Contact = () => {
         </div>
 
         <ChatBox />
-        <Footer />
       </div>
     </>
   );

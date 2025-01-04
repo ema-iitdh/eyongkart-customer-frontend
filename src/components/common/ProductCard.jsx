@@ -99,7 +99,7 @@ const ProductCard = ({ product }) => {
             <img
               src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/f_auto,q_auto,w_400,h_400/${imageUrl}`}
               alt={name}
-              className='w-full h-full block object-contain transform group-hover:scale-110 transition-transform duration-500'
+              className='w-full h-full bg-slate-100 block object-contain transform group-hover:scale-110 transition-transform duration-500'
             />
             {discount > 0 && (
               <div className='absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 h-[24px] rounded-full text-sm font-medium shadow-lg flex items-center'>

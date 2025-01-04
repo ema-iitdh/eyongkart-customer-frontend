@@ -42,7 +42,6 @@ const HomePage = () => {
           <Banner />
           <Products />
           <ChatBox />
-          <Footer />
         </div>
       )}
     </>

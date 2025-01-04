@@ -43,7 +43,6 @@ const AboutUs = () => {
         </div>
       </div>
       <ChatBox />
-      <Footer />
     </>
   );
 };

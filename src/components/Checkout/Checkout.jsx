@@ -539,7 +539,6 @@ const Checkout = () => {
       </div>
 
       <ChatBox />
-      <Footer />
     </div>
   );
 };

@@ -15,8 +15,6 @@ const Product = () => {
     <div>
       <Navbar />
       <ProductDisplay product={product} />
-
-      <Footer />
     </div>
   );
 };

@@ -307,7 +307,6 @@ const CategorySort = React.memo(() => {
           </div>
         </div>
         <ChatBox />
-        <Footer />
       </div>
     </div>
   );
