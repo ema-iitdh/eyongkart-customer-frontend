@@ -436,7 +436,6 @@ const BecomeSeller = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

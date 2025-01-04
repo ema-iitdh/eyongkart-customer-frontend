@@ -655,7 +655,7 @@ export default function Checkout() {
                       defaultChecked
                       id='cod'
                       type='radio'
-                      value={'COD'}
+                      value={'cod'}
                     />
                     <label htmlFor='cod'> Cash on Delivery </label>
                   </div>

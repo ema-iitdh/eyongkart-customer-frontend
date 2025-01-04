@@ -140,7 +140,6 @@ const CancellationAndRefund = () => {
         </div>
       </div>
       <ChatBox />
-      <Footer />
     </>
   );
 };

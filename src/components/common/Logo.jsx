@@ -8,7 +8,7 @@ export default function Logo() {
     >
       <div className=' p-2 rounded-lg '>
         <img
-          src='/favicon.png'
+          src='/eyong.png'
           alt='Logo'
           className='h-8 w-auto drop-shadow hover:drop-shadow-lg transition-all'
         />

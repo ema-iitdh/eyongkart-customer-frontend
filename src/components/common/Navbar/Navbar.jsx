@@ -3,9 +3,9 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import { GrFavorite } from 'react-icons/gr';
 import { BsFillArchiveFill, BsFillBoxFill } from 'react-icons/bs';
-import { Tooltip, Button, Avatar } from '@mantine/core';
+// import { Tooltip, Button, Avatar } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
-import { X, Menu, ChevronDown } from 'lucide-react';
+import { X, Menu, ChevronDown, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Axios from '../../../api/axiosInstance';
 import SearchBar from '../../Search/SearchBar';
@@ -22,6 +22,7 @@ import NavItem from './_components/NavItem';
 import { useAddToCart, useCart } from '@/features/cart/hooks/useCart';
 import { useWishlist } from '@/features/wishlist/hooks/useWishlist';
 import useCartStore from '@/store/useCartStore';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const Navbar = () => {
   const { user, isAuthenticated } = useAuth();
@@ -93,25 +94,36 @@ const Navbar = () => {
                 {isAuthenticated ? (
                   <div className='flex items-center gap-2'>
                     {/* <span className='text-sm text-gray-700'>{user?.email}</span> */}
-                    <Avatar
+                    <Avatar className='drop-shadow-md'>
+                      <AvatarImage src={user?.picture} />
+                      <AvatarFallback className='bg-orange-500 font-extrabold text-white'>
+                        {user?.userName?.charAt(0)?.toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+
+                    {/* <Avatar
                       src={user?.picture}
                       alt={user?.email}
                       color='red'
                       size='md'
                       className='cursor-pointer hover:scale-105 transition-transform'
-                    />
-                    <div className='absolute right-0 top-9 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50'>
+                    /> */}
+                    <div className='absolute group right-0 top-9 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50'>
                       <div className='p-4 space-y-3'>
+                        <h2 className='font-sans font-bold text-lg relative'>
+                          My Profile
+                          <span className='h-1 w-[40px] group-hover:w-[120px] bg-rose-500 absolute -bottom-1 left-0 transition-all duration-300' />
+                        </h2>
                         <div className='flex items-center gap-3 pb-3 border-b border-gray-200'>
-                          <Avatar
-                            src={user?.picture}
-                            alt={user?.email}
-                            color='red'
-                            size='md'
-                          />
+                          <Avatar className='drop-shadow-md bg-yellow-'>
+                            <AvatarImage src={user?.picture} />
+                            <AvatarFallback className='bg-orange-500 font-extrabold text-white'>
+                              {user?.userName?.charAt(0)?.toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
                           <div>
                             <p className='font-medium text-sm'>
-                              {user?.name || 'User'}
+                              {user?.userName || 'User'}
                             </p>
                             <p className='text-xs text-gray-500'>
                               {user?.email}
@@ -137,7 +149,7 @@ const Navbar = () => {
                           type='button'
                           onClick={() => logout()}
                           disabled={isPending}
-                          className='w-full text-left text-sm text-red-500 hover:text-red-600 transition-colors py-1.5 font-medium'
+                          className='w-full text-center p-2 rounded-lg text-sm bg-rose-600 text-slate-100 hover:bg-rose-700 transition-colors py-1.5 font-medium'
                         >
                           {isPending ? 'Logging out...' : 'Sign Out'}
                         </button>
@@ -145,14 +157,20 @@ const Navbar = () => {
                     </div>
                   </div>
                 ) : (
-                  <NavLink to='/login'>
-                    <Avatar
+                  <NavLink to='/login' className='cursor-pointer'>
+                    <Avatar className='drop-shadow-md bg-yellow-'>
+                      <AvatarImage src={null} />
+                      <AvatarFallback className='bg-orange-500 font-extrabold text-white'>
+                        <User size={20} />
+                      </AvatarFallback>
+                    </Avatar>
+                    {/* <Avatar
                       src={null}
                       alt='User'
                       color='red'
                       size='sm'
                       className='cursor-pointer hover:scale-105 transition-transform'
-                    />
+                    /> */}
                   </NavLink>
                 )}
 
@@ -186,18 +204,18 @@ const Navbar = () => {
                       </div>
 
                       <div className='pt-3 border-t border-gray-200'>
-                        <NavLink
+                        {/* <NavLink
                           to='/track-order'
                           className='block text-sm text-gray-700 hover:text-red-500 transition-colors py-1.5'
                         >
                           Track your order
-                        </NavLink>
-                        <NavLink
+                        </NavLink> */}
+                        {/* <NavLink
                           to='/help'
                           className='block text-sm text-gray-700 hover:text-red-500 transition-colors py-1.5'
                         >
                           Help & Support
-                        </NavLink>
+                        </NavLink> */}
                       </div>
                     </div>
                   </div>
@@ -226,7 +244,7 @@ const Navbar = () => {
         <div className='p-3 border-b'>
           <div className='flex items-center justify-between'>
             <NavLink to='/' className='flex-shrink-0'>
-              <img src='/logo.png' alt='Logo' className='h-8 w-auto' />
+              <img src='/eyong.png' alt='Logo' className='h-8 w-auto' />
             </NavLink>
             <button
               type='button'
@@ -283,8 +301,13 @@ const Navbar = () => {
                 </NavLink> */}
 
                 <div className='flex items-center gap-2 p-2'>
-                  <Avatar size={20} color='red' src={user?.avatar} />
-                  <span>{user?.email}</span>
+                  <Avatar className='drop-shadow-md bg-yellow-'>
+                    <AvatarImage src={user?.picture} />
+                    <AvatarFallback className='bg-orange-500 font-extrabold text-white'>
+                      {user?.userName?.charAt(0)?.toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span>{user?.userName}</span>
                 </div>
 
                 <button
@@ -305,7 +328,11 @@ const Navbar = () => {
                 onClick={toggleSidebar}
                 className='flex items-center gap-2 p-2 rounded-lg hover:bg-red-50 text-gray-700 hover:text-red-500 transition-colors'
               >
-                <Avatar size={20} color='red' src={null} />
+                <Avatar size={20} color='red' src={null}>
+                  <AvatarFallback className='bg-orange-500 font-extrabold text-white'>
+                    <User size={20} />
+                  </AvatarFallback>
+                </Avatar>
                 <span>Sign In</span>
               </NavLink>
             )}

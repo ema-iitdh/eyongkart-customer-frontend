@@ -119,7 +119,6 @@ const Wishlist = () => {
         </div>
       )}
       <ChatBox />
-      <Footer />
     </div>
   );
 };

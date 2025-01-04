@@ -12,7 +12,6 @@ const Carts = () => {
         <CartsItems />
       </div>
       <ChatBox />
-      <Footer />
     </>
   );
 };

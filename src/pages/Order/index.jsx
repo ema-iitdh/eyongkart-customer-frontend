@@ -307,7 +307,6 @@ export default function Orders() {
       </div>
 
       <ChatBox />
-      <Footer />
     </div>
   );
 }

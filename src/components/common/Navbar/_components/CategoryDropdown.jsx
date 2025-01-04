@@ -42,7 +42,7 @@ export default function CategoryDropdown() {
 
   return (
     <nav className='hidden lg:block'>
-      <ul className='flex items-center gap-8 text-sm font-["Inter"]'>
+      <ul className='flex items-center gap-8 text-sm font-sans'>
         {[
           { title: 'MEN', items: filteredMen },
           { title: 'WOMEN', items: filteredWomen },

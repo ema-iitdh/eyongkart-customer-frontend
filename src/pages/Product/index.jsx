@@ -241,7 +241,7 @@ export default function Product() {
           {/* Product Details */}
           <div className='space-y-6'>
             <div>
-              <h1 className='font-serif text-3xl font-bold bg-gradient-to-r from-gray-800 to-orange-600 bg-clip-text text-transparent'>
+              <h1 className='font-serif text-3xl font-bold text-gray-800'>
                 {product?.name}
               </h1>
               <div className='flex items-center gap-4 mt-2'>
@@ -343,10 +343,10 @@ export default function Product() {
             <div className='flex flex-col md:flex-row gap-3'>
               <Button
                 size='md'
-                className={`flex-1 py-3 px-4 bg-gradient-to-r ${
+                className={`flex-1 py-3 px-4 ${
                   isInCart
-                    ? 'from-red-600 to-red-700 hover:from-red-700 hover:to-red-800'
-                    : 'from-yellow-800 to-orange-800 hover:from-yellow-700 hover:to-orange-700'
+                    ? 'bg-rose-600 hover:bg-rose-700'
+                    : 'bg-gray-600 hover:bg-gray-700'
                 } text-white font-semibold transform hover:scale-105 transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
                 leftIcon={<FaShoppingCart />}
                 disabled={currentVariant?.stock.status === 'out_of_stock'}
@@ -356,7 +356,7 @@ export default function Product() {
               </Button>
               <Button
                 size='md'
-                className='flex-1 py-3 px-4 bg-gradient-to-r from-green-800 to-green-700 hover:from-green-900 hover:to-black text-white font-semibold transform hover:scale-105 transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
+                className='flex-1 py-3 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold transform hover:scale-105 transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
                 disabled={currentVariant?.stock.status === 'out_of_stock'}
                 onClick={handleBuyNow}
               >

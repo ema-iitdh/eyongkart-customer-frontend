@@ -77,7 +77,6 @@ const MyOrder = () => {
       </div>
 
       <ChatBox />
-      <Footer />
     </div>
   );
 };

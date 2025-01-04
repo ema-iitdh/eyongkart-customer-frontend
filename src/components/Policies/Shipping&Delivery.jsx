@@ -168,7 +168,6 @@ const ShippingAndDelivery = () => {
         </div>
       </div>
       <ChatBox />
-      <Footer />
     </>
   );
 };

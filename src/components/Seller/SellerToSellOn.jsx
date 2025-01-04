@@ -58,7 +58,6 @@ const HowToSellOn = () => {
           ))}
         </div>
       </div>
-      <Footer />
     </>
   );
 };
