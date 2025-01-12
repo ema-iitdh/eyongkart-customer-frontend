@@ -17,6 +17,7 @@ import Orders from '@/pages/Order';
 import OrderDetail from '@/pages/Order/OrderDetail';
 import Navbar from '@/components/common/Navbar/Navbar';
 import AboutUs from '@/pages/AboutUs';
+import ProtectedRoute from './ProtectedRoutes';
 
 // TODO: Add ERROR BOUNDARY
 export default function AppRoutes() {
@@ -41,12 +42,17 @@ export default function AppRoutes() {
           <Route path={ROUTES.PRODUCT.LIST}>
             <Route path={ROUTES.PRODUCT.DETAIL} element={<Product />} />
           </Route>
-          <Route path={ROUTES.CART} element={<Cart />} />
-          <Route path={ROUTES.CHECKOUT_USING_BUY_NOW} element={<Checkout />} />
-          <Route path={ROUTES.CHECKOUT_FROM_CART} element={<Checkout />} />
-          <Route path={ROUTES.WISHLIST} element={<Wishlist />} />
-          <Route path={ROUTES.MY_ORDER} element={<Orders />} />
-          <Route path={ROUTES.ORDER_DETAIL} element={<OrderDetail />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path={ROUTES.CART} element={<Cart />} />
+            <Route
+              path={ROUTES.CHECKOUT_USING_BUY_NOW}
+              element={<Checkout />}
+            />
+            <Route path={ROUTES.CHECKOUT_FROM_CART} element={<Checkout />} />
+            <Route path={ROUTES.WISHLIST} element={<Wishlist />} />
+            <Route path={ROUTES.MY_ORDER} element={<Orders />} />
+            <Route path={ROUTES.ORDER_DETAIL} element={<OrderDetail />} />
+          </Route>
           <Route path={ROUTES.ABOUT_US} element={<AboutUs />} />
           <Route
             path='*'

@@ -1,15 +1,15 @@
 import { useAddToCart } from '@/features/cart/hooks/useCart';
-import { Rating } from '@mantine/core';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Heart, ShoppingCart } from 'lucide-react';
-import { memo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { CloudinaryConfig } from '../../../Cloudinary';
 import {
   useToggleWishlist,
   useWishlist,
 } from '@/features/wishlist/hooks/useWishlist';
 import useCartStore from '@/store/useCartStore';
+import { Rating } from '@mantine/core';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Heart, ShoppingCart } from 'lucide-react';
+import { memo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { CloudinaryConfig } from '../../../Cloudinary';
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
@@ -39,6 +39,7 @@ const ProductCard = ({ product }) => {
 
   const toggleWishlist = (e) => {
     e.preventDefault();
+
     toggleWishlistApi({
       productId: _id,
       variantId: variants?.[0]?._id || 'none',
@@ -47,6 +48,7 @@ const ProductCard = ({ product }) => {
 
   const handleAddToCart = (e) => {
     e.preventDefault(); // Prevent navigation
+
     addToCartStore({ productId: _id, quantity: 1 });
     addToCart({
       productId: _id,
