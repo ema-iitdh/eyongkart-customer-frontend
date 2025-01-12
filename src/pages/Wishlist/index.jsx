@@ -34,12 +34,15 @@ export default function Wishlist() {
           productService.getProductById(item.product)
         );
 
-        const responses = await Promise.all(productPromises);
+        const responses = await Promise.allSettled(productPromises);
 
         // Filter out any failed requests and map to product data
         const validProducts = responses
-          .filter((response) => response?.product) // Only keep successful responses
-          .map((response) => response.product);
+          .filter(
+            (response) =>
+              response.status === 'fulfilled' && response.value?.product
+          )
+          .map((response) => response.value.product);
 
         if (validProducts.length === 0) {
           throw new Error('No valid products found');
@@ -93,8 +96,13 @@ export default function Wishlist() {
     (isProductsLoading && wishlistData?.wishlist?.items?.length > 0)
   ) {
     return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <div>Loading...</div>
+      <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-purple-50 dark:from-gray-800 dark:to-gray-900'>
+        <div className='flex flex-col items-center gap-4'>
+          <div className='w-16 h-16 border-4 border-pink-400 border-t-transparent rounded-full animate-spin' />
+          <div className='text-lg font-medium text-gray-600 dark:text-gray-300'>
+            Loading your wishlist...
+          </div>
+        </div>
       </div>
     );
   }
