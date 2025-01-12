@@ -24,7 +24,6 @@ const Products = () => {
       setProducts(res.data.products);
       setLoading(false);
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };

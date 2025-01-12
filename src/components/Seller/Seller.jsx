@@ -50,7 +50,7 @@ const BecomeSeller = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form Submitted:', formData);
+
     // Add API submission logic here
   };
 

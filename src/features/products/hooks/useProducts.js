@@ -5,7 +5,6 @@ export const useProducts = ({ filter = '' }, options) => {
   return useQuery({
     queryKey: ['products', filter],
     queryFn: () => {
-      console.log('inside queryFn');
       return productService.getProducts({ filter });
     },
     ...options,

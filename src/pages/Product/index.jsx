@@ -103,13 +103,6 @@ export default function Product() {
     return [];
   })();
 
-  console.log(
-    dynamicImages,
-    'dynamicImages',
-    dynamicImageUrl,
-    'dynamicImageUrl'
-  );
-
   const handleQuantityChange = (value) => {
     const newQuantity = Math.max(1, Math.min(99, value));
     setQuantity(newQuantity);
@@ -348,7 +341,8 @@ export default function Product() {
                     ? 'bg-rose-600 hover:bg-rose-700'
                     : 'bg-gray-600 hover:bg-gray-700'
                 } text-white font-semibold transform hover:scale-105 transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
-                leftIcon={<FaShoppingCart />}
+                // leftIcon={<FaShoppingCart />}
+                leftSection={<FaShoppingCart />}
                 disabled={currentVariant?.stock.status === 'out_of_stock'}
                 onClick={handleAddToCart}
               >

@@ -120,25 +120,27 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className='col-span-1'>
-            <h3 className='text-lg font-bold mb-6 text-gray-900 relative after:content-[""] after:absolute after:-bottom-2 after:left-0 after:w-12 after:h-1 after:bg-red-500'>
-              Quick Links
-            </h3>
-            <ul className='space-y-3'>
-              {quickLinks.map(([text, link]) => (
-                <li key={v4()}>
-                  <Link
-                    to={link}
-                    className='text-gray-600 hover:text-red-500 transition-colors duration-300 text-sm flex items-center group'
-                  >
-                    <span className='transform group-hover:translate-x-2 transition-transform duration-300 ease-in-out'>
-                      {text}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {quickLinks.length > 0 && (
+            <div className='col-span-1'>
+              <h3 className='text-lg font-bold mb-6 text-gray-900 relative after:content-[""] after:absolute after:-bottom-2 after:left-0 after:w-12 after:h-1 after:bg-red-500'>
+                Quick Links
+              </h3>
+              <ul className='space-y-3'>
+                {quickLinks.map(([text, link]) => (
+                  <li key={v4()}>
+                    <Link
+                      to={link}
+                      className='text-gray-600 hover:text-red-500 transition-colors duration-300 text-sm flex items-center group'
+                    >
+                      <span className='transform group-hover:translate-x-2 transition-transform duration-300 ease-in-out'>
+                        {text}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Customer Service */}
           {customerService.length > 0 && (
@@ -166,71 +168,88 @@ const Footer = () => {
           )}
 
           {/* Contact Info */}
-          <div className='col-span-1'>
-            <h3 className='text-lg font-bold mb-6 text-gray-900 relative after:content-[""] after:absolute after:-bottom-2 after:left-0 after:w-12 after:h-1 after:bg-red-500'>
-              Get In Touch
-            </h3>
-            <div className='space-y-4'>
-              <div className='flex items-center space-x-3'>
-                <div className='min-w-[24px] text-red-500'>📧</div>
-                <div>
-                  <p className='text-gray-600 text-sm'>
-                    <a
-                      href={`mailto:${data?.eyongkartInfo?.[0]?.contactInfo?.email}`}
-                      className='hover:underline'
-                    >
-                      {data?.eyongkartInfo?.[0]?.contactInfo?.email}
-                    </a>
-                  </p>
-                </div>
-              </div>
+          {data?.eyongkartInfo?.[0]?.contactInfo && (
+            <div className='col-span-1'>
+              <h3 className='text-lg font-bold mb-6 text-gray-900 relative after:content-[""] after:absolute after:-bottom-2 after:left-0 after:w-12 after:h-1 after:bg-red-500'>
+                Get In Touch
+              </h3>
+              <div className='space-y-4'>
+                {data?.eyongkartInfo?.[0]?.contactInfo?.email && (
+                  <div className='flex items-center space-x-3'>
+                    <div className='min-w-[24px] text-red-500'>📧</div>
+                    <div>
+                      <p className='text-gray-600 text-sm'>
+                        <a
+                          href={`mailto:${data?.eyongkartInfo?.[0]?.contactInfo?.email}`}
+                          className='hover:underline'
+                        >
+                          {data?.eyongkartInfo?.[0]?.contactInfo?.email}
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                )}
 
-              <div className='flex items-center space-x-3'>
-                <div className='min-w-[24px] text-red-500'>📞</div>
-                <div>
-                  <p className='text-gray-600 text-sm'>
-                    <a
-                      href={`tel:${data?.eyongkartInfo?.[0]?.contactInfo?.phone}`}
-                      className='hover:underline'
-                    >
-                      {data?.eyongkartInfo?.[0]?.contactInfo?.phone}
-                    </a>
-                  </p>
-                </div>
-              </div>
+                {data?.eyongkartInfo?.[0]?.contactInfo?.phone && (
+                  <div className='flex items-center space-x-3'>
+                    <div className='min-w-[24px] text-red-500'>📞</div>
+                    <div>
+                      <p className='text-gray-600 text-sm'>
+                        <a
+                          href={`tel:${data?.eyongkartInfo?.[0]?.contactInfo?.phone}`}
+                          className='hover:underline'
+                        >
+                          {data?.eyongkartInfo?.[0]?.contactInfo?.phone}
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                )}
 
-              <div className='flex items-center space-x-3'>
-                <div className='min-w-[24px] text-red-500'>📍</div>
-                <div>
-                  <p className='text-gray-600 text-sm'>
-                    <a
-                      href={data?.eyongkartInfo?.[0]?.contactInfo?.mapURL}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='hover:underline'
-                    >
-                      {data?.eyongkartInfo?.[0]?.contactInfo?.address}
-                    </a>
-                  </p>
-                </div>
+                {data?.eyongkartInfo?.[0]?.contactInfo?.address && (
+                  <div className='flex items-center space-x-3'>
+                    <div className='min-w-[24px] text-red-500'>📍</div>
+                    <div>
+                      <p className='text-gray-600 text-sm'>
+                        <a
+                          href={
+                            data?.eyongkartInfo?.[0]?.contactInfo?.mapURL || '#'
+                          }
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='hover:underline'
+                        >
+                          {data?.eyongkartInfo?.[0]?.contactInfo?.address}
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Bottom Bar */}
-        <div className='mt-16 pt-8 border-t border-gray-200'>
-          <div className='flex flex-col md:flex-row justify-between items-center'>
-            <p className='text-gray-600 text-sm'>
-              © {new Date().getFullYear()} {data?.eyongkartInfo?.[0]?.copyright}
-            </p>
-            <div className='mt-4 md:mt-0'>
-              <p className='text-gray-500 text-sm flex items-center gap-2'>
-                {data?.eyongkartInfo?.[0]?.developersMessage}
-              </p>
+        {data?.eyongkartInfo?.[0]?.copyright && (
+          <div className='mt-16 pt-8 border-t border-gray-200'>
+            <div className='flex flex-col md:flex-row justify-between items-center'>
+              {data?.eyongkartInfo?.[0]?.copyright && (
+                <p className='text-gray-600 text-sm'>
+                  © {new Date().getFullYear()}{' '}
+                  {data?.eyongkartInfo?.[0]?.copyright}
+                </p>
+              )}
+              {data?.eyongkartInfo?.[0]?.developersMessage && (
+                <div className='mt-4 md:mt-0'>
+                  <p className='text-gray-500 text-sm flex items-center gap-2'>
+                    {data?.eyongkartInfo?.[0]?.developersMessage}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
-        </div>
+        )}
       </div>
     </footer>
   );

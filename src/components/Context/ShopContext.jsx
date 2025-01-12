@@ -33,7 +33,6 @@ const ShopContextProvider = (props) => {
   const fetchProducts = async () => {
     const res = await Axios.get('/product/allproduct');
     setData(res.data.products);
-    console.log(data);
   };
   useEffect(() => {
     fetchProducts();

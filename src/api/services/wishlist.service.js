@@ -7,7 +7,6 @@ export const wishlistService = {
     return response.data;
   },
   toggleWishlist: async ({ productId, variantId }) => {
-    console.log(productId, variantId, 'productId, variantId');
     const response = await Axios.post(API_ENDPOINTS.wishlist.toggle, {
       productId,
       variantId,

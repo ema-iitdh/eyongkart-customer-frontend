@@ -42,8 +42,6 @@ const HorizontalScrollerWithButton = ({
     }
   };
 
-  console.log(minDiscount);
-
   return (
     <div className='relative'>
       {(title || buttonPosition === 'top') && (

@@ -38,8 +38,6 @@ const RelatedProduct = ({ productId }) => {
     });
   }
 
-  console.log('related', relatedProducts);
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentProductId]);
