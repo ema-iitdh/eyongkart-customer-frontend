@@ -45,8 +45,6 @@ const ReviewSubmit = () => {
     handleSubmitReview(formData);
   };
 
-  console.log('Submitting review data:', formData);
-
   return (
     <div className='pt-2'>
       <form

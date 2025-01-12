@@ -27,7 +27,6 @@ const Wishlist = () => {
       setProducts(data.products.filter((i) => i.fav === 'Yes'));
       setLoading(false);
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };

@@ -147,7 +147,7 @@ const Checkout = () => {
       alert('Server error. Are you online?');
       return;
     }
-    console.log(result.data);
+    result.data;
     const { amount, id: order_id, currency } = result.data;
 
     const options = {
@@ -172,7 +172,7 @@ const Checkout = () => {
         //     },
         //   }
         // );
-        console.log(body);
+
         const { data } = await Axios.post('/order/validate', {
           razorpay_order_id: body.razorpay_order_id,
           razorpay_payment_id: body.razorpay_payment_id,
@@ -235,8 +235,8 @@ const Checkout = () => {
 
     return total;
   };
-  // console.log("cartItems:", cartItems);
-  // console.log("checkoutItems:", checkoutItem);
+  //
+  //
   useEffect(() => {
     let isData = localStorage.getItem('checkoutItem');
     if (isData) {

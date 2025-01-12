@@ -94,20 +94,13 @@ const Navbar = () => {
                 {isAuthenticated ? (
                   <div className='flex items-center gap-2'>
                     {/* <span className='text-sm text-gray-700'>{user?.email}</span> */}
-                    <Avatar className='drop-shadow-md'>
+                    <Avatar className='drop-shadow-md' key={user?.picture}>
                       <AvatarImage src={user?.picture} />
                       <AvatarFallback className='bg-orange-500 font-extrabold text-white'>
                         {user?.userName?.charAt(0)?.toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
 
-                    {/* <Avatar
-                      src={user?.picture}
-                      alt={user?.email}
-                      color='red'
-                      size='md'
-                      className='cursor-pointer hover:scale-105 transition-transform'
-                    /> */}
                     <div className='absolute group right-0 top-9 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50'>
                       <div className='p-4 space-y-3'>
                         <h2 className='font-sans font-bold text-lg relative'>

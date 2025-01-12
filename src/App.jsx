@@ -66,9 +66,19 @@ const App = () => {
         <GoogleOAuthProvider clientId={googleClientId}>
           <MantineProvider>
             <ToastContainer
-              position='top-right'
+              position='top-center'
+              toastStyle={{
+                backgroundColor: 'hsl(210, 40%, 93%)',
+                color: 'black',
+                borderRadius: '10px',
+                padding: '10px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                maxWidth: '90vw',
+                margin: '0 auto',
+              }}
               autoClose={500}
-              hideProgressBar={false}
+              hideProgressBar={true}
               newestOnTop={false}
               closeOnClick
               rtl={false}

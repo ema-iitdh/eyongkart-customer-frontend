@@ -18,12 +18,10 @@ const Shop = () => {
         url: '/product/allproduct',
         method: 'GET',
       });
-      // console.log(res.data.products);
+      //
       setproducts(res.data.products);
       setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const handleOnChange = (e) => {
@@ -42,8 +40,7 @@ const Shop = () => {
       behavior: 'smooth',
     });
   }, []);
-  console.log(searchProduct);
-  console.log(newproducts);
+
   return (
     <>
       <div className='bg-white  dark:bg-gray-900 dark:text-white duration-200 overflow-hidden pt-24'>

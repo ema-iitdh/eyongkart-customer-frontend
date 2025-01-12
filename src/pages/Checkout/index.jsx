@@ -212,7 +212,7 @@ export default function Checkout() {
             item.variant?.price?.discountedPrice ||
             productDetails.discountedPrice ||
             productDetails.price;
-          console.log(price, item);
+
           return acc + price * item.quantity;
         }, 0);
 
@@ -268,7 +268,6 @@ export default function Checkout() {
       const selectedAddr = addressesResponse?.data.find(
         (addr) => addr._id === selectedAddress.value
       );
-      console.log(addressesResponse?.data, selectedAddress.value);
 
       if (!selectedAddr) {
         toast.error('Please select an address');
@@ -301,7 +300,6 @@ export default function Checkout() {
       },
       {
         onSuccess: (response) => {
-          console.log(response);
           navigate(`/order/${response.order._id}`, {
             state: {
               message: 'Order placed successfully!',

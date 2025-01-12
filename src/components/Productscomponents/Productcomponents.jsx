@@ -16,7 +16,7 @@ const ProductComponents = () => {
   const categoryList = categoriesComponent?.data?.categories?.map(
     (category) => category
   );
-  // console.log(categoryList);
+  //
 
   return (
     <div className='p-2 drop-shadow-md'>

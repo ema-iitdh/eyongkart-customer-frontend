@@ -90,7 +90,6 @@ export default function Cart() {
   const totalAmount = useMemo(() => {
     if (!cartItemProducts?.length) return 0;
     return cartItemProducts.reduce((acc, item) => {
-      console.log(item);
       return (
         acc +
         (item?.product?.variants?.price?.discountedPrice ||
