@@ -173,7 +173,7 @@ export default function OrderDetail() {
                           src={`${
                             CloudinaryConfig.CLOUDINARY_URL
                           }/image/upload/v1700463893/${
-                            item?.product?.images?.[0]?.url ||
+                            item?.product?.baseImage?.url ||
                             item?.product?.image_id?.[0]
                           }`}
                           alt={item.name}

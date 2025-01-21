@@ -22,8 +22,8 @@ const PriceStores = () => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const filterItems = useMemo(() => {
     return productLists
-      .filter((product) => product.discountedPrice <= maxPrice)
-      .sort((a, b) => a.discountedPrice - b.discountedPrice);
+      .filter((product) => product.variants[0].price.discountedPrice <= maxPrice)
+      .sort((a, b) => a.variants[0].price.discountedPrice - b.variants[0].price.discountedPrice);
   }, [productLists, maxPrice]);
 
   if (isLoading) {

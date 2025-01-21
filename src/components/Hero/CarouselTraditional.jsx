@@ -40,9 +40,10 @@ const CarouselTraditional = () => {
 
   const productsWithDiscount = data?.products
     .filter(
-      (product) => product?.variants?.[0]?.discount > 0 || product?.discount > 0
+      (product) => product?.variants?.[0]?.price.discount > 0 || product?.discount > 0
     )
     .slice(0, 6);
+  console.log(productsWithDiscount);
 
   const NextArrow = ({ onClick }) => (
     <button
@@ -170,23 +171,23 @@ const CarouselTraditional = () => {
                     <div className='flex items-center gap-3'>
                       <span className='text-xl sm:text-2xl text-gray-500 line-through'>
                         ₹
-                        {product?.variants[0]?.price ||
+                        {product?.variants[0]?.price?.basePrice ||
                           product?.price ||
                           '1499'}
                       </span>
                       <span className='text-3xl sm:text-4xl font-bold text-indigo-600'>
                         ₹
-                        {product?.variants[0]?.discountedPrice ||
+                        {product?.variants[0]?.price?.discountedPrice ||
                           product?.discountedPrice ||
                           '999'}
                       </span>
                     </div>
                     <span className='px-3 py-1 bg-green-500 text-white rounded-full text-sm font-semibold'>
                       {Math.round(
-                        (((product?.variants[0]?.price || product?.price) -
-                          (product?.variants[0]?.discountedPrice ||
+                        (((product?.variants[0]?.price?.basePrice || product?.price) -
+                          (product?.variants[0]?.price?.discountedPrice ||
                             product?.discountedPrice)) /
-                          (product?.variants[0]?.price || product?.price)) *
+                          (product?.variants[0]?.price?.basePrice || product?.price)) *
                           100
                       )}
                       % OFF
@@ -200,7 +201,7 @@ const CarouselTraditional = () => {
                       CloudinaryConfig.CLOUDINARY_URL
                     }/image/upload/q_auto,f_auto/${
                       product?.variants[0]?.images?.[0]?.url ||
-                      product?.image_id?.[0]
+                      product?.baseImage?.url
                     }`}
                     alt={product?.name}
                     className='w-[160px] h-[100px] xs:w-[200px] xs:h-[120px] sm:w-[280px] sm:h-[240px] md:w-[350px] md:h-[320px] object-contain mx-auto drop-shadow-2xl'

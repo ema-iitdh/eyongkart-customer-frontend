@@ -54,19 +54,18 @@ export default function Cart() {
             const variant = productData?.variants?.find(
               (v) => v?._id === item?.variantId?.[0]
             );
-
-            const imageId =
-              productData?.images?.[0]?.url || productData?.image_id?.[0];
-            const imageUrl = imageId
-              ? `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/c_fill,w_400,h_400/${imageId}`
-              : '/placeholder-image.jpg';
+            // const imageId =
+            //   productData?.images?.[0]?.url || productData?.image_id?.[0];
+            // const imageUrl = imageId
+            //   ? `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/c_fill,w_400,h_400/${imageId}`
+            //   : '/placeholder-image.jpg';
 
             return {
               ...item,
               product: productData,
               variant,
               price: variant?.price?.discountedPrice || productData?.price,
-              imageUrl,
+              // imageUrl,
             };
           } catch (error) {
             console.error('Error fetching product:', error);
@@ -92,7 +91,7 @@ export default function Cart() {
     return cartItemProducts.reduce((acc, item) => {
       return (
         acc +
-        (item?.product?.variants?.price?.discountedPrice ||
+        (item?.variant?.price?.discountedPrice ||
           item?.product?.discountedPrice ||
           0) *
           (item?.quantity || 0)
@@ -206,7 +205,7 @@ export default function Cart() {
                 >
                   <div className='relative group w-full sm:w-auto'>
                     <img
-                      src={item.imageUrl}
+                      src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${item.variant.images[0].url}`}
                       alt={item?.product?.name || 'Product image'}
                       className='w-full sm:w-24 lg:w-32 h-32 sm:h-24 lg:h-32 object-cover rounded-lg mx-auto sm:mx-0'
                       loading='lazy'
@@ -236,7 +235,7 @@ export default function Cart() {
                     </div>
                     <p className='text-lg sm:text-xl font-bold text-gray-800'>
                       ₹
-                      {item?.product?.variants?.price?.discountedPrice?.toLocaleString?.() ||
+                      {item?.variant?.price?.discountedPrice?.toLocaleString?.() ||
                         item?.product?.discountedPrice?.toLocaleString?.()}
                     </p>
                   </div>
