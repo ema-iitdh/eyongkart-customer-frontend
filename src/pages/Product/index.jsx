@@ -40,7 +40,7 @@ export default function Product() {
   const variants = useMemo(() => {
     if (!product?.variants) return [];
     return product?.variants?.map((variant) => ({
-      value: variant._id,
+      value: variant._id, 
       label: `${variant.color.name} - ${variant.size.value} - ₹${variant.price.discountedPrice}`,
       variant,
     }));
@@ -66,6 +66,24 @@ export default function Product() {
     return variants.find((v) => v.value === selectedVariant)?.variant;
   }, [selectedVariant, variants]);
 
+  const currentImages = useMemo(() => {
+    if (currentVariant?.images?.length > 0) {
+      return currentVariant.images.map((img) => ({
+        url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${img.url}`,
+        alt: img.altText,
+        id: img._id,
+      }));
+    }
+    if (product?.baseImage) {
+      return [{
+        url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${product.baseImage.url}`,
+        alt: product.baseImage.altText,
+        id: 'base'
+      }];
+    }
+    return [];
+  }, [currentVariant, product]);
+
   if (isLoading) {
     return (
       <div className='min-h-screen flex justify-center items-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50'>
@@ -74,34 +92,34 @@ export default function Product() {
     );
   }
 
-  const dynamicImageId =
-    productResponse?.product?.images?.[selectedImage]?.url?.replace(/"/g, '') ||
-    productResponse?.product?.image_id?.[selectedImage]?.replace(/"/g, '');
+  // const dynamicImageId =
+  //   productResponse?.product?.images?.[selectedImage]?.url?.replace(/"/g, '') ||
+  //   productResponse?.product?.image_id?.[selectedImage]?.replace(/"/g, '');
 
-  const dynamicImageUrl = `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${dynamicImageId}`;
+  // const dynamicImageUrl = `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${dynamicImageId}`;
 
-  const dynamicImages = (() => {
-    if (productResponse?.product?.images?.length > 0) {
-      return productResponse?.product?.images?.map((img) => ({
-        url: `${
-          CloudinaryConfig.CLOUDINARY_URL
-        }/image/upload/${img?.url?.replace(/"/g, '')}`,
-        id: img,
-      }));
-    }
+  // const dynamicImages = (() => {
+  //   if (productResponse?.product?.images?.length > 0) {
+  //     return productResponse?.product?.images?.map((img) => ({
+  //       url: `${
+  //         CloudinaryConfig.CLOUDINARY_URL
+  //       }/image/upload/${img?.url?.replace(/"/g, '')}`,
+  //       id: img,
+  //     }));
+  //   }
 
-    if (productResponse?.product?.image_id?.length > 0) {
-      return productResponse?.product?.image_id?.map((img) => ({
-        url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${img?.replace(
-          /"/g,
-          ''
-        )}`,
-        id: img,
-      }));
-    }
+  //   if (productResponse?.product?.image_id?.length > 0) {
+  //     return productResponse?.product?.image_id?.map((img) => ({
+  //       url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${img?.replace(
+  //         /"/g,
+  //         ''
+  //       )}`,
+  //       id: img,
+  //     }));
+  //   }
 
-    return [];
-  })();
+  //   return [];
+  // })();
 
   const handleQuantityChange = (value) => {
     const newQuantity = Math.max(1, Math.min(99, value));
@@ -159,8 +177,8 @@ export default function Product() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 1.1 }}
                   transition={{ duration: 0.3 }}
-                  src={dynamicImageUrl}
-                  alt={product?.name}
+                  src={currentImages[selectedImage]?.url}
+                  alt={currentImages[selectedImage]?.alt}
                   className='w-full h-full object-cover'
                 />
               </AnimatePresence>
@@ -205,7 +223,7 @@ export default function Product() {
             </motion.div>
 
             <div className='grid grid-cols-4 gap-3'>
-              {dynamicImages.map((img, index) => (
+              {currentImages.map((img, index) => (
                 <button
                   type='button'
                   key={v4()}
@@ -223,7 +241,7 @@ export default function Product() {
                 >
                   <img
                     src={img.url}
-                    alt={`${product?.name} view ${index + 1}`}
+                    alt={img.alt}
                     className='w-full h-full object-cover'
                   />
                 </button>
@@ -239,12 +257,12 @@ export default function Product() {
               </h1>
               <div className='flex items-center gap-4 mt-2'>
                 <Rating
-                  value={product?.averageRating}
+                  value={currentVariant?.averageRating || 0}
                   fractions={2}
                   size='md'
                 />
                 <span className='text-gray-600'>
-                  ({product?.totalReviews} reviews)
+                  ({currentVariant?.totalReviews || 0} reviews)
                 </span>
               </div>
             </div>
@@ -264,7 +282,7 @@ export default function Product() {
               <p className='text-3xl font-bold bg-gray-800 bg-clip-text text-transparent'>
                 ₹
                 {currentVariant
-                  ? currentVariant.price.discountedPrice
+                  ? currentVariant?.price.discountedPrice
                   : product?.discountedPrice}
               </p>
               {(currentVariant?.price.discount > 0 ||
@@ -383,7 +401,35 @@ export default function Product() {
                 <div>
                   <p className='text-gray-500'>Material</p>
                   <p className='font-medium text-gray-900'>
-                    {product?.material || 'Not provided'}
+                    {product?.specifications?.material || 'Not provided'}
+                  </p>
+                </div>
+                <div>
+                  <p className='text-gray-500'>Age Group</p>
+                  <p className='font-medium text-gray-900'>
+                    {product?.ageGroup || 'Not provided'}
+                  </p>
+                </div>
+                {currentVariant?.size?.measurements && (
+                  <>
+                    <div>
+                      <p className='text-gray-500'>Length</p>
+                      <p className='font-medium text-gray-900'>
+                        {currentVariant.size.measurements.length.value} {currentVariant.size.measurements.length.unit}
+                      </p>
+                    </div>
+                    <div>
+                      <p className='text-gray-500'>Width</p>
+                      <p className='font-medium text-gray-900'>
+                        {currentVariant.size.measurements.width.value} {currentVariant.size.measurements.width.unit}
+                      </p>
+                    </div>
+                  </>
+                )}
+                <div>
+                  <p className='text-gray-500'>Gender</p>
+                  <p className='font-medium text-gray-900'>
+                    {product?.gender || 'Not provided'}
                   </p>
                 </div>
                 <div>

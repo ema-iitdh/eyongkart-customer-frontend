@@ -204,6 +204,7 @@ export default function Checkout() {
             variantId: item.variantId || 'none',
           };
         });
+        console.log(cartItems);
 
         setItems(cartItems);
         const subTotal = cartItems.reduce((acc, item) => {
@@ -672,15 +673,14 @@ export default function Checkout() {
                       itemDetails[item.product._id]?.product || item.product;
                     return (
                       <div
-                        key={item._id}
+                        key={item.product._id}
                         className='flex gap-3 sm:gap-4 py-2 border-b border-gray-200 last:border-0'
                       >
                         <img
                           src={`${
                             CloudinaryConfig.CLOUDINARY_URL
-                          }/image/upload/v1700463893/${
-                            productDetails.images?.[0]?.url ||
-                            productDetails.image_id?.[0]
+                          }/image/upload/${
+                            productDetails?.baseImage?.url
                           }`}
                           alt={productDetails.name}
                           className='w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg'
