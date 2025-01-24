@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
   const { addToCart: addToCartStore } = useCartStore();
 
   const isWishlisted = wishlist?.wishlist?.items?.some(
-    (item) => item.product === _id
+    (item) => item?.product === _id
   );
 
   const { mutate: addToCart } = useAddToCart();
@@ -100,9 +100,9 @@ const ProductCard = ({ product }) => {
               alt={name}
               className='w-full h-full bg-slate-100 block object-contain transform group-hover:scale-110 transition-transform duration-500'
             />
-            {variants[0].price.discount > 0 && (
+            {variants?.[0]?.price?.discount > 0 && (
               <div className='absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 h-[24px] rounded-full text-sm font-medium shadow-lg flex items-center'>
-                {variants[0].price.discount}% OFF
+                {variants?.[0]?.price?.discount}% OFF
               </div>
             )}
           </button>
@@ -128,7 +128,7 @@ const ProductCard = ({ product }) => {
 
             <div className='flex items-center justify-between mt-3'>
               <div className='flex items-center gap-2 flex-wrap'>
-                {variants[0].price.discount > 0 ? (
+                {variants?.[0]?.price?.discount > 0 ? (
                   <>
                     <span className='text-gray-400 line-through sm:text-xs text-[10px]'>
                       ₹{dynamicBasePrice}
