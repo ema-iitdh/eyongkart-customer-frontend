@@ -201,7 +201,7 @@ const CarouselTraditional = () => {
                       CloudinaryConfig.CLOUDINARY_URL
                     }/image/upload/q_auto,f_auto/${
                       product?.variants[0]?.images?.[0]?.url ||
-                      product?.baseImage?.url
+                      product?.baseImage?.url || product?.image_id?.[0]
                     }`}
                     alt={product?.name}
                     className='w-[160px] h-[100px] xs:w-[200px] xs:h-[120px] sm:w-[280px] sm:h-[240px] md:w-[350px] md:h-[320px] object-contain mx-auto drop-shadow-2xl'

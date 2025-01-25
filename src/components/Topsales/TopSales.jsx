@@ -4,10 +4,11 @@ import { useProducts } from '@/features/products/hooks/useProducts';
 import HorizontalScrollerWithButton from '../common/HorizontalScrollerWithButton';
 import ProductCard from '../common/ProductCard';
 import HorizontalScrollWithViewMore from '../common/HorizontalScrollWithViewMore';
+import { useNavigate } from 'react-router-dom';
 
 const TopSales = () => {
   const [minDiscount, setMinDiscount] = useState(10);
-
+  const navigate = useNavigate();
   const {
     data: productData,
     isLoading,

@@ -404,7 +404,7 @@ export default function Checkout() {
     value: addr._id,
     label: `${addr.deliveredToWhom} - ${addr.address}, ${addr.district}, ${addr.state}, ${addr.pincode}, ${addr.phone}, ${addr.street}, ${addr.landmark}`,
   }));
-
+  console.log(items);
   return (
     <div className='min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-4 sm:py-8'>
       <div className='container mx-auto px-2 sm:px-4 max-w-6xl'>
@@ -680,7 +680,7 @@ export default function Checkout() {
                           src={`${
                             CloudinaryConfig.CLOUDINARY_URL
                           }/image/upload/${
-                            productDetails?.baseImage?.url
+                            productDetails?.baseImage?.url || productDetails?.image_id?.[0]
                           }`}
                           alt={productDetails.name}
                           className='w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg'

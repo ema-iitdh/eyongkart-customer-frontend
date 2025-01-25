@@ -5,7 +5,8 @@ import { ShopContext } from '../Context/ShopContext';
 import { useNavigate } from 'react-router-dom';
 import { CloudinaryConfig } from '../../../Cloudinary';
 
-const CartItem = ({ item, substractQuantity, addToCart, removeFromCart }) => (
+const CartItem = ({ item, substractQuantity, addToCart, removeFromCart }) => {
+  return (
   <div className='flex flex-row   border border-gray-400 rounded-lg shadow-lg p-6 transition-all hover:shadow-2xl'>
     <div className='w-full sm:w-[120px]  sm:h-[150px] h-[150px] flex justify-center items-center mb-4 sm:mb-0'>
       <img
@@ -75,7 +76,7 @@ const CartItem = ({ item, substractQuantity, addToCart, removeFromCart }) => (
       </h3>
     </div>
   </div>
-);
+)};
 
 const CartTotals = ({ total, navigate }) => (
   <div className='mt-8 bg-white border border-gray-400 p-6 rounded-lg shadow-lg transition-all hover:shadow-2xl'>

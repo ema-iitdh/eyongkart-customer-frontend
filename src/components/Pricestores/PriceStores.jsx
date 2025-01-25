@@ -21,14 +21,15 @@ const PriceStores = () => {
   // Memoize filtered items to prevent recalculation on every render
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const filterItems = useMemo(() => {
+    console.log("pl", productLists)
     return productLists
       .filter(
-        (product) => product?.variants?.[0]?.price?.discountedPrice <= maxPrice
+        (product) => (product?.variants?.[0]?.price?.discountedPrice || product?.discountedPrice) <= maxPrice
       )
       .sort(
         (a, b) =>
-          a?.variants?.[0]?.price?.discountedPrice -
-          b?.variants?.[0]?.price?.discountedPrice
+          (a?.variants?.[0]?.price?.discountedPrice || a?.discountedPrice) -
+          (b?.variants?.[0]?.price?.discountedPrice || b?.discountedPrice)
       );
   }, [productLists, maxPrice]);
 

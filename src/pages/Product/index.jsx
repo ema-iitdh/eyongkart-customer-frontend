@@ -66,23 +66,31 @@ export default function Product() {
     return variants.find((v) => v.value === selectedVariant)?.variant;
   }, [selectedVariant, variants]);
 
-  const currentImages = useMemo(() => {
-    if (currentVariant?.images?.length > 0) {
-      return currentVariant.images.map((img) => ({
-        url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${img.url}`,
-        alt: img.altText,
-        id: img._id,
-      }));
-    }
-    if (product?.baseImage) {
-      return [{
-        url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${product.baseImage.url}`,
-        alt: product.baseImage.altText,
-        id: 'base'
-      }];
-    }
-    return [];
-  }, [currentVariant, product]);
+  let currentImages = useMemo(() => {
+    return product?.image_id.map((img) => ({
+      url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${img}`
+    }))
+  }, [product?.image_id]);
+
+  if (variants.length > 0) {
+    currentImages = (() => {
+      if (currentVariant?.images?.length > 0) {
+        return currentVariant.images.map((img) => ({
+          url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${img.url}`,
+          alt: img.altText,
+          id: img._id,
+        }));
+      }
+      if (product?.baseImage) {
+        return [{
+          url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${product.baseImage.url}`,
+          alt: product.baseImage.altText,
+          id: 'base'
+        }];
+      }
+      return [];
+    });
+  }
 
   if (isLoading) {
     return (

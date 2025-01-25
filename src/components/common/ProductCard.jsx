@@ -13,14 +13,20 @@ import { CloudinaryConfig } from '../../../Cloudinary';
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
+  console.log(product);
+
   const {
     _id,
     name,
     averageRating,
     totalReviews,
     purchaseCount,
+    image_id,
     baseImage,
     variants = [],
+    price,
+    discount,
+    discountedPrice
   } = product;
 
   const { mutate: toggleWishlistApi } = useToggleWishlist();
@@ -54,10 +60,10 @@ const ProductCard = ({ product }) => {
   };
 
   // const imageUrl = image_id?.[0]?.replace(/"/g, '') || images?.[0]?.url || '';
-  const imageUrl = baseImage?.url;
-  const dynamicPrice = variants?.[0]?.price?.discountedPrice;
-  const dynamicDiscount = variants?.[0]?.price?.discount;
-  const dynamicBasePrice = variants?.[0]?.price?.basePrice;
+  const imageUrl = baseImage?.url || image_id?.[0];
+  const dynamicPrice = price || variants?.[0]?.price?.discountedPrice;
+  const dynamicDiscount = discount || variants?.[0]?.price?.discount;
+  const dynamicBasePrice = discountedPrice || variants?.[0]?.price?.basePrice;
 
   return (
     <Link to={`/product/${_id}`} className='block h-[480px]'>

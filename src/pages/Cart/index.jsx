@@ -169,7 +169,7 @@ export default function Cart() {
       </div>
     );
   }
-
+  console.log(cartItemProducts);
   return (
     <div className='min-h-screen bg-gradient-to-br from-violet-50 to-fuchsia-50 py-4 sm:py-8'>
       <div className='container mx-auto px-2 sm:px-4 max-w-4xl'>
@@ -205,7 +205,7 @@ export default function Cart() {
                 >
                   <div className='relative group w-full sm:w-auto'>
                     <img
-                      src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${item?.variant?.images?.[0]?.url}`}
+                      src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${item?.variant?.images?.[0]?.url || item?.product?.image_id?.[0]}`}
                       alt={item?.product?.name || 'Product image'}
                       className='w-full sm:w-24 lg:w-32 h-32 sm:h-24 lg:h-32 object-cover rounded-lg mx-auto sm:mx-0'
                       loading='lazy'
