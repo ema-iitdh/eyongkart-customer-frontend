@@ -54,6 +54,7 @@ export default function AppRoutes() {
             <Route path={ROUTES.ORDER_DETAIL} element={<OrderDetail />} />
           </Route>
           <Route path={ROUTES.ABOUT_US} element={<AboutUs />} />
+          <Route path={'/admin/*'} element={null} />
           <Route
             path='*'
             element={
