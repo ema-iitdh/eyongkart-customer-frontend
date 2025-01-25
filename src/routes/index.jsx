@@ -54,16 +54,6 @@ export default function AppRoutes() {
             <Route path={ROUTES.ORDER_DETAIL} element={<OrderDetail />} />
           </Route>
           <Route path={ROUTES.ABOUT_US} element={<AboutUs />} />
-          <Route path={'/admin/*'} element={null} />
-          <Route
-            path='*'
-            element={
-              <div className='bg-gradient-to-br  from-slate-200 via-blue-100 to-orange-200 text-gray-500 font-extrabold text-3xl min-h-[100svh] grid place-items-center lg:text-6xl'>
-                {' '}
-                Coming soon...
-              </div>
-            }
-          />
         </Route>
 
         {/* 
@@ -116,6 +106,16 @@ export default function AppRoutes() {
         />
 
         <Route path={ROUTES.CONTACT} element={<Contact />} /> */}
+        <Route path={'/admin/*'} element={null} />
+        <Route
+          path='*'
+          element={
+            <div className='bg-gradient-to-br  from-slate-200 via-blue-100 to-orange-200 text-gray-500 font-extrabold text-3xl min-h-[100svh] grid place-items-center lg:text-6xl'>
+              {' '}
+              Coming soon...
+            </div>
+          }
+        />
       </Routes>
     </Suspense>
   );
