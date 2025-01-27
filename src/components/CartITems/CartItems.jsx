@@ -7,76 +7,77 @@ import { CloudinaryConfig } from '../../../Cloudinary';
 
 const CartItem = ({ item, substractQuantity, addToCart, removeFromCart }) => {
   return (
-  <div className='flex flex-row   border border-gray-400 rounded-lg shadow-lg p-6 transition-all hover:shadow-2xl'>
-    <div className='w-full sm:w-[120px]  sm:h-[150px] h-[150px] flex justify-center items-center mb-4 sm:mb-0'>
-      <img
-        className='sm:w-full sm:h-full w-[120px] h-[160px] object-fit rounded-lg'
-        src={`${
-          CloudinaryConfig.CLOUDINARY_URL
-        }/image/upload/${item?.image_id[0]?.replace(/"/g, '')}`}
-        alt=''
-      />
-    </div>
-
-    <div className=' sm:ml-4 flex flex-col  justify-between w-full'>
-      <div className='flex justify-between mb-2'>
-        <h3 className=' sm:text-xl font-semibold text-black text-[15px]'>
-          {item.name}
-        </h3>
-        <button
-          type='button'
-          className='text-red-500 p-1 hover:text-red-600 transition'
-          onClick={() => removeFromCart(item._id)}
-        >
-          <FaTimes size={20} />
-        </button>
+    <div className='flex flex-row   border border-gray-400 rounded-lg shadow-lg p-6 transition-all hover:shadow-2xl'>
+      <div className='w-full sm:w-[120px]  sm:h-[150px] h-[150px] flex justify-center items-center mb-4 sm:mb-0'>
+        <img
+          className='sm:w-full sm:h-full w-[120px] h-[160px] object-fit rounded-lg'
+          src={`${
+            CloudinaryConfig.CLOUDINARY_URL
+          }/image/upload/${item?.image_id[0]?.replace(/"/g, '')}`}
+          alt=''
+        />
       </div>
 
-      {/* <div className="flex justify-between text-[15px] mb-2"> */}
-      <div className=' flex sm:text[18px] text-[14px]'>
-        <p className='font-semibold sm:text[18px] text-red-400 '>
-          ₹{item.discountedPrice}
-        </p>
-        <p className='font-semibold sm:text[18px] text-black line-through pl-2 '>
-          ₹{item.price}
-        </p>
-        <p className='font-semibold text-gray-500 pl-2 '>
-          ({item.discount}%OFF)
-        </p>
-      </div>
-
-      {/* </div> */}
-
-      <div className='flex justify-between  pr-3'>
-        <p className='font-semibold text-gray-800 sm:text-[18px] text-[14px] '>
-          Qty: {item.quantity}
-        </p>
-        <div className='flex gap-4'>
+      <div className=' sm:ml-4 flex flex-col  justify-between w-full'>
+        <div className='flex justify-between mb-2'>
+          <h3 className=' sm:text-xl font-semibold text-black text-[15px]'>
+            {item.name}
+          </h3>
           <button
             type='button'
-            className='bg-gray-200 hover:bg-gray-300 rounded-full w-6 h-6 flex justify-center items-center transition'
-            onClick={() => substractQuantity(item._id)}
+            className='text-red-500 p-1 hover:text-red-600 transition'
+            onClick={() => removeFromCart(item._id)}
           >
-            <span className='font-bold text-xl'>-</span>
-          </button>
-          <span className='flex justify-center items-center font-semibold text-lg text-black dark:text-white'>
-            {item.quantity}
-          </span>
-          <button
-            type='button'
-            className='bg-gray-200 hover:bg-gray-300 rounded-full w-6 h-6 flex justify-center items-center transition'
-            onClick={() => addToCart(item._id)}
-          >
-            <span className='font-bold text-xl'>+</span>
+            <FaTimes size={20} />
           </button>
         </div>
+
+        {/* <div className="flex justify-between text-[15px] mb-2"> */}
+        <div className=' flex sm:text[18px] text-[14px]'>
+          <p className='font-semibold sm:text[18px] text-red-400 '>
+            ₹{item.discountedPrice}
+          </p>
+          <p className='font-semibold sm:text[18px] text-black line-through pl-2 '>
+            ₹{item.price}
+          </p>
+          <p className='font-semibold text-gray-500 pl-2 '>
+            ({item.discount}%OFF)
+          </p>
+        </div>
+
+        {/* </div> */}
+
+        <div className='flex justify-between  pr-3'>
+          <p className='font-semibold text-gray-800 sm:text-[18px] text-[14px] '>
+            Qty: {item.quantity}
+          </p>
+          <div className='flex gap-4'>
+            <button
+              type='button'
+              className='bg-gray-200 hover:bg-gray-300 rounded-full w-6 h-6 flex justify-center items-center transition'
+              onClick={() => substractQuantity(item._id)}
+            >
+              <span className='font-bold text-xl'>-</span>
+            </button>
+            <span className='flex justify-center items-center font-semibold text-lg text-black dark:text-white'>
+              {item.quantity}
+            </span>
+            <button
+              type='button'
+              className='bg-gray-200 hover:bg-gray-300 rounded-full w-6 h-6 flex justify-center items-center transition'
+              onClick={() => addToCart(item._id)}
+            >
+              <span className='font-bold text-xl'>+</span>
+            </button>
+          </div>
+        </div>
+        <h3 className='font-semibold text-black '>
+          SubTotal: ₹ {item.discountedPrice * item.quantity}
+        </h3>
       </div>
-      <h3 className='font-semibold text-black '>
-        SubTotal: ₹ {item.discountedPrice * item.quantity}
-      </h3>
     </div>
-  </div>
-)};
+  );
+};
 
 const CartTotals = ({ total, navigate }) => (
   <div className='mt-8 bg-white border border-gray-400 p-6 rounded-lg shadow-lg transition-all hover:shadow-2xl'>
@@ -129,9 +130,9 @@ const CartsItems = () => {
   const getTotal = () => {
     let total = 0;
     if (cartItems?.length) {
-      cartItems.forEach((i) => {
+      for (const i of cartItems) {
         total += i.discountedPrice * i.quantity;
-      });
+      }
     }
     return total;
   };

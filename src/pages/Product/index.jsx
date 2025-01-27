@@ -34,14 +34,14 @@ export default function Product() {
   const product = productResponse?.product;
 
   const isInCart = useMemo(() => {
-    return cartData?.cart?.some((item) => item.product._id === productId);
+    return cartData?.cart?.some((item) => item.product?._id === productId);
   }, [cartData, productId]);
 
   const variants = useMemo(() => {
     if (!product?.variants) return [];
     return product?.variants?.map((variant) => ({
-      value: variant._id, 
-      label: `${variant.color.name} - ${variant.size.value} - ₹${variant.price.discountedPrice}`,
+      value: variant?._id,
+      label: `${variant?.color?.name} - ${variant?.size?.value} - ₹${variant?.price?.discountedPrice}`,
       variant,
     }));
   }, [product]);
@@ -56,7 +56,7 @@ export default function Product() {
         (v) => v.variant.stock.status === 'in_stock'
       );
       setSelectedVariant(
-        inStockVariant ? inStockVariant.value : variants[0].value
+        inStockVariant ? inStockVariant?.value : variants?.[0]?.value
       );
     }
   }, [variants, selectedVariant]);
@@ -67,29 +67,33 @@ export default function Product() {
   }, [selectedVariant, variants]);
 
   let currentImages = useMemo(() => {
-    return product?.image_id.map((img) => ({
-      url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${img}`
-    }))
-  }, [product?.image_id]);
+    if (!product?.image_id) return [];
+    return product.image_id.map((img) => ({
+      url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${img}`,
+    }));
+  }, [product]);
 
   if (variants.length > 0) {
-    currentImages = (() => {
+    const getImages = () => {
       if (currentVariant?.images?.length > 0) {
         return currentVariant.images.map((img) => ({
-          url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${img.url}`,
-          alt: img.altText,
-          id: img._id,
+          url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${img?.url}`,
+          alt: img?.altText,
+          id: img?._id,
         }));
       }
       if (product?.baseImage) {
-        return [{
-          url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${product.baseImage.url}`,
-          alt: product.baseImage.altText,
-          id: 'base'
-        }];
+        return [
+          {
+            url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${product?.baseImage?.url}`,
+            alt: product?.baseImage?.altText,
+            id: 'base',
+          },
+        ];
       }
       return [];
-    });
+    };
+    currentImages = getImages();
   }
 
   if (isLoading) {
@@ -134,7 +138,7 @@ export default function Product() {
     setQuantity(newQuantity);
     if (isInCart) {
       updateCart({
-        productId: product._id,
+        productId: product?._id,
         quantity: newQuantity,
         variantId: currentVariant?._id || 'none',
       });
@@ -143,17 +147,17 @@ export default function Product() {
 
   const handleAddToCart = () => {
     if (isInCart) {
-      removeFromCart(product._id);
+      removeFromCart(product?._id);
     } else {
       if (currentVariant) {
         addToCart({
-          productId: product._id,
+          productId: product?._id,
           variantId: currentVariant?._id || 'none',
           quantity,
         });
       } else {
         addToCart({
-          productId: product._id,
+          productId: product?._id,
           quantity,
           variantId: currentVariant?._id || 'none',
         });
@@ -163,7 +167,7 @@ export default function Product() {
 
   const handleBuyNow = () => {
     navigate(
-      `/checkout/${product._id}/${currentVariant?._id || 'none'}/${quantity}`
+      `/checkout/${product?._id}/${currentVariant?._id || 'none'}/${quantity}`
     );
   };
 
@@ -179,16 +183,30 @@ export default function Product() {
               className='relative w-4/5 mx-auto aspect-square rounded-2xl overflow-hidden md:shadow-lg'
             >
               <AnimatePresence mode='wait'>
-                <motion.img
-                  key={selectedImage}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
-                  src={currentImages[selectedImage]?.url}
-                  alt={currentImages[selectedImage]?.alt}
-                  className='w-full h-full object-cover'
-                />
+                {currentImages?.length > 0 ? (
+                  <motion.img
+                    key={selectedImage}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                    src={currentImages[selectedImage]?.url}
+                    alt={currentImages[selectedImage]?.alt}
+                    className='w-full h-full object-cover'
+                  />
+                ) : (
+                  product?.baseImage && (
+                    <motion.img
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 1.1 }}
+                      transition={{ duration: 0.3 }}
+                      src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${product.baseImage.url}`}
+                      alt={product.baseImage.altText}
+                      className='w-full h-full object-cover'
+                    />
+                  )
+                )}
               </AnimatePresence>
               <motion.button
                 onClick={(e) => {
@@ -231,7 +249,7 @@ export default function Product() {
             </motion.div>
 
             <div className='grid grid-cols-4 gap-3'>
-              {currentImages.map((img, index) => (
+              {currentImages?.map((img, index) => (
                 <button
                   type='button'
                   key={v4()}
@@ -290,7 +308,7 @@ export default function Product() {
               <p className='text-3xl font-bold bg-gray-800 bg-clip-text text-transparent'>
                 ₹
                 {currentVariant
-                  ? currentVariant?.price.discountedPrice
+                  ? currentVariant?.price?.discountedPrice
                   : product?.discountedPrice}
               </p>
               {(currentVariant?.price.discount > 0 ||
@@ -423,13 +441,15 @@ export default function Product() {
                     <div>
                       <p className='text-gray-500'>Length</p>
                       <p className='font-medium text-gray-900'>
-                        {currentVariant.size.measurements.length.value} {currentVariant.size.measurements.length.unit}
+                        {currentVariant.size.measurements.length.value}{' '}
+                        {currentVariant.size.measurements.length.unit}
                       </p>
                     </div>
                     <div>
                       <p className='text-gray-500'>Width</p>
                       <p className='font-medium text-gray-900'>
-                        {currentVariant.size.measurements.width.value} {currentVariant.size.measurements.width.unit}
+                        {currentVariant.size.measurements.width.value}{' '}
+                        {currentVariant.size.measurements.width.unit}
                       </p>
                     </div>
                   </>
