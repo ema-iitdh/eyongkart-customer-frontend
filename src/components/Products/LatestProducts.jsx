@@ -22,6 +22,8 @@ export default function LatestProducts() {
 
   const latestProducts = sortedProducts?.slice(0, 10);
 
+  console.log(latestProducts, 'latestProducts');
+
   if (isLoading) {
     return (
       <div className='flex justify-center items-center min-h-[200px]'>

@@ -180,7 +180,7 @@ export default function Product() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className='relative w-4/5 mx-auto aspect-square rounded-2xl overflow-hidden md:shadow-lg'
+              className='relative w-4/5 sm:w-[65%] mx-auto aspect-square rounded-2xl overflow-hidden md:shadow-lg'
             >
               <AnimatePresence mode='wait'>
                 {currentImages?.length > 0 ? (

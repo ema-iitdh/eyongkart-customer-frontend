@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { CloudinaryConfig } from '../../../Cloudinary';
 import Axios from '../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { useCarouselProducts } from '@/features/products/hooks/useProducts';
 import { ROUTES } from '@/constants/routes';
 
@@ -24,7 +24,7 @@ const CarouselSkeleton = () => {
             </div>
           </div>
           <div className='order-1 sm:order-2 flex items-center justify-center'>
-            <div className='w-[160px] h-[100px] xs:w-[200px] xs:h-[120px] sm:w-[280px] sm:h-[240px] md:w-[350px] md:h-[320px] bg-gray-200 rounded-lg animate-pulse' />
+            <div className='w-[200px] h-[140px] xs:w-[240px] xs:h-[160px] sm:w-[280px] sm:h-[240px] md:w-[350px] md:h-[320px] bg-gray-200 rounded-lg animate-pulse' />
           </div>
         </div>
       </div>
@@ -37,6 +37,8 @@ const CarouselTraditional = () => {
   const [carouselData, setCarouselData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { data, isLoading: isProductsLoading } = useCarouselProducts();
+
+  console.log(data?.products);
 
   const productsWithDiscount = data?.products
     .filter(
@@ -131,20 +133,11 @@ const CarouselTraditional = () => {
   }
 
   return (
-    <div className='relative container w-[95svw] justify-self-center mx-auto sm:m-3 sm:mt-0 rounded-xl overflow-hidden py-5 bg-gradient-to-r from-orange-300 to-yellow-400 dark:from-gray-800 dark:to-gray-900'>
+    <div className='relative container w-[95svw] justify-self-center mx-auto rounded-xl overflow-hidden py-5 bg-gradient-to-r from-orange-300 to-yellow-400 dark:from-gray-800 dark:to-gray-900'>
       <div className='p-2 mx-auto'>
         <Slider {...settings}>
           {productsWithDiscount?.map((product) => (
-            <div
-              key={product._id}
-              className='outline-none'
-              onClick={() => navigate(`${ROUTES.PRODUCT.LIST}/${product._id}`)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  navigate(`${ROUTES.PRODUCT.LIST}/${product._id}`);
-                }
-              }}
-            >
+            <div key={product._id} className='outline-none'>
               <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-x-10 px-4 sm:px-8'>
                 <div className='flex flex-col justify-center gap-2 sm:gap-3 md:gap-3 order-2 sm:order-1 relative z-10 text-center sm:text-left'>
                   <h2 className='text-base sm:text-lg lg:text-xl font-bold text-gray-800 dark:text-gray-100 transition-colors line-clamp-2'>
@@ -170,18 +163,20 @@ const CarouselTraditional = () => {
                       </span>
                     </div>
                     <span className='px-3 py-1 bg-green-500 text-white rounded-full text-sm font-semibold'>
-                      {Math.round(
-                        (((product?.variants[0]?.price?.markedUpPrice ||
-                          product?.price) -
-                          (product?.variants[0]?.price?.discountedPrice ||
-                            product?.discountedPrice)) /
-                          (product?.variants[0]?.price?.markedUpPrice ||
-                            product?.price)) *
-                          100
-                      )}
-                      % OFF
+                      {product?.variants[0]?.price?.discount}% OFF
                     </span>
                   </div>
+
+                  <button
+                    type='button'
+                    onClick={() =>
+                      navigate(`${ROUTES.PRODUCT.LIST}/${product._id}`)
+                    }
+                    className='mt-4 inline-flex items-center gap-2 bg-gray-700 text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors duration-200 w-fit mx-auto sm:mx-0'
+                  >
+                    View Product
+                    <ArrowRight className='w-4 h-4' />
+                  </button>
                 </div>
 
                 <div className='order-1 sm:order-2 transform transition-transform hover:scale-105 duration-500'>
@@ -194,7 +189,7 @@ const CarouselTraditional = () => {
                       product?.image_id?.[0]
                     }`}
                     alt={product?.name}
-                    className='w-[160px] h-[100px] xs:w-[200px] xs:h-[120px] sm:w-[280px] sm:h-[240px] md:w-[350px] md:h-[320px] object-contain mx-auto drop-shadow-2xl'
+                    className='w-[400px] h-[200px] xs:w-[240px] xs:h-[160px] sm:w-[280px] sm:h-[240px] md:w-[350px] md:h-[320px] object-contain mx-auto drop-shadow-2xl'
                     loading='lazy'
                   />
                 </div>

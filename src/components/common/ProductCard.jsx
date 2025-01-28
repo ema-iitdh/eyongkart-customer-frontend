@@ -10,10 +10,9 @@ import { Heart, ShoppingCart } from 'lucide-react';
 import { memo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CloudinaryConfig } from '../../../Cloudinary';
+
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
-
-  console.log(product);
 
   const {
     _id,
@@ -41,7 +40,7 @@ const ProductCard = ({ product }) => {
 
   const toggleWishlist = (e) => {
     e.preventDefault();
-
+    e.stopPropagation();
     toggleWishlistApi({
       productId: _id,
       variantId: variants?.[0]?._id || 'none',
@@ -49,7 +48,8 @@ const ProductCard = ({ product }) => {
   };
 
   const handleAddToCart = (e) => {
-    e.preventDefault(); // Prevent navigation
+    e.preventDefault();
+    e.stopPropagation();
 
     addToCartStore({ productId: _id, quantity: 1 });
     addToCart({
@@ -59,116 +59,99 @@ const ProductCard = ({ product }) => {
     });
   };
 
-  // const imageUrl = image_id?.[0]?.replace(/"/g, '') || images?.[0]?.url || '';
   const imageUrl = baseImage?.url || image_id?.[0];
-  const dynamicPrice = price || variants?.[0]?.price?.discountedPrice;
-  const dynamicDiscount = discount || variants?.[0]?.price?.discount;
+  const dynamicPrice = variants?.[0]?.price?.discountedPrice || price;
+  const dynamicDiscount = variants?.[0]?.price?.discount || discount;
   const dynamicBasePrice =
-    discountedPrice || variants?.[0]?.price?.markedUpPrice;
+    variants?.[0]?.price?.markedUpPrice || discountedPrice;
 
   return (
-    <Link to={`/product/${_id}`} className='block h-[480px]'>
+    <Link to={`/product/${_id}`} className='block w-full '>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className='relative bg-gradient-to-br from-pink-50 via-white to-blue-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 md:mx-[1rem] h-full flex flex-col group'
+        className='relative bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 h-[380px] flex flex-col group overflow-hidden'
       >
-        {/* Wishlist Button */}
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          onClick={toggleWishlist}
-          className='absolute top-3 right-3 z-10 bg-gradient-to-br from-white/95 to-white/85 backdrop-blur-sm p-2 h-[40px] w-[40px] rounded-full shadow-sm transition-opacity duration-300'
-        >
-          <AnimatePresence>
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className='h-full w-full flex items-center justify-center'
-            >
-              <Heart
-                fill={isWishlisted ? '#ef4444' : 'none'}
-                stroke={isWishlisted ? '#ef4444' : 'currentColor'}
-                className='w-5 h-5 transition-colors'
-              />
-            </motion.div>
-          </AnimatePresence>
-        </motion.button>
+        {/* Discount Badge */}
+        {dynamicDiscount > 0 && (
+          <div className='absolute top-2 left-2 z-10'>
+            <div className='bg-red-600 text-white px-2 py-1 rounded-sm text-xs font-bold'>
+              {dynamicDiscount}% OFF
+            </div>
+          </div>
+        )}
 
-        {/* Product Image Container */}
-        <div className='w-full h-[240px] relative overflow-hidden bg-gradient-to-b from-gray-50 to-white'>
-          <button
-            type='button'
-            onClick={() => navigate(`/product/${_id}`)}
-            className='w-full h-full cursor-pointer'
-          >
-            <img
-              src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/f_auto,q_auto,w_400,h_400/${imageUrl}`}
-              alt={name}
-              className='w-full h-full bg-slate-100 block object-contain transform group-hover:scale-110 transition-transform duration-500'
-            />
-            {variants?.[0]?.price?.discount > 0 && (
-              <div className='absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 h-[24px] rounded-full text-sm font-medium shadow-lg flex items-center'>
-                {variants?.[0]?.price?.discount}% OFF
-              </div>
-            )}
-          </button>
+        {/* Wishlist Button */}
+        <button
+          type='button'
+          onClick={toggleWishlist}
+          className='absolute top-2 right-2 z-10 p-2 rounded-full bg-white/90 shadow-md hover:bg-white transition-all duration-200'
+        >
+          <Heart
+            size={18}
+            fill={isWishlisted ? '#dc2626' : 'none'}
+            stroke={isWishlisted ? '#dc2626' : '#374151'}
+            strokeWidth={2}
+          />
+        </button>
+
+        {/* Image Container */}
+        <div className='h-[180px] bg-gray-50'>
+          <img
+            src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/f_auto,q_auto,w_400,h_400/${imageUrl}`}
+            alt={name}
+            className='w-full h-full object-contain p-4 transition-transform duration-300 group-hover:scale-105'
+            loading='lazy'
+          />
         </div>
 
         {/* Product Details */}
-        <div className='p-4 flex-1 flex flex-col justify-between bg-gradient-to-b from-transparent via-white to-gray-50 h-[240px]'>
-          <div className='h-[160px]'>
-            {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-            <h3
-              className='font-medium text-gray-800 text-xs sm:text-sm line-clamp-3 hover:text-red-500 cursor-pointer transition-colors duration-200 leading-[16px] sm:leading-[20px] h-[48px] sm:h-[60px] overflow-hidden'
-              onClick={() => navigate(`/product/${_id}`)}
-            >
+        <div className='p-3 flex flex-col flex-1'>
+          <div className='flex-1'>
+            <h3 className='text-sm font-medium text-gray-900 line-clamp-2 min-h-[40px] mb-1'>
               {name}
             </h3>
 
-            <div className='flex items-center gap-2 mt-2 h-[20px]'>
+            {/* Rating & Reviews */}
+            <div className='flex items-center gap-2 mb-1'>
               <Rating value={averageRating} fractions={2} readOnly size='xs' />
               <span className='text-xs text-gray-500'>
-                ({totalReviews || 0})
+                {totalReviews?.toLocaleString() || 0}
               </span>
             </div>
 
-            <div className='flex items-center justify-between mt-3'>
-              <div className='flex items-center gap-2 flex-wrap'>
-                {variants?.[0]?.price?.discount > 0 ? (
-                  <>
-                    <span className='text-gray-400 line-through sm:text-xs text-[10px]'>
-                      ₹{dynamicBasePrice}
-                    </span>
-                    <span className='sm:text-lg text-base font-semibold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent'>
-                      ₹{dynamicPrice}
-                    </span>
-                    <span className='text-xs bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent font-medium'>
-                      ({dynamicDiscount}% off)
-                    </span>
-                  </>
-                ) : (
-                  <span className='sm:text-lg text-base font-semibold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent'>
-                    ₹{dynamicPrice}
+            {/* Price Section */}
+            <div className='space-y-0.5'>
+              <div className='flex items-baseline gap-2'>
+                <span className='text-lg font-bold text-gray-900'>
+                  ₹{dynamicPrice?.toLocaleString()}
+                </span>
+                {dynamicDiscount > 0 && (
+                  <span className='text-sm text-gray-500 line-through'>
+                    ₹{dynamicBasePrice?.toLocaleString()}
                   </span>
                 )}
               </div>
-              {purchaseCount > 0 && (
-                <span className='text-xs text-gray-500 bg-gradient-to-r from-gray-100 to-gray-50 px-2  flex items-center rounded-full'>
-                  {purchaseCount} bought
-                </span>
-              )}
+
+              <div className='text-xs text-gray-600'>
+                {dynamicDiscount > 0 ? (
+                  <span className='text-green-600 font-medium'>
+                    Save ₹{dynamicBasePrice - dynamicPrice}
+                  </span>
+                ) : (
+                  <span className='text-gray-400'>Best Price</span>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Add to Cart Button */}
           <motion.button
             onClick={handleAddToCart}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className='w-full bg-orange-500 py-2 hover:bg-orange-600 text-white rounded-lg flex items-center justify-center gap-2 transition-all duration-300 mt-3 shadow-md hover:shadow-lg sm:text-base text-sm font-medium'
+            whileTap={{ scale: 0.95 }}
+            className='mt-2 w-full bg-gradient-to-b from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-sm font-medium text-gray-900 py-2 px-4 rounded-md shadow-sm hover:shadow flex items-center justify-center gap-2 transition-colors duration-200'
           >
-            <ShoppingCart className='sm:w-4 sm:h-4 w-3.5 h-3.5' />
+            <ShoppingCart size={16} />
             Add to Cart
           </motion.button>
         </div>
