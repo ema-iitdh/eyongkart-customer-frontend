@@ -317,7 +317,7 @@ export default function Product() {
                   <span className='text-gray-500 line-through'>
                     ₹
                     {currentVariant
-                      ? currentVariant.price.basePrice
+                      ? currentVariant.price.markedUpPrice
                       : product?.price}
                   </span>
                   <span className='text-green-500 font-semibold'>

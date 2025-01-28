@@ -12,7 +12,7 @@ const ProductCard = ({ filteredWomenProductList }) => {
 
   const displayedWomenProducts = filteredWomenProductList?.slice(0, 15);
   const sortedProductList = displayedWomenProducts?.sort((a, b) =>
-    a.name.localeCompare(b.name)
+    a?.name?.localeCompare(b?.name)
   );
 
   return (

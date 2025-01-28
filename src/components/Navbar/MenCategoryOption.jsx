@@ -105,7 +105,7 @@ export default function MenCategoryOption({
                 <ul className='list-none mt-2 mb-3'>
                   {category?.subCategories
                     ?.sort((a, b) =>
-                      a.subCategoryName.localeCompare(b.subCategoryName)
+                      a?.subCategoryName?.localeCompare(b?.subCategoryName)
                     )
                     .map((subcategory) => (
                       <li key={subcategory._id}>

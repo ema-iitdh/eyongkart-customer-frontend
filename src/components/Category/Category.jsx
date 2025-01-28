@@ -11,7 +11,7 @@ const Category = () => {
   const scrollContainerRef = React.useRef(null);
 
   const categoryList = data?.categories?.sort((a, b) =>
-    a.name.localeCompare(b.name)
+    a?.name?.localeCompare(b?.name)
   );
 
   const scroll = (direction) => {

@@ -123,7 +123,9 @@ export default function CategoryDropdown() {
                         <ul className='space-y-2'>
                           {category.subCategories
                             ?.sort((a, b) =>
-                              a.subCategoryName.localeCompare(b.subCategoryName)
+                              a?.subCategoryName?.localeCompare(
+                                b?.subCategoryName
+                              )
                             )
                             .map((subCategory) => (
                               <motion.li

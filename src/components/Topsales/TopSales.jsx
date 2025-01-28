@@ -34,7 +34,7 @@ const TopSales = () => {
         if (maxDiscountB !== maxDiscountA) {
           return maxDiscountB - maxDiscountA;
         }
-        return a.name.localeCompare(b.name);
+        return a?.name?.localeCompare(b?.name);
       });
   }, [productData, minDiscount]);
 

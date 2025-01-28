@@ -40,9 +40,11 @@ const CarouselTraditional = () => {
 
   const productsWithDiscount = data?.products
     .filter(
-      (product) => product?.variants?.[0]?.price.discount > 0 || product?.discount > 0
+      (product) =>
+        product?.variants?.[0]?.price.discount > 0 || product?.discount > 0
     )
     .slice(0, 6);
+
   console.log(productsWithDiscount);
 
   const NextArrow = ({ onClick }) => (
@@ -105,25 +107,25 @@ const CarouselTraditional = () => {
     ],
   };
 
-  const fetchCarouselData = async () => {
-    try {
-      setIsLoading(true);
-      const { data } = await Axios({
-        url: '/carousel',
-        method: 'GET',
-      });
-      setCarouselData(data.list || []);
-    } catch (error) {
-      console.error('Error fetching carousel data:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const fetchCarouselData = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     const { data } = await Axios({
+  //       url: '/carousel',
+  //       method: 'GET',
+  //     });
+  //     setCarouselData(data.list || []);
+  //   } catch (error) {
+  //     console.error('Error fetching carousel data:', error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    fetchCarouselData();
-  }, []);
+  // // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // useEffect(() => {
+  //   fetchCarouselData();
+  // }, []);
 
   useEffect(() => {
     window.scrollTo({
@@ -132,13 +134,15 @@ const CarouselTraditional = () => {
     });
   }, []);
 
-  if (isLoading || isProductsLoading) {
+  if (isProductsLoading) {
     return <CarouselSkeleton />;
   }
 
   if (!productsWithDiscount?.length) {
     return null;
   }
+
+  console.log(productsWithDiscount.length, 'productsWithDiscount');
 
   return (
     <div className='relative container w-[95svw] justify-self-center mx-auto sm:m-3 sm:mt-0 rounded-xl overflow-hidden py-5 bg-gradient-to-r from-orange-300 to-yellow-400 dark:from-gray-800 dark:to-gray-900'>
@@ -171,7 +175,7 @@ const CarouselTraditional = () => {
                     <div className='flex items-center gap-3'>
                       <span className='text-xl sm:text-2xl text-gray-500 line-through'>
                         ₹
-                        {product?.variants[0]?.price?.basePrice ||
+                        {product?.variants[0]?.price?.markedUpPrice ||
                           product?.price ||
                           '1499'}
                       </span>
@@ -184,10 +188,12 @@ const CarouselTraditional = () => {
                     </div>
                     <span className='px-3 py-1 bg-green-500 text-white rounded-full text-sm font-semibold'>
                       {Math.round(
-                        (((product?.variants[0]?.price?.basePrice || product?.price) -
+                        (((product?.variants[0]?.price?.markedUpPrice ||
+                          product?.price) -
                           (product?.variants[0]?.price?.discountedPrice ||
                             product?.discountedPrice)) /
-                          (product?.variants[0]?.price?.basePrice || product?.price)) *
+                          (product?.variants[0]?.price?.markedUpPrice ||
+                            product?.price)) *
                           100
                       )}
                       % OFF
@@ -201,7 +207,8 @@ const CarouselTraditional = () => {
                       CloudinaryConfig.CLOUDINARY_URL
                     }/image/upload/q_auto,f_auto/${
                       product?.variants[0]?.images?.[0]?.url ||
-                      product?.baseImage?.url || product?.image_id?.[0]
+                      product?.baseImage?.url ||
+                      product?.image_id?.[0]
                     }`}
                     alt={product?.name}
                     className='w-[160px] h-[100px] xs:w-[200px] xs:h-[120px] sm:w-[280px] sm:h-[240px] md:w-[350px] md:h-[320px] object-contain mx-auto drop-shadow-2xl'

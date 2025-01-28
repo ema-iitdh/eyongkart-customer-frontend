@@ -111,7 +111,7 @@ const SearchResults = () => {
         });
       }
 
-      filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+      filteredProducts.sort((a, b) => a?.name?.localeCompare(b?.name));
 
       setProducts(filteredProducts);
       setLoading(false);

@@ -26,7 +26,7 @@ const ProductCard = ({ product }) => {
     variants = [],
     price,
     discount,
-    discountedPrice
+    discountedPrice,
   } = product;
 
   const { mutate: toggleWishlistApi } = useToggleWishlist();
@@ -63,7 +63,8 @@ const ProductCard = ({ product }) => {
   const imageUrl = baseImage?.url || image_id?.[0];
   const dynamicPrice = price || variants?.[0]?.price?.discountedPrice;
   const dynamicDiscount = discount || variants?.[0]?.price?.discount;
-  const dynamicBasePrice = discountedPrice || variants?.[0]?.price?.basePrice;
+  const dynamicBasePrice =
+    discountedPrice || variants?.[0]?.price?.markedUpPrice;
 
   return (
     <Link to={`/product/${_id}`} className='block h-[480px]'>
