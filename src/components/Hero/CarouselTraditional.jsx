@@ -45,35 +45,41 @@ const CarouselTraditional = () => {
     )
     .slice(0, 6);
 
-  console.log(productsWithDiscount);
+  // Only show arrows if there is more than 1 product
+  const NextArrow = ({ onClick }) => {
+    if (productsWithDiscount?.length <= 1) return null;
+    return (
+      <button
+        onClick={onClick}
+        type='button'
+        className='absolute -right-12 top-1/2 -translate-y-1/2 z-10 w-14 h-14 flex items-center justify-center bg-black/20 hover:bg-black/70 rounded-full'
+      >
+        <ChevronRight className='w-8 h-8 text-white' />
+      </button>
+    );
+  };
 
-  const NextArrow = ({ onClick }) => (
-    <button
-      onClick={onClick}
-      type='button'
-      className='absolute -right-12 top-1/2 -translate-y-1/2 z-10 w-14 h-14 flex items-center justify-center bg-black/20 hover:bg-black/70 rounded-full'
-    >
-      <ChevronRight className='w-8 h-8 text-white' />
-    </button>
-  );
+  const PrevArrow = ({ onClick }) => {
+    if (productsWithDiscount?.length <= 1) return null;
+    return (
+      <button
+        onClick={onClick}
+        type='button'
+        className='absolute -left-12 top-1/2 -translate-y-1/2 z-10 w-14 h-14 flex items-center justify-center bg-black/20 hover:bg-black/70 rounded-full'
+      >
+        <ChevronLeft className='w-8 h-8 text-white' />
+      </button>
+    );
+  };
 
-  const PrevArrow = ({ onClick }) => (
-    <button
-      onClick={onClick}
-      type='button'
-      className='absolute -left-12 top-1/2 -translate-y-1/2 z-10 w-14 h-14 flex items-center justify-center bg-black/20 hover:bg-black/70 rounded-full'
-    >
-      <ChevronLeft className='w-8 h-8 text-white' />
-    </button>
-  );
-
+  // Configure slider settings based on number of products
   const settings = {
-    dots: true,
-    arrows: true,
-    infinite: true,
+    dots: productsWithDiscount?.length > 1, // Only show dots if multiple products
+    arrows: productsWithDiscount?.length > 1, // Only show arrows if multiple products
+    infinite: productsWithDiscount?.length > 1, // Only enable infinite scroll if multiple products
     speed: 1000,
     slidesToShow: 1,
-    autoplay: true,
+    autoplay: productsWithDiscount?.length > 1, // Only autoplay if multiple products
     slidesToScroll: 1,
     autoplaySpeed: 3000,
     cssEase: 'cubic-bezier(0.4, 0, 0.2, 1)',
@@ -82,50 +88,32 @@ const CarouselTraditional = () => {
     dotsClass: 'slick-dots custom-dots',
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    // Fix vertical duplication by setting adaptiveHeight to true
+    adaptiveHeight: true,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          arrows: true,
-          dots: true,
+          arrows: productsWithDiscount?.length > 1,
+          dots: productsWithDiscount?.length > 1,
         },
       },
       {
         breakpoint: 768,
         settings: {
           arrows: false,
-          dots: true,
+          dots: productsWithDiscount?.length > 1,
         },
       },
       {
         breakpoint: 640,
         settings: {
           arrows: false,
-          dots: true,
+          dots: productsWithDiscount?.length > 1,
         },
       },
     ],
   };
-
-  // const fetchCarouselData = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     const { data } = await Axios({
-  //       url: '/carousel',
-  //       method: 'GET',
-  //     });
-  //     setCarouselData(data.list || []);
-  //   } catch (error) {
-  //     console.error('Error fetching carousel data:', error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  // useEffect(() => {
-  //   fetchCarouselData();
-  // }, []);
 
   useEffect(() => {
     window.scrollTo({
@@ -142,8 +130,6 @@ const CarouselTraditional = () => {
     return null;
   }
 
-  console.log(productsWithDiscount.length, 'productsWithDiscount');
-
   return (
     <div className='relative container w-[95svw] justify-self-center mx-auto sm:m-3 sm:mt-0 rounded-xl overflow-hidden py-5 bg-gradient-to-r from-orange-300 to-yellow-400 dark:from-gray-800 dark:to-gray-900'>
       <div className='p-2 mx-auto'>
@@ -151,7 +137,7 @@ const CarouselTraditional = () => {
           {productsWithDiscount?.map((product) => (
             <div
               key={product._id}
-              className='outline-none pb-[1rem] lg:pb-[3rem]'
+              className='outline-none'
               onClick={() => navigate(`${ROUTES.PRODUCT.LIST}/${product._id}`)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -167,9 +153,6 @@ const CarouselTraditional = () => {
                   <h1 className='text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-blue-300 bg-clip-text text-transparent line-clamp-2'>
                     {product?.name}
                   </h1>
-                  {/* <h1 className='text-2xl sm:text-4xl md:text-[65px] uppercase font-bold text-white drop-shadow-lg'>
-                    {product?.title2}
-                  </h1> */}
 
                   <div className='flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-4 mt-2'>
                     <div className='flex items-center gap-3'>

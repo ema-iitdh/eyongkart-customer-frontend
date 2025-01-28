@@ -19,7 +19,11 @@ export default function WomenProduct() {
     );
   }
 
-  const menProducts = products?.products?.slice(0, 15);
+  const womenProducts = products?.products?.slice(0, 15);
+
+  if (womenProducts.length === 0) {
+    return null;
+  }
 
   return (
     <div className='py-8 container mx-auto'>
@@ -34,7 +38,7 @@ export default function WomenProduct() {
         itemClassName='w-[280px]'
         onViewMore={() => navigate(`${ROUTES.COLLECTIONS}/Women?gender=Female`)}
       >
-        {menProducts?.map((product) => (
+        {womenProducts?.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </HorizontalScrollWithViewMore>

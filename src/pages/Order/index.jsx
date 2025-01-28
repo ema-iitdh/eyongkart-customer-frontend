@@ -32,6 +32,8 @@ export default function Orders() {
     }
   }, [ordersData]);
 
+  console.log(ordersData?.orders);
+
   if (isLoading) {
     return (
       <div className='h-screen flex items-center justify-center bg-gradient-to-br from-violet-500/20 via-fuchsia-500/20 to-pink-500/20'>
@@ -122,10 +124,10 @@ export default function Orders() {
                                     src={`${
                                       CloudinaryConfig.CLOUDINARY_URL
                                     }/image/upload/v1700463893/${
-                                      item?.product?.images?.[0]?.url ||
-                                      item?.product?.image_id?.[0]
+                                      item?.variant?.images?.[0]?.url ||
+                                      item?.variant?.image_id?.[0]
                                     }`}
-                                    alt={item?.product?.name}
+                                    alt={item?.variant?.name}
                                     className='w-full h-full object-cover rounded-lg shadow-md'
                                   />
                                 </div>
@@ -147,6 +149,11 @@ export default function Orders() {
                           <p className='text-gray-500'>
                             Ordered on{' '}
                             {new Date(order.createdAt).toLocaleDateString()}
+                          </p>
+                          <p className='text-gray-600'>
+                            Delivery Charge: ₹
+                            {order?.shipping_details?.shipping_charge?.toLocaleString() ||
+                              '0'}
                           </p>
                           <p className='font-bold text-lg bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent'>
                             Total: ₹{order?.amount?.toLocaleString()}
@@ -219,15 +226,17 @@ export default function Orders() {
                                     src={`${
                                       CloudinaryConfig.CLOUDINARY_URL
                                     }/image/upload/v1700463893/${
-                                      item?.product?.images?.[0]?.url ||
-                                      item?.product?.image_id?.[0]
+                                      item?.variant?.images?.[0]?.url ||
+                                      item?.variant?.image_id?.[0]
                                     }`}
-                                    alt={item?.product?.name}
+                                    alt={item?.variant?.name}
                                     className='w-full h-full object-cover rounded-lg shadow-md'
                                   />
                                 </div>
                                 <div>
-                                  <p className='font-medium'>{item.name}</p>
+                                  <p className='font-medium'>
+                                    {item.variant.name}
+                                  </p>
                                   <p className='text-sm text-gray-500'>
                                     Qty: {item.quantity}
                                   </p>
@@ -244,6 +253,11 @@ export default function Orders() {
                           <p className='text-gray-500'>
                             Delivered on{' '}
                             {new Date(order?.updatedAt).toLocaleDateString()}
+                          </p>
+                          <p className='text-gray-600'>
+                            Delivery Charge: ₹
+                            {order?.shipping_details?.shipping_charge?.toLocaleString() ||
+                              '0'}
                           </p>
                           <p className='font-bold text-lg bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent'>
                             Total: ₹{order?.amount?.toLocaleString()}

@@ -229,6 +229,7 @@ const Checkout = () => {
   const getTotal = () => {
     let total = 0;
     // const items = cartItems || checkoutItem;
+    // biome-ignore lint/complexity/noForEach: <explanation>
     checkoutItem?.forEach((i) => {
       total += i.discountedPrice;
     });
@@ -417,7 +418,7 @@ const Checkout = () => {
                   {/* Render Cart Items */}
                   {checkoutItem?.map((p, i) => (
                     <div
-                      key={i}
+                      key={p?._id}
                       className='flex items-center border border-gray-300 rounded-lg gap-2 mb-3'
                     >
                       <p className='p-1'>

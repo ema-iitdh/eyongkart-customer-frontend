@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useGetOrderById } from '@/features/orders/hooks/userOrders';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CloudinaryConfig } from '@/constants/Cloudinary';
+import { CloudinaryConfig } from '../../../../Cloudinary';
 
 export default function OrderDetail() {
   const { orderId } = useParams();

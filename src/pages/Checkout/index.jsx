@@ -5,7 +5,6 @@ import {
 import { useCart } from '@/features/cart/hooks/useCart';
 import { useProductById } from '@/features/products/hooks/useProducts';
 import { Button, TextInput } from '@mantine/core';
-import { CloudinaryConfig } from '@/constants/Cloudinary';
 import { useQueryClient } from '@tanstack/react-query';
 import Select from 'react-select';
 import { motion } from 'framer-motion';
@@ -18,6 +17,7 @@ import {
 } from '@/features/orders/hooks/userOrders';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
+import { CloudinaryConfig } from '../../../Cloudinary';
 
 const addressFormSchema = z.object({
   deliveredToWhom: z.string().min(1, 'Name is required'),
@@ -680,7 +680,8 @@ export default function Checkout() {
                           src={`${
                             CloudinaryConfig.CLOUDINARY_URL
                           }/image/upload/${
-                            productDetails?.baseImage?.url || productDetails?.image_id?.[0]
+                            productDetails?.baseImage?.url ||
+                            productDetails?.image_id?.[0]
                           }`}
                           alt={productDetails.name}
                           className='w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg'

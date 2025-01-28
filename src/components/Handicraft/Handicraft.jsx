@@ -39,6 +39,10 @@ const Handicraft = () => {
     );
   }
 
+  if (handicraftLists.length === 0) {
+    return null;
+  }
+
   return (
     <section className='py-12 bg-gradient-to-b from-gray-50 to-white'>
       <div className='container mx-auto px-4'>

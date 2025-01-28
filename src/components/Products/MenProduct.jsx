@@ -19,6 +19,10 @@ export default function MenProduct() {
 
   const menProducts = products?.products?.slice(0, 15);
 
+  if (menProducts.length === 0) {
+    return null;
+  }
+
   return (
     <div className='py-8 container mx-auto'>
       <div className='flex justify-center items-center mb-6'>
