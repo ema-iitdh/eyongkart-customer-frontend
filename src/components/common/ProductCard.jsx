@@ -70,7 +70,7 @@ const ProductCard = ({ product }) => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className='relative bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 h-[380px] flex flex-col group overflow-hidden'
+        className='relative bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 h-[390px] flex flex-col group overflow-hidden'
       >
         {/* Discount Badge */}
         {dynamicDiscount > 0 && (
