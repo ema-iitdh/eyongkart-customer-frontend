@@ -98,7 +98,7 @@ export default function Orders() {
                         },
                       }}
                       exit={{ opacity: 0, scale: 0.95 }}
-                      whileHover={{ scale: 1.02 }}
+                      // whileHover={{ scale: 1.02 }}
                       className='bg-white/80 backdrop-blur-sm dark:bg-gray-800/90 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 p-4'
                     >
                       <div className='flex flex-col sm:flex-row justify-between gap-4'>
@@ -137,7 +137,9 @@ export default function Orders() {
                                     Qty: {item.quantity}
                                   </p>
                                   <p className='text-violet-600 font-semibold'>
-                                    ₹{item.price.toLocaleString()}
+                                    ₹
+                                    {item?.variant?.price?.discountedPrice ||
+                                      item?.price}
                                   </p>
                                 </div>
                               </motion.div>

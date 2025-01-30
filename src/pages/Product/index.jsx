@@ -18,24 +18,33 @@ import {
 } from '@/features/cart/hooks/useCart';
 
 export default function Product() {
-  const { productId } = useParams();
+  const { productId, variantId } = useParams();
+  // Set default selected variant to first available variant
+  const [selectedVariant, setSelectedVariant] = useState(variantId);
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const { data: wishlist } = useWishlist();
   const { mutate: toggleWishlist } = useToggleWishlist();
-  const { mutate: addToCart } = useAddToCart();
-  const { mutate: updateCart } = useUpdateCart();
-  const { mutate: removeFromCart } = useRemoveFromCart();
+  const { mutate: addToCart, isLoading: isAddingToCart } = useAddToCart();
+  const { mutate: updateCart, isLoading: isUpdatingCart } = useUpdateCart();
+  const { mutate: removeFromCart, isLoading: isRemovingFromCart } =
+    useRemoveFromCart();
   const { data: cartData } = useCart();
 
   const { data: productResponse, isLoading } = useProductById(productId);
 
   const product = productResponse?.product;
 
+  console.log(cartData, 'cartData');
+
   const isInCart = useMemo(() => {
-    return cartData?.cart?.some((item) => item.product?._id === productId);
-  }, [cartData, productId]);
+    return cartData?.cart?.some(
+      (item) =>
+        item.product?._id === productId &&
+        item?.variantId?.[0] === selectedVariant
+    );
+  }, [cartData, productId, selectedVariant]);
 
   const variants = useMemo(() => {
     if (!product?.variants) return [];
@@ -45,9 +54,6 @@ export default function Product() {
       variant,
     }));
   }, [product]);
-
-  // Set default selected variant to first available variant
-  const [selectedVariant, setSelectedVariant] = useState(null);
 
   // Update selected variant when variants are loaded
   useEffect(() => {
@@ -147,7 +153,10 @@ export default function Product() {
 
   const handleAddToCart = () => {
     if (isInCart) {
-      removeFromCart(product?._id);
+      removeFromCart({
+        productId: product?._id,
+        variantId: selectedVariant,
+      });
     } else {
       if (currentVariant) {
         addToCart({
@@ -384,17 +393,18 @@ export default function Product() {
                   isInCart
                     ? 'bg-rose-600 hover:bg-rose-700'
                     : 'bg-gray-600 hover:bg-gray-700'
-                } text-white font-semibold transform hover:scale-105 transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
+                } text-white font-semibold transform  transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
                 // leftIcon={<FaShoppingCart />}
                 leftSection={<FaShoppingCart />}
                 disabled={currentVariant?.stock.status === 'out_of_stock'}
                 onClick={handleAddToCart}
+                loading={isAddingToCart || isUpdatingCart || isRemovingFromCart}
               >
                 {isInCart ? 'Remove from Cart' : 'Add to Cart'}
               </Button>
               <Button
                 size='md'
-                className='flex-1 py-3 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold transform hover:scale-105 transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
+                className='flex-1 py-3 px-4 bg-gradient-to-b hover:text-gray-900 from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-300 text-gray-900 font-semibold transform  transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
                 disabled={currentVariant?.stock.status === 'out_of_stock'}
                 onClick={handleBuyNow}
               >

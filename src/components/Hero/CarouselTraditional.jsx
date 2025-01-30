@@ -34,21 +34,19 @@ const CarouselSkeleton = () => {
 
 const CarouselTraditional = () => {
   const navigate = useNavigate();
-  const [carouselData, setCarouselData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
   const { data, isLoading: isProductsLoading } = useCarouselProducts();
 
-  console.log(data?.products);
+  const productsWithDiscount = React.useMemo(() => {
+    return data?.products
+      .filter(
+        (product) =>
+          product?.variants?.[0]?.price.discount > 0 || product?.discount > 0
+      )
+      .slice(0, 6);
+  }, [data?.products]);
 
-  const productsWithDiscount = data?.products
-    .filter(
-      (product) =>
-        product?.variants?.[0]?.price.discount > 0 || product?.discount > 0
-    )
-    .slice(0, 6);
-
-  // Only show arrows if there is more than 1 product
-  const NextArrow = ({ onClick }) => {
+  const NextArrow = React.memo(({ onClick }) => {
     if (productsWithDiscount?.length <= 1) return null;
     return (
       <button
@@ -59,9 +57,9 @@ const CarouselTraditional = () => {
         <ChevronRight className='w-8 h-8 text-white' />
       </button>
     );
-  };
+  });
 
-  const PrevArrow = ({ onClick }) => {
+  const PrevArrow = React.memo(({ onClick }) => {
     if (productsWithDiscount?.length <= 1) return null;
     return (
       <button
@@ -72,26 +70,32 @@ const CarouselTraditional = () => {
         <ChevronLeft className='w-8 h-8 text-white' />
       </button>
     );
-  };
+  });
 
-  // Configure slider settings based on number of products
   const settings = {
-    dots: productsWithDiscount?.length > 1, // Only show dots if multiple products
-    arrows: productsWithDiscount?.length > 1, // Only show arrows if multiple products
-    infinite: productsWithDiscount?.length > 1, // Only enable infinite scroll if multiple products
-    speed: 1000,
+    dots: productsWithDiscount?.length > 1,
+    arrows: productsWithDiscount?.length > 1,
+    infinite: productsWithDiscount?.length > 1,
+    speed: 500, // Reduced from 1000 to 500 for smoother transitions
     slidesToShow: 1,
-    autoplay: productsWithDiscount?.length > 1, // Only autoplay if multiple products
+    autoplay: productsWithDiscount?.length > 1,
     slidesToScroll: 1,
     autoplaySpeed: 3000,
-    cssEase: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    cssEase: 'ease-out', // Changed from cubic-bezier for smoother animation
     pauseOnHover: true,
     pauseOnFocus: true,
     dotsClass: 'slick-dots custom-dots',
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    // Fix vertical duplication by setting adaptiveHeight to true
-    adaptiveHeight: true,
+    adaptiveHeight: false, // Changed to false to prevent layout shifts
+    swipe: true,
+    swipeToSlide: true,
+    touchThreshold: 10, // Added for better touch response
+    useCSS: true,
+    useTransform: true,
+    waitForAnimate: false, // Added to prevent queuing of animations
+    beforeChange: () => setIsDragging(true),
+    afterChange: () => setIsDragging(false),
     responsive: [
       {
         breakpoint: 1024,
@@ -124,6 +128,17 @@ const CarouselTraditional = () => {
     });
   }, []);
 
+  const handleClick = React.useCallback(
+    (product) => {
+      if (!isDragging) {
+        navigate(
+          `${ROUTES.PRODUCT.LIST}/${product._id}/${product?.variants[0]?._id}`
+        );
+      }
+    },
+    [isDragging, navigate]
+  );
+
   if (isProductsLoading) {
     return <CarouselSkeleton />;
   }
@@ -137,7 +152,16 @@ const CarouselTraditional = () => {
       <div className='p-2 mx-auto'>
         <Slider {...settings}>
           {productsWithDiscount?.map((product) => (
-            <div key={product._id} className='outline-none'>
+            <div
+              key={product._id}
+              className='outline-none cursor-pointer'
+              onClick={() => handleClick(product)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleClick(product);
+                }
+              }}
+            >
               <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-x-10 px-4 sm:px-8'>
                 <div className='flex flex-col justify-center gap-2 sm:gap-3 md:gap-3 order-2 sm:order-1 relative z-10 text-center sm:text-left'>
                   <h2 className='text-base sm:text-lg lg:text-xl font-bold text-gray-800 dark:text-gray-100 transition-colors line-clamp-2'>
@@ -166,20 +190,9 @@ const CarouselTraditional = () => {
                       {product?.variants[0]?.price?.discount}% OFF
                     </span>
                   </div>
-
-                  <button
-                    type='button'
-                    onClick={() =>
-                      navigate(`${ROUTES.PRODUCT.LIST}/${product._id}`)
-                    }
-                    className='mt-4 inline-flex items-center gap-2 bg-gray-700 text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors duration-200 w-fit mx-auto sm:mx-0'
-                  >
-                    View Product
-                    <ArrowRight className='w-4 h-4' />
-                  </button>
                 </div>
 
-                <div className='order-1 sm:order-2 transform transition-transform hover:scale-105 duration-500'>
+                <div className='order-1 sm:order-2 transform will-change-transform'>
                   <img
                     src={`${
                       CloudinaryConfig.CLOUDINARY_URL
@@ -202,4 +215,4 @@ const CarouselTraditional = () => {
   );
 };
 
-export default CarouselTraditional;
+export default React.memo(CarouselTraditional);

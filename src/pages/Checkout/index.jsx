@@ -671,6 +671,7 @@ export default function Checkout() {
                   {items?.map((item) => {
                     const productDetails =
                       itemDetails[item.product._id]?.product || item.product;
+
                     return (
                       <div
                         key={item.product._id}
@@ -680,7 +681,7 @@ export default function Checkout() {
                           src={`${
                             CloudinaryConfig.CLOUDINARY_URL
                           }/image/upload/${
-                            productDetails?.baseImage?.url ||
+                            item?.variant?.images?.[0]?.url ||
                             productDetails?.image_id?.[0]
                           }`}
                           alt={productDetails.name}
@@ -691,10 +692,17 @@ export default function Checkout() {
                             {productDetails.name}
                           </h3>
                           {item.variant && (
-                            <p className='text-xs sm:text-sm text-gray-600'>
-                              {item.variant.color?.name} -{' '}
-                              {item.variant.size?.value}
-                            </p>
+                            <div className='flex flex-col gap-1'>
+                              <p className='text-xs sm:text-sm text-gray-600'>
+                                {item.variant.color?.name}
+                              </p>
+                              <p className='text-xs sm:text-sm text-gray-600'>
+                                {item.variant.size?.value}
+                              </p>
+                              <p className='text-xs sm:text-sm text-gray-600'>
+                                {item.variant.pattern?.name}
+                              </p>
+                            </div>
                           )}
                           <div className='flex justify-between items-center mt-1 sm:mt-2'>
                             <p className='text-purple-600 font-medium text-sm sm:text-base'>
@@ -734,8 +742,6 @@ export default function Checkout() {
                 </p>
               )}
               <Button
-                variant='gradient'
-                gradient={{ from: 'indigo', to: 'purple' }}
                 size='lg'
                 fullWidth
                 onClick={handleSubmit}
@@ -745,7 +751,7 @@ export default function Checkout() {
                   !orderDetails.paymentMethod ||
                   isOrderLoading
                 }
-                className='h-10 sm:h-12 text-sm sm:text-base'
+                className='h-10 sm:h-12 text-sm sm:text-base bg-gradient-to-b from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-gray-900 font-semibold transform  transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 hover:text-gray-900'
               >
                 {isOrderLoading ? (
                   <div className='flex items-center justify-center gap-2'>

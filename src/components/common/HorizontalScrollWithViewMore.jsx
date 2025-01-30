@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useEffect, memo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import HorizontalScrollerWithButton from './HorizontalScrollerWithButton';
 import { cn } from '@/lib/utils';
@@ -12,64 +12,62 @@ const HorizontalScrollWithViewMore = ({
   onViewMore,
   showViewMore = true,
   buttonPosition = 'middle',
+  title,
+  description,
 }) => {
   const [itemsToShow, setItemsToShow] = useState(initialItemsToShow);
 
-  // Calculate items to show based on screen width
-  const calculateItemsToShow = () => {
-    if (window.innerWidth < 640) return 4; // Mobile
-    if (window.innerWidth < 1024) return 6; // Tablet
-    return Math.max(8, initialItemsToShow); // Desktop - show at least 8 items
-  };
+  const calculateItemsToShow = useCallback(() => {
+    if (window.innerWidth < 640) return 8; // Mobile
+    if (window.innerWidth < 1024) return 12; // Tablet
+    return Math.max(15, initialItemsToShow); // Desktop
+  }, [initialItemsToShow]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const handleResize = () => {
       setItemsToShow(calculateItemsToShow());
     };
 
-    // Set initial value
     setItemsToShow(calculateItemsToShow());
-
-    // Add resize listener
     window.addEventListener('resize', handleResize);
-
-    // Cleanup
     return () => window.removeEventListener('resize', handleResize);
-  }, [initialItemsToShow]);
+  }, [calculateItemsToShow]);
 
   const displayedItems = React.Children.toArray(children).slice(0, itemsToShow);
   const hasMoreItems = React.Children.count(children) > itemsToShow;
 
+  const wrappedItems = displayedItems.map((child, index) => (
+    <motion.div
+      key={v4()}
+      className={cn('flex-shrink-0', itemClassName)}
+      // whileHover={{ y: -5 }}
+      transition={{ duration: 0.2 }}
+    >
+      {child}
+    </motion.div>
+  ));
+
   return (
     <div className='relative'>
-      <div className='flex justify-between items-center mb-4'>
-        <div /> {/* Empty div for spacing */}
-        {showViewMore && hasMoreItems && (
+      {
+        <div className='flex justify-end mb-4'>
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className='px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-md hover:from-orange-600 hover:to-orange-700 transition-colors'
+            className='px-4 mr-10 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-md hover:from-orange-600 hover:to-orange-700 transition-colors'
             onClick={onViewMore}
           >
-            View more
+            See more
           </motion.button>
-        )}
-      </div>
+        </div>
+      }
 
-      <HorizontalScrollerWithButton buttonPosition={buttonPosition}>
-        {displayedItems.map((child, index) => {
-          return (
-            <motion.div
-              key={v4()}
-              className={cn('flex-shrink-0', itemClassName)}
-              whileHover={{ y: -5 }}
-            >
-              {child}
-            </motion.div>
-          );
-        })}
-      </HorizontalScrollerWithButton>
+      <HorizontalScrollerWithButton
+        buttonPosition={buttonPosition}
+        items={wrappedItems}
+        title={title}
+        description={description}
+      />
     </div>
   );
 };

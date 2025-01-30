@@ -57,12 +57,12 @@ export const useRemoveFromCart = () => {
 
   return useMutation({
     mutationKey: ['removeFromCart'],
-    mutationFn: (...args) => {
+    mutationFn: ({ productId, variantId }) => {
       if (!isAuthenticated) {
         loginRedirect();
         throw new Error('Please login and try again');
       }
-      return cartService.removeFromCart(...args);
+      return cartService.removeFromCart(productId, variantId);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });

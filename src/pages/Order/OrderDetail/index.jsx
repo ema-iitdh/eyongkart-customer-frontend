@@ -173,7 +173,7 @@ export default function OrderDetail() {
                           src={`${
                             CloudinaryConfig.CLOUDINARY_URL
                           }/image/upload/v1700463893/${
-                            item?.product?.baseImage?.url ||
+                            item?.variant?.images?.[0]?.url ||
                             item?.product?.image_id?.[0]
                           }`}
                           alt={item.name}
@@ -184,9 +184,12 @@ export default function OrderDetail() {
                         <h3 className='font-medium text-gray-800 text-sm sm:text-base'>
                           {item.name}
                         </h3>
+
                         <p className='text-xs sm:text-sm text-gray-600'>
-                          Variant: {item.variant?.size?.value},{' '}
-                          {item.variant?.color?.name}
+                          Color: {item.variant?.color?.name}
+                        </p>
+                        <p className='text-xs sm:text-sm text-gray-600'>
+                          Size: {item.variant?.size?.value}
                         </p>
                         <p className='text-xs sm:text-sm text-gray-600'>
                           Quantity: {item.quantity}
@@ -195,10 +198,10 @@ export default function OrderDetail() {
                     </div>
                     <div className='text-right'>
                       <p className='font-medium text-gray-800 text-sm sm:text-base'>
-                        ₹{item.price}
+                        ₹{item.variant?.price?.discountedPrice || item.price}
                       </p>
                       <p className='text-xs sm:text-sm text-gray-600'>
-                        Total: ₹{item.price * item.quantity}
+                        Total: ₹{item?.price * item.quantity}
                       </p>
                     </div>
                   </motion.div>

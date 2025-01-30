@@ -12,7 +12,7 @@ export const API_ENDPOINTS = {
   cart: {
     list: '/cart/getCart',
     add: '/cart/add',
-    remove: (productId) => `/cart/remove/${productId}`,
+    remove: (productId, variantId) => `/cart/remove/${productId}/${variantId}`,
     update: '/cart/update',
     // ! TODO: IMPLEMENT THIS AS SOON AS POSSIBLE
     clear: '/cart/clear',

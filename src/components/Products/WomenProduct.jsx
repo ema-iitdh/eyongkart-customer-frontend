@@ -26,7 +26,7 @@ export default function WomenProduct() {
   }
 
   return (
-    <div className='py-8 container mx-auto'>
+    <div className='py-8 mx-auto'>
       <div className='flex justify-center items-center mb-6'>
         <h2 className='text-3xl font-bold text-gray-700 drop-shadow-lg'>
           Women's Collection

@@ -134,7 +134,7 @@ export default function Wishlist() {
                     src={`${
                       CloudinaryConfig.CLOUDINARY_URL
                     }/image/upload/v1700463893/${
-                      item?.product?.baseImage?.url ||
+                      item?.variant?.images?.[0]?.url ||
                       item?.product?.image_id?.[0]
                     }`}
                     alt={item?.product?.name}
@@ -146,7 +146,16 @@ export default function Wishlist() {
                   <h3 className='font-semibold text-base sm:text-lg mb-1'>
                     {item?.product?.name}
                   </h3>
-                  <p className='text-violet-600 font-bold text-sm sm:text-base'>
+                  <p className='text-gray-500 text-sm sm:text-base'>
+                    {item?.variant?.color?.name}
+                  </p>
+                  <p className='text-gray-500 text-sm sm:text-base'>
+                    {item?.variant?.size?.value}
+                  </p>
+                  <p className='text-gray-500 text-sm sm:text-base'>
+                    {item?.variant?.pattern?.name}
+                  </p>
+                  <p className='text-gray-800 font-bold text-lg sm:text-xl mt-2'>
                     ₹
                     {item?.variant?.price?.discountedPrice?.toLocaleString?.() ||
                       item?.product?.price?.toLocaleString?.()}
@@ -155,12 +164,12 @@ export default function Wishlist() {
 
                 <div className='flex flex-row sm:flex-col md:flex-row gap-2 w-full sm:w-auto'>
                   <Link
-                    to={`/product/${item?.product?._id}`}
+                    to={`/product/${item?.product?._id}/${item?.variant?._id}`}
                     className='flex-1 sm:flex-none'
                   >
                     <Button
-                      variant='light'
-                      color='violet'
+                      // variant='light'
+                      color='black'
                       size='sm'
                       leftIcon={<FaShoppingBag size={14} />}
                       fullWidth
@@ -170,7 +179,7 @@ export default function Wishlist() {
                     </Button>
                   </Link>
                   <Button
-                    variant='subtle'
+                    // variant='subtle'
                     color='red'
                     size='sm'
                     onClick={() =>
@@ -181,7 +190,7 @@ export default function Wishlist() {
                     }
                     disabled={deletingId === item?.product?._id}
                     loading={deletingId === item?.product?._id}
-                    className='hover:bg-red-50'
+                    className='hover:bg-red-600'
                   >
                     <FaTrash size={14} />
                   </Button>

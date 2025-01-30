@@ -11,7 +11,7 @@ export const ROUTES = {
   CART: '/cart',
   PRODUCT: {
     LIST: '/product',
-    DETAIL: ':productId',
+    DETAIL: ':productId/:variantId',
   },
   SORTED: '/sorted/:categoryId/:subcategoryId?',
   CATEGORY: '/category',

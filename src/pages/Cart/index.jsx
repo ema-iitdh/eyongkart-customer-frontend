@@ -24,7 +24,8 @@ export default function Cart() {
   const queryClient = useQueryClient();
   const { data: cartData, isLoading } = useCart();
   const { mutate: updateCart } = useUpdateCart();
-  const { mutate: removeFromCart } = useRemoveFromCart();
+  const { mutate: removeFromCart, isLoading: isRemovingFromCart } =
+    useRemoveFromCart();
   const { mutate: clearCart } = useClearCart();
 
   const [localCart, setLocalCart] = useState([]);
@@ -118,7 +119,7 @@ export default function Cart() {
     debouncedUpdateCart(item?.product?._id, item?.variant?._id, newQuantity);
   };
 
-  const handleRemoveItem = (productId) => {
+  const handleRemoveItem = (productId, variantId) => {
     // Update local state first
     setLocalCart((prev) =>
       prev?.filter((item) => item?.product?._id !== productId)
@@ -127,7 +128,7 @@ export default function Cart() {
       prev?.filter((item) => item?.product?._id !== productId)
     );
     // Then call API
-    removeFromCart(productId);
+    removeFromCart({ productId, variantId });
   };
 
   if (isLoading || (cartData?.cart?.length && !productsFetched)) {
@@ -185,7 +186,7 @@ export default function Cart() {
             <Badge
               size='md'
               variant='gradient'
-              gradient={{ from: 'violet', to: 'fuchsia' }}
+              gradient={{ from: '#333', to: '#333' }}
             >
               {cartItemProducts.length}{' '}
               {cartItemProducts.length === 1 ? 'Item' : 'Items'}
@@ -203,9 +204,15 @@ export default function Cart() {
                   exit={{ opacity: 0, x: -100 }}
                   className='flex flex-col sm:flex-row gap-3 sm:gap-4 p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl shadow-sm hover:shadow transition-shadow'
                 >
-                  <div className='relative group w-full sm:w-auto'>
+                  <Link
+                    to={`/product/${item?.product?._id}/${item?.variant?._id}`}
+                    className='relative group w-full sm:w-auto cursor-pointer'
+                  >
                     <img
-                      src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${item?.variant?.images?.[0]?.url || item?.product?.image_id?.[0]}`}
+                      src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${
+                        item?.variant?.images?.[0]?.url ||
+                        item?.product?.image_id?.[0]
+                      }`}
                       alt={item?.product?.name || 'Product image'}
                       className='w-full sm:w-24 lg:w-32 h-32 sm:h-24 lg:h-32 object-cover rounded-lg mx-auto sm:mx-0'
                       loading='lazy'
@@ -214,20 +221,18 @@ export default function Cart() {
                       }}
                     />
                     <div className='absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors rounded-lg' />
-                  </div>
+                  </Link>
 
-                  <div className='flex-1 space-y-1 sm:space-y-2 text-center sm:text-left'>
+                  <Link
+                    to={`/product/${item?.product?._id}/${item?.variant?._id}`}
+                    className='flex-1 space-y-1 sm:space-y-2 text-center sm:text-left cursor-pointer hover:opacity-80'
+                  >
                     <div>
                       <h3 className='text-base sm:text-lg  text-gray-800'>
                         {item?.product?.name}
                       </h3>
                       {item?.variant && (
-                        <Badge
-                          variant='light'
-                          color='violet'
-                          size='sm'
-                          className='mt-1'
-                        >
+                        <Badge variant='light' size='sm' className='mt-1'>
                           {item?.variant?.color?.name} -{' '}
                           {item?.variant?.size?.value}
                         </Badge>
@@ -238,13 +243,13 @@ export default function Cart() {
                       {item?.variant?.price?.discountedPrice?.toLocaleString?.() ||
                         item?.product?.discountedPrice?.toLocaleString?.()}
                     </p>
-                  </div>
+                  </Link>
 
                   <div className='flex flex-row sm:flex-col items-center justify-between gap-2 sm:gap-3'>
                     <div className='flex items-center gap-2 bg-gray-50 rounded-full p-1'>
                       <Button
                         variant='subtle'
-                        color='violet'
+                        color='black'
                         compact
                         size='xs'
                         onClick={() =>
@@ -261,7 +266,7 @@ export default function Cart() {
                       </span>
                       <Button
                         variant='subtle'
-                        color='violet'
+                        color='black'
                         compact
                         size='xs'
                         onClick={() =>
@@ -279,7 +284,11 @@ export default function Cart() {
                       variant='light'
                       color='red'
                       size='xs'
-                      onClick={() => handleRemoveItem(item?.product?._id)}
+                      onClick={() => {
+                        handleRemoveItem(item?.product?._id, item?.variant?.id);
+                      }}
+                      loading={isRemovingFromCart}
+                      disabled={isRemovingFromCart}
                       className='hover:bg-red-50'
                     >
                       <FaTrash size={10} />
@@ -303,7 +312,7 @@ export default function Cart() {
                 <Link to='/' className='w-full sm:w-auto'>
                   <Button
                     variant='light'
-                    color='violet'
+                    color='black'
                     size='sm'
                     leftIcon={<FaArrowLeft size={12} />}
                     fullWidth
@@ -313,8 +322,7 @@ export default function Cart() {
                 </Link>
                 <Link to='/checkout' className='w-full sm:w-auto'>
                   <Button
-                    variant='gradient'
-                    gradient={{ from: 'violet', to: 'fuchsia' }}
+                    className='bg-yellow-400 text-gray-800 hover:bg-yellow-500 hover:text-gray-800'
                     size='sm'
                     fullWidth
                   >

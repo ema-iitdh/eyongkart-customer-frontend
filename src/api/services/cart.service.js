@@ -14,8 +14,10 @@ export const cartService = {
     });
     return response.data;
   },
-  removeFromCart: async (productId) => {
-    const response = await Axios.delete(API_ENDPOINTS.cart.remove(productId));
+  removeFromCart: async (productId, variantId) => {
+    const response = await Axios.delete(
+      API_ENDPOINTS.cart.remove(productId, variantId)
+    );
     return response.data;
   },
   updateCart: async ({ productId, quantity, variantId }) => {

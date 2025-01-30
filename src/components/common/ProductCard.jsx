@@ -66,7 +66,10 @@ const ProductCard = ({ product }) => {
     variants?.[0]?.price?.markedUpPrice || discountedPrice;
 
   return (
-    <Link to={`/product/${_id}`} className='block w-full '>
+    <Link
+      to={`/product/${_id}/${variants?.[0]?._id}`}
+      className='block w-full '
+    >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -96,11 +99,11 @@ const ProductCard = ({ product }) => {
         </button>
 
         {/* Image Container */}
-        <div className='h-[180px] bg-gray-50'>
+        <div className='h-[175px] bg-gray-50'>
           <img
             src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/f_auto,q_auto,w_400,h_400/${imageUrl}`}
             alt={name}
-            className='w-full h-full object-contain p-4 transition-transform duration-300 group-hover:scale-105'
+            className='w-full aspect-square h-full object-cover transition-transform duration-300 group-hover:scale-105'
             loading='lazy'
           />
         </div>

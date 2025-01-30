@@ -1,6 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+  FaArrowUp,
+} from 'react-icons/fa';
 import { v4 } from 'uuid';
 import { useEyongkartInfo } from '@/features/eyongkartInfo/hooks/useEyongkartInfo';
 import { ROUTES } from '@/constants/routes';
@@ -66,6 +72,15 @@ const Footer = () => {
   return (
     <footer className='bg-gradient-to-b from-gray-50 to-gray-10'>
       <div className='container mx-auto px-4 pt-16 pb-8'>
+        <button
+          type='button'
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className=' bg-gray-700 hover:bg-gray-800 text-slate-200 justify-center  px-4 py-2 rounded mb-10 flex w-full items-center gap-2'
+        >
+          <FaArrowUp /> Back to Top
+        </button>
         <div className='grid lg:grid-cols-4 md:grid-cols-2 gap-12'>
           {/* Brand Section */}
           <div className='col-span-1'>
