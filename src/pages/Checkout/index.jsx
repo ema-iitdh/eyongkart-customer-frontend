@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import Select from 'react-select';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { productService } from '@/api/services/product.service';
 import {
   useShippingDetails,
@@ -18,6 +18,7 @@ import {
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 import { CloudinaryConfig } from '../../../Cloudinary';
+import { ROUTES } from '@/constants/routes';
 
 const addressFormSchema = z.object({
   deliveredToWhom: z.string().min(1, 'Name is required'),
@@ -404,7 +405,11 @@ export default function Checkout() {
     value: addr._id,
     label: `${addr.deliveredToWhom} - ${addr.address}, ${addr.district}, ${addr.state}, ${addr.pincode}, ${addr.phone}, ${addr.street}, ${addr.landmark}`,
   }));
-  console.log(items);
+
+  // if (items?.length === 0) {
+  //   return <Navigate to={ROUTES.HOME} />;
+  // }
+
   return (
     <div className='min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-4 sm:py-8'>
       <div className='container mx-auto px-2 sm:px-4 max-w-6xl'>

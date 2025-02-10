@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, redirect } from 'react-router-dom';
 import { authService } from '../../../api/services/auth.service';
 import { ROUTES } from '../../../constants/routes';
 import { useState, useEffect } from 'react';
@@ -76,7 +76,6 @@ export const useSignup = () => {
 // Logout hook
 export const useLogout = () => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
   const { logout } = useAuthenticationStore();
 
   return useMutation({
@@ -85,7 +84,7 @@ export const useLogout = () => {
       logout();
       queryClient.clear();
       toast.success('Logged out successfully');
-      navigate(ROUTES.LOGIN, { replace: true });
+      redirect(ROUTES.LOGIN);
     },
     onError() {
       toast.error('Failed to logout');

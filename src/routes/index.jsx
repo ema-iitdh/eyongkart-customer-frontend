@@ -1,23 +1,23 @@
 import AuthLayout from '@/layouts/AuthLayout';
 import CollectionLayout from '@/layouts/CollectionLayout';
 import MainLayout from '@/layouts/MainLayout';
+import AboutUs from '@/pages/AboutUs';
 import Login from '@/pages/Auth/Login';
 import Signup from '@/pages/Auth/Signup';
-import Collections from '@/pages/Collection/Collections';
-import HomePage from '@/pages/Home';
-import Product from '@/pages/Product';
-import { Suspense } from 'react';
-import { Outlet, Route, Routes } from 'react-router-dom';
-import { ROUTES } from '../constants/routes';
-import RedirectAuthenticatedUser from './RedirectAuthenticatedUser';
 import Cart from '@/pages/Cart';
 import Checkout from '@/pages/Checkout';
-import Wishlist from '@/pages/Wishlist';
+import Collections from '@/pages/Collection/Collections';
+import HomePage from '@/pages/Home';
 import Orders from '@/pages/Order';
 import OrderDetail from '@/pages/Order/OrderDetail';
-import Navbar from '@/components/common/Navbar/Navbar';
-import AboutUs from '@/pages/AboutUs';
+import Product from '@/pages/Product';
+import Wishlist from '@/pages/Wishlist';
+import NotFound from '@/pages/not-found';
+import { Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { ROUTES } from '../constants/routes';
 import ProtectedRoute from './ProtectedRoutes';
+import RedirectAuthenticatedUser from './RedirectAuthenticatedUser';
 
 // TODO: Add ERROR BOUNDARY
 export default function AppRoutes() {
@@ -107,15 +107,7 @@ export default function AppRoutes() {
 
         <Route path={ROUTES.CONTACT} element={<Contact />} /> */}
         <Route path={'/admin/*'} element={null} />
-        <Route
-          path='*'
-          element={
-            <div className='bg-gradient-to-br  from-slate-200 via-blue-100 to-orange-200 text-gray-500 font-extrabold text-3xl min-h-[100svh] grid place-items-center lg:text-6xl'>
-              {' '}
-              Coming soon...
-            </div>
-          }
-        />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </Suspense>
   );

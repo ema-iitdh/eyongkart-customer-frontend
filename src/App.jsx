@@ -1,6 +1,6 @@
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { BrowserRouter, Outlet } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ import { ROUTES } from './constants/routes';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import { v4 } from 'uuid';
 
 const queryclient = new QueryClient({
   defaultOptions: {
@@ -20,20 +21,21 @@ const queryclient = new QueryClient({
       refetchOnWindowFocus: true,
       retry: 1,
       staleTime: 5 * 1000,
-      onError: (error) => {
-        // toast.error(error?.response?.data?.message || error?.message);
-        console.error('Query error:', error);
-        if (error.response?.status === 401) {
-          // Handle unauthorized error
-          localStorage.clear();
-        } else if (error.response?.status === 404) {
-          // Handle not found error
-          console.error('Resource not found');
-        } else if (error.response?.status >= 500) {
-          // Handle server errors
-          console.error('Server error occurred');
-        }
-      },
+      useErrorBoundary: true,
+      // onError: (error) => {
+      //   // toast.error(error?.response?.data?.message || error?.message);
+      //   console.error('Query error:', error);
+      //   if (error.response?.status === 401) {
+      //     // Handle unauthorized error
+      //     localStorage.clear();
+      //   } else if (error.response?.status === 404) {
+      //     // Handle not found error
+      //     console.error('Resource not found');
+      //   } else if (error.response?.status >= 500) {
+      //     // Handle server errors
+      //     console.error('Server error occurred');
+      //   }
+      // },
     },
     mutations: {
       retry: 1,
@@ -61,8 +63,8 @@ const App = () => {
   }
 
   return (
-    <ErrorBoundary>
-      <QueryClientProvider client={queryclient}>
+    <QueryClientProvider client={queryclient}>
+      <ErrorBoundary>
         <GoogleOAuthProvider clientId={googleClientId}>
           <MantineProvider>
             <ToastContainer
@@ -93,8 +95,8 @@ const App = () => {
           </MantineProvider>
         </GoogleOAuthProvider>
         <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
-      </QueryClientProvider>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </QueryClientProvider>
   );
 };
 

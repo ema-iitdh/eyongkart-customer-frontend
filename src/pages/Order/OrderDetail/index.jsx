@@ -55,6 +55,22 @@ export default function OrderDetail() {
               </div>
             </motion.div>
 
+            <div className='flex gap-2 text-lg py-2 mx-2'>
+              {/* Estimated Delivery Date */}
+              <span className='text-green-700 font-bold'>
+                Estimated Delivery Date:
+              </span>
+              <span className='text-gray-900 font-bold'>
+                {new Date(
+                  order?.shipping_details?.estimated_delivery_date
+                ).toLocaleDateString('en-IN', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                }) || 'N/A'}
+              </span>
+            </div>
+
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6'>
               {/* Shipping Information */}
               <motion.div

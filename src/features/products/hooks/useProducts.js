@@ -24,6 +24,7 @@ export const useProductById = (id) => {
     queryFn: () => productService.getProductById(id),
     cacheTime: 0,
     staleTime: 0,
+    enabled: !!id,
   });
 };
 

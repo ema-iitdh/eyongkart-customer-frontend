@@ -1,4 +1,38 @@
+import { useLogout } from '@/features/auth/hooks/useAuth';
 import React from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+
+function NotFound({ onBack }) {
+  return (
+    <div className='min-h-screen flex items-center justify-center bg-gray-50'>
+      <div className='max-w-lg w-full text-center px-4'>
+        <h1 className='text-9xl font-bold text-gray-900 mb-2'>404</h1>
+        <h2 className='text-3xl font-semibold text-gray-800 mb-4'>
+          Page Not Found
+        </h2>
+        <p className='text-gray-600 mb-8'>
+          Oops! The page you are looking for might have been removed, had its
+          name changed, or is temporarily unavailable.
+        </p>
+        <button
+          type='button'
+          onClick={onBack}
+          className='inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200'
+        >
+          Go Back
+        </button>
+      </div>
+    </div>
+  );
+}
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -8,10 +42,16 @@ class ErrorBoundary extends React.Component {
 
   static getDerivedStateFromError(error) {
     // Update state so the next render will show the fallback UI.
-    return { hasError: true };
+    return { hasError: true, error };
   }
 
   componentDidCatch(error, errorInfo) {
+    // Check for 401 status in axios error response
+    if (error?.response?.status === 401 || error?.status === 401) {
+      this.props.onUnauthorized();
+      return;
+    }
+
     // You can log the error to an error reporting service here
     this.setState({
       error: error,
@@ -21,6 +61,53 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
+    if (this.state.error?.response?.status === 401) {
+      return (
+        <Dialog
+          open={
+            this.state.error?.response?.status === 401 ||
+            this.state.error?.status === 401
+          }
+        >
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Session Expired</DialogTitle>
+              <DialogDescription>
+                Your login session may have expired or you are unauthorized.
+                Please login again.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <button
+                type='button'
+                onClick={() => {
+                  this.setState({ hasError: false, error: null });
+                  window.location.reload();
+                }}
+                className='inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+              >
+                Refresh Page
+              </button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      );
+    }
+
+    if (this.state.error?.response?.status === 404) {
+      return (
+        <NotFound
+          onBack={() => {
+            this.setState({ hasError: false, error: null });
+            window.history.back();
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }}
+        />
+      );
+    }
+
     if (this.state.hasError) {
       return (
         <div className='min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4'>
@@ -35,7 +122,7 @@ class ErrorBoundary extends React.Component {
             <button
               type='button'
               onClick={() => {
-                this.setState({ hasError: false });
+                this.setState({ hasError: false, error: null });
                 window.location.reload();
               }}
               className='inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
@@ -61,4 +148,14 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-export default ErrorBoundary;
+const ErrorBoundaryWrapper = (props) => {
+  const { mutate: logout } = useLogout();
+
+  return (
+    <ErrorBoundary {...props} onUnauthorized={logout}>
+      {props.children}
+    </ErrorBoundary>
+  );
+};
+
+export default ErrorBoundaryWrapper;
