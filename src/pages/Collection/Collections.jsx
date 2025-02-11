@@ -11,15 +11,19 @@ export default function Collections() {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const { ref, inView } = useInView();
+  const { ref, inView } = useInView({
+    threshold: 0.5, // Only trigger when 50% of element is visible
+    rootMargin: '100px', // Only trigger when element is 100px from viewport
+  });
   const location = useLocation();
 
+  // Reset state when route changes
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setProducts([]);
-    setPage(1);
+    setPage(null);
     setIsLoadingMore(false);
-  }, [location.pathname]);
+  }, [location.pathname, searchParams.toString()]); // Also reset when search params change
 
   const { data, isLoading, error } = useProducts(
     {
@@ -27,7 +31,7 @@ export default function Collections() {
     },
     {
       staleTime: 0,
-      refetchOnMount: true,
+      refetchOnMount: 'always', // Force refetch on mount
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
       onSuccess: (data) => {
@@ -52,6 +56,7 @@ export default function Collections() {
 
   const hasNextPage = data?.pagination?.hasNextPage;
 
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       setProducts([]);
@@ -61,11 +66,11 @@ export default function Collections() {
   }, []);
 
   useEffect(() => {
-    if (inView && hasNextPage && !isLoadingMore) {
+    if (inView && hasNextPage && !isLoadingMore && !isLoading) {
       setIsLoadingMore(true);
       setPage((prev) => prev + 1);
     }
-  }, [inView, hasNextPage, isLoadingMore]);
+  }, [inView, hasNextPage, isLoadingMore, isLoading]);
 
   if (isLoading && page === 1) {
     return (

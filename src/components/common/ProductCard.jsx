@@ -66,14 +66,11 @@ const ProductCard = ({ product }) => {
     variants?.[0]?.price?.markedUpPrice || discountedPrice;
 
   return (
-    <Link
-      to={`/product/${_id}/${variants?.[0]?._id}`}
-      className='block w-full '
-    >
+    <Link to={`/product/${_id}/${variants?.[0]?._id}`} className='block w-full'>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className='relative bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 h-[390px] flex flex-col group overflow-hidden'
+        className='relative bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col group overflow-hidden'
       >
         {/* Discount Badge */}
         {dynamicDiscount > 0 && (
@@ -99,11 +96,11 @@ const ProductCard = ({ product }) => {
         </button>
 
         {/* Image Container */}
-        <div className='h-[175px] bg-gray-50'>
+        <div className='relative pt-[75%] bg-gray-50'>
           <img
-            src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/f_auto,q_auto,w_400,h_400/${imageUrl}`}
+            src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/f_auto,q_auto,w_400,h_300/${imageUrl}`}
             alt={name}
-            className='w-full aspect-square h-full object-cover transition-transform duration-300 group-hover:scale-105'
+            className='absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105'
             loading='lazy'
           />
         </div>
@@ -111,7 +108,7 @@ const ProductCard = ({ product }) => {
         {/* Product Details */}
         <div className='p-3 flex flex-col flex-1'>
           <div className='flex-1'>
-            <h3 className='text-sm font-medium text-gray-900 line-clamp-2 min-h-[40px] mb-1'>
+            <h3 className='text-sm font-medium text-gray-900 line-clamp-2 mb-1'>
               {name}
             </h3>
 
@@ -149,14 +146,14 @@ const ProductCard = ({ product }) => {
           </div>
 
           {/* Add to Cart Button */}
-          <motion.button
+          {/* <motion.button
             onClick={handleAddToCart}
             whileTap={{ scale: 0.95 }}
             className='mt-2 w-full bg-gradient-to-b from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-sm font-medium text-gray-900 py-2 px-4 rounded-md shadow-sm hover:shadow flex items-center justify-center gap-2 transition-colors duration-200'
           >
             <ShoppingCart size={16} />
             Add to Cart
-          </motion.button>
+          </motion.button> */}
         </div>
       </motion.div>
     </Link>

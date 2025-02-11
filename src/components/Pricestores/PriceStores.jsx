@@ -4,9 +4,11 @@ import ProductCard from '../common/ProductCard';
 import HorizontalScrollWithViewMore from '../common/HorizontalScrollWithViewMore';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import ImageOnlyCard from '../common/ImageOnlyCard';
+import ImageAndNameCard from '../common/ImageAndNameCard';
 
 const PriceStores = () => {
-  const maxPrice = 2000;
+  const maxPrice = 1000;
   const navigate = useNavigate();
 
   const {
@@ -21,10 +23,11 @@ const PriceStores = () => {
   // Memoize filtered items to prevent recalculation on every render
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const filterItems = useMemo(() => {
-    console.log("pl", productLists)
     return productLists
       .filter(
-        (product) => (product?.variants?.[0]?.price?.discountedPrice || product?.discountedPrice) <= maxPrice
+        (product) =>
+          (product?.variants?.[0]?.price?.discountedPrice ||
+            product?.discountedPrice) <= maxPrice
       )
       .sort(
         (a, b) =>
@@ -57,7 +60,7 @@ const PriceStores = () => {
     <section className='py-8'>
       <div className='container mx-auto px-4'>
         <div className='flex  items-center justify-center mb-2'>
-          <h2 className='text-3xl items-center flex drop-shadow-lg text-center font-bold text-gray-800'>
+          <h2 className='text-2xl items-center flex drop-shadow-lg text-center font-bold text-gray-800'>
             Budget Friendly
             <span className='ml-2 text-lg font-medium text-red-500'>
               (Under ₹{maxPrice})
@@ -67,7 +70,6 @@ const PriceStores = () => {
 
         <HorizontalScrollWithViewMore
           initialItemsToShow={4}
-          itemClassName='w-[280px]'
           onViewMore={() => {
             navigate(
               `${ROUTES.COLLECTIONS}/Budget Friendly?variants.price.discountedPrice_lte=2000`
@@ -75,7 +77,7 @@ const PriceStores = () => {
           }}
         >
           {filterItems?.map((item) => (
-            <ProductCard key={item._id} product={item} />
+            <ImageAndNameCard key={item._id} product={item} />
           ))}
         </HorizontalScrollWithViewMore>
       </div>

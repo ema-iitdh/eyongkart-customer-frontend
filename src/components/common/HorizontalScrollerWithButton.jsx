@@ -253,12 +253,12 @@ const HorizontalScrollerWithButton = ({
             'scrollbar-none md:hover:scrollbar-thin md:hover:scrollbar-track-transparent md:hover:scrollbar-thumb-gray-300'
           )}
           style={{
-            gridAutoColumns: 'minmax(140px, 1fr)',
+            // gridAutoColumns: 'minmax(140px, 1fr)',
             '--scrollbar-thumb-height': '8px',
           }}
           onScroll={handleScroll}
         >
-          <div className='flex gap-4'>
+          <div className='flex gap-2'>
             {(items.length > 0 ? items : React.Children.toArray(children)).map(
               (item, index) => (
                 <div key={item?.id || index} className='scroll-item'>

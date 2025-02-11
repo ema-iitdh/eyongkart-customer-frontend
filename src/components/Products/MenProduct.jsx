@@ -4,10 +4,13 @@ import { useProducts } from '@/features/products/hooks/useProducts';
 import ProductCard from '../common/ProductCard';
 import HorizontalScrollWithViewMore from '../common/HorizontalScrollWithViewMore';
 import { ROUTES } from '@/constants/routes';
+import ImageAndNameCard from '../common/ImageAndNameCard';
 
 export default function MenProduct() {
   const navigate = useNavigate();
-  const { data: products, isLoading } = useProducts({ filter: 'gender=Male' });
+  const { data: products, isLoading } = useProducts({
+    filter: 'gender=Male',
+  });
 
   if (isLoading) {
     return (
@@ -33,11 +36,10 @@ export default function MenProduct() {
 
       <HorizontalScrollWithViewMore
         initialItemsToShow={4}
-        itemClassName='w-[280px]'
         onViewMore={() => navigate(`${ROUTES.COLLECTIONS}/Men?gender=Male`)}
       >
         {menProducts?.map((product) => (
-          <ProductCard key={product._id} product={product} />
+          <ImageAndNameCard key={product._id} product={product} />
         ))}
       </HorizontalScrollWithViewMore>
     </div>

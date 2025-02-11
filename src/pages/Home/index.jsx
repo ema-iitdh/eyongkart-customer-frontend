@@ -16,6 +16,8 @@ import { ROUTES } from '@/constants/routes';
 import { useCategory } from '@/features/category/hooks/useCategory';
 import Footer from '@/components/Footer/Footer';
 import WomenProduct from '@/components/Products/WomenProduct';
+import GroupCardViewMore from '@/components/common/GroupCardViewMore';
+import OffersWrapper from './_components/Banner/Offer/OffersWrapper';
 
 const HomePage = () => {
   const { data: products, isLoading } = useProducts({ filter: '' });
@@ -52,8 +54,9 @@ const HomePage = () => {
         <Category />
         {/* Hero Section */}
         <CarouselTraditional />
+        <OffersWrapper />
         <TopSales />
-        <PriceStores />
+        {/* <PriceStores /> */}
         <Handicraft />
         <LatestProducts />
         <MenProduct />

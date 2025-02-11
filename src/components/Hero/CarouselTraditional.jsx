@@ -9,7 +9,7 @@ import { ROUTES } from '@/constants/routes';
 
 const CarouselSkeleton = () => {
   return (
-    <div className='relative container w-[95svw] justify-self-center mx-auto sm:m-3 sm:mt-0 rounded-xl overflow-hidden py-5 bg-gradient-to-r from-orange-300 to-yellow-400 dark:from-gray-800 dark:to-gray-900'>
+    <div className='relative container w-[95svw] justify-self-center mx-auto rounded-xl overflow-hidden py-5 bg-gradient-to-r from-orange-300 to-yellow-400 dark:from-gray-800 dark:to-gray-900'>
       <div className='p-2 mx-auto'>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-x-10 px-4 sm:px-8'>
           <div className='flex flex-col justify-center gap-4 sm:gap-6 order-2 sm:order-1 relative z-10'>

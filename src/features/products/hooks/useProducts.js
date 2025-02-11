@@ -14,7 +14,7 @@ export const useProducts = ({ filter = '' }, options) => {
 export const useCarouselProducts = () => {
   return useQuery({
     queryKey: ['carouselProducts'],
-    queryFn: () => productService.getProducts({ filter: 'limit=50' }),
+    queryFn: () => productService.getProducts({ filter: 'limit=none' }),
   });
 };
 

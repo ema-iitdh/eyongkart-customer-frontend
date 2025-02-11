@@ -26,8 +26,8 @@ const Category = () => {
   };
 
   return (
-    <div className='bg-[#EFF4FF] py-4 px-10'>
-      <div className='container mx-auto px-4'>
+    <div className='mx-auto'>
+      <div className='container py-4 bg-[#EFF4FF] rounded mx-auto px-10 '>
         <h2 className='text-xl font-bold text-gray-800 text-center'>
           Browse Categories
         </h2>

@@ -4,6 +4,7 @@ import { useProducts } from '@/features/products/hooks/useProducts';
 import ProductCard from '../common/ProductCard';
 import HorizontalScrollWithViewMore from '../common/HorizontalScrollWithViewMore';
 import { ROUTES } from '@/constants/routes';
+import ImageAndNameCard from '../common/ImageAndNameCard';
 
 export default function WomenProduct() {
   const navigate = useNavigate();
@@ -26,22 +27,25 @@ export default function WomenProduct() {
   }
 
   return (
-    <div className='py-8 mx-auto'>
-      <div className='flex justify-center items-center mb-6'>
-        <h2 className='text-3xl font-bold text-gray-700 drop-shadow-lg'>
-          Women's Collection
-        </h2>
-      </div>
+    <section className='py-8'>
+      <div className='container mx-auto px-4'>
+        <div className='flex justify-center items-center mb-6'>
+          <h2 className='text-3xl font-bold text-gray-700 drop-shadow-lg'>
+            Women's Collection
+          </h2>
+        </div>
 
-      <HorizontalScrollWithViewMore
-        initialItemsToShow={4}
-        itemClassName='w-[280px]'
-        onViewMore={() => navigate(`${ROUTES.COLLECTIONS}/Women?gender=Female`)}
-      >
-        {womenProducts?.map((product) => (
-          <ProductCard key={product._id} product={product} />
-        ))}
-      </HorizontalScrollWithViewMore>
-    </div>
+        <HorizontalScrollWithViewMore
+          initialItemsToShow={4}
+          onViewMore={() =>
+            navigate(`${ROUTES.COLLECTIONS}/Women?gender=Female`)
+          }
+        >
+          {womenProducts?.map((product) => (
+            <ImageAndNameCard key={product._id} product={product} />
+          ))}
+        </HorizontalScrollWithViewMore>
+      </div>
+    </section>
   );
 }
