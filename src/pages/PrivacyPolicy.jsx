@@ -46,8 +46,8 @@ const PrivacyPolicy = () => {
 
           <p className="text-gray-700 mt-8 text-lg">
             For privacy-related inquiries, contact us at{" "}
-            <a href="mailto:ema@iitdh.ac.in" className="text-blue-600 hover:underline">
-              ema@iitdh.ac.in
+            <a href="mailto:support.ema@iitdh.ac.in" className="text-blue-600 hover:underline">
+              support.ema@iitdh.ac.in
             </a>
             .
           </p>

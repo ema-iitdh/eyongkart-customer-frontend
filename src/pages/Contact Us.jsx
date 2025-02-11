@@ -1,4 +1,4 @@
-import { ClockIcon, MapPinIcon, PhoneIcon } from "lucide-react"
+import { ClockIcon, MapPinIcon } from "lucide-react"
 import { BsEnvelope } from "react-icons/bs"
 
 
@@ -14,8 +14,8 @@ const ContactUs = () => {
             <div className="flex items-center">
               <BsEnvelope className="h-6 w-6 text-gray-600 mr-2" />
               <span className="text-gray-700">Email:</span>
-              <a href="mailto:ema@iitdh.ac.in" className="ml-2 text-blue-600 hover:underline">
-                ema@iitdh.ac.in
+              <a href="mailto:support.ema@iitdh.ac.in" className="ml-2 text-blue-600 hover:underline">
+                support.ema@iitdh.ac.in
               </a>
             </div>
 

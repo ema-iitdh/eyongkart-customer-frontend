@@ -17,8 +17,8 @@ const CancellationAndRefund = () => {
             <li>Only defective or damaged items are eligible for returns within 7 days of delivery.</li>
             <li>
               To initiate a return, email us at{" "}
-              <a href="mailto:ema@iitdh.ac.in" className="text-blue-600 hover:underline">
-                ema@iitdh.ac.in
+              <a href="mailto:support.ema@iitdh.ac.in" className="text-blue-600 hover:underline">
+                support.ema@iitdh.ac.in
               </a>{" "}
               with order details and product images.
             </li>
@@ -32,8 +32,8 @@ const CancellationAndRefund = () => {
 
           <p className="text-gray-700 mt-8 text-lg">
             For refund assistance, contact us at{" "}
-            <a href="mailto:ema@iitdh.ac.in" className="text-blue-600 hover:underline">
-              ema@iitdh.ac.in
+            <a href="mailto:support.ema@iitdh.ac.in" className="text-blue-600 hover:underline">
+              support.ema@iitdh.ac.in
             </a>
             .
           </p>
