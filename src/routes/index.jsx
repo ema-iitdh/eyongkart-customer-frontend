@@ -18,6 +18,10 @@ import { Route, Routes } from 'react-router-dom';
 import { ROUTES } from '../constants/routes';
 import ProtectedRoute from './ProtectedRoutes';
 import RedirectAuthenticatedUser from './RedirectAuthenticatedUser';
+import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import TermsAndConditions from '@/pages/TermsAndConditions';
+import CancellationAndRefund from '@/pages/CancellationAndRefund';
+import ContactUs from '@/pages/Contact Us';
 
 // TODO: Add ERROR BOUNDARY
 export default function AppRoutes() {
@@ -54,6 +58,10 @@ export default function AppRoutes() {
             <Route path={ROUTES.ORDER_DETAIL} element={<OrderDetail />} />
           </Route>
           <Route path={ROUTES.ABOUT_US} element={<AboutUs />} />
+          <Route path={ROUTES.PRIVACY_POLICY} element={<PrivacyPolicy />} />
+          <Route path={ROUTES.TERMS_AND_CONDITIONS} element={<TermsAndConditions />} />
+          <Route path={ROUTES.CANCELLATION_AND_REFUND} element={<CancellationAndRefund />} />
+          <Route path={ROUTES.CONTACT} element={<ContactUs />} />
         </Route>
 
         {/* 

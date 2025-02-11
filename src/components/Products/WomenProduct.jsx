@@ -22,7 +22,7 @@ export default function WomenProduct() {
 
   const womenProducts = products?.products?.slice(0, 15);
 
-  if (womenProducts.length === 0) {
+  if (womenProducts?.length === 0) {
     return null;
   }
 

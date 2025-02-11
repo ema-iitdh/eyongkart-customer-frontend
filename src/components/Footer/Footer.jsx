@@ -57,11 +57,11 @@ const Footer = () => {
     );
 
   const customerService = [
-    ['shippingPolicy', 'Shipping & Delivery', '/shipping'],
-    ['returnsAndRefunds', 'Returns & Refunds', '/cancel'],
+    ['contactUs', 'Contact us', '/contact'],
+    ['cancellationAndRefunds', 'Cancellation & Refund Policy', '/cancel'],
     ['termsAndConditions', 'Terms & Conditions', '/tac'],
     ['privacyPolicy', 'Privacy Policy', '/privacypolicy'],
-  ].filter(([dbKey]) => data?.eyongkartInfo?.[0]?.[dbKey]?.content);
+  ];
 
   const quickLinks = [
     ['Home', '/'],
