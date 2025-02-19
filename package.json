@@ -54,6 +54,7 @@
     "react-slick": "^0.30.2",
     "react-toastify": "^10.0.5",
     "react-whatsapp": "^0.3.0",
+    "react-zoom-pan-pinch": "^3.7.0",
     "recharts": "^2.12.7",
     "router-dom": "^2.2.11",
     "slick-carousel": "^1.8.1",

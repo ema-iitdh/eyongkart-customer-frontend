@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Rating, Button, Select, NumberInput } from '@mantine/core';
 import { FaHeart, FaShoppingCart, FaMinus, FaPlus } from 'react-icons/fa';
@@ -16,10 +16,10 @@ import {
   useCart,
   useRemoveFromCart,
 } from '@/features/cart/hooks/useCart';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 export default function Product() {
   const { productId, variantId } = useParams();
-  // Set default selected variant to first available variant
   const [selectedVariant, setSelectedVariant] = useState(variantId);
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(0);
@@ -31,6 +31,22 @@ export default function Product() {
   const { mutate: removeFromCart, isLoading: isRemovingFromCart } =
     useRemoveFromCart();
   const { data: cartData } = useCart();
+
+  // Magnifier states
+  const [showMagnifier, setShowMagnifier] = useState(false);
+  const [[imgWidth, imgHeight], setImgSize] = useState([0, 0]);
+  const [[x, y], setXY] = useState([0, 0]);
+  const imageRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const { data: productResponse, isLoading } = useProductById(productId);
 
@@ -55,7 +71,6 @@ export default function Product() {
     }));
   }, [product]);
 
-  // Update selected variant when variants are loaded
   useEffect(() => {
     if (variants.length > 0 && !selectedVariant) {
       const inStockVariant = variants.find(
@@ -102,6 +117,30 @@ export default function Product() {
     currentImages = getImages();
   }
 
+  // Handle mouse enter for magnifier
+  const handleMouseEnter = (e) => {
+    const elem = e.currentTarget;
+    const { width, height } = elem.getBoundingClientRect();
+    setImgSize([width, height]);
+    setShowMagnifier(true);
+  };
+
+  // Handle mouse leave for magnifier
+  const handleMouseLeave = () => {
+    setShowMagnifier(false);
+  };
+
+  // Handle mouse move for magnifier
+  const handleMouseMove = (e) => {
+    const elem = e.currentTarget;
+    const { top, left } = elem.getBoundingClientRect();
+
+    // Calculate cursor position on the image
+    const x = e.pageX - left - window.pageXOffset;
+    const y = e.pageY - top - window.pageYOffset;
+    setXY([x, y]);
+  };
+
   if (isLoading) {
     return (
       <div className='min-h-screen flex justify-center items-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50'>
@@ -109,35 +148,6 @@ export default function Product() {
       </div>
     );
   }
-
-  // const dynamicImageId =
-  //   productResponse?.product?.images?.[selectedImage]?.url?.replace(/"/g, '') ||
-  //   productResponse?.product?.image_id?.[selectedImage]?.replace(/"/g, '');
-
-  // const dynamicImageUrl = `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${dynamicImageId}`;
-
-  // const dynamicImages = (() => {
-  //   if (productResponse?.product?.images?.length > 0) {
-  //     return productResponse?.product?.images?.map((img) => ({
-  //       url: `${
-  //         CloudinaryConfig.CLOUDINARY_URL
-  //       }/image/upload/${img?.url?.replace(/"/g, '')}`,
-  //       id: img,
-  //     }));
-  //   }
-
-  //   if (productResponse?.product?.image_id?.length > 0) {
-  //     return productResponse?.product?.image_id?.map((img) => ({
-  //       url: `${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${img?.replace(
-  //         /"/g,
-  //         ''
-  //       )}`,
-  //       id: img,
-  //     }));
-  //   }
-
-  //   return [];
-  // })();
 
   const handleQuantityChange = (value) => {
     const newQuantity = Math.max(1, Math.min(99, value));
@@ -189,10 +199,34 @@ export default function Product() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className='relative w-4/5 sm:w-[65%] mx-auto aspect-square rounded-2xl overflow-hidden md:shadow-lg'
+              className='relative w-4/5 sm:w-[65%] mx-auto aspect-square rounded-2xl overflow-hidden md:overflow-visible md:shadow-lg'
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onMouseMove={handleMouseMove}
+              ref={imageRef}
             >
               <AnimatePresence mode='wait'>
-                {currentImages?.length > 0 ? (
+                {isMobile ? (
+                  <TransformWrapper>
+                    <TransformComponent>
+                      {currentImages?.length > 0 ? (
+                        <img
+                          src={currentImages[selectedImage]?.url}
+                          alt={currentImages[selectedImage]?.alt}
+                          className='w-full h-full object-cover'
+                        />
+                      ) : (
+                        product?.baseImage && (
+                          <img
+                            src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${product.baseImage.url}`}
+                            alt={product.baseImage.altText}
+                            className='w-full h-full object-cover'
+                          />
+                        )
+                      )}
+                    </TransformComponent>
+                  </TransformWrapper>
+                ) : currentImages?.length > 0 ? (
                   <motion.img
                     key={selectedImage}
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -217,6 +251,49 @@ export default function Product() {
                   )
                 )}
               </AnimatePresence>
+
+              {showMagnifier && !isMobile && (
+                <>
+                  {/* Small magnifier square */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      border: '2px solid #333',
+                      background: 'rgba(0, 0, 0, 0.1)',
+                      cursor: 'none',
+                      width: '150px',
+                      height: '150px',
+                      left: `${x - 75}px`,
+                      top: `${y - 75}px`,
+                      pointerEvents: 'none',
+                    }}
+                  />
+
+                  {/* Zoomed view */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      zIndex: 100,
+                      top: '-5%',
+                      left: '100%',
+                      marginLeft: '20px',
+                      border: '5px solid #d4d4d4',
+                      background: '#fff',
+                      width: '600px',
+                      height: '600px',
+                      backgroundImage: `url(${
+                        currentImages[selectedImage]?.url ||
+                        product?.baseImage?.url
+                      })`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: `${-x * 4 + 350}px ${-y * 5 + 250}px`,
+                      backgroundSize: '1500px 2000px',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                </>
+              )}
+
               <motion.button
                 onClick={(e) => {
                   e.preventDefault();
@@ -394,7 +471,6 @@ export default function Product() {
                     ? 'bg-rose-600 hover:bg-rose-700'
                     : 'bg-gray-600 hover:bg-gray-700'
                 } text-white font-semibold transform  transition-all duration-200 md:shadow-lg hover:shadow-xl rounded-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100`}
-                // leftIcon={<FaShoppingCart />}
                 leftSection={<FaShoppingCart />}
                 disabled={currentVariant?.stock.status === 'out_of_stock'}
                 onClick={handleAddToCart}
