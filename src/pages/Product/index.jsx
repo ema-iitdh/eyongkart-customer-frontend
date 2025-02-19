@@ -209,21 +209,23 @@ export default function Product() {
                 {isMobile ? (
                   <TransformWrapper>
                     <TransformComponent>
-                      {currentImages?.length > 0 ? (
-                        <img
-                          src={currentImages[selectedImage]?.url}
-                          alt={currentImages[selectedImage]?.alt}
-                          className='w-full h-full object-cover'
-                        />
-                      ) : (
-                        product?.baseImage && (
+                      <div className='relative w-4/5 sm:w-[65%] mx-auto aspect-square rounded-2xl overflow-hidden md:overflow-visible md:shadow-lg'>
+                        {currentImages?.length > 0 ? (
                           <img
-                            src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${product.baseImage.url}`}
-                            alt={product.baseImage.altText}
+                            src={currentImages[selectedImage]?.url}
+                            alt={currentImages[selectedImage]?.alt}
                             className='w-full h-full object-cover'
                           />
-                        )
-                      )}
+                        ) : (
+                          product?.baseImage && (
+                            <img
+                              src={`${CloudinaryConfig.CLOUDINARY_URL}/image/upload/${product.baseImage.url}`}
+                              alt={product.baseImage.altText}
+                              className='w-full h-full object-cover'
+                            />
+                          )
+                        )}
+                      </div>
                     </TransformComponent>
                   </TransformWrapper>
                 ) : currentImages?.length > 0 ? (
